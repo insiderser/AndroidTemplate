@@ -70,7 +70,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ~/.m2/repository/org/robolectric/android-all
-          key: robolectric-cache
+          key: robolectric-cache-q
 
       - name: Generate build number
         uses: einaregilsson/build-number@v1
@@ -79,9 +79,8 @@ jobs:
 
       - name: Build
         run: >
-          ./gradlew spotlessCheck dependencyUpdates lint app:assembleDebug
-          app:assembleRelease test jacocoTestReportDebug jacocoTestReportRelease
-          -Papp.versionCode=$BUILD_NUMBER --stacktrace --scan
+          ./gradlew spotlessCheck dependencyUpdates lint app:assembleDebug app:assembleRelease
+          test jacocoTestReportDebug -Papp.versionCode=$BUILD_NUMBER --stacktrace
 
       - name: Upload report to Codecov
         uses: codecov/codecov-action@v1
