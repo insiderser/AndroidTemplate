@@ -17,9 +17,9 @@ package com.insiderser.android.core.dagger
 
 import androidx.lifecycle.ViewModel
 import com.google.common.truth.Truth.assertThat
-import javax.inject.Provider
 import org.junit.Assert
 import org.junit.Test
+import javax.inject.Provider
 
 class ViewModelFactoryTest {
 
@@ -41,13 +41,13 @@ class ViewModelFactoryTest {
         assertThat(created).isInstanceOf(TestViewModelImpl::class.java)
     }
 
-    @Test(expected = Error::class)
+    @Test(expected = NoVMProviderError::class)
     fun assertFails_noViewModelProvider() {
         val victim = ViewModelFactory(emptyMap())
         victim.create(TestViewModel::class.java)
     }
 
-    @Test(expected = Error::class)
+    @Test(expected = NoVMProviderError::class)
     fun assertFails_noViewModelProvider_getSubclassOfProvided() {
         val provider = Provider<ViewModel> { TestViewModel() }
         val victim = ViewModelFactory(mapOf(TestViewModel::class.java to provider))

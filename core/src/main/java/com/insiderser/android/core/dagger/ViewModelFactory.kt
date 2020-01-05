@@ -28,13 +28,19 @@ class ViewModelFactory @Inject constructor(
     private val creators: @JvmSuppressWildcards Map<Class<out ViewModel>, Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
 
+    /**
+     * Create [T] using Dagger.
+     */
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         Timber.d("Creating instance of ${modelClass.name}")
 
         val found = creators.entries.find { modelClass.isAssignableFrom(it.key) }
         val creator = found?.value
-            ?: throw Error("Cannot create an instance of ${modelClass.name} using Dagger")
+            ?: throw NoVMProviderError(
+                "Cannot create an instance of ${modelClass.name} using Dagger. " +
+                    "Did you forget to add it into Dagger?"
+            )
         try {
             return creator.get() as T
         } catch (e: Exception) {
@@ -42,3 +48,9 @@ class ViewModelFactory @Inject constructor(
         }
     }
 }
+
+/**
+ * An [Error] that indicates that no [Provider] for the given [ViewModel]
+ * had been added into a Dagger graph.
+ */
+class NoVMProviderError(message: String) : Error(message)
