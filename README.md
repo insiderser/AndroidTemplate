@@ -10,15 +10,16 @@ logic that I use (or plan to use) to build Android apps.
 
 This template includes:
 
-  - multi-module setup with reusable logic in [buildSrc](buildSrc/)
-  - CI configuration with GitHub Actions
-  - repeated code that we do in most Android apps nowadays
-  - basic Dagger setup
+- multi-module setup with reusable logic in [buildSrc](buildSrc/)
+- CI configuration with GitHub Actions
+- repeated code that we do in most Android apps nowadays
+- basic Dagger setup
   
 Inspired by:
-  - [iosched](https://github.com/google/iosched/)
-  - [tivi](https://github.com/chrisbanes/tivi)
-  - Numerous articles & docs
+
+- [iosched](https://github.com/google/iosched/)
+- [tivi](https://github.com/chrisbanes/tivi)
+- Numerous articles & docs
 
 ### License
 
