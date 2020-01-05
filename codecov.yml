@@ -1,0 +1,36 @@
+codecov:
+  require_ci_to_pass: yes
+
+coverage:
+  precision: 2
+  round: down
+  range: "70...100"
+  status:
+    project:
+      logic:  # declare a new status context "logic"
+        target: 85
+        threshold: 5
+        base: auto
+        if_not_found: success
+        if_ci_failed: success
+        informational: false # fail checks if not up to standarts
+        only_pulls: false
+        paths: # remove all ui files
+          - '!app/'
+          - '!*-ui/'
+      ui: # declare a new status context for ui-facing code
+        base: auto
+        if_not_found: success
+        if_ci_failed: success
+        informational: true # don't fail checks, only show coverage
+        only_pulls: false
+        paths:
+          - '*-ui/'
+          - app/
+    patch: yes
+    changes: yes
+
+comment:
+  layout: "reach,diff,flags,tree"
+  behavior: default
+  require_changes: yes
