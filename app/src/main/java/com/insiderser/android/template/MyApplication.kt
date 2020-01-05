@@ -21,6 +21,12 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import timber.log.Timber
 
+/**
+ * This is an entry point of the whole application.
+ *
+ * This class executes basic app configuration, such as building a
+ * Dagger graph, initializing libraries that need to be initialized on startup, etc.
+ */
 class MyApplication : DaggerApplication() {
 
     override fun onCreate() {
@@ -48,6 +54,10 @@ class MyApplication : DaggerApplication() {
         )
     }
 
+    /**
+     * Returns app-level [Dagger component][dagger.Component], that is used
+     * throughout the app.
+     */
     override fun applicationInjector(): AndroidInjector<MyApplication> {
         return DaggerAppComponent.factory().create(this)
     }

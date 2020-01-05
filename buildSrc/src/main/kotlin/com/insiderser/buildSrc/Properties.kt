@@ -18,11 +18,17 @@ package com.insiderser.buildSrc
 
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.extra
+import java.util.Properties
 
+/**
+ * Load all properties from `local.properties` into [project][Project]'s [extra].
+ *
+ * Loaded properties can be retrieved from [extra] or using [Project.findProperty].
+ */
 fun Project.loadLocalProperties() {
-    val localProperties = java.util.Properties()
     val localPropertiesFile = file("local.properties")
     if (localPropertiesFile.exists()) {
+        val localProperties = Properties()
         localPropertiesFile.inputStream().use { inputStream ->
             localProperties.load(inputStream)
         }

@@ -23,17 +23,36 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.kotlin.dsl.findByType
 
+/**
+ * Add dependency to both `testImplementation` and `androidTestImplementation`
+ */
 fun DependencyHandler.sharedTestImplementation(dependencyNotation: Any) {
     add("testImplementation", dependencyNotation)
     add("androidTestImplementation", dependencyNotation)
 }
 
+/**
+ * Convenience method that loads [android extension][BaseExtension].
+ */
 private fun Project.android(action: BaseExtension.() -> Unit) {
     val androidExtension = extensions.findByType(BaseExtension::class)
-        ?: throw Error("Should be called after applying android plugin")
+        ?: throw AndroidExtensionNotFoundError("Should be called after applying android plugin")
     androidExtension.apply(action)
 }
 
+/**
+ * Denotes that Android extension was not found. This means that `Android Gradle plugin`
+ * hadn't been applied to this [project][Project].
+ */
+class AndroidExtensionNotFoundError(message: String) : Error(message)
+
+/**
+ * Apply default configuration to this module.
+ *
+ * This is a convenience method that allows us to have the configuration in one place.
+ *
+ * **Note**: Android plugin must be applied before calling this method.
+ */
 fun Project.configureAndroidModule() {
     android {
         compileSdkVersion(Versions.Sdk.compile)
@@ -55,12 +74,20 @@ fun Project.configureAndroidModule() {
 
         lintOptions {
             isAbortOnError = true
+            isCheckTestSources = false
             isCheckGeneratedSources = true
             lintConfig = rootProject.file("lint.xml")
         }
     }
 }
 
+/**
+ * Apply default configuration for instrumentation testing to this module.
+ *
+ * This is a convenience method that allows us to have the configuration in one place.
+ *
+ * **Note**: Android plugin must be applied before calling this method.
+ */
 fun Project.configureInstrumentationTests() {
     android {
         defaultConfig {

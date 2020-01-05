@@ -78,6 +78,7 @@ obj/
 .idea/dynamic.xml
 .idea/uiDesigner.xml
 .idea/assetWizardSettings.xml
+.idea/mongoSettings.xml
 
 # OS-specific files
 .DS_Store
@@ -111,9 +112,6 @@ hs_err_pid*
 
 # JIRA plugin
 atlassian-ide-plugin.xml
-
-# Mongo Explorer plugin
-.idea/mongoSettings.xml
 
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
