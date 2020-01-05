@@ -24,6 +24,9 @@ import androidx.lifecycle.Observer
  */
 class Event<out T : Any>(private val content: T) {
 
+    /**
+     * `false` if [getContentIfNotHandled] was never called, `true` otherwise.
+     */
     var hasBeenHandled: Boolean = false
         private set
 
