@@ -1,10 +1,9 @@
 ## Android Template
 
 [![Gradle build](https://github.com/Insiderser/AndroidTemplate/workflows/Build/badge.svg)](https://github.com/Insiderser/AndroidTemplate/actions?query=branch%3Amaster+workflow%3Abuild)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Insiderser_AndroidTemplate&metric=alert_status)](https://sonarcloud.io/dashboard?id=Insiderser_AndroidTemplate)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/041b5a6aaea24bb58766ac38b02263b5)](https://www.codacy.com/manual/Insiderser/AndroidTemplate?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Insiderser/AndroidTemplate&amp;utm_campaign=Badge_Grade)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Codecov](https://codecov.io/gh/Insiderser/AndroidTemplate/branch/master/graph/badge.svg)](https://codecov.io/gh/Insiderser/AndroidTemplate)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 This is the project that contains all the common
 logic that I use (or plan to use) to build Android apps.
