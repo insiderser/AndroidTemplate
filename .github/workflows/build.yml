@@ -31,8 +31,7 @@ jobs:
           java-version: 11
 
       - name: Add executable permissions to all script files
-        run: |
-          - sudo chmod +x ./checksum.sh ./gradlew
+        run: sudo chmod +x ./checksum.sh ./gradlew
 
       - name: Generate cache key
         run: ./checksum.sh checksum.txt
