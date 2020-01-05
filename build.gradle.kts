@@ -40,7 +40,7 @@ plugins {
     id("com.diffplug.gradle.spotless") version "3.27.0"
     id("com.github.ben-manes.versions") version "0.27.0"
     id("com.vanniktech.android.junit.jacoco") version "0.15.0"
-    id("org.sonarqube") version "2.8"
+    id("org.sonarqube") version "2.8" apply false
 }
 
 allprojects {
@@ -101,7 +101,7 @@ subprojects {
     }
 
     apply(plugin = "org.sonarqube")
-    sonarqube {
+    extensions.findByType<org.sonarqube.gradle.SonarQubeExtension>()?.apply {
         properties {
             // TODO: configure for new project
             property("sonar.projectName", "Android Template")
