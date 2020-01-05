@@ -49,7 +49,15 @@ android {
 //                )
 //            }
 //        }
+    }
 
+    signingConfigs {
+        getByName("debug") {
+            storeFile = rootProject.file("release/debug.jks")
+            storePassword = "android"
+            keyAlias = "android"
+            keyPassword = "android"
+        }
     }
 
     buildTypes {
@@ -60,6 +68,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        getByName("debug") {
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 }
