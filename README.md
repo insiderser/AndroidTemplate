@@ -17,7 +17,7 @@ This template includes:
   - basic Dagger setup
   
 Inspired by:
-  - [iosched])(https://github.com/google/iosched/)
+  - [iosched](https://github.com/google/iosched/)
   - [tivi](https://github.com/chrisbanes/tivi)
   - Numerous articles & docs
 
