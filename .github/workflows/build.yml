@@ -83,13 +83,6 @@ jobs:
           app:assembleRelease test jacocoTestReportDebug jacocoTestReportRelease
           -Papp.versionCode=$BUILD_NUMBER --stacktrace --scan
 
-      - name: Submit to SonarCloud
-        if: always()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew sonarqube
-
       - name: Upload report to Codecov
         uses: codecov/codecov-action@v1
         if: always()

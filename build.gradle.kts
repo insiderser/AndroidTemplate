@@ -40,7 +40,6 @@ plugins {
     id("com.diffplug.gradle.spotless") version "3.27.0"
     id("com.github.ben-manes.versions") version "0.27.0"
     id("com.vanniktech.android.junit.jacoco") version "0.15.0"
-    id("org.sonarqube") version "2.8" apply false
 }
 
 allprojects {
@@ -97,24 +96,6 @@ subprojects {
             ktlint(Versions.ktlint)
             @Suppress("INACCESSIBLE_TYPE")
             licenseHeaderFile(rootProject.file("spotless/copyright.kt"))
-        }
-    }
-
-    apply(plugin = "org.sonarqube")
-    extensions.findByType<org.sonarqube.gradle.SonarQubeExtension>()?.properties {
-        // TODO: configure for new project
-        property("sonar.projectName", "Android Template")
-        property("sonar.projectKey", "Insiderser_AndroidTemplate")
-        property("sonar.organization", "insiderser")
-        property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.sourceEncoding", "UTF-8")
-        property("sonar.profile", "Android Lint")
-        property("sonar.projectVersion", Versions.versionName)
-
-        val sonarToken = System.getenv("SONAR_TOKEN")
-            ?: findProperty("sonar.token")
-        if (sonarToken != null) {
-            property("sonar.login", sonarToken)
         }
     }
 
