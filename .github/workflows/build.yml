@@ -30,9 +30,6 @@ jobs:
         with:
           java-version: 11
 
-      - name: Add executable permissions to all script files
-        run: sudo chmod +x ./checksum.sh ./gradlew
-
       - name: Generate cache key
         run: ./checksum.sh checksum.txt
 
@@ -41,7 +38,7 @@ jobs:
           mkdir -p ~/.gradle
           cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
-      # Can't cache Gradle dists because they are too big
+      # Can't cache Gradle dists because they are too big (over 400MB)
       - name: Restore Gradle module cache
         uses: actions/cache@v1
         with:
