@@ -24,7 +24,7 @@ import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.kotlin.dsl.findByType
 
 /**
- * Add dependency to both `testImplementation` and `androidTestImplementation`
+ * Add dependency to both `testImplementation` and `androidTestImplementation`.
  */
 fun DependencyHandler.sharedTestImplementation(dependencyNotation: Any) {
     add("testImplementation", dependencyNotation)
@@ -77,6 +77,9 @@ fun Project.configureAndroidModule() {
             isCheckTestSources = false
             isCheckGeneratedSources = true
             lintConfig = rootProject.file("lint.xml")
+
+            textReport = true
+            textOutput("stdout")
         }
     }
 }
