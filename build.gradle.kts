@@ -101,22 +101,20 @@ subprojects {
     }
 
     apply(plugin = "org.sonarqube")
-    extensions.findByType<org.sonarqube.gradle.SonarQubeExtension>()?.apply {
-        properties {
-            // TODO: configure for new project
-            property("sonar.projectName", "Android Template")
-            property("sonar.projectKey", "Insiderser_AndroidTemplate")
-            property("sonar.organization", "insiderser")
-            property("sonar.host.url", "https://sonarcloud.io")
-            property("sonar.sourceEncoding", "UTF-8")
-            property("sonar.profile", "Android Lint")
-            property("sonar.projectVersion", Versions.versionName)
+    extensions.findByType<org.sonarqube.gradle.SonarQubeExtension>()?.properties {
+        // TODO: configure for new project
+        property("sonar.projectName", "Android Template")
+        property("sonar.projectKey", "Insiderser_AndroidTemplate")
+        property("sonar.organization", "insiderser")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.sourceEncoding", "UTF-8")
+        property("sonar.profile", "Android Lint")
+        property("sonar.projectVersion", Versions.versionName)
 
-            val sonarToken = System.getenv("SONAR_TOKEN")
-                ?: findProperty("sonar.token")
-            if (sonarToken != null) {
-                property("sonar.login", sonarToken)
-            }
+        val sonarToken = System.getenv("SONAR_TOKEN")
+            ?: findProperty("sonar.token")
+        if (sonarToken != null) {
+            property("sonar.login", sonarToken)
         }
     }
 
