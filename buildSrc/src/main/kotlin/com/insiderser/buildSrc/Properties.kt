@@ -21,11 +21,15 @@ import org.gradle.kotlin.dsl.extra
 
 fun Project.loadLocalProperties() {
     val localProperties = java.util.Properties()
-    file("local.properties").inputStream().use { inputStream ->
-        localProperties.load(inputStream)
-    }
-    localProperties.forEach { key, value ->
-        check(key is String)
-        extra[key] = value
+    val localPropertiesFile = file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.inputStream().use { inputStream ->
+            localProperties.load(inputStream)
+        }
+
+        localProperties.forEach { key, value ->
+            check(key is String)
+            extra[key] = value
+        }
     }
 }
