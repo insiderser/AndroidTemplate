@@ -36,7 +36,7 @@ android {
         applicationId = "com.insiderser.android.template"
         versionName = Versions.versionName
         versionCode = findProperty("app.versionCode").let {
-            if(it is String) it.toInt() else 1
+            if (it is String) it.toInt() else 1
         }
 
         // TODO: if you use room
@@ -56,8 +56,10 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 }

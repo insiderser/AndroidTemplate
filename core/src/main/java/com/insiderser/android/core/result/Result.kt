@@ -45,4 +45,4 @@ val Result<*>.succeeded
  * If the [Result] is [Success], return it's data; otherwise, return [fallback].
  */
 fun <R> Result<R>.successOr(fallback: R): R =
-        (this as? Success<R>)?.data ?: fallback
+    (this as? Success<R>)?.data ?: fallback

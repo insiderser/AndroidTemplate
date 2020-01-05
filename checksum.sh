@@ -17,7 +17,7 @@ while read -r -d ''; do
     echo "Found $REPLY"
     FILES+=("$REPLY")
 done < <(find . -type f \( -name "build.gradle*" -o -name "Dependencies.kt" \
- -o -name "gradle-wrapper.properties" -o -name "Configuration.kt" \) -print0)
+    -o -name "gradle-wrapper.properties" -o -name "Configuration.kt" \) -print0)
 
 # Loop through files and append their MD5 to result file
 for file in "${FILES[@]}"; do

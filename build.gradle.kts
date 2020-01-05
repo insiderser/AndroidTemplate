@@ -59,33 +59,33 @@ junitJacoco {
     includeNoLocationClasses = false
     setIgnoreProjects(":test-shared")
     excludes = listOf(
-            // From https://github.com/vanniktech/gradle-android-junit-jacoco-plugin/blob/master/src/main/groovy/com/vanniktech/android/junit/jacoco/GenerationPlugin.groovy
-            "**/R.*",
-            "**/R$*.*",
-            "**/R2.*", // ButterKnife Gradle Plugin.
-            "**/R2$*.*", // ButterKnife Gradle Plugin.
-            "**/*$$*",
-            "**/*\$ViewInjector*.*", // Older ButterKnife Versions.
-            "**/*\$ViewBinder*.*", // Older ButterKnife Versions.
-            "**/*_ViewBinding*.*", // Newer ButterKnife Versions.
-            "**/BuildConfig.*",
-            "**/Manifest*.*",
-            "**/*\$Lambda$*.*", // Jacoco can not handle several "$" in class name.
-            "**/*Dagger*.*", // Dagger auto-generated code.
-            "**/*MembersInjector*.*", // Dagger auto-generated code.
-            "**/*_Provide*Factory*.*", // Dagger auto-generated code.
-            "**/*_Factory*.*", // Dagger auto-generated code.
-            "**/*\$JsonObjectMapper.*", // LoganSquare auto-generated code.
-            "**/*\$inlined$*.*", // Kotlin specific, Jacoco can not handle several "$" in class name.
-            "**/*\$Icepick.*", // Icepick auto-generated code.
-            "**/*\$StateSaver.*", // android-state auto-generated code.
-            "**/*AutoValue_*.*", // AutoValue auto-generated code.
+        // From https://github.com/vanniktech/gradle-android-junit-jacoco-plugin/blob/master/src/main/groovy/com/vanniktech/android/junit/jacoco/GenerationPlugin.groovy
+        "**/R.*",
+        "**/R$*.*",
+        "**/R2.*", // ButterKnife Gradle Plugin.
+        "**/R2$*.*", // ButterKnife Gradle Plugin.
+        "**/*$$*",
+        "**/*\$ViewInjector*.*", // Older ButterKnife Versions.
+        "**/*\$ViewBinder*.*", // Older ButterKnife Versions.
+        "**/*_ViewBinding*.*", // Newer ButterKnife Versions.
+        "**/BuildConfig.*",
+        "**/Manifest*.*",
+        "**/*\$Lambda$*.*", // Jacoco can not handle several "$" in class name.
+        "**/*Dagger*.*", // Dagger auto-generated code.
+        "**/*MembersInjector*.*", // Dagger auto-generated code.
+        "**/*_Provide*Factory*.*", // Dagger auto-generated code.
+        "**/*_Factory*.*", // Dagger auto-generated code.
+        "**/*\$JsonObjectMapper.*", // LoganSquare auto-generated code.
+        "**/*\$inlined$*.*", // Kotlin specific, Jacoco can not handle several "$" in class name.
+        "**/*\$Icepick.*", // Icepick auto-generated code.
+        "**/*\$StateSaver.*", // android-state auto-generated code.
+        "**/*AutoValue_*.*", // AutoValue auto-generated code.
 
-            "**/*Binding.*", // Data/View Binding
-            "**/*Module.*", // Dagger modules
-            "**/*Component.*", // Dagger components
-            "**/*Impl.*", // Room generated code
-            "**/*Application.*" // Testing App classes is a pain in the ass. Is it even possible?
+        "**/*Binding.*", // Data/View Binding
+        "**/*Module.*", // Dagger modules
+        "**/*Component.*", // Dagger components
+        "**/*Impl.*", // Room generated code
+        "**/*Application.*" // Testing App classes is a pain in the ass. Is it even possible?
     )
 }
 
@@ -113,7 +113,7 @@ subprojects {
             property("sonar.projectVersion", Versions.versionName)
 
             val sonarToken = System.getenv("SONAR_TOKEN")
-                    ?: findProperty("sonar.token")
+                ?: findProperty("sonar.token")
             if (sonarToken != null) {
                 property("sonar.login", sonarToken)
             }

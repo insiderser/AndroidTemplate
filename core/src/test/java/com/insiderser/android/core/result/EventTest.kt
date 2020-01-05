@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.insiderser.android.core.result
 
 import com.google.common.truth.Truth.assertThat
@@ -29,7 +28,7 @@ class EventTest {
 
         assertThat(victim.hasBeenHandled).isFalse()
         assertThat(victim.getContentIfNotHandled())
-                .isSameInstanceAs(someClass)
+            .isSameInstanceAs(someClass)
 
         assertThat(victim.hasBeenHandled).isTrue()
         assertThat(victim.getContentIfNotHandled()).isNull()

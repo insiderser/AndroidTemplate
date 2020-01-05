@@ -17,9 +17,9 @@ package com.insiderser.android.core.dagger
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
+import timber.log.Timber
 
 /**
  * [ViewModelProvider.Factory] that uses Dagger to create [ViewModel]s.
@@ -34,7 +34,7 @@ class ViewModelFactory @Inject constructor(
 
         val found = creators.entries.find { modelClass.isAssignableFrom(it.key) }
         val creator = found?.value
-                ?: throw Error("Cannot create an instance of ${modelClass.name} using Dagger")
+            ?: throw Error("Cannot create an instance of ${modelClass.name} using Dagger")
         try {
             return creator.get() as T
         } catch (e: Exception) {

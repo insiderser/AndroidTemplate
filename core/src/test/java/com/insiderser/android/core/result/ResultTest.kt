@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.insiderser.android.core.result
 
 import com.google.common.truth.Truth.assertThat
@@ -30,7 +29,7 @@ class ResultTest {
 
         val fallback = SimpleTestClass()
         assertThat(result.successOr(fallback))
-                .isSameInstanceAs(fallback)
+            .isSameInstanceAs(fallback)
     }
 
     @Test
@@ -43,7 +42,7 @@ class ResultTest {
 
         val fallback = SimpleTestClass()
         assertThat(result.successOr(fallback))
-                .isSameInstanceAs(fallback)
+            .isSameInstanceAs(fallback)
     }
 
     @Test
@@ -56,7 +55,7 @@ class ResultTest {
 
         val fallback = SimpleTestClass()
         assertThat(result.successOr(fallback))
-                .isSameInstanceAs(data)
+            .isSameInstanceAs(data)
     }
 
     @Test
@@ -68,6 +67,6 @@ class ResultTest {
 
         val fallback = SimpleTestClass()
         assertThat(result.successOr(fallback))
-                .isSameInstanceAs(fallback)
+            .isSameInstanceAs(fallback)
     }
 }

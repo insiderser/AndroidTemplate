@@ -39,7 +39,6 @@ class ExampleInstrumentationTest {
         @Suppress("UNUSED_VARIABLE")
         val applicationContext: Context = ApplicationProvider.getApplicationContext()
 
-
 //        Espresso.onView(withText("Some text")).check(matches(isDisplayed()))
     }
 }

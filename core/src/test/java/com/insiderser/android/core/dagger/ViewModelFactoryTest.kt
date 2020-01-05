@@ -17,9 +17,9 @@ package com.insiderser.android.core.dagger
 
 import androidx.lifecycle.ViewModel
 import com.google.common.truth.Truth.assertThat
+import javax.inject.Provider
 import org.junit.Assert
 import org.junit.Test
-import javax.inject.Provider
 
 class ViewModelFactoryTest {
 
@@ -64,12 +64,12 @@ class ViewModelFactoryTest {
             victim.create(TestViewModelImpl::class.java)
         }
         assertThat(exception)
-                .hasCauseThat()
-                .isInstanceOf(MyException::class.java)
+            .hasCauseThat()
+            .isInstanceOf(MyException::class.java)
         assertThat(exception)
-                .hasCauseThat()
-                .hasMessageThat()
-                .isEqualTo(message)
+            .hasCauseThat()
+            .hasMessageThat()
+            .isEqualTo(message)
     }
 }
 

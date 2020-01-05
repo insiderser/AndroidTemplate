@@ -40,11 +40,11 @@ class MyApplication : DaggerApplication() {
 
     private fun enableStrictMode() {
         StrictMode.setThreadPolicy(
-                StrictMode.ThreadPolicy.Builder()
-                        .detectAll()
-                        .penaltyLog()
-                        .penaltyDeath()
-                        .build()
+            StrictMode.ThreadPolicy.Builder()
+                .detectAll()
+                .penaltyLog()
+                .penaltyDeath()
+                .build()
         )
     }
 

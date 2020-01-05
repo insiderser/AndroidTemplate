@@ -31,5 +31,6 @@ class MainModule {
     }
 
     @Provides
-    fun provideConnectivityManager(context: Context): ConnectivityManager? = context.getSystemService()
+    fun provideConnectivityManager(context: Context): ConnectivityManager? =
+        context.getSystemService()
 }

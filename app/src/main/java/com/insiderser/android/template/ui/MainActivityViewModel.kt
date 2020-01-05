@@ -19,5 +19,5 @@ import androidx.lifecycle.ViewModel
 import javax.inject.Inject
 
 class MainActivityViewModel @Inject constructor(
-        // Your repositories or use cases, depending on your architecture pattern
+    // Your repositories or use cases, depending on your architecture pattern
 ) : ViewModel()
