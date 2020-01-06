@@ -16,6 +16,9 @@
 -keepattributes *Annotation*
 -keep public class * extends java.lang.Exception
 
+# Used in activity_main.xml
+-keep class androidx.navigation.fragment.NavHostFragment
+
 # If you use Crashlytics, uncomment this:
 #-keep class com.crashlytics.** { *; }
 #-dontwarn com.crashlytics.**
