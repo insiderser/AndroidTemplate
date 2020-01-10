@@ -22,8 +22,10 @@
 package com.insiderser.android.template
 
 import android.os.StrictMode
-import com.insiderser.android.template.dagger.DaggerAppComponent
-import dagger.android.AndroidInjector
+import com.insiderser.android.core.dagger.AppComponent
+import com.insiderser.android.core.dagger.AppComponentProvider
+import com.insiderser.android.template.dagger.AppComponentImpl
+import com.insiderser.android.template.dagger.DaggerAppComponentImpl
 import dagger.android.DaggerApplication
 import timber.log.Timber
 
@@ -33,7 +35,11 @@ import timber.log.Timber
  * This class executes basic app configuration, such as building a
  * Dagger graph, initializing libraries that need to be initialized on startup, etc.
  */
-class MyApplication : DaggerApplication() {
+class MyApplication : DaggerApplication(), AppComponentProvider {
+
+    private val appComponent: AppComponentImpl by lazy {
+        DaggerAppComponentImpl.factory().create(this)
+    }
 
     override fun onCreate() {
         // Enable strict mode before Dagger builds graph
@@ -64,7 +70,7 @@ class MyApplication : DaggerApplication() {
      * Returns app-level [Dagger component][dagger.Component], that is used
      * throughout the app.
      */
-    override fun applicationInjector(): AndroidInjector<MyApplication> {
-        return DaggerAppComponent.factory().create(this)
-    }
+    override fun applicationInjector() = appComponent
+
+    override fun appComponent(): AppComponent = appComponent
 }

@@ -21,6 +21,7 @@
  */
 package com.insiderser.android.template.dagger
 
+import com.insiderser.android.core.dagger.AppComponent
 import com.insiderser.android.core.dagger.CoreModule
 import com.insiderser.android.core.dagger.ViewModelModule
 import com.insiderser.android.template.MyApplication
@@ -33,7 +34,9 @@ import javax.inject.Singleton
 /**
  * Main application-level dagger component that holds everything together.
  *
- * Use [DaggerAppComponent.factory] to create [AppComponent].
+ * Use [DaggerAppComponentImpl.factory] to create [AppComponentImpl].
+ *
+ * Feature modules should create separate module components that depend on [AppComponent].
  */
 @Singleton
 @Component(
@@ -45,17 +48,17 @@ import javax.inject.Singleton
         ActivityBindingModule::class
     ]
 )
-interface AppComponent : AndroidInjector<MyApplication> {
+interface AppComponentImpl : AndroidInjector<MyApplication>, AppComponent {
 
     /**
-     * Dagger factory for building [AppComponent], binding instances into a dagger graph.
+     * Dagger factory for building [AppComponentImpl], binding instances into a dagger graph.
      */
     @Component.Factory
     interface Factory : AndroidInjector.Factory<MyApplication> {
 
         /**
-         * Create [AppComponent] & bind [MyApplication] into a dagger graph.
+         * Create [AppComponentImpl] & bind [MyApplication] into a dagger graph.
          */
-        override fun create(@BindsInstance application: MyApplication): AppComponent
+        override fun create(@BindsInstance application: MyApplication): AppComponentImpl
     }
 }
