@@ -38,30 +38,21 @@ jobs:
           mkdir -p ~/.gradle
           cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
-      # Can't cache Gradle dists because they are too big (over 400MB)
-      - name: Restore Gradle module cache
+      - name: Restore Gradle cache
         uses: actions/cache@v1
         with:
-          path: ~/.gradle/caches/modules-2
-          key: ${{ runner.os }}-gradlemodules-${{ hashFiles('checksum.txt') }}
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradlecache-${{ hashFiles('checksum.txt') }}
           restore-keys: |
-            ${{ runner.os }}-gradlemodules-
+            ${{ runner.os }}-gradlecache-
 
-      - name: Restore jars cache
+      - name: Restore Gradle dist cache
         uses: actions/cache@v1
         with:
-          path: ~/.gradle/caches/jars-3
-          key: ${{ runner.os }}-gradlejars-${{ hashFiles('checksum.txt') }}
+          path: ~/.gradle/wrapper/dists
+          key: ${{ runner.os }}-gradledist-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
           restore-keys: |
-            ${{ runner.os }}-gradlejars-
-
-      - name: Restore build cache
-        uses: actions/cache@v1
-        with:
-          path: ~/.gradle/caches/build-cache-1
-          key: ${{ runner.os }}-gradlebuildcache-${{ hashFiles('checksum.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-gradlebuildcache-
+            ${{ runner.os }}-gradledist-
 
       - name: Restore robolectric cache
         uses: actions/cache@v1
