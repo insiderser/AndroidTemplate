@@ -130,6 +130,8 @@ subprojects {
 tasks.withType<DependencyUpdatesTask> {
     checkForGradleUpdate = false
     rejectVersionIf {
-        candidate.version.contains("alpha")
+        candidate.version.contains("alpha") ||
+            // Reject Kotlin early access preview (EAP) releases
+            candidate.version.contains("eap")
     }
 }
