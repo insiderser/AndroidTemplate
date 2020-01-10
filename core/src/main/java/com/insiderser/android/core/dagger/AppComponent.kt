@@ -19,33 +19,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.dagger
-
-import com.insiderser.android.core.dagger.ActivityScoped
-import com.insiderser.android.template.ui.MainActivity
-import com.insiderser.android.template.ui.MainActivityModule
-import dagger.Module
-import dagger.android.ContributesAndroidInjector
+package com.insiderser.android.core.dagger
 
 /**
- * We want Dagger.Android to create a SubComponent which has a parent Component of whichever module
- * ActivityBindingModule is on, in our case that will be [AppComponentImpl]. You never
- * need to tell [AppComponentImpl] that it is going to have all these subcomponents
- * nor do you need to tell these subcomponents that [AppComponentImpl] exists.
- * We are also telling Dagger.Android that this generated SubComponent needs to include the
- * specified modules and be aware of a scope annotation [ActivityScoped].
+ * Main component, that feature modules can use to get app-level dependencies.
+ *
+ * Usage:
+ *   - Create feature module with component that depends on [AppComponent],
+ *     e.g. `@Component(dependencies = [AppComponent::class])`.
+ *   - In the component, add factory that binds an instance of [AppComponent] to get
+ *     [AppComponent] into the loop.
  */
-@Module
-abstract class ActivityBindingModule {
-
-    /**
-     * Tell dagger to create a SubComponent for [MainActivity].
-     */
-    @ActivityScoped
-    @ContributesAndroidInjector(
-        modules = [
-            MainActivityModule::class
-        ]
-    )
-    abstract fun mainActivity(): MainActivity
-}
+interface AppComponent
