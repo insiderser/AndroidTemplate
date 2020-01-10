@@ -22,7 +22,6 @@
 package com.insiderser.android.template
 
 import android.content.Context
-import android.os.Build.VERSION_CODES.Q
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -30,10 +29,7 @@ import com.insiderser.android.template.ui.MainActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
 
-// Attention: Android 10 requires Java 9
-@Config(sdk = [Q])
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentationTest {
 
