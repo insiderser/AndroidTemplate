@@ -22,21 +22,19 @@
 package com.insiderser.android.template.dagger
 
 import android.content.Context
-import android.net.ConnectivityManager
-import androidx.core.content.getSystemService
 import com.insiderser.android.template.MyApplication
 import dagger.Module
 import dagger.Provides
 
+/**
+ * Tells dagger that [MyApplication] is our main [Context] and
+ * [Application][android.app.Application].
+ */
 @Module
-class MainModule {
+class ContextModule {
 
     @Provides
     fun provideApplicationContext(myApplication: MyApplication): Context {
         return myApplication.applicationContext
     }
-
-    @Provides
-    fun provideConnectivityManager(context: Context): ConnectivityManager? =
-        context.getSystemService()
 }

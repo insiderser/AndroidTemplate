@@ -19,32 +19,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.dagger
 
-import com.insiderser.android.core.dagger.CoreModule
-import com.insiderser.android.core.dagger.ViewModelModule
-import com.insiderser.android.template.MyApplication
-import dagger.BindsInstance
-import dagger.Component
-import dagger.android.AndroidInjectionModule
-import dagger.android.AndroidInjector
-import javax.inject.Singleton
+package com.insiderser.android.core.dagger
 
-@Singleton
-@Component(
-    modules = [
-        AndroidInjectionModule::class,
-        CoreModule::class,
-        ContextModule::class,
-        ViewModelModule::class,
-        ActivityBindingModule::class
-    ]
-)
-interface AppComponent : AndroidInjector<MyApplication> {
+import android.content.Context
+import android.net.ConnectivityManager
+import androidx.core.content.getSystemService
+import dagger.Module
+import dagger.Provides
 
-    @Component.Factory
-    interface Factory : AndroidInjector.Factory<MyApplication> {
+/**
+ * Dagger module used throughout the app.
+ */
+@Module
+class CoreModule {
 
-        override fun create(@BindsInstance application: MyApplication): AppComponent
-    }
+    @Provides
+    fun provideConnectivityManager(context: Context): ConnectivityManager? =
+        context.getSystemService()
 }
