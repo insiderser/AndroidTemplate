@@ -197,7 +197,7 @@ object Libs {
         }
 
         object Work {
-            private const val version = "2.2.0"
+            private const val version = "2.3.0-rc01"
             const val runtimeKtx = "androidx.work:work-runtime-ktx:$version"
             const val testing = "androidx.work:work-testing:$version"
         }
@@ -225,7 +225,7 @@ object Libs {
     }
 
     object OkHttp {
-        private const val version = "4.3.0"
+        private const val version = "4.3.1"
         const val okHttp = "com.squareup.okhttp3:okhttp:$version"
         const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
         const val mockWebServer = "com.squareup.okhttp3:mockwebserver:$version"
