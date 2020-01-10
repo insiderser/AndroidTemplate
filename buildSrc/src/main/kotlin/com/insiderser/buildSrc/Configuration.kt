@@ -79,9 +79,12 @@ fun Project.configureAndroidModule() {
         }
 
         lintOptions {
+            // TODO: uncomment line below for new projects
+            // isWarningsAsErrors = true
             isAbortOnError = true
             isCheckTestSources = false
             isCheckGeneratedSources = true
+            isCheckDependencies = true
             lintConfig = rootProject.file("lint.xml")
 
             textReport = true
