@@ -123,3 +123,5 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 checksum.txt
+
+release.jks
