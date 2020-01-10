@@ -30,6 +30,12 @@ import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import javax.inject.Singleton
 
+/**
+ * Main application-level dagger component that holds everything together.
+ *
+ * Use dagger's generated implementation [DaggerAppComponent.factory] to create
+ * [AppComponent].
+ */
 @Singleton
 @Component(
     modules = [
@@ -42,9 +48,15 @@ import javax.inject.Singleton
 )
 interface AppComponent : AndroidInjector<MyApplication> {
 
+    /**
+     * Dagger factory for building [AppComponent], binding instances into a dagger graph.
+     */
     @Component.Factory
     interface Factory : AndroidInjector.Factory<MyApplication> {
 
+        /**
+         * Create [AppComponent] & bind [MyApplication] into a dagger graph.
+         */
         override fun create(@BindsInstance application: MyApplication): AppComponent
     }
 }

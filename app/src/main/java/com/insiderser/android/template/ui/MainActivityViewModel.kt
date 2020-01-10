@@ -24,6 +24,10 @@ package com.insiderser.android.template.ui
 import androidx.lifecycle.ViewModel
 import javax.inject.Inject
 
+/**
+ * [ViewModel] for [MainActivity]. It provides data & reacts to changes, separating
+ * all that from the activity.
+ */
 class MainActivityViewModel @Inject constructor(
     // Your repositories or use cases, depending on your architecture pattern
 ) : ViewModel()

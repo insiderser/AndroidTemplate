@@ -32,6 +32,10 @@ import dagger.Module
 @Module
 interface ViewModelModule {
 
+    /**
+     * Define connection between the framework's [ViewModelProvider.Factory]
+     * and out own implementation: [ViewModelFactory].
+     */
     @Binds
     fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }

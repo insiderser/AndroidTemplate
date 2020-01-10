@@ -34,8 +34,19 @@ import com.insiderser.android.core.result.Result.Success
  */
 sealed class Result<out R> {
 
+    /**
+     * The operation was successful & (maybe) returned some [data].
+     */
     data class Success<out R>(val data: R) : Result<R>()
+
+    /**
+     * An [error][cause] occurred during the operation.
+     */
     data class Error(val cause: Throwable) : Result<Nothing>()
+
+    /**
+     * The operation is in progress.
+     */
     object Loading : Result<Nothing>()
 }
 

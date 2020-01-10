@@ -28,6 +28,9 @@ import com.insiderser.android.template.R
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
+/**
+ * The main activity with [androidx.fragment.app.FragmentContainerView] as its root.
+ */
 class MainActivity : DaggerAppCompatActivity() {
 
     @Inject

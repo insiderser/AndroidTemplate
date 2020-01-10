@@ -27,9 +27,16 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
+/**
+ * A Dagger module for [MainActivity].
+ */
 @Module
 interface MainActivityModule {
 
+    /**
+     * Tell Dagger that we want [MainActivityViewModel] to be bound into [MainActivity]
+     * using [ViewModelFactory][com.insiderser.android.core.dagger.ViewModelFactory].
+     */
     @Binds
     @IntoMap
     @ViewModelKey(MainActivityViewModel::class)
