@@ -23,9 +23,9 @@ package com.insiderser.android.core.dagger
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
-import timber.log.Timber
 
 /**
  * [ViewModelProvider.Factory] that uses Dagger to create [ViewModel]s.

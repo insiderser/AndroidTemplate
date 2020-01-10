@@ -99,7 +99,13 @@ subprojects {
     spotless {
         kotlin {
             target("**/*.kt")
-            ktlint(Versions.ktlint)
+            ktlint(Versions.ktlint).userData(
+                mapOf(
+                    // TODO: KtLint import ordering conflicts with IntelliJ's.
+                    //   See https://github.com/pinterest/ktlint/issues/527
+                    "disabled_rules" to "import-ordering"
+                )
+            )
             @Suppress("INACCESSIBLE_TYPE")
             licenseHeaderFile(rootProject.file("spotless/copyright.kt"))
         }

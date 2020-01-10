@@ -21,7 +21,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="com.insiderser.android.core">
+    package="com.insiderser.android.core">
 
     <!-- TODO: remove if not checking connectivity -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
