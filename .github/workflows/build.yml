@@ -98,13 +98,6 @@ jobs:
           MAPPING_KEY: ${{ secrets.MAPPING_KEY }}
         run: release/mapping-archivator.sh
 
-      - name: Upload test coverage to Codecov
-        uses: codecov/codecov-action@v1
-        if: always()
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
-
       - name: Upload build outputs
         if: always()
         uses: actions/upload-artifact@v1
@@ -138,6 +131,13 @@ jobs:
         with:
           name: junit-results
           path: junit
+
+      - name: Upload test coverage to Codecov
+        uses: codecov/codecov-action@v1
+        if: always()
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
 
       - name: Create draft release
         if: startsWith(github.ref, 'refs/tags/v')
