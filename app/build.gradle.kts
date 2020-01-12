@@ -21,7 +21,6 @@
  */
 
 import com.insiderser.buildSrc.Libs
-import com.insiderser.buildSrc.Versions
 import com.insiderser.buildSrc.configureAndroidModule
 import com.insiderser.buildSrc.sharedTestImplementation
 
@@ -35,13 +34,17 @@ plugins {
 
 configureAndroidModule()
 
+val releaseKeystore = rootProject.file("release/release.jks")
+val useReleaseKeystore = releaseKeystore.exists()
+
+val ciVersionName = findProperty("app.versionName") as String?
+val ciVersionCode = findProperty("app.versionCode") as String?
+
 android {
     defaultConfig {
         applicationId = "com.insiderser.android.template"
-        versionName = Versions.versionName
-        versionCode = findProperty("app.versionCode").let {
-            if (it is String) it.toInt() else 1
-        }
+        versionName = ciVersionName ?: "1.0.0-dev"
+        versionCode = ciVersionCode?.toInt() ?: 1
 
         // TODO: if you use room
 //        javaCompileOptions {
@@ -62,12 +65,26 @@ android {
             keyAlias = "android"
             keyPassword = "android"
         }
+
+        if (releaseKeystore.exists()) {
+            create("release") {
+                storeFile = releaseKeystore
+                storePassword = findProperty("SIGN_STORE_PASSWORD") as String?
+                keyAlias = findProperty("SIGN_KEY_ALIAS") as String?
+                keyPassword = findProperty("SIGN_KEY_PASSWORD") as String?
+            }
+        }
     }
 
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
+
+            signingConfig = signingConfigs.getByName(
+                if (useReleaseKeystore) "release" else "debug"
+            )
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
