@@ -73,9 +73,9 @@ jobs:
         if: success() && startsWith(github.ref, 'refs/tags/v')
         env:
           RELEASE_KEYSTORE_ENCRYPT_KEY: ${{ secrets.RELEASE_KEYSTORE_ENCRYPT_KEY }}
+          RELEASE_KEYSTORE_IV: ${{ secrets.RELEASE_KEYSTORE_IV }}
         run: |
           export VERSION_NAME=$(echo ${{ github.ref }} | awk -F/ '{ print $NF }')
-          echo Version name is $VERSION_NAME
           ./release/secrets-setup.sh
 
       - name: Build
