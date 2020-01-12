@@ -71,10 +71,7 @@ jobs:
 
       - name: Setup release environment
         if: success() && startsWith(github.ref, 'refs/tags/v')
-        env:
-          RELEASE_KEYSTORE_KEY: ${{ secrets.RELEASE_KEYSTORE_KEY }}
-          RELEASE_KEYSTORE_IV: ${{ secrets.RELEASE_KEYSTORE_IV }}
-        run: ./release/secrets-setup.sh
+        run: ./release/secrets-setup.sh ${{ secrets.RELEASE_KEYSTORE_KEY }}
 
       - name: Build
         env:
@@ -93,9 +90,7 @@ jobs:
 
       - name: Encrypt mapping
         if: always() && startsWith(github.ref, 'refs/tags/v')
-        env:
-          MAPPING_PASSPHRASE: ${{ secrets.MAPPING_PASSPHRASE }}
-        run: release/mapping-archivator.sh
+        run: release/achive-mapping.sh ${{ secrets.MAPPING_PASSPHRASE }}
 
       - name: Upload build outputs
         if: always()
