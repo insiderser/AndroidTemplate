@@ -72,7 +72,7 @@ jobs:
       - name: Setup release environment
         if: success() && startsWith(github.ref, 'refs/tags/v')
         env:
-          RELEASE_KEYSTORE_ENCRYPT_KEY: ${{ secrets.RELEASE_KEYSTORE_ENCRYPT_KEY }}
+          RELEASE_KEYSTORE_KEY: ${{ secrets.RELEASE_KEYSTORE_KEY }}
           RELEASE_KEYSTORE_IV: ${{ secrets.RELEASE_KEYSTORE_IV }}
         run: |
           export VERSION_NAME=$(echo ${{ github.ref }} | awk -F/ '{ print $NF }')
@@ -95,7 +95,7 @@ jobs:
       - name: Encrypt mapping
         if: startsWith(github.ref, 'refs/tags/v')
         env:
-          MAPPING_KEY: ${{ secrets.MAPPING_KEY }}
+          MAPPING_PASSPHRASE: ${{ secrets.MAPPING_PASSPHRASE }}
         run: release/mapping-archivator.sh
 
       - name: Upload build outputs

@@ -4,8 +4,9 @@
 zip -r -j app/build/outputs/mapping/release.zip app/build/outputs/mapping/release/
 
 #Encrypt zipped mapping
-openssl aes-256-cbc -e -md sha256 -in app/build/outputs/mapping/release.zip \
-    -out app/build/outputs/mapping/release.zip.aes -v -iter 1000000 -K "$MAPPING_KEY"
+openssl enc -e -aes-256-cbc -in app/build/outputs/mapping/release.zip \
+    -out app/build/outputs/mapping/release.zip.enc -v -iter 1000000 \
+    -k "$MAPPING_PASSPHRASE"
 
 # Remove mapping to make sure that we don't leak it anywhere
 rm -rf app/build/outputs/mapping/release/ app/build/outputs/mapping/release.zip
