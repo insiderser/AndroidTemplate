@@ -70,7 +70,7 @@ jobs:
           token: ${{secrets.GITHUB_TOKEN}}
 
       - name: Setup release environment
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: success() && startsWith(github.ref, 'refs/tags/v')
         env:
           RELEASE_KEYSTORE_ENCRYPT_KEY: ${{ secrets.RELEASE_KEYSTORE_ENCRYPT_KEY }}
         run: |
