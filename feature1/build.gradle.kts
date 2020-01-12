@@ -22,6 +22,7 @@
 
 import com.insiderser.buildSrc.Libs
 import com.insiderser.buildSrc.configureAndroidModule
+import com.insiderser.buildSrc.sharedTestImplementation
 
 plugins {
     id("com.android.library")
@@ -34,24 +35,46 @@ configureAndroidModule()
 
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
+    implementation(project(":core"))
 
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.Coroutines.core)
     implementation(Libs.Coroutines.android)
-    testImplementation(Libs.Coroutines.test)
 
+    implementation(Libs.AndroidX.appcompat)
     implementation(Libs.AndroidX.coreKtx)
+    implementation(Libs.AndroidX.coordinatorLayout)
+    implementation(Libs.Google.material)
+
     implementation(Libs.AndroidX.Lifecycle.extensions)
+    implementation(Libs.AndroidX.Lifecycle.viewModelKtx)
+
+    implementation(Libs.AndroidX.Fragment.fragment)
+    implementation(Libs.AndroidX.Fragment.fragmentKtx)
+    debugImplementation(Libs.AndroidX.Fragment.testing) {
+        exclude(group = "androidx.test", module = "core")
+    }
 
     implementation(Libs.timber)
 
     implementation(Libs.Dagger.dagger)
     kapt(Libs.Dagger.compiler)
 
-    testImplementation(Libs.Test.junit4)
+    sharedTestImplementation(Libs.Test.junit4)
+    sharedTestImplementation(Libs.Google.truth)
+    sharedTestImplementation(project(":test-shared"))
+    sharedTestImplementation(Libs.Coroutines.test)
     testImplementation(Libs.Test.MockK.mockK)
-    testImplementation(Libs.Google.truth)
-    testImplementation(Libs.Coroutines.test)
-    testImplementation(project(":test-shared"))
-    testImplementation(Libs.Test.AndroidX.arch)
+
+    sharedTestImplementation(Libs.Test.Robolectric.annotations)
+    testImplementation(Libs.Test.Robolectric.robolectric)
+
+    sharedTestImplementation(Libs.Test.AndroidX.core)
+    sharedTestImplementation(Libs.Test.AndroidX.runner)
+    sharedTestImplementation(Libs.Test.AndroidX.rules)
+    sharedTestImplementation(Libs.Test.AndroidX.ext)
+    sharedTestImplementation(Libs.Test.AndroidX.extTruth)
+    sharedTestImplementation(Libs.Test.AndroidX.arch)
+
+    sharedTestImplementation(Libs.Test.AndroidX.Espresso.espressoCore)
 }
