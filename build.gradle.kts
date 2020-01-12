@@ -62,7 +62,6 @@ loadLocalProperties()
 junitJacoco {
     jacocoVersion = Versions.jacoco
     includeNoLocationClasses = false
-    setIgnoreProjects(":test-shared")
     excludes = listOf(
         // From https://github.com/vanniktech/gradle-android-junit-jacoco-plugin/blob/master/src/main/groovy/com/vanniktech/android/junit/jacoco/GenerationPlugin.groovy
         "**/R.*",

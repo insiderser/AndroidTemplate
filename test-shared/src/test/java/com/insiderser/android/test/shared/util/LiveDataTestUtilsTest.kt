@@ -19,26 +19,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.test.shared.util
 
-import com.insiderser.buildSrc.Libs
-import com.insiderser.buildSrc.configureAndroidModule
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
+import com.google.common.truth.Truth.assertThat
+import org.junit.Rule
+import org.junit.Test
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("android.extensions")
-}
+class LiveDataTestUtilsTest {
 
-configureAndroidModule()
+    @get:Rule
+    val executorRule = InstantTaskExecutorRule()
 
-dependencies {
-    implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
+    @Test
+    fun getValue_returnsData() {
+        val instance = SimpleTestClass()
+        val liveData = MutableLiveData(instance)
 
-    implementation(Libs.Kotlin.stdlib)
+        val actual = LiveDataTestUtils.getValue(liveData)
+        assertThat(actual).isSameInstanceAs(instance)
+    }
 
-    implementation(Libs.AndroidX.Lifecycle.extensions)
+    @Test
+    fun getValue_returnsNullOnTimeout() {
+        val liveData = MutableLiveData<Any>()
 
-    testImplementation(Libs.Test.junit4)
-    testImplementation(Libs.Google.truth)
-    testImplementation(Libs.Test.AndroidX.arch)
+        val actual = LiveDataTestUtils.getValue(liveData)
+        assertThat(actual).isNull()
+    }
 }
