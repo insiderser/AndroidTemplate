@@ -15,10 +15,12 @@ coverage:
         if_ci_failed: success
         informational: false # fail checks if not up to standarts
         only_pulls: false
-        paths: # remove all ui files
+        paths: # remove all ui paths
           - '!app/'
           - '!*-ui/'
-      ui: # declare a new status context for ui-facing code
+          - '!**/ui/'
+          - '!**/widget/'
+      ui: # declare a new status context for ui code
         base: auto
         if_not_found: success
         if_ci_failed: success
@@ -26,6 +28,8 @@ coverage:
         only_pulls: false
         paths:
           - '*-ui/'
+          - '**/ui/'
+          - '**/widget/'
           - app/
     patch: false
     changes: true
