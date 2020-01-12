@@ -23,7 +23,6 @@
 import com.insiderser.buildSrc.Libs
 import com.insiderser.buildSrc.Versions
 import com.insiderser.buildSrc.configureAndroidModule
-import com.insiderser.buildSrc.configureInstrumentationTests
 import com.insiderser.buildSrc.sharedTestImplementation
 
 plugins {
@@ -35,7 +34,6 @@ plugins {
 }
 
 configureAndroidModule()
-configureInstrumentationTests()
 
 android {
     defaultConfig {

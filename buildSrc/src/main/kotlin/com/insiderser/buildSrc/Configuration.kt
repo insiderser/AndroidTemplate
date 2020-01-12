@@ -53,7 +53,7 @@ private fun Project.android(action: BaseExtension.() -> Unit) {
 class AndroidExtensionNotFoundError(message: String) : Error(message)
 
 /**
- * Apply default configuration to this module.
+ * Apply default Android configuration to this module.
  *
  * This is a convenience method that allows us to have the configuration in one place.
  *
@@ -70,6 +70,17 @@ fun Project.configureAndroidModule() {
 
             if (this@android is LibraryExtension) {
                 consumerProguardFiles("consumer-rules.pro")
+            }
+
+            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        }
+
+        sourceSets {
+            findByName("test")!!.apply {
+                java.srcDir("src/sharedTest/java")
+            }
+            findByName("androidTest")!!.apply {
+                java.srcDir("src/sharedTest/java")
             }
         }
 
@@ -89,30 +100,6 @@ fun Project.configureAndroidModule() {
 
             textReport = true
             textOutput("stdout")
-        }
-    }
-}
-
-/**
- * Apply default configuration for instrumentation testing to this module.
- *
- * This is a convenience method that allows us to have the configuration in one place.
- *
- * **Note**: Android plugin must be applied before calling this method.
- */
-fun Project.configureInstrumentationTests() {
-    android {
-        defaultConfig {
-            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        }
-
-        sourceSets {
-            findByName("test")!!.apply {
-                java.srcDir("src/sharedTest/java")
-            }
-            findByName("androidTest")!!.apply {
-                java.srcDir("src/sharedTest/java")
-            }
         }
 
         testOptions {
