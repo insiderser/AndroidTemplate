@@ -22,7 +22,6 @@
 
 import com.insiderser.buildSrc.Libs
 import com.insiderser.buildSrc.configureAndroidModule
-import com.insiderser.buildSrc.sharedTestImplementation
 
 plugins {
     id("com.android.library")
@@ -45,19 +44,8 @@ dependencies {
     implementation(Libs.Dagger.dagger)
 
     testImplementation(Libs.Test.junit4)
-    sharedTestImplementation(Libs.Google.truth)
-    sharedTestImplementation(project(":test-shared"))
+    testImplementation(Libs.Google.truth)
+    testImplementation(project(":test-shared"))
     testImplementation(Libs.Test.MockK.mockK)
-
-    testImplementation(Libs.Test.Robolectric.robolectric)
-    sharedTestImplementation(Libs.Test.Robolectric.annotations)
-
-    sharedTestImplementation(Libs.Test.AndroidX.core)
-    sharedTestImplementation(Libs.Test.AndroidX.runner)
-    sharedTestImplementation(Libs.Test.AndroidX.rules)
-    sharedTestImplementation(Libs.Test.AndroidX.ext)
-    sharedTestImplementation(Libs.Test.AndroidX.extTruth)
-    sharedTestImplementation(Libs.Test.AndroidX.arch)
-
-    sharedTestImplementation(Libs.Test.AndroidX.Espresso.espressoCore)
+    testImplementation(Libs.Test.AndroidX.arch)
 }
