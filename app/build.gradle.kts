@@ -43,7 +43,7 @@ val ciVersionCode = findProperty("app.versionCode") as String?
 android {
     defaultConfig {
         applicationId = "com.insiderser.android.template"
-        versionName = ciVersionName?.takeIf { it.isNotBlank() } ?: "1.0.0-dev"
+        versionName = ciVersionName?.takeIf { it.startsWith("v") } ?: "1.0.0-dev"
         versionCode = ciVersionCode?.takeIf { it.isNotBlank() }?.toInt() ?: 1
 
         // TODO: if you use room

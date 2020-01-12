@@ -74,9 +74,7 @@ jobs:
         env:
           RELEASE_KEYSTORE_KEY: ${{ secrets.RELEASE_KEYSTORE_KEY }}
           RELEASE_KEYSTORE_IV: ${{ secrets.RELEASE_KEYSTORE_IV }}
-        run: |
-          export VERSION_NAME=$(echo ${{ github.ref }} | awk -F/ '{ print $NF }')
-          ./release/secrets-setup.sh
+        run: ./release/secrets-setup.sh
 
       - name: Build
         env:
@@ -86,7 +84,8 @@ jobs:
         run: >
           ./gradlew spotlessCheck dependencyUpdates app:lintDebug testDebugUnitTest
           jacocoTestReportDebug app:assembleDebug app:assembleRelease app:bundleRelease
-          -Papp.versionCode=$BUILD_NUMBER -Papp.versionName=$VERSION_NAME --stacktrace
+          -Papp.versionName=$(echo ${{ github.ref }} | awk -F/ '{ print $NF }')
+          -Papp.versionCode=$BUILD_NUMBER --stacktrace
 
       - name: Clean secrets
         if: always()
