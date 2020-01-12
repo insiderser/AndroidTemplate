@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-MAPPING_PASSPHRASE="$1"
+MAPPING_PASSPHRASE="$*"
 
 if [[ -n $MAPPING_PASSPHRASE ]]; then
     # Zip mapping

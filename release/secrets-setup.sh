@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-RELEASE_KEYSTORE_KEY="$1"
+RELEASE_KEYSTORE_KEY="$*"
 
 if [[ -n $RELEASE_KEYSTORE_KEY ]]; then
     openssl enc -aes-256-cbc -md sha256 -d -in release/release.jks.enc \
