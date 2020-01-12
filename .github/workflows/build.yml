@@ -92,7 +92,7 @@ jobs:
         run: ./release/secrets-teardown.sh
 
       - name: Encrypt mapping
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: always() && startsWith(github.ref, 'refs/tags/v')
         env:
           MAPPING_PASSPHRASE: ${{ secrets.MAPPING_PASSPHRASE }}
         run: release/mapping-archivator.sh
@@ -139,7 +139,7 @@ jobs:
           fail_ci_if_error: true
 
       - name: Create draft release
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: success() && startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v1
         with:
           draft: true
