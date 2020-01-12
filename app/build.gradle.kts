@@ -125,6 +125,7 @@ dependencies {
     sharedTestImplementation(Libs.Test.junit4)
     sharedTestImplementation(Libs.Google.truth)
     sharedTestImplementation(project(":test-shared"))
+    sharedTestImplementation(Libs.Coroutines.test)
     testImplementation(Libs.Test.MockK.mockK)
 
     sharedTestImplementation(Libs.Test.Robolectric.annotations)

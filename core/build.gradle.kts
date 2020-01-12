@@ -35,6 +35,9 @@ dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
 
     implementation(Libs.Kotlin.stdlib)
+    implementation(Libs.Coroutines.core)
+    implementation(Libs.Coroutines.android)
+    testImplementation(Libs.Coroutines.test)
 
     implementation(Libs.AndroidX.coreKtx)
     implementation(Libs.AndroidX.Lifecycle.extensions)
@@ -44,8 +47,9 @@ dependencies {
     implementation(Libs.Dagger.dagger)
 
     testImplementation(Libs.Test.junit4)
-    testImplementation(Libs.Google.truth)
-    testImplementation(project(":test-shared"))
     testImplementation(Libs.Test.MockK.mockK)
+    testImplementation(Libs.Google.truth)
+    testImplementation(Libs.Coroutines.test)
+    testImplementation(project(":test-shared"))
     testImplementation(Libs.Test.AndroidX.arch)
 }
