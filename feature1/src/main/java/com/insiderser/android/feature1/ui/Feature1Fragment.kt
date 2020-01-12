@@ -19,6 +19,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.feature1.ui
 
-rootProject.name = "Template"
-include ':app', ':core', ':test-shared', ':data', ':feature1'
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import com.insiderser.android.core.dagger.AppComponentProvider
+import com.insiderser.android.feature1.dagger.DaggerFeature1Component
+import com.insiderser.android.feature1.dagger.Feature1Component
+
+/**
+ * Sample [Fragment] that does nothing, except injecting into itself.
+ */
+class Feature1Fragment : Fragment() {
+
+    private val injector: Feature1Component by lazy {
+        val application = requireActivity().application
+
+        check(application is AppComponentProvider) {
+            "Your application must implement AppComponentProvider"
+        }
+
+        val appComponent = application.appComponent()
+        DaggerFeature1Component.factory().create(appComponent)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        injector.inject(this)
+        super.onCreate(savedInstanceState)
+    }
+}

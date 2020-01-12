@@ -40,11 +40,14 @@ import kotlin.annotation.AnnotationRetention.RUNTIME
  * cannot have a sub component with the same scope.
  *
  * The [ActivityScoped] scoping annotation specifies that the lifespan of a dependency be the same
- * as that of an [android.app.Activity]. This is used to annotate dependencies that behave
+ * as that of an [activity][android.app.Activity]. This is used to annotate dependencies that behave
  * like a singleton within the lifespan of an [android.app.Activity].
  *
  * `@Singleton` is used to specify that the lifespan
  * of a dependency be the same as that of the [android.app.Application].
+ *
+ * @see FragmentScoped
+ * @see FeatureScoped
  */
 @MustBeDocumented
 @Retention(RUNTIME)
@@ -56,8 +59,24 @@ annotation class ActivityScoped
  * a dependency should be the same as that of a [android.app.Fragment].
  *
  * @see ActivityScoped
+ * @see FeatureScoped
  */
 @MustBeDocumented
 @Retention(RUNTIME)
 @Scope
 annotation class FragmentScoped
+
+/**
+ * Tells Dagger that the lifespan of a dependency
+ * should be the same as that of a feature components.
+ *
+ * Use this only when the dependency is bound to that feature and
+ * you have a *multi-module project*, where your feature has it's own module.
+ *
+ * @see ActivityScoped
+ * @see FragmentScoped
+ */
+@MustBeDocumented
+@Retention(RUNTIME)
+@Scope
+annotation class FeatureScoped

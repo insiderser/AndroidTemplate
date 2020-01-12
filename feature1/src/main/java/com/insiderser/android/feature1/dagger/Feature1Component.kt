@@ -19,6 +19,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.feature1.dagger
 
-rootProject.name = "Template"
-include ':app', ':core', ':test-shared', ':data', ':feature1'
+import com.insiderser.android.core.dagger.AppComponent
+import com.insiderser.android.core.dagger.FeatureScoped
+import com.insiderser.android.feature1.ui.Feature1Fragment
+import dagger.Component
+
+/**
+ * Component for feature 1. This is used throughout the module.
+ *
+ * App-level dependencies come from [AppComponent].
+ *
+ * @see com.insiderser.android.feature1.dagger.DaggerFeature1Component.factory
+ */
+@FeatureScoped
+@Component(dependencies = [AppComponent::class])
+interface Feature1Component {
+
+    /**
+     * Inject all dependencies in [Feature1Fragment].
+     */
+    fun inject(feature1Fragment: Feature1Fragment)
+
+    /**
+     * Dagger factory for building [Feature1Component].
+     *
+     * @see com.insiderser.android.feature1.dagger.DaggerFeature1Component.factory
+     */
+    @Component.Factory
+    interface Factory {
+
+        /**
+         * Put [AppComponent] into a dagger graph and create [Feature1Component].
+         */
+        fun create(
+            appComponent: AppComponent
+        ): Feature1Component
+    }
+}
