@@ -36,7 +36,7 @@ inline fun consume(f: () -> Unit): Boolean {
  * By default, Kotlin doesn't care whether we consumed all possible variants
  * in `when` statements as long as the statement doesn't return any value.
  *
- * This extension allows to force Kotlin to check that all variants are matched.
+ * This extension allows us to force Kotlin to check that all variants are matched.
  *
  * Example:
  * ```

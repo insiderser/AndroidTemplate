@@ -57,7 +57,7 @@ class AndroidExtensionNotFoundError(message: String) : Error(message)
  *
  * This is a convenience method that allows us to have the configuration in one place.
  *
- * **Note**: Android plugin must be applied before calling this method.
+ * **Note**: an Android plugin must be applied before calling this method.
  */
 fun Project.configureAndroidModule() {
     android {

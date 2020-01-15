@@ -33,8 +33,7 @@ import javax.inject.Singleton
 /**
  * Main application-level dagger component that holds everything together.
  *
- * Use dagger's generated implementation [DaggerAppComponent.factory] to create
- * [AppComponent].
+ * Use [DaggerAppComponent.factory] to create [AppComponent].
  */
 @Singleton
 @Component(
