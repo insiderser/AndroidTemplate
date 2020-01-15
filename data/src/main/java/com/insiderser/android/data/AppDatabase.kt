@@ -41,7 +41,7 @@ import kotlinx.coroutines.asExecutor
  * maintaining DB connections is expensive and your DBs can't share data between
  * each other. You can go hybrid, merging dependent databases together and
  * keeping separate DBs in isolation. Also, Google says that they are working
- * on making Room merge dependent DBs at compile time, but it's not available yet.
+ * on making Room merge dependent DBs at runtime, but it's not available yet.
  *
  * @see com.insiderser.android.data.dagger.DataModule
  * @see AppDatabase.create
