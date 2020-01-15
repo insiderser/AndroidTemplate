@@ -113,7 +113,7 @@ jobs:
       - name: Copy schemas
         run: |
           mkdir -p schemas
-          find . -type d -regex ".*/schemas/com\.insiderser.*" -exec cp {} schemas/ \;
+          find . -type d -regex ".*/schemas/com\.insiderser.*" -exec cp -r {} schemas/ \;
 
       - name: Upload Room schemas
         uses: actions/upload-artifact@v1
