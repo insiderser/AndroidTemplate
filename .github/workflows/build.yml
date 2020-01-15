@@ -101,7 +101,7 @@ jobs:
         if: always()
         run: |
           mkdir -p junit
-          find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} junit/ \;
+          find . -type f -regex ".*/build/test-results/.*xml" -exec cp -r {} junit/ \;
 
       - name: Upload test results
         if: always()
