@@ -54,6 +54,8 @@ import kotlinx.coroutines.asExecutor
 )
 abstract class AppDatabase : RoomDatabase() {
 
+    abstract val myDao: MyDao
+
     companion object {
 
         internal const val DB_VERSION = 1

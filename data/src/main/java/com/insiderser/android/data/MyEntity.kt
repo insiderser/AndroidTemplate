@@ -25,9 +25,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * TODO: remove.
+ * A sample entity with [id] and [name] as its columns.
  *
- * This has been added only to make the project compile.
+ * @see MyDao
  */
 @Entity
-data class MyEntity(@PrimaryKey val id: Int)
+data class MyEntity(
+    @PrimaryKey(autoGenerate = true) val id: Int,
+    val name: String
+)

@@ -23,6 +23,7 @@ package com.insiderser.android.data.dagger
 
 import android.content.Context
 import com.insiderser.android.data.AppDatabase
+import com.insiderser.android.data.MyDao
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -36,4 +37,8 @@ class DataModule {
     @Singleton
     @Provides
     fun provideAppDatabase(context: Context): AppDatabase = AppDatabase.create(context)
+
+    @Singleton
+    @Provides
+    fun provideMyDao(db: AppDatabase): MyDao = db.myDao
 }
