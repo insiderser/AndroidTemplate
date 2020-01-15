@@ -23,8 +23,6 @@ package com.insiderser.android.data
 
 import android.content.Context
 import androidx.room.Database
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import kotlinx.coroutines.Dispatchers
@@ -49,7 +47,7 @@ import kotlinx.coroutines.asExecutor
  */
 @Database(
     entities = [
-        Entity::class
+        MyEntity::class
     ],
     version = AppDatabase.DB_VERSION
 )
@@ -67,11 +65,3 @@ abstract class AppDatabase : RoomDatabase() {
                 .build()
     }
 }
-
-/**
- * TODO: remove.
- *
- * This has been added only to make project compile.
- */
-@Entity
-data class Entity(@PrimaryKey val id: Int)
