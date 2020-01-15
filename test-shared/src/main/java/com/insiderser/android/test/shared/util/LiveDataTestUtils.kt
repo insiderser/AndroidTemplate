@@ -27,28 +27,21 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
 /**
- * Safely handles observables from LiveData for testing.
+ * Get the value of a [LiveData] safely.
  */
-object LiveDataTestUtils {
-
-    /**
-     * Gets the value of a LiveData safely.
-     */
-    @JvmStatic
-    @Throws(InterruptedException::class)
-    fun <T> getValue(liveData: LiveData<T>): T? {
-        var data: T? = null
-        val latch = CountDownLatch(1)
-        val observer = object : Observer<T> {
-            override fun onChanged(o: T?) {
-                data = o
-                latch.countDown()
-                liveData.removeObserver(this)
-            }
+@Throws(InterruptedException::class)
+fun <T> LiveData<T>.await(): T? {
+    var data: T? = null
+    val latch = CountDownLatch(1)
+    val observer = object : Observer<T> {
+        override fun onChanged(o: T?) {
+            data = o
+            latch.countDown()
+            removeObserver(this)
         }
-        liveData.observeForever(observer)
-        latch.await(2, TimeUnit.SECONDS)
-
-        return data
     }
+    observeForever(observer)
+    latch.await(2, TimeUnit.SECONDS)
+
+    return data
 }

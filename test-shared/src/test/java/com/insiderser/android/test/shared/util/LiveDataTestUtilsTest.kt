@@ -37,7 +37,7 @@ class LiveDataTestUtilsTest {
         val instance = SimpleTestClass()
         val liveData = MutableLiveData(instance)
 
-        val actual = LiveDataTestUtils.getValue(liveData)
+        val actual = liveData.await()
         assertThat(actual).isSameInstanceAs(instance)
     }
 
@@ -45,7 +45,7 @@ class LiveDataTestUtilsTest {
     fun getValue_returnsNullOnTimeout() {
         val liveData = MutableLiveData<Any>()
 
-        val actual = LiveDataTestUtils.getValue(liveData)
+        val actual = liveData.await()
         assertThat(actual).isNull()
     }
 }
