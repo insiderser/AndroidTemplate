@@ -35,6 +35,5 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun provideAppDatabase(context: Context): AppDatabase =
-        AppDatabase.create(context)
+    fun provideAppDatabase(context: Context): AppDatabase = AppDatabase.create(context)
 }

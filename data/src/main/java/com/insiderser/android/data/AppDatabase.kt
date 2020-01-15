@@ -44,6 +44,7 @@ import kotlinx.coroutines.asExecutor
  * on making Room merge dependent DBs at compile time, but it's not available yet.
  *
  * @see com.insiderser.android.data.dagger.DataModule
+ * @see AppDatabase.create
  */
 @Database(
     entities = [
@@ -58,6 +59,15 @@ abstract class AppDatabase : RoomDatabase() {
         internal const val DB_VERSION = 1
         private const val DB_NAME = "app.db"
 
+        /**
+         * Create an [AppDatabase] instance that is connected to the persistent SQLite
+         * database. If the database doesn't exist, it will be created.
+         *
+         * **Note**: you don't need to use this method directly — use dagger for that.
+         *
+         * @param context an application context
+         * @see com.insiderser.android.data.dagger.DataModule
+         */
         @JvmStatic
         fun create(context: Context): AppDatabase =
             Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME)
