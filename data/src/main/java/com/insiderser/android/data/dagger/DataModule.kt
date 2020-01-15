@@ -19,6 +19,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.data.dagger
 
-rootProject.name = "Template"
-include ':app', ':core', ':test-shared', ':data'
+import android.content.Context
+import com.insiderser.android.data.AppDatabase
+import com.insiderser.android.data.MyDao
+import dagger.Module
+import dagger.Provides
+import javax.inject.Singleton
+
+/**
+ * A module that tells dagger how to create anything in this data module.
+ */
+@Module
+class DataModule {
+
+    @Singleton
+    @Provides
+    fun provideAppDatabase(context: Context): AppDatabase = AppDatabase.create(context)
+
+    @Singleton
+    @Provides
+    fun provideMyDao(db: AppDatabase): MyDao = db.myDao
+}

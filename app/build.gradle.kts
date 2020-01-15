@@ -43,17 +43,6 @@ android {
         applicationId = "com.insiderser.android.template"
         versionName = ciVersionName?.takeIf { it.isNotBlank() } ?: Versions.versionName
         versionCode = ciVersionCode?.takeIf { it.isNotBlank() }?.toInt() ?: 1
-
-        // TODO: if you use room
-//        javaCompileOptions {
-//            annotationProcessorOptions {
-//                arguments = mapOf(
-//                        "room.schemaLocation" to "$projectDir/schemas",
-//                        "room.incremental" to "true",
-//                        "room.expandProjection" to "true"
-//                )
-//            }
-//        }
     }
 
     signingConfigs {

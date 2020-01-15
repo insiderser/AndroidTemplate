@@ -19,6 +19,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.data
 
-rootProject.name = "Template"
-include ':app', ':core', ':test-shared', ':data'
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+/**
+ * A sample entity with [id] and [name] as its columns.
+ *
+ * @see MyDao
+ */
+@Entity
+data class MyEntity(
+    @PrimaryKey(autoGenerate = true) val id: Int,
+    val name: String
+)
