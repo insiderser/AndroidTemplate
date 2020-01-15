@@ -69,6 +69,12 @@ jobs:
         with:
           token: ${{secrets.GITHUB_TOKEN}}
 
+      - name: Check code
+        run: ./gradlew dependencyUpdates spotlessCheck app:lintDebug --stacktrace
+
+      - name: Test
+        run: ./gradlew testDebugUnitTest jacocoTestReportDebug --stacktrace
+
       - name: Setup release environment
         if: success() && startsWith(github.ref, 'refs/tags/v')
         run: ./release/secrets-setup.sh ${{ secrets.RELEASE_KEYSTORE_KEY }} ${{ secrets.RELEASE_KEYSTORE_IV }}
@@ -79,10 +85,9 @@ jobs:
           ORG_GRADLE_PROJECT_SIGN_KEY_ALIAS: ${{ secrets.SIGN_KEY_ALIAS }}
           ORG_GRADLE_PROJECT_SIGN_KEY_PASSWORD: ${{ secrets.SIGN_KEY_PASSWORD }}
         run: >
-          ./gradlew spotlessCheck dependencyUpdates app:lintDebug testDebugUnitTest
-          jacocoTestReportDebug app:assembleDebug app:assembleRelease app:bundleRelease
+          ./gradlew app:assembleDebug app:assembleRelease app:bundleRelease
           -Papp.versionName=$(echo ${{ github.ref }} | awk -F/ '{ print $NF }')
-          -Papp.versionCode=$BUILD_NUMBER --stacktrace
+          -Papp.versionCode=$BUILD_NUMBER
 
       - name: Clean secrets
         if: always()
