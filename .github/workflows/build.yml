@@ -5,8 +5,6 @@ on:
     branches:
       - master
       - develop
-    tags:
-      - 'v*'
     paths-ignore:
       - '.idea/**'
   pull_request:
@@ -75,27 +73,8 @@ jobs:
       - name: Test
         run: ./gradlew testDebugUnitTest jacocoTestReportDebug --stacktrace
 
-      - name: Setup release environment
-        if: success() && startsWith(github.ref, 'refs/tags/v')
-        run: ./release/secrets-setup.sh ${{ secrets.RELEASE_KEYSTORE_KEY }} ${{ secrets.RELEASE_KEYSTORE_IV }}
-
       - name: Build
-        env:
-          ORG_GRADLE_PROJECT_SIGN_STORE_PASSWORD: ${{ secrets.SIGN_STORE_PASSWORD }}
-          ORG_GRADLE_PROJECT_SIGN_KEY_ALIAS: ${{ secrets.SIGN_KEY_ALIAS }}
-          ORG_GRADLE_PROJECT_SIGN_KEY_PASSWORD: ${{ secrets.SIGN_KEY_PASSWORD }}
-        run: >
-          ./gradlew app:assembleDebug app:assembleRelease app:bundleRelease
-          -Papp.versionName=$(echo ${{ github.ref }} | awk -F/ '{ print $NF }')
-          -Papp.versionCode=$BUILD_NUMBER
-
-      - name: Clean secrets
-        if: always()
-        run: ./release/secrets-teardown.sh
-
-      - name: Encrypt mapping
-        if: always() && startsWith(github.ref, 'refs/tags/v')
-        run: release/achive-mapping.sh ${{ secrets.MAPPING_KEY }} ${{ secrets.MAPPING_IV }}
+        run: ./gradlew app:assembleDebug app:assembleRelease -Papp.versionCode=$BUILD_NUMBER
 
       - name: Upload build outputs
         if: always()
@@ -136,14 +115,3 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
-
-      - name: Create draft release
-        if: success() && startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v1
-        with:
-          draft: true
-          files: |
-            app/build/outputs/apk/release/app-release.apk
-            app/build/outputs/bundle/release/app-release.aab
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

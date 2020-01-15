@@ -21,6 +21,7 @@
  */
 
 import com.insiderser.buildSrc.Libs
+import com.insiderser.buildSrc.Versions
 import com.insiderser.buildSrc.configureAndroidModule
 import com.insiderser.buildSrc.sharedTestImplementation
 
@@ -34,16 +35,13 @@ plugins {
 
 configureAndroidModule()
 
-val releaseKeystore = rootProject.file("release/release.jks")
-val useReleaseKeystore = releaseKeystore.exists()
-
 val ciVersionName = findProperty("app.versionName") as String?
 val ciVersionCode = findProperty("app.versionCode") as String?
 
 android {
     defaultConfig {
         applicationId = "com.insiderser.android.template"
-        versionName = ciVersionName?.takeIf { it.startsWith("v") } ?: "1.0.0-dev"
+        versionName = ciVersionName?.takeIf { it.isNotBlank() } ?: Versions.versionName
         versionCode = ciVersionCode?.takeIf { it.isNotBlank() }?.toInt() ?: 1
 
         // TODO: if you use room
@@ -60,19 +58,10 @@ android {
 
     signingConfigs {
         getByName("debug") {
-            storeFile = rootProject.file("release/debug.jks")
+            storeFile = rootProject.file("debug.jks")
             storePassword = "android"
             keyAlias = "android"
             keyPassword = "android"
-        }
-
-        if (releaseKeystore.exists()) {
-            create("release") {
-                storeFile = releaseKeystore
-                storePassword = findProperty("SIGN_STORE_PASSWORD") as String?
-                keyAlias = findProperty("SIGN_KEY_ALIAS") as String?
-                keyPassword = findProperty("SIGN_KEY_PASSWORD") as String?
-            }
         }
     }
 
@@ -80,10 +69,7 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
-
-            signingConfig = signingConfigs.getByName(
-                if (useReleaseKeystore) "release" else "debug"
-            )
+            signingConfig = signingConfigs.getByName("debug")
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
