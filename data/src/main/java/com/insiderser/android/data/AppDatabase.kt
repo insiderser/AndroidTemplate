@@ -29,7 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asExecutor
 
 /**
- * A main Room database. Here you can retrieve all app's DAOs.
+ * A main Room database. Here you can retrieve all app DAOs.
  *
  * You don't need to use this class directly. Instead, get one of DAOs using Dagger.
  *
@@ -38,7 +38,7 @@ import kotlinx.coroutines.asExecutor
  * it won't scale very well and has no isolation. On the other hand,
  * with feature-based DBs you create separate DBs for each feature,
  * which scales very well and has perfect isolation, but it costs more because
- * maintaining DB connections is expensive and your DBs can't share data between
+ * maintaining DB connections is expensive, and your DBs can't share data between
  * each other. You can go hybrid, merging dependent databases together and
  * keeping separate DBs in isolation. Also, Google says that they are working
  * on making Room merge dependent DBs at runtime, but it's not available yet.
