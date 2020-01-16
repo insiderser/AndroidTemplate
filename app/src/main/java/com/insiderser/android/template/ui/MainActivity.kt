@@ -22,9 +22,13 @@
 package com.insiderser.android.template.ui
 
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.viewModels
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updateMargins
 import androidx.lifecycle.ViewModelProvider
-import com.insiderser.android.template.R
+import com.insiderser.android.template.databinding.ActivityMainBinding
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -38,8 +42,22 @@ class MainActivity : DaggerAppCompatActivity() {
 
     private val viewModel: MainActivityViewModel by viewModels { viewModelFactory }
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.root.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+
+        binding.contentContainer.setOnApplyWindowInsetsListener { contentContainer, insets ->
+            contentContainer.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                updateMargins(top = insets.systemWindowInsetTop)
+            }
+            insets
+        }
     }
 }
