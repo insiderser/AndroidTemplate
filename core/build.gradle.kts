@@ -41,6 +41,8 @@ dependencies {
     testImplementation(Libs.Coroutines.test)
 
     implementation(Libs.AndroidX.coreKtx)
+    implementation(Libs.AndroidX.appcompat)
+    implementation(Libs.Google.material)
     implementation(Libs.AndroidX.Lifecycle.extensions)
 
     implementation(Libs.timber)
