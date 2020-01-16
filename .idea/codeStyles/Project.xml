@@ -17,6 +17,9 @@
     <Properties>
       <option name="KEEP_BLANK_LINES" value="true" />
     </Properties>
+    <Shell_Script>
+      <option name="SWITCH_CASES_INDENTED" value="true" />
+    </Shell_Script>
     <codeStyleSettings language="Shell Script">
       <indentOptions>
         <option name="INDENT_SIZE" value="4" />
