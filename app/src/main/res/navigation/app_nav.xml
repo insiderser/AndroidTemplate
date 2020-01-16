@@ -20,19 +20,18 @@
   ~ SOFTWARE.
   -->
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/contentContainer"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    android:id="@+id/app_nav"
+    app:startDestination="@id/feature1_dest">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/navigation_view"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:navGraph="@navigation/app_nav" />
+    <fragment
+        android:id="@+id/feature1_dest"
+        android:name="com.insiderser.android.feature1.ui.Feature1Fragment"
+        android:label="@string/feature1_label">
 
-</merge>
+        <argument
+            android:name="SomeArg"
+            app:argType="string" />
+    </fragment>
+</navigation>

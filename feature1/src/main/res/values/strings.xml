@@ -20,19 +20,6 @@
   ~ SOFTWARE.
   -->
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/contentContainer"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/navigation_view"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:navGraph="@navigation/app_nav" />
-
-</merge>
+<resources>
+    <string name="feature1_label">Feature1</string>
+</resources>

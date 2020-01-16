@@ -22,10 +22,14 @@
 package com.insiderser.android.feature1.ui
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.insiderser.android.core.dagger.AppComponentProvider
 import com.insiderser.android.feature1.dagger.DaggerFeature1Component
 import com.insiderser.android.feature1.dagger.Feature1Component
+import com.insiderser.android.feature1.databinding.Feature1FragmentBinding
 
 /**
  * Sample [Fragment] that does nothing, except injecting into itself.
@@ -43,8 +47,20 @@ class Feature1Fragment : Fragment() {
         DaggerFeature1Component.factory().create(appComponent)
     }
 
+    private lateinit var binding: Feature1FragmentBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         injector.inject(this)
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return Feature1FragmentBinding.inflate(inflater, container, false).also {
+            binding = it
+        }.root
     }
 }

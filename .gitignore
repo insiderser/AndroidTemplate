@@ -79,6 +79,7 @@ obj/
 .idea/uiDesigner.xml
 .idea/assetWizardSettings.xml
 .idea/mongoSettings.xml
+.idea/navEditor.xml
 
 # OS-specific files
 .DS_Store

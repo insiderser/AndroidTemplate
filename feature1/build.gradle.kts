@@ -43,7 +43,7 @@ dependencies {
 
     implementation(Libs.AndroidX.appcompat)
     implementation(Libs.AndroidX.coreKtx)
-    implementation(Libs.AndroidX.coordinatorLayout)
+    implementation(Libs.AndroidX.constraintlayout)
     implementation(Libs.Google.material)
 
     implementation(Libs.AndroidX.Lifecycle.extensions)
