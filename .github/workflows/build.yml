@@ -51,8 +51,6 @@ jobs:
         with:
           path: ~/.gradle/wrapper/dists
           key: ${{ runner.os }}-gradledist-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradledist-
 
       - name: Restore robolectric cache
         uses: actions/cache@v1
