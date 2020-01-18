@@ -21,12 +21,11 @@
  */
 package com.insiderser.android.feature1.ui
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.insiderser.android.common.ui.FragmentWithViewBinding
-import com.insiderser.android.core.dagger.AppComponentProvider
+import com.insiderser.android.common.ui.binding.FragmentWithViewBinding
+import com.insiderser.android.core.dagger.AppComponent
 import com.insiderser.android.feature1.dagger.DaggerFeature1Component
 import com.insiderser.android.feature1.dagger.Feature1Component
 import com.insiderser.android.feature1.databinding.Feature1FragmentBinding
@@ -36,24 +35,11 @@ import com.insiderser.android.feature1.databinding.Feature1FragmentBinding
  */
 class Feature1Fragment : FragmentWithViewBinding<Feature1FragmentBinding>() {
 
-    private val injector: Feature1Component by lazy {
-        val application = requireActivity().application
-
-        check(application is AppComponentProvider) {
-            "Your application must implement AppComponentProvider"
-        }
-
-        val appComponent = application.appComponent()
-        DaggerFeature1Component.factory().create(appComponent)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        injector.inject(this)
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): Feature1FragmentBinding = Feature1FragmentBinding.inflate(inflater, container, false)
+
+    override fun provideInjector(appComponent: AppComponent): Feature1Component =
+        DaggerFeature1Component.factory().create(appComponent)
 }

@@ -19,38 +19,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.feature1.dagger
+package com.insiderser.android.common.ui.dagger
 
+import androidx.fragment.app.testing.launchFragment
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.core.dagger.AppComponent
-import com.insiderser.android.core.dagger.FeatureScoped
-import com.insiderser.android.feature1.ui.Feature1Fragment
-import dagger.Component
+import com.insiderser.android.test.shared.util.SimpleTestClass
 import dagger.android.AndroidInjector
+import org.junit.Test
+import org.junit.runner.RunWith
 
-/**
- * Component for feature 1. This is used throughout the module.
- *
- * App-level dependencies come from [AppComponent].
- *
- * @see com.insiderser.android.feature1.dagger.DaggerFeature1Component.factory
- */
-@FeatureScoped
-@Component(dependencies = [AppComponent::class])
-interface Feature1Component : AndroidInjector<Feature1Fragment> {
+@RunWith(AndroidJUnit4::class)
+class DaggerFragmentTest {
 
-    /**
-     * Dagger factory for building [Feature1Component].
-     *
-     * @see com.insiderser.android.feature1.dagger.DaggerFeature1Component.factory
-     */
-    @Component.Factory
-    interface Factory {
+    @Test
+    fun assert_dependenciesInjected() {
+        val dependency = SimpleTestClass()
+        val testComponent = TestComponent(dependency)
+        val fragment = TestFragment(testComponent)
+        @Suppress("UNUSED_VARIABLE") val scenario = launchFragment { fragment }
 
-        /**
-         * Put [AppComponent] into a dagger graph and create [Feature1Component].
-         */
-        fun create(
-            appComponent: AppComponent
-        ): Feature1Component
+        assertThat(fragment.dependency).isSameInstanceAs(dependency)
+    }
+}
+
+class TestFragment(private val testComponent: TestComponent) : DaggerFragment() {
+
+    var dependency: SimpleTestClass? = null
+
+    override fun provideInjector(appComponent: AppComponent): AndroidInjector<out DaggerFragment> =
+        testComponent
+}
+
+class TestComponent(private val dependency: SimpleTestClass) : AndroidInjector<TestFragment> {
+    override fun inject(instance: TestFragment) {
+        instance.dependency = dependency
     }
 }

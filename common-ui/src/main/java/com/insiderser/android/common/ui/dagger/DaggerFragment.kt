@@ -19,38 +19,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.feature1.dagger
+package com.insiderser.android.common.ui.dagger
 
+import android.os.Bundle
+import androidx.fragment.app.Fragment
 import com.insiderser.android.core.dagger.AppComponent
-import com.insiderser.android.core.dagger.FeatureScoped
-import com.insiderser.android.feature1.ui.Feature1Fragment
-import dagger.Component
+import com.insiderser.android.core.dagger.AppComponentProvider
 import dagger.android.AndroidInjector
+import dagger.android.HasAndroidInjector
+import timber.log.Timber
 
 /**
- * Component for feature 1. This is used throughout the module.
- *
- * App-level dependencies come from [AppComponent].
- *
- * @see com.insiderser.android.feature1.dagger.DaggerFeature1Component.factory
+ * A [Fragment] that injects its members in [onCreate].
  */
-@FeatureScoped
-@Component(dependencies = [AppComponent::class])
-interface Feature1Component : AndroidInjector<Feature1Fragment> {
+abstract class DaggerFragment : Fragment(), HasAndroidInjector {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Timber.v("Trying to inject ${javaClass.canonicalName}")
+        androidInjector().inject(this)
+        super.onCreate(savedInstanceState)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    final override fun androidInjector(): AndroidInjector<Any> {
+        val application = requireActivity().application
+
+        check(application is AppComponentProvider) {
+            "Your application must implement AppComponentProvider"
+        }
+
+        val appComponent = application.appComponent()
+        return provideInjector(appComponent) as AndroidInjector<Any>
+    }
 
     /**
-     * Dagger factory for building [Feature1Component].
-     *
-     * @see com.insiderser.android.feature1.dagger.DaggerFeature1Component.factory
+     * Returns dagger component that will be used to inject this class.
      */
-    @Component.Factory
-    interface Factory {
-
-        /**
-         * Put [AppComponent] into a dagger graph and create [Feature1Component].
-         */
-        fun create(
-            appComponent: AppComponent
-        ): Feature1Component
-    }
+    protected abstract fun provideInjector(appComponent: AppComponent): AndroidInjector<out DaggerFragment>
 }
