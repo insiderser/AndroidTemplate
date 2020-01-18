@@ -33,3 +33,5 @@ ignore:
   - '**/*Database.*'
   - '**/*Entity.*'
   - '**/*Dao.*'
+  - '**/*Application.*'
+  - '**/*App.*'
