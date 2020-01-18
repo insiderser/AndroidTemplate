@@ -13,7 +13,7 @@ coverage:
         base: auto
         if_not_found: success
         if_ci_failed: success
-        informational: false # fail checks if not up to standarts
+        informational: false # fail checks if not up to standards
         only_pulls: false
         paths: # remove all ui paths
           - '!app/'
