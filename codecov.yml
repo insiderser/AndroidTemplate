@@ -30,3 +30,6 @@ ignore:
   - '**/widget/**'
   - '**/*Activity.*'
   - '**/*Fragment.*'
+  - '**/*Database.*'
+  - '**/*Entity.*'
+  - '**/*Dao.*'
