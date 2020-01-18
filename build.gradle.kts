@@ -89,7 +89,8 @@ junitJacoco {
         "**/*Module.*", // Dagger modules
         "**/*Component.*", // Dagger components
         "**/*Impl.*", // Room generated code
-        "**/*Application.*" // Testing App classes is a pain in the ass. Is it even possible?
+        "**/*Application.*", // Testing App classes is a pain in the ass. Is it even possible?
+        "**/*FragmentArgs.*" // AndroidX Navigation component generated code
     )
 }
 
