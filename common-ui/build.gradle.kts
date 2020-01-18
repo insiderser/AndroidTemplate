@@ -20,5 +20,41 @@
  * SOFTWARE.
  */
 
-rootProject.name = "Template"
-include ':app', ':core', ':common-ui', ':test-shared', ':data', ':feature1'
+import com.insiderser.buildSrc.Libs
+import com.insiderser.buildSrc.configureAndroidModule
+import com.insiderser.buildSrc.sharedTestImplementation
+
+plugins {
+    id("com.android.library")
+    kotlin("android")
+    kotlin("android.extensions")
+}
+
+configureAndroidModule()
+
+dependencies {
+    implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
+
+    implementation(Libs.Kotlin.stdlib)
+
+    api(Libs.AndroidX.appcompat)
+    api(Libs.AndroidX.Fragment.fragment)
+    api(Libs.AndroidX.Fragment.fragmentKtx)
+
+    debugImplementation(Libs.AndroidX.Fragment.testing) {
+        exclude(group = "androidx.test", module = "core")
+    }
+
+    implementation(Libs.timber)
+
+    sharedTestImplementation(Libs.Test.junit4)
+    sharedTestImplementation(Libs.Google.truth)
+
+    testImplementation(Libs.Test.Robolectric.robolectric)
+
+    sharedTestImplementation(Libs.Test.AndroidX.core)
+    sharedTestImplementation(Libs.Test.AndroidX.runner)
+    sharedTestImplementation(Libs.Test.AndroidX.rules)
+    sharedTestImplementation(Libs.Test.AndroidX.ext)
+    sharedTestImplementation(Libs.Test.AndroidX.extTruth)
+}
