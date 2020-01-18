@@ -33,8 +33,6 @@ plugins {
 configureAndroidModule()
 
 dependencies {
-    implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
-
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.Coroutines.core)
     implementation(Libs.Coroutines.android)

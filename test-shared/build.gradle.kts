@@ -32,8 +32,6 @@ plugins {
 configureAndroidModule()
 
 dependencies {
-    implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
-
     implementation(Libs.Kotlin.stdlib)
 
     implementation(Libs.AndroidX.Lifecycle.extensions)

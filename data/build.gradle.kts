@@ -48,7 +48,6 @@ android {
 }
 
 dependencies {
-    implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
     implementation(project(":core"))
 
     implementation(Libs.Kotlin.stdlib)

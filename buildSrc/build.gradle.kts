@@ -30,7 +30,5 @@ repositories {
 }
 
 dependencies {
-    compileOnly(gradleApi())
-
     implementation("com.android.tools.build:gradle:3.6.0-rc01")
 }
