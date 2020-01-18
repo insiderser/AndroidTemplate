@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.common.ui
+package com.insiderser.android.common.ui.binding
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,6 +28,7 @@ import android.view.ViewGroup
 import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.insiderser.android.common.ui.dagger.DaggerFragment
 import timber.log.Timber
 
 /**
@@ -38,7 +39,7 @@ import timber.log.Timber
  * @param B [ViewBinding] class that is used.
  * @see Fragment
  */
-abstract class FragmentWithViewBinding<B : ViewBinding> : Fragment() {
+abstract class FragmentWithViewBinding<B : ViewBinding> : DaggerFragment() {
 
     /**
      * A current [ViewBinding] that is being displayed to the user.

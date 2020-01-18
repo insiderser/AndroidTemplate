@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.common.ui
+package com.insiderser.android.common.ui.binding
 
 import android.content.Context
 import android.os.Bundle
@@ -31,6 +31,9 @@ import androidx.lifecycle.Lifecycle.State.DESTROYED
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.viewbinding.ViewBinding
 import com.google.common.truth.Truth.assertThat
+import com.insiderser.android.common.ui.dagger.DaggerFragment
+import com.insiderser.android.core.dagger.AppComponent
+import dagger.android.AndroidInjector
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -92,4 +95,7 @@ class FakeFragmentWithViewBinding : FragmentWithViewBinding<FakeViewBinding>() {
         }
         onBindingCreatedCalled = true
     }
+
+    override fun provideInjector(appComponent: AppComponent): AndroidInjector<out DaggerFragment> =
+        AndroidInjector { }
 }
