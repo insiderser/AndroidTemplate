@@ -45,7 +45,6 @@ buildscript {
 plugins {
     id("com.diffplug.gradle.spotless") version "3.27.1"
     id("com.github.ben-manes.versions") version "0.27.0"
-    id("com.vanniktech.android.junit.jacoco") version "0.15.0"
 }
 
 allprojects {
@@ -58,40 +57,6 @@ allprojects {
 }
 
 loadLocalProperties()
-
-junitJacoco {
-    jacocoVersion = Versions.jacoco
-    includeNoLocationClasses = false
-    excludes = listOf(
-        // From https://github.com/vanniktech/gradle-android-junit-jacoco-plugin/blob/master/src/main/groovy/com/vanniktech/android/junit/jacoco/GenerationPlugin.groovy
-        "**/R.*",
-        "**/R$*.*",
-        "**/R2.*", // ButterKnife Gradle Plugin.
-        "**/R2$*.*", // ButterKnife Gradle Plugin.
-        "**/*$$*",
-        "**/*\$ViewInjector*.*", // Older ButterKnife Versions.
-        "**/*\$ViewBinder*.*", // Older ButterKnife Versions.
-        "**/*_ViewBinding*.*", // Newer ButterKnife Versions.
-        "**/BuildConfig.*",
-        "**/Manifest*.*",
-        "**/*\$Lambda$*.*", // Jacoco cannot handle several "$" in class name.
-        "**/*Dagger*.*", // Dagger auto-generated code.
-        "**/*MembersInjector*.*", // Dagger auto-generated code.
-        "**/*_Provide*Factory*.*", // Dagger auto-generated code.
-        "**/*_Factory*.*", // Dagger auto-generated code.
-        "**/*\$JsonObjectMapper.*", // LoganSquare auto-generated code.
-        "**/*\$inlined$*.*", // Kotlin specific, Jacoco cannot handle several "$" in class name.
-        "**/*\$Icepick.*", // Icepick auto-generated code.
-        "**/*\$StateSaver.*", // android-state auto-generated code.
-        "**/*AutoValue_*.*", // AutoValue auto-generated code.
-
-        "**/*Binding.*", // Data/View Binding
-        "**/*Module.*", // Dagger modules
-        "**/*Component.*", // Dagger components
-        "**/*Impl.*", // Room generated code
-        "**/*FragmentArgs.*" // AndroidX Navigation component generated code
-    )
-}
 
 subprojects {
     apply(plugin = "com.diffplug.gradle.spotless")
