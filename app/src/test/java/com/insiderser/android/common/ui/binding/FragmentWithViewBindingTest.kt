@@ -71,10 +71,10 @@ class FragmentWithViewBindingTest {
     }
 
     @Test
+    @Suppress("UNUSED_VARIABLE")
     fun assert_bindingIsCreated() {
-        @Suppress("UNUSED_VARIABLE") val scenario = launchFragment { fragment }
+        val scenario = launchFragment { fragment }
 
-        // Fragment is in the RESUMED state
         assertThat(fragment.binding).isSameInstanceAs(mockBinding)
         assertThat(fragment.requireBinding()).isSameInstanceAs(mockBinding)
         assertThat(fragment.onBindingCreatedCalled).isTrue()
