@@ -23,37 +23,40 @@ package com.insiderser.android.common.ui.dagger
 
 import androidx.fragment.app.testing.launchFragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.core.dagger.AppComponent
-import com.insiderser.android.test.shared.util.SimpleTestClass
 import dagger.android.AndroidInjector
+import io.mockk.MockKAnnotations
+import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.verify
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class DaggerFragmentTest {
 
-    @Test
-    fun assert_dependenciesInjected() {
-        val dependency = SimpleTestClass()
-        val testComponent = TestComponent(dependency)
-        val fragment = TestFragment(testComponent)
-        @Suppress("UNUSED_VARIABLE") val scenario = launchFragment { fragment }
+    @RelaxedMockK
+    private lateinit var mockComponent: AndroidInjector<TestFragment>
 
-        assertThat(fragment.dependency).isSameInstanceAs(dependency)
+    private lateinit var fragment: TestFragment
+
+    @Before
+    fun setUp() {
+        MockKAnnotations.init(this)
+        fragment = TestFragment(mockComponent)
     }
-}
 
-class TestFragment(private val testComponent: TestComponent) : DaggerFragment() {
+    @Test
+    @Suppress("UNUSED_VARIABLE")
+    fun assert_dependenciesInjected() {
+        val scenario = launchFragment { fragment }
+        verify(exactly = 1) { mockComponent.inject(fragment) }
+    }
 
-    var dependency: SimpleTestClass? = null
+    class TestFragment(private val testComponent: AndroidInjector<TestFragment>) :
+        DaggerFragment() {
 
-    override fun provideInjector(appComponent: AppComponent): AndroidInjector<out DaggerFragment> =
-        testComponent
-}
-
-class TestComponent(private val dependency: SimpleTestClass) : AndroidInjector<TestFragment> {
-    override fun inject(instance: TestFragment) {
-        instance.dependency = dependency
+        override fun provideInjector(appComponent: AppComponent): AndroidInjector<out DaggerFragment> =
+            testComponent
     }
 }

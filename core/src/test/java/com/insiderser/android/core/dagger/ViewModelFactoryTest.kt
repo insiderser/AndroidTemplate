@@ -69,18 +69,13 @@ class ViewModelFactoryTest {
         val exception = Assert.assertThrows(RuntimeException::class.java) {
             victim.create(TestViewModelImpl::class.java)
         }
-        assertThat(exception)
-            .hasCauseThat()
-            .isInstanceOf(MyException::class.java)
-        assertThat(exception)
-            .hasCauseThat()
-            .hasMessageThat()
-            .isEqualTo(message)
+        assertThat(exception.cause).isInstanceOf(MyException::class.java)
+        assertThat(exception.cause?.message).isEqualTo(message)
     }
+
+    private open class TestViewModel : ViewModel()
+
+    private class TestViewModelImpl : TestViewModel()
+
+    private class MyException(message: String) : Exception(message)
 }
-
-private open class TestViewModel : ViewModel()
-
-private class TestViewModelImpl : TestViewModel()
-
-private class MyException(message: String) : Exception(message)

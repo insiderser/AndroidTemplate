@@ -21,7 +21,6 @@
  */
 package com.insiderser.android.common.ui.binding
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,17 +33,37 @@ import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.common.ui.dagger.DaggerFragment
 import com.insiderser.android.core.dagger.AppComponent
 import dagger.android.AndroidInjector
+import io.mockk.MockKAnnotations
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.mockk
 import org.junit.Assert.assertThrows
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class FragmentWithViewBindingTest {
 
+    @RelaxedMockK
+    private lateinit var mockView: View
+
+    @MockK
+    private lateinit var mockBinding: ViewBinding
+
+    private lateinit var fragment: FakeFragmentWithViewBinding
+
+    @Before
+    fun setUp() {
+        MockKAnnotations.init(this)
+        every { mockBinding.root } returns mockView
+
+        fragment = FakeFragmentWithViewBinding(mockBinding)
+    }
+
     @Test
     fun assert_initialBinding_isNull() {
-        val fragment = FakeFragmentWithViewBinding()
-
         assertThat(fragment.binding).isNull()
         assertThrows(IllegalStateException::class.java) {
             fragment.requireBinding()
@@ -53,19 +72,17 @@ class FragmentWithViewBindingTest {
 
     @Test
     fun assert_bindingIsCreated() {
-        val fragment = FakeFragmentWithViewBinding()
         @Suppress("UNUSED_VARIABLE") val scenario = launchFragment { fragment }
 
         // Fragment is in the RESUMED state
-        assertThat(fragment.binding).isSameInstanceAs(fragment.testBinding)
-        assertThat(fragment.requireBinding()).isSameInstanceAs(fragment.testBinding)
+        assertThat(fragment.binding).isSameInstanceAs(mockBinding)
+        assertThat(fragment.requireBinding()).isSameInstanceAs(mockBinding)
         assertThat(fragment.onBindingCreatedCalled).isTrue()
-        assertThat(fragment.view).isSameInstanceAs(fragment.testBinding.root)
+        assertThat(fragment.view).isSameInstanceAs(mockView)
     }
 
     @Test
     fun assert_destroyedView_bindingIsNull() {
-        val fragment = FakeFragmentWithViewBinding()
         val scenario = launchFragment { fragment }
 
         scenario.moveToState(DESTROYED)
@@ -74,28 +91,23 @@ class FragmentWithViewBindingTest {
             fragment.requireBinding()
         }
     }
-}
 
-class FakeViewBinding(context: Context) : ViewBinding {
-    private val view = View(context)
-    override fun getRoot(): View = view
-}
+    class FakeFragmentWithViewBinding(private val testBinding: ViewBinding) :
+        FragmentWithViewBinding<ViewBinding>() {
 
-class FakeFragmentWithViewBinding : FragmentWithViewBinding<FakeViewBinding>() {
+        var onBindingCreatedCalled = false
 
-    val testBinding by lazy { FakeViewBinding(requireContext()) }
-    var onBindingCreatedCalled = false
+        override fun onCreateBinding(inflater: LayoutInflater, container: ViewGroup?): ViewBinding =
+            testBinding
 
-    override fun onCreateBinding(inflater: LayoutInflater, container: ViewGroup?): FakeViewBinding =
-        testBinding
-
-    override fun onBindingCreated(binding: FakeViewBinding, savedInstanceState: Bundle?) {
-        if (onBindingCreatedCalled) {
-            throw IllegalStateException("onBindingCreated was called twice")
+        override fun onBindingCreated(binding: ViewBinding, savedInstanceState: Bundle?) {
+            if (onBindingCreatedCalled) {
+                throw IllegalStateException("onBindingCreated was called twice")
+            }
+            onBindingCreatedCalled = true
         }
-        onBindingCreatedCalled = true
-    }
 
-    override fun provideInjector(appComponent: AppComponent): AndroidInjector<out DaggerFragment> =
-        AndroidInjector { }
+        override fun provideInjector(appComponent: AppComponent): AndroidInjector<out DaggerFragment> =
+            mockk(relaxed = true)
+    }
 }

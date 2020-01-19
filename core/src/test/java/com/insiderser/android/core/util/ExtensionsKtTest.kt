@@ -23,6 +23,8 @@ package com.insiderser.android.core.util
 
 import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.test.shared.util.SimpleTestClass
+import io.mockk.mockk
+import io.mockk.verify
 import org.junit.Test
 
 class ExtensionsKtTest {
@@ -31,18 +33,16 @@ class ExtensionsKtTest {
     // so they are marked as not-covered. See https://github.com/jacoco/jacoco/issues/654
     @Test
     fun consume() {
-        var called = false
-        val result = consume {
-            assertThat(called).isFalse() // Check not called multiple times
-            called = true
-        }
-        assertThat(called).isTrue()
+        val function = mockk<() -> Unit>(relaxed = true)
+        val result = consume(function)
+
+        verify(exactly = 1) { function.invoke() }
         assertThat(result).isTrue()
     }
 
     @Test
     fun checkAllMatched() {
         val obj = SimpleTestClass()
-        assertThat(obj.checkAllMatched).isEqualTo(obj)
+        assertThat(obj.checkAllMatched).isSameInstanceAs(obj)
     }
 }

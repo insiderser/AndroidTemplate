@@ -34,8 +34,7 @@ class ResultTest {
         assertThat(result.succeeded).isFalse()
 
         val fallback = SimpleTestClass()
-        assertThat(result.successOr(fallback))
-            .isSameInstanceAs(fallback)
+        assertThat(result.successOr(fallback)).isSameInstanceAs(fallback)
     }
 
     @Test
@@ -47,8 +46,7 @@ class ResultTest {
         assertThat(result.succeeded).isFalse()
 
         val fallback = SimpleTestClass()
-        assertThat(result.successOr(fallback))
-            .isSameInstanceAs(fallback)
+        assertThat(result.successOr(fallback)).isSameInstanceAs(fallback)
     }
 
     @Test
@@ -60,8 +58,7 @@ class ResultTest {
         assertThat(result.succeeded).isTrue()
 
         val fallback = SimpleTestClass()
-        assertThat(result.successOr(fallback))
-            .isSameInstanceAs(data)
+        assertThat(result.successOr(fallback)).isSameInstanceAs(data)
     }
 
     @Test
@@ -72,7 +69,6 @@ class ResultTest {
         assertThat(result.succeeded).isFalse()
 
         val fallback = SimpleTestClass()
-        assertThat(result.successOr(fallback))
-            .isSameInstanceAs(fallback)
+        assertThat(result.successOr(fallback)).isSameInstanceAs(fallback)
     }
 }

@@ -37,6 +37,8 @@ dependencies {
     implementation(Libs.Kotlin.stdlib)
 
     api(Libs.AndroidX.appcompat)
+    api(Libs.AndroidX.Activity.activity)
+    api(Libs.AndroidX.Activity.activityKtx)
     api(Libs.AndroidX.Fragment.fragment)
     api(Libs.AndroidX.Fragment.fragmentKtx)
 

@@ -55,32 +55,8 @@ object Libs {
 
     object Test {
         const val junit4 = "junit:junit:4.13"
-
-        object MockK {
-            private const val version = "1.9.3"
-            const val mockK = "io.mockk:mockk:$version"
-
-            /**
-             * Better not to use mocking in Android Instrumented tests.
-             *
-             * Just extract everything as an interface & create their test implementations,
-             * injecting them using Dagger.
-             *
-             * This is due to the fact that on Android we cannot mock final class.
-             * There are multiple workarounds (kotlin's
-             * [allopen](https://kotlinlang.org/docs/reference/compiler-plugins.html),
-             * [dexopener](https://github.com/tmurakami/dexopener)).
-             *
-             * To **fix objenesis error**, one can override library version to '2.6'.
-             *
-             * @see
-             * - https://github.com/mockk/mockk/issues/281
-             * - https://github.com/mockk/mockk/blob/master/ANDROID.md
-             * - https://github.com/tmurakami/dexopener
-             * - https://github.com/easymock/objenesis/issues/65
-             */
-            const val android = "io.mockk:mockk-android:$version"
-        }
+        const val truth = "com.google.truth:truth:1.0.1"
+        const val mockK = "io.mockk:mockk:1.9.3"
 
         object Robolectric {
             private const val version = "4.3.1"
@@ -121,7 +97,6 @@ object Libs {
     object Google {
         const val material = "com.google.android.material:material:1.1.0-rc01"
         const val gson = "com.google.code.gson:gson:2.8.6"
-        const val truth = "com.google.truth:truth:1.0.1"
     }
 
     object Kotlin {

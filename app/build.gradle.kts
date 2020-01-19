@@ -54,6 +54,15 @@ android {
         }
     }
 
+    sourceSets {
+        findByName("test")!!.apply {
+            java.srcDir("src/sharedTest/java")
+        }
+        findByName("androidTest")!!.apply {
+            java.srcDir("src/sharedTest/java")
+        }
+    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
@@ -105,8 +114,6 @@ dependencies {
     implementation(Libs.AndroidX.Navigation.ui)
     implementation(Libs.AndroidX.Navigation.fragment)
 
-    implementation(Libs.timber)
-
     implementation(Libs.Dagger.dagger)
     implementation(Libs.Dagger.androidSupport)
     kapt(Libs.Dagger.compiler)
@@ -114,11 +121,9 @@ dependencies {
 
     debugImplementation(Libs.leakCanary)
 
-    sharedTestImplementation(Libs.Test.junit4)
-    sharedTestImplementation(Libs.Google.truth)
     sharedTestImplementation(project(":test-shared"))
     sharedTestImplementation(Libs.Coroutines.test)
-    testImplementation(Libs.Test.MockK.mockK)
+    testImplementation(Libs.Test.mockK)
 
     sharedTestImplementation(Libs.Test.Robolectric.annotations)
     testImplementation(Libs.Test.Robolectric.robolectric)
@@ -127,7 +132,6 @@ dependencies {
     sharedTestImplementation(Libs.Test.AndroidX.runner)
     sharedTestImplementation(Libs.Test.AndroidX.rules)
     sharedTestImplementation(Libs.Test.AndroidX.ext)
-    sharedTestImplementation(Libs.Test.AndroidX.extTruth)
     sharedTestImplementation(Libs.Test.AndroidX.arch)
 
     sharedTestImplementation(Libs.Test.AndroidX.Espresso.espressoCore)

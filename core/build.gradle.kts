@@ -43,15 +43,13 @@ dependencies {
     implementation(Libs.Google.material)
     implementation(Libs.AndroidX.Lifecycle.extensions)
 
-    implementation(Libs.timber)
+    api(Libs.timber)
 
     implementation(Libs.Dagger.dagger)
     kapt(Libs.Dagger.compiler)
 
-    testImplementation(Libs.Test.junit4)
-    testImplementation(Libs.Test.MockK.mockK)
-    testImplementation(Libs.Google.truth)
-    testImplementation(Libs.Coroutines.test)
     testImplementation(project(":test-shared"))
+    testImplementation(Libs.Test.mockK)
+    testImplementation(Libs.Coroutines.test)
     testImplementation(Libs.Test.AndroidX.arch)
 }

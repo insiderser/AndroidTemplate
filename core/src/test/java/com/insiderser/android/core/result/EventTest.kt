@@ -33,8 +33,7 @@ class EventTest {
         val victim = Event(someClass)
 
         assertThat(victim.hasBeenHandled).isFalse()
-        assertThat(victim.getContentIfNotHandled())
-            .isSameInstanceAs(someClass)
+        assertThat(victim.getContentIfNotHandled()).isSameInstanceAs(someClass)
 
         assertThat(victim.hasBeenHandled).isTrue()
         assertThat(victim.getContentIfNotHandled()).isNull()

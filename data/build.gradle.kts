@@ -22,7 +22,6 @@
 
 import com.insiderser.buildSrc.Libs
 import com.insiderser.buildSrc.configureAndroidModule
-import com.insiderser.buildSrc.sharedTestImplementation
 
 plugins {
     id("com.android.library")
@@ -55,27 +54,22 @@ dependencies {
     implementation(Libs.AndroidX.coreKtx)
     implementation(Libs.AndroidX.Lifecycle.extensions)
 
-    implementation(Libs.timber)
-
-    implementation(Libs.Dagger.dagger)
-
     implementation(Libs.AndroidX.Room.common)
     implementation(Libs.AndroidX.Room.runtime)
     implementation(Libs.AndroidX.Room.ktx)
     kapt(Libs.AndroidX.Room.compiler)
 
-    testImplementation(Libs.Test.junit4)
-    sharedTestImplementation(Libs.Google.truth)
-    sharedTestImplementation(project(":test-shared"))
-    sharedTestImplementation(Libs.AndroidX.Room.testing)
+    implementation(Libs.Dagger.dagger)
+    kapt(Libs.Dagger.compiler)
+
+    testImplementation(project(":test-shared"))
+    testImplementation(Libs.AndroidX.Room.testing)
 
     testImplementation(Libs.Test.Robolectric.robolectric)
-    sharedTestImplementation(Libs.Test.Robolectric.annotations)
-
-    sharedTestImplementation(Libs.Test.AndroidX.core)
-    sharedTestImplementation(Libs.Test.AndroidX.ext)
-    sharedTestImplementation(Libs.Test.AndroidX.rules)
-    sharedTestImplementation(Libs.Test.AndroidX.runner)
-    sharedTestImplementation(Libs.Test.AndroidX.arch)
-    sharedTestImplementation(Libs.Test.AndroidX.Espresso.espressoCore)
+    testImplementation(Libs.Test.AndroidX.core)
+    testImplementation(Libs.Test.AndroidX.ext)
+    testImplementation(Libs.Test.AndroidX.rules)
+    testImplementation(Libs.Test.AndroidX.runner)
+    testImplementation(Libs.Test.AndroidX.arch)
+    testImplementation(Libs.Test.AndroidX.Espresso.espressoCore)
 }

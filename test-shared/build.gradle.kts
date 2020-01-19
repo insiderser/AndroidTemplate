@@ -36,7 +36,9 @@ dependencies {
 
     implementation(Libs.AndroidX.Lifecycle.extensions)
 
+    api(Libs.Test.junit4)
+    api(Libs.Test.truth)
+
     testImplementation(Libs.Test.junit4)
-    testImplementation(Libs.Google.truth)
     testImplementation(Libs.Test.AndroidX.arch)
 }

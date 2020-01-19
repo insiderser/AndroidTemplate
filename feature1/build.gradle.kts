@@ -51,20 +51,15 @@ dependencies {
 
     implementation(Libs.AndroidX.Fragment.fragment)
     implementation(Libs.AndroidX.Fragment.fragmentKtx)
-    debugImplementation(Libs.AndroidX.Fragment.testing) {
-        exclude(group = "androidx.test", module = "core")
-    }
-
-    implementation(Libs.timber)
 
     implementation(Libs.Dagger.dagger)
     kapt(Libs.Dagger.compiler)
 
-    sharedTestImplementation(Libs.Test.junit4)
-    sharedTestImplementation(Libs.Google.truth)
     sharedTestImplementation(project(":test-shared"))
     sharedTestImplementation(Libs.Coroutines.test)
-    testImplementation(Libs.Test.MockK.mockK)
+    debugImplementation(Libs.AndroidX.Fragment.testing) {
+        exclude(group = "androidx.test", module = "core")
+    }
 
     sharedTestImplementation(Libs.Test.Robolectric.annotations)
     testImplementation(Libs.Test.Robolectric.robolectric)

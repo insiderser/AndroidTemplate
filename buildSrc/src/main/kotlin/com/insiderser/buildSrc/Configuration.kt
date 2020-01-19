@@ -75,15 +75,6 @@ fun Project.configureAndroidModule() {
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
 
-        sourceSets {
-            findByName("test")!!.apply {
-                java.srcDir("src/sharedTest/java")
-            }
-            findByName("androidTest")!!.apply {
-                java.srcDir("src/sharedTest/java")
-            }
-        }
-
         viewBinding {
             isEnabled = true
         }
