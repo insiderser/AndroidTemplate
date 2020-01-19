@@ -67,7 +67,7 @@ jobs:
         run: ./gradlew dependencyUpdates spotlessCheck app:lintDebug --stacktrace
 
       - name: Test
-        run: ./gradlew testDebugUnitTest jacocoTestReportDebug --stacktrace
+        run: ./gradlew testDebugUnitTest --stacktrace
 
       - name: Build
         run: ./gradlew app:assembleDebug app:assembleRelease -Papp.versionCode=$BUILD_NUMBER
