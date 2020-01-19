@@ -23,7 +23,7 @@ package com.insiderser.android.core.dagger
 
 import androidx.lifecycle.ViewModel
 import com.google.common.truth.Truth.assertThat
-import org.junit.Assert
+import org.junit.Assert.assertThrows
 import org.junit.Test
 import javax.inject.Provider
 
@@ -66,7 +66,7 @@ class ViewModelFactoryTest {
         val provider = Provider<ViewModel> { throw MyException(message) }
         val victim = ViewModelFactory(mapOf(TestViewModelImpl::class.java to provider))
 
-        val exception = Assert.assertThrows(RuntimeException::class.java) {
+        val exception = assertThrows(RuntimeException::class.java) {
             victim.create(TestViewModelImpl::class.java)
         }
         assertThat(exception.cause).isInstanceOf(MyException::class.java)
