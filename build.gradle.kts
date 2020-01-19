@@ -21,7 +21,6 @@
  */
 
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import com.insiderser.buildSrc.Libs
 import com.insiderser.buildSrc.Versions
 import com.insiderser.buildSrc.loadLocalProperties
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -80,13 +79,6 @@ subprojects {
             jvmTarget = Versions.jvmTarget
             allWarningsAsErrors = true
             freeCompilerArgs = listOf("-Xjsr305=strict")
-        }
-    }
-
-    configurations.all {
-        resolutionStrategy {
-            // FIXME: JUnit classes are not resolved without this:
-            force(Libs.Test.junit4)
         }
     }
 }
