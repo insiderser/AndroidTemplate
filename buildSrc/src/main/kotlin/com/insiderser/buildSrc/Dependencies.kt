@@ -94,11 +94,6 @@ object Libs {
         }
     }
 
-    object Google {
-        const val material = "com.google.android.material:material:1.1.0-rc01"
-        const val gson = "com.google.code.gson:gson:2.8.6"
-    }
-
     object Kotlin {
         private const val version = "1.3.61"
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
@@ -117,6 +112,7 @@ object Libs {
     object AndroidX {
         const val coreKtx = "androidx.core:core-ktx:1.2.0-rc01"
         const val appcompat = "androidx.appcompat:appcompat:1.1.0"
+        const val material = "com.google.android.material:material:1.1.0-rc02"
         const val browser = "androidx.browser:browser:1.2.0"
         const val collection = "androidx.collection:collection-ktx:1.1.0"
         const val recyclerview = "androidx.recyclerview:recyclerview:1.1.0"

@@ -40,7 +40,7 @@ dependencies {
 
     implementation(Libs.AndroidX.coreKtx)
     implementation(Libs.AndroidX.appcompat)
-    implementation(Libs.Google.material)
+    implementation(Libs.AndroidX.material)
     implementation(Libs.AndroidX.Lifecycle.extensions)
 
     api(Libs.timber)

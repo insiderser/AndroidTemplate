@@ -96,7 +96,7 @@ dependencies {
     implementation(Libs.AndroidX.appcompat)
     implementation(Libs.AndroidX.coreKtx)
     implementation(Libs.AndroidX.coordinatorLayout)
-    implementation(Libs.Google.material)
+    implementation(Libs.AndroidX.material)
 
     implementation(Libs.AndroidX.Lifecycle.extensions)
     implementation(Libs.AndroidX.Lifecycle.viewModelKtx)
