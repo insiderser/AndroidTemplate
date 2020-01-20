@@ -28,4 +28,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.DarkActionBar" parent="Widget.MaterialComponents.ActionBar.Solid">
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
+
 </resources>
