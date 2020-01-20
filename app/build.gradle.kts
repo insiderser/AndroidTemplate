@@ -111,6 +111,8 @@ dependencies {
         exclude(group = "androidx.test", module = "core")
     }
 
+    implementation(Libs.edgeToEdge)
+
     implementation(Libs.AndroidX.Navigation.ui)
     implementation(Libs.AndroidX.Navigation.fragment)
 

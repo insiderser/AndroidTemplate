@@ -52,6 +52,8 @@ object Libs {
 
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.1"
 
+    const val edgeToEdge = "de.halfbit:edge-to-edge:0.8"
+
     object Test {
         const val junit4 = "junit:junit:4.13"
         const val truth = "com.google.truth:truth:1.0.1"
