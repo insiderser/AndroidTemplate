@@ -173,11 +173,6 @@ object Libs {
         }
     }
 
-    object RxJava {
-        const val rxJava = "io.reactivex.rxjava2:rxjava:2.2.16"
-        const val rxAndroid = "io.reactivex.rxjava2:rxandroid:2.1.1"
-    }
-
     object Dagger {
         private const val version = "2.25.4"
         const val dagger = "com.google.dagger:dagger:$version"
@@ -189,8 +184,6 @@ object Libs {
     object Retrofit {
         private const val version = "2.7.1"
         const val retrofit = "com.squareup.retrofit2:retrofit:$version"
-        const val retrofitRxJavaAdapter = "com.squareup.retrofit2:adapter-rxjava2:$version"
-        const val gsonConverter = "com.squareup.retrofit2:converter-gson:$version"
         const val mock = "com.squareup.retrofit2:retrofit-mock:$version"
     }
 
