@@ -25,17 +25,16 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+
+        <item name="appBarLayoutStyle">@style/Widget.Template.AppBar</item>
+        <item name="toolbarStyle">@style/Widget.Template.Toolbar</item>
 
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:navigationBarColor">@color/transparent</item>
         <item name="android:statusBarColor">@color/transparent</item>
-    </style>
-
-    <style name="AppTheme.DarkActionBar" parent="Widget.MaterialComponents.ActionBar.Solid">
-        <item name="android:textColorPrimary">@color/white</item>
     </style>
 
 </resources>

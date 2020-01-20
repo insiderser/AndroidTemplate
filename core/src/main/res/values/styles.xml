@@ -21,11 +21,8 @@
   -->
 
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorSecondary">#03DAC5</color>
 
-    <color name="white">#fff</color>
-    <color name="black">#000</color>
-    <color name="transparent">#0fff</color>
+    <style name="Widget.Template.Toolbar" parent="Widget.MaterialComponents.Toolbar.PrimarySurface" />
+
+    <style name="Widget.Template.AppBar" parent="Widget.MaterialComponents.AppBarLayout.PrimarySurface" />
 </resources>
