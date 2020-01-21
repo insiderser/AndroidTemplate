@@ -31,6 +31,10 @@ import timber.log.Timber
 
 /**
  * A [Fragment] that injects its members in [onCreate].
+ *
+ * This [Fragment] should be used only in feature modules that create their own
+ * feature dagger components. If you want to use app-level component as your feature-level,
+ * consider using [dagger.android.support.DaggerFragment].
  */
 abstract class DaggerFragment : Fragment(), HasAndroidInjector {
 
