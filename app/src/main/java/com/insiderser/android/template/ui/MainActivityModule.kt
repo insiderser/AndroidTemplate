@@ -22,7 +22,7 @@
 package com.insiderser.android.template.ui
 
 import androidx.lifecycle.ViewModel
-import com.insiderser.android.core.dagger.ViewModelKey
+import com.insiderser.android.template.core.dagger.ViewModelKey
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -35,7 +35,7 @@ interface MainActivityModule {
 
     /**
      * Tell Dagger that we want [MainActivityViewModel] to be bound into [MainActivity]
-     * using [ViewModelFactory][com.insiderser.android.core.dagger.ViewModelFactory].
+     * using [ViewModelFactory][com.insiderser.android.template.core.dagger.ViewModelFactory].
      */
     @Binds
     @IntoMap

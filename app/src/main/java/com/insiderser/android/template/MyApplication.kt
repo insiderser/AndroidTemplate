@@ -22,8 +22,8 @@
 package com.insiderser.android.template
 
 import android.os.StrictMode
-import com.insiderser.android.core.dagger.AppComponent
-import com.insiderser.android.core.dagger.AppComponentProvider
+import com.insiderser.android.template.core.dagger.AppComponent
+import com.insiderser.android.template.core.dagger.AppComponentProvider
 import com.insiderser.android.template.dagger.AppComponentImpl
 import com.insiderser.android.template.dagger.DaggerAppComponentImpl
 import dagger.android.DaggerApplication

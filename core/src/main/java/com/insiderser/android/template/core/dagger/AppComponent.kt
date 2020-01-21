@@ -19,29 +19,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.feature1.ui
+package com.insiderser.android.template.core.dagger
 
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.insiderser.android.template.feature1.R
-import org.junit.Test
-import org.junit.runner.RunWith
-
-@RunWith(AndroidJUnit4::class)
-class Feature1FragmentTest {
-
-    @Test
-    fun assert_IAmAFragment_isDisplayed() {
-        @Suppress("UNUSED_VARIABLE")
-        val fragmentScenario = launchFragmentInContainer<Feature1Fragment>()
-
-        onView(withId(R.id.i_am_a_fragment_text_view))
-            .check(matches(isCompletelyDisplayed()))
-            .check(matches(withText("I am a Fragment")))
-    }
-}
+/**
+ * Main component, that feature modules can use to get app-level dependencies.
+ *
+ * Usage:
+ *   - Create feature module with component that depends on [AppComponent],
+ *     e.g. `@Component(dependencies = [AppComponent::class])`.
+ *   - In the component, add factory that binds an instance of [AppComponent] to get
+ *     [AppComponent] into the loop.
+ */
+interface AppComponent

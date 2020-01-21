@@ -21,7 +21,7 @@
  */
 package com.insiderser.android.template.dagger
 
-import com.insiderser.android.core.dagger.ActivityScoped
+import com.insiderser.android.template.core.dagger.ActivityScoped
 import com.insiderser.android.template.ui.MainActivity
 import com.insiderser.android.template.ui.MainActivityModule
 import dagger.Module

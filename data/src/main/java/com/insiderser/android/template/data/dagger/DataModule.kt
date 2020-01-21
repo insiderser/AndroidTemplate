@@ -19,29 +19,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.feature1.ui
+package com.insiderser.android.template.data.dagger
 
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.insiderser.android.template.feature1.R
-import org.junit.Test
-import org.junit.runner.RunWith
+import android.content.Context
+import com.insiderser.android.template.data.AppDatabase
+import com.insiderser.android.template.data.MyDao
+import dagger.Module
+import dagger.Provides
+import javax.inject.Singleton
 
-@RunWith(AndroidJUnit4::class)
-class Feature1FragmentTest {
+/**
+ * A module that tells dagger how to create anything in this data module.
+ */
+@Module
+class DataModule {
 
-    @Test
-    fun assert_IAmAFragment_isDisplayed() {
-        @Suppress("UNUSED_VARIABLE")
-        val fragmentScenario = launchFragmentInContainer<Feature1Fragment>()
+    @Singleton
+    @Provides
+    fun provideAppDatabase(context: Context): AppDatabase = AppDatabase.create(context)
 
-        onView(withId(R.id.i_am_a_fragment_text_view))
-            .check(matches(isCompletelyDisplayed()))
-            .check(matches(withText("I am a Fragment")))
-    }
+    @Singleton
+    @Provides
+    fun provideMyDao(db: AppDatabase): MyDao = db.myDao
 }

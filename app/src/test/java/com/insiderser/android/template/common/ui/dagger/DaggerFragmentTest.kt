@@ -19,29 +19,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.feature1.ui
+package com.insiderser.android.template.common.ui.dagger
 
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.fragment.app.testing.launchFragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.insiderser.android.template.feature1.R
+import com.insiderser.android.template.core.dagger.AppComponent
+import dagger.android.AndroidInjector
+import io.mockk.MockKAnnotations
+import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.verify
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class Feature1FragmentTest {
+class DaggerFragmentTest {
+
+    @RelaxedMockK
+    private lateinit var mockComponent: AndroidInjector<TestFragment>
+
+    private lateinit var fragment: TestFragment
+
+    @Before
+    fun setUp() {
+        MockKAnnotations.init(this)
+        fragment = TestFragment(mockComponent)
+    }
 
     @Test
-    fun assert_IAmAFragment_isDisplayed() {
-        @Suppress("UNUSED_VARIABLE")
-        val fragmentScenario = launchFragmentInContainer<Feature1Fragment>()
+    @Suppress("UNUSED_VARIABLE")
+    fun assert_dependenciesInjected() {
+        val scenario = launchFragment { fragment }
+        verify(exactly = 1) { mockComponent.inject(fragment) }
+    }
 
-        onView(withId(R.id.i_am_a_fragment_text_view))
-            .check(matches(isCompletelyDisplayed()))
-            .check(matches(withText("I am a Fragment")))
+    class TestFragment(private val testComponent: AndroidInjector<TestFragment>) :
+        DaggerFragment() {
+
+        override fun provideInjector(appComponent: AppComponent): AndroidInjector<out DaggerFragment> =
+            testComponent
     }
 }

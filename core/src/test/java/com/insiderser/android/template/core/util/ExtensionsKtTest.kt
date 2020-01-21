@@ -19,29 +19,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.feature1.ui
+package com.insiderser.android.template.core.util
 
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.insiderser.android.template.feature1.R
+import com.google.common.truth.Truth.assertThat
+import com.insiderser.android.test.shared.util.SimpleTestClass
+import io.mockk.mockk
+import io.mockk.verify
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
-class Feature1FragmentTest {
+class ExtensionsKtTest {
+
+    // Jacoco currently doesn't understand Kotlin inline functions,
+    // so they are marked as not-covered. See https://github.com/jacoco/jacoco/issues/654
+    @Test
+    fun consume() {
+        val function = mockk<() -> Unit>(relaxed = true)
+        val result = consume(function)
+
+        verify(exactly = 1) { function.invoke() }
+        assertThat(result).isTrue()
+    }
 
     @Test
-    fun assert_IAmAFragment_isDisplayed() {
-        @Suppress("UNUSED_VARIABLE")
-        val fragmentScenario = launchFragmentInContainer<Feature1Fragment>()
-
-        onView(withId(R.id.i_am_a_fragment_text_view))
-            .check(matches(isCompletelyDisplayed()))
-            .check(matches(withText("I am a Fragment")))
+    fun checkAllMatched() {
+        val obj = SimpleTestClass()
+        assertThat(obj.checkAllMatched).isSameInstanceAs(obj)
     }
 }

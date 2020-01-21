@@ -19,29 +19,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.feature1.ui
+package com.insiderser.android.template.core.result
 
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.insiderser.android.template.feature1.R
+import com.google.common.truth.Truth.assertThat
+import com.insiderser.android.test.shared.util.SimpleTestClass
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
-class Feature1FragmentTest {
+class EventTest {
 
     @Test
-    fun assert_IAmAFragment_isDisplayed() {
-        @Suppress("UNUSED_VARIABLE")
-        val fragmentScenario = launchFragmentInContainer<Feature1Fragment>()
+    fun testEvent() {
+        val someClass = SimpleTestClass()
+        val victim = Event(someClass)
 
-        onView(withId(R.id.i_am_a_fragment_text_view))
-            .check(matches(isCompletelyDisplayed()))
-            .check(matches(withText("I am a Fragment")))
+        assertThat(victim.hasBeenHandled).isFalse()
+        assertThat(victim.getContentIfNotHandled()).isSameInstanceAs(someClass)
+
+        assertThat(victim.hasBeenHandled).isTrue()
+        assertThat(victim.getContentIfNotHandled()).isNull()
+        assertThat(victim.hasBeenHandled).isTrue()
+
+        assertThat(victim.peekContent()).isSameInstanceAs(someClass)
     }
 }

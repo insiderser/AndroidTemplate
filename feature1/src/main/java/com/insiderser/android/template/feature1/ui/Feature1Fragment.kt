@@ -21,27 +21,25 @@
  */
 package com.insiderser.android.template.feature1.ui
 
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.insiderser.android.template.feature1.R
-import org.junit.Test
-import org.junit.runner.RunWith
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.insiderser.android.template.common.ui.binding.FragmentWithViewBinding
+import com.insiderser.android.template.core.dagger.AppComponent
+import com.insiderser.android.template.feature1.dagger.DaggerFeature1Component
+import com.insiderser.android.template.feature1.dagger.Feature1Component
+import com.insiderser.android.template.feature1.databinding.Feature1FragmentBinding
 
-@RunWith(AndroidJUnit4::class)
-class Feature1FragmentTest {
+/**
+ * Sample [Fragment] that does nothing, except injecting into itself.
+ */
+class Feature1Fragment : FragmentWithViewBinding<Feature1FragmentBinding>() {
 
-    @Test
-    fun assert_IAmAFragment_isDisplayed() {
-        @Suppress("UNUSED_VARIABLE")
-        val fragmentScenario = launchFragmentInContainer<Feature1Fragment>()
+    override fun onCreateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): Feature1FragmentBinding = Feature1FragmentBinding.inflate(inflater, container, false)
 
-        onView(withId(R.id.i_am_a_fragment_text_view))
-            .check(matches(isCompletelyDisplayed()))
-            .check(matches(withText("I am a Fragment")))
-    }
+    override fun provideInjector(appComponent: AppComponent): Feature1Component =
+        DaggerFeature1Component.factory().create(appComponent)
 }

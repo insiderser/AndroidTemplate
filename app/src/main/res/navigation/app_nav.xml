@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/feature1_dest"
-        android:name="com.insiderser.android.feature1.ui.Feature1Fragment"
+        android:name="com.insiderser.android.template.feature1.ui.Feature1Fragment"
         android:label="@string/feature1_label">
 
         <argument

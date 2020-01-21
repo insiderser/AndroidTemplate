@@ -21,10 +21,10 @@
  */
 package com.insiderser.android.template.dagger
 
-import com.insiderser.android.core.dagger.AppComponent
-import com.insiderser.android.core.dagger.CoreModule
-import com.insiderser.android.core.dagger.ViewModelModule
 import com.insiderser.android.template.MyApplication
+import com.insiderser.android.template.core.dagger.AppComponent
+import com.insiderser.android.template.core.dagger.CoreModule
+import com.insiderser.android.template.core.dagger.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule

@@ -19,29 +19,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.feature1.ui
+package com.insiderser.android.template.core.util
 
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.insiderser.android.template.feature1.R
-import org.junit.Test
-import org.junit.runner.RunWith
+import android.net.ConnectivityManager
+import javax.inject.Inject
 
-@RunWith(AndroidJUnit4::class)
-class Feature1FragmentTest {
+/**
+ * Utility class that checks whether device is connected to the Internet.
+ */
+class NetworkUtils @Inject constructor(private val cm: ConnectivityManager?) {
 
-    @Test
-    fun assert_IAmAFragment_isDisplayed() {
-        @Suppress("UNUSED_VARIABLE")
-        val fragmentScenario = launchFragmentInContainer<Feature1Fragment>()
-
-        onView(withId(R.id.i_am_a_fragment_text_view))
-            .check(matches(isCompletelyDisplayed()))
-            .check(matches(withText("I am a Fragment")))
+    /**
+     * Checks whether the device is connected or connecting to the internet.
+     */
+    // FIXME: deprecated. Alternative method requires API 23+.
+    @Suppress("DEPRECATION")
+    fun hasNetworkConnection(): Boolean {
+        val activeNetworkInfo = cm?.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting
     }
 }
