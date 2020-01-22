@@ -26,14 +26,11 @@ package com.insiderser.android.template.core.dagger
  *
  * This should be implemented by [application][android.app.Application]s and used by
  * feature modules to get app-level dependencies.
- *
- * @see android.content.Context.getApplicationContext
- * @see AppComponentProvider.appComponent
  */
 interface AppComponentProvider {
 
     /**
-     * Provide [AppComponent] component implementation that can inject dependencies.
+     * [AppComponent] component implementation that can provide dependencies.
      */
-    fun appComponent(): AppComponent
+    val appComponent: AppComponent
 }

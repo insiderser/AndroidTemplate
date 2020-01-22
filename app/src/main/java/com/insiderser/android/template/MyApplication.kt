@@ -26,6 +26,8 @@ import com.insiderser.android.template.core.dagger.AppComponent
 import com.insiderser.android.template.core.dagger.AppComponentProvider
 import com.insiderser.android.template.dagger.AppComponentImpl
 import com.insiderser.android.template.dagger.DaggerAppComponentImpl
+import com.insiderser.android.template.prefs.data.dagger.PreferencesComponent
+import com.insiderser.android.template.prefs.data.dagger.PreferencesComponentProvider
 import dagger.android.DaggerApplication
 import timber.log.Timber
 
@@ -37,7 +39,7 @@ import timber.log.Timber
  */
 class MyApplication : DaggerApplication(), AppComponentProvider {
 
-    private val appComponent: AppComponentImpl by lazy {
+    private val appComponentImpl: AppComponentImpl by lazy {
         DaggerAppComponentImpl.factory().create(this)
     }
 
@@ -70,7 +72,7 @@ class MyApplication : DaggerApplication(), AppComponentProvider {
      * Returns app-level [Dagger component][dagger.Component], that is used
      * throughout the app.
      */
-    override fun applicationInjector() = appComponent
+    override fun applicationInjector() = appComponentImpl
 
-    override fun appComponent(): AppComponent = appComponent
+    override val appComponent: AppComponent get() = appComponentImpl
 }

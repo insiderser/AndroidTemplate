@@ -22,7 +22,7 @@
 package com.insiderser.android.template.core.dagger
 
 /**
- * Main component, that feature modules can use to get app-level dependencies.
+ * Main component that feature modules can use to get app-level dependencies.
  *
  * Usage:
  *   - Create feature module with component that depends on [AppComponent],

@@ -36,7 +36,8 @@ import javax.inject.Singleton
  *
  * Use [DaggerAppComponentImpl.factory] to create [AppComponentImpl].
  *
- * Feature modules should create separate module components that depend on [AppComponent].
+ * Feature modules may create separate module components
+ * that depend on one of [AppComponentImpl]'s parent components.
  */
 @Singleton
 @Component(
@@ -54,11 +55,11 @@ interface AppComponentImpl : AndroidInjector<MyApplication>, AppComponent {
      * Dagger factory for building [AppComponentImpl], binding instances into a dagger graph.
      */
     @Component.Factory
-    interface Factory : AndroidInjector.Factory<MyApplication> {
+    interface Factory {
 
         /**
          * Create [AppComponentImpl] & bind [MyApplication] into a dagger graph.
          */
-        override fun create(@BindsInstance application: MyApplication): AppComponentImpl
+        fun create(@BindsInstance application: MyApplication): AppComponentImpl
     }
 }
