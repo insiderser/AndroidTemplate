@@ -26,8 +26,6 @@ import com.insiderser.android.template.core.dagger.AppComponent
 import com.insiderser.android.template.core.dagger.AppComponentProvider
 import com.insiderser.android.template.dagger.AppComponentImpl
 import com.insiderser.android.template.dagger.DaggerAppComponentImpl
-import com.insiderser.android.template.prefs.data.dagger.PreferencesComponent
-import com.insiderser.android.template.prefs.data.dagger.PreferencesComponentProvider
 import dagger.android.DaggerApplication
 import timber.log.Timber
 
