@@ -105,7 +105,6 @@ object Libs {
     object Coroutines {
         private const val version = "1.3.3"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
-        const val rx2 = "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:$version"
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
         const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
     }
@@ -149,7 +148,6 @@ object Libs {
             private const val version = "2.1.1"
             const val common = "androidx.paging:paging-common-ktx:$version"
             const val runtime = "androidx.paging:paging-runtime-ktx:$version"
-            const val rx2 = "androidx.paging:paging-rxjava2:$version"
         }
 
         object Lifecycle {
