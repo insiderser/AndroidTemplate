@@ -78,15 +78,13 @@ abstract class FragmentWithViewBinding<B : ViewBinding> : DaggerFragment() {
     }
 
     /**
-     * Called immediately after [onBindingCreated],
+     * Called immediately after [onCreateBinding],
      * but before any saved state has been restored in to the view.
-     * This gives subclasses a chance to initialize themselves once
-     * they know their view hierarchy has been completely created. However, the fragment's
-     * view hierarchy is not attached to its parent at this point.
      *
      * @param binding The [ViewBinding] returned by [onCreateBinding].
      * @param savedInstanceState If non-null, this fragment is being re-constructed
      * from a previous saved state as given here.
+     * @see onViewCreated
      */
     @MainThread
     protected open fun onBindingCreated(binding: B, savedInstanceState: Bundle?) {
