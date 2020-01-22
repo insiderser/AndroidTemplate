@@ -22,7 +22,7 @@
 package com.insiderser.android.template.core.util
 
 import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.test.shared.util.SimpleTestClass
+import com.insiderser.android.template.test.shared.util.SimpleTestClass
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test

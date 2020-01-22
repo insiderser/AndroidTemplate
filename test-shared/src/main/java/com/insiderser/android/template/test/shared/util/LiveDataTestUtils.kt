@@ -19,10 +19,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.test.shared.util
+package com.insiderser.android.template.test.shared.util
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 
 /**
- * Simple class that has no fields, parameters or subclasses
- * other than that inherited from [Any] class.
+ * Get the value of a [LiveData] safely.
  */
-class SimpleTestClass
+@Throws(InterruptedException::class)
+fun <T> LiveData<T>.await(): T? {
+    var data: T? = null
+    val latch = CountDownLatch(1)
+    val observer = object : Observer<T> {
+        override fun onChanged(o: T?) {
+            data = o
+            latch.countDown()
+            removeObserver(this)
+        }
+    }
+    observeForever(observer)
+    latch.await(2, TimeUnit.SECONDS)
+
+    return data
+}

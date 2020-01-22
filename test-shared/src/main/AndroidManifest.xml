@@ -20,4 +20,4 @@
   ~ SOFTWARE.
   -->
 
-<manifest package="com.insiderser.android.test.shared" />
+<manifest package="com.insiderser.android.template.test.shared" />

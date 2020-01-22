@@ -24,7 +24,7 @@ package com.insiderser.android.template.core.result
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.test.shared.util.SimpleTestClass
+import com.insiderser.android.template.test.shared.util.SimpleTestClass
 import org.junit.Assert.fail
 import org.junit.Rule
 import org.junit.Test
