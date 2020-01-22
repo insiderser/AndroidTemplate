@@ -64,10 +64,10 @@ jobs:
           token: ${{secrets.GITHUB_TOKEN}}
 
       - name: Check code
-        run: ./gradlew dependencyUpdates spotlessCheck app:lintDebug --stacktrace
+        run: ./gradlew dependencyUpdates spotlessCheck app:lintDebug
 
       - name: Test
-        run: ./gradlew testDebugUnitTest --stacktrace
+        run: ./gradlew testDebugUnitTest
 
       - name: Build
         run: ./gradlew app:assembleDebug app:assembleRelease -Papp.versionCode=$BUILD_NUMBER
