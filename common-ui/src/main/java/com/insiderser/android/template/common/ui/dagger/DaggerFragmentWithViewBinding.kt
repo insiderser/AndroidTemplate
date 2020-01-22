@@ -38,26 +38,20 @@ import timber.log.Timber
  */
 abstract class DaggerFragmentWithViewBinding<B : ViewBinding> : FragmentWithViewBinding<B>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        Timber.v("Trying to inject ${javaClass.canonicalName}")
-        androidInjector().inject(this)
-        super.onCreate(savedInstanceState)
+    override fun onAttach(context: Context) {
+        injectItself()
+        super.onAttach(context)
     }
 
     @Suppress("UNCHECKED_CAST")
-    final override fun androidInjector(): AndroidInjector<Any> {
-        val application = requireActivity().application
-
-        check(application is AppComponentProvider) {
-            "Your application must implement AppComponentProvider"
-        }
-
-        val appComponent = application.appComponent()
-        return provideInjector(appComponent) as AndroidInjector<Any>
+    private fun injectItself() {
+        Timber.v("Trying to inject ${javaClass.canonicalName}")
+        val injector = provideInjector() as AndroidInjector<DaggerFragmentWithViewBinding<B>>
+        injector.inject(this)
     }
 
     /**
      * @return A dagger component that will be used to inject this class.
      */
-    protected abstract fun provideInjector(appComponent: AppComponent): AndroidInjector<out DaggerFragment>
+    protected abstract fun provideInjector(): AndroidInjector<out DaggerFragmentWithViewBinding<B>>
 }

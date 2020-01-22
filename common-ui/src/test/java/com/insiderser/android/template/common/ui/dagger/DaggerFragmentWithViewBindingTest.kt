@@ -21,19 +21,22 @@
  */
 package com.insiderser.android.template.common.ui.dagger
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.fragment.app.testing.launchFragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.insiderser.android.template.core.dagger.AppComponent
+import androidx.viewbinding.ViewBinding
 import dagger.android.AndroidInjector
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class DaggerFragmentTest {
+class DaggerFragmentWithViewBindingTest {
 
     @RelaxedMockK
     private lateinit var mockComponent: AndroidInjector<TestFragment>
@@ -48,15 +51,18 @@ class DaggerFragmentTest {
 
     @Test
     @Suppress("UNUSED_VARIABLE")
-    fun assert_dependenciesInjected() {
+    fun assert_injectWasCalled() {
         val scenario = launchFragment { fragment }
         verify(exactly = 1) { mockComponent.inject(fragment) }
     }
 
     class TestFragment(private val testComponent: AndroidInjector<TestFragment>) :
-        DaggerFragment() {
+        DaggerFragmentWithViewBinding<ViewBinding>() {
 
-        override fun provideInjector(appComponent: AppComponent): AndroidInjector<out DaggerFragment> =
+        override fun provideInjector(): AndroidInjector<TestFragment> =
             testComponent
+
+        override fun onCreateBinding(inflater: LayoutInflater, container: ViewGroup?): ViewBinding =
+            mockk(relaxed = true)
     }
 }
