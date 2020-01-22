@@ -21,22 +21,22 @@
  */
 package com.insiderser.android.template.common.ui.dagger
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import com.insiderser.android.template.core.dagger.AppComponent
-import com.insiderser.android.template.core.dagger.AppComponentProvider
+import android.content.Context
+import androidx.viewbinding.ViewBinding
+import com.insiderser.android.template.common.ui.binding.FragmentWithViewBinding
 import dagger.android.AndroidInjector
-import dagger.android.HasAndroidInjector
 import timber.log.Timber
 
 /**
- * A [Fragment] that injects its members in [onCreate].
+ * A [FragmentWithViewBinding] that injects its members in [onAttach].
  *
- * This [Fragment] should be used only in feature modules that create their own
- * feature dagger components. If you want to use app-level component as your feature-level,
- * consider using [dagger.android.support.DaggerFragment].
+ * Differences from [dagger.android.support.DaggerFragment]:
+ *   - allows subclasses to choose what dagger component should be used to inject this class
+ *   - implements [FragmentWithViewBinding]
+ *
+ * @see FragmentWithViewBinding
  */
-abstract class DaggerFragment : Fragment(), HasAndroidInjector {
+abstract class DaggerFragmentWithViewBinding<B : ViewBinding> : FragmentWithViewBinding<B>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.v("Trying to inject ${javaClass.canonicalName}")
@@ -57,7 +57,7 @@ abstract class DaggerFragment : Fragment(), HasAndroidInjector {
     }
 
     /**
-     * Returns dagger component that will be used to inject this class.
+     * @return A dagger component that will be used to inject this class.
      */
     protected abstract fun provideInjector(appComponent: AppComponent): AndroidInjector<out DaggerFragment>
 }

@@ -28,7 +28,6 @@ import android.view.ViewGroup
 import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.insiderser.android.template.common.ui.dagger.DaggerFragment
 import timber.log.Timber
 
 /**
@@ -39,7 +38,7 @@ import timber.log.Timber
  * @param B [ViewBinding] class that is used.
  * @see Fragment
  */
-abstract class FragmentWithViewBinding<B : ViewBinding> : DaggerFragment() {
+abstract class FragmentWithViewBinding<B : ViewBinding> : Fragment() {
 
     /**
      * A current [ViewBinding] that is being displayed to the user.
