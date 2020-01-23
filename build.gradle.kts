@@ -78,7 +78,7 @@ subprojects {
         kotlinOptions {
             jvmTarget = Versions.jvmTarget
             allWarningsAsErrors = true
-            freeCompilerArgs = listOf("-Xjsr305=strict")
+            freeCompilerArgs = listOf("-Xjsr305=strict", "-Xuse-experimental=kotlin.Experimental")
         }
     }
 }
