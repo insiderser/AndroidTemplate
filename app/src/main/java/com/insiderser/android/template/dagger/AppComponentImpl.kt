@@ -49,7 +49,7 @@ import javax.inject.Singleton
         ActivityBindingModule::class
     ]
 )
-internal interface AppComponentImpl : AndroidInjector<MyApplication>, AppComponent {
+interface AppComponentImpl : AndroidInjector<MyApplication>, AppComponent {
 
     /**
      * Dagger factory for building [AppComponentImpl], binding instances into a dagger graph.
