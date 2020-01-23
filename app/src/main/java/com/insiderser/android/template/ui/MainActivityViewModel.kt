@@ -28,6 +28,6 @@ import javax.inject.Inject
  * [ViewModel] for [MainActivity]. It provides data & reacts to changes, separating
  * all that from the activity.
  */
-class MainActivityViewModel @Inject constructor(
+internal class MainActivityViewModel @Inject constructor(
     // Your repositories or use cases, depending on your architecture pattern
 ) : ViewModel()

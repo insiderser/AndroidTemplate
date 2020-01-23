@@ -31,7 +31,7 @@ import dagger.Provides
  * [Application][android.app.Application].
  */
 @Module
-class ContextModule {
+internal class ContextModule {
 
     @Provides
     fun provideApplicationContext(myApplication: MyApplication): Context {

@@ -36,7 +36,7 @@ import dagger.android.ContributesAndroidInjector
  * specified modules and be aware of a scope annotation [ActivityScoped].
  */
 @Module
-abstract class ActivityBindingModule {
+internal abstract class ActivityBindingModule {
 
     /**
      * Tell dagger to create a SubComponent for [MainActivity].

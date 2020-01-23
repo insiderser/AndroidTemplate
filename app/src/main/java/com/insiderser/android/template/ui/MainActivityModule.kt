@@ -31,7 +31,7 @@ import dagger.multibindings.IntoMap
  * A Dagger module for [MainActivity].
  */
 @Module
-interface MainActivityModule {
+internal interface MainActivityModule {
 
     /**
      * Tell Dagger that we want [MainActivityViewModel] to be bound into [MainActivity]
