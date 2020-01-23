@@ -20,8 +20,8 @@
  * SOFTWARE.
  */
 
-import com.insiderser.buildSrc.Libs
-import com.insiderser.buildSrc.configureAndroidModule
+import com.insiderser.android.template.buildSrc.Libs
+import com.insiderser.android.template.buildSrc.configureAndroidModule
 
 plugins {
     id("com.android.library")
@@ -36,7 +36,6 @@ dependencies {
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.Coroutines.core)
     implementation(Libs.Coroutines.android)
-    testImplementation(Libs.Coroutines.test)
 
     implementation(Libs.AndroidX.coreKtx)
     implementation(Libs.AndroidX.appcompat)

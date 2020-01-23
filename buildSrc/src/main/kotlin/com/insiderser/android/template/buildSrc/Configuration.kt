@@ -19,8 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package com.insiderser.buildSrc
+package com.insiderser.android.template.buildSrc
 
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
@@ -30,7 +29,7 @@ import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.kotlin.dsl.findByType
 
 /**
- * Add dependency to both `testImplementation` and `androidTestImplementation`.
+ * Add the dependency to both `testImplementation` and `androidTestImplementation`.
  */
 fun DependencyHandler.sharedTestImplementation(dependencyNotation: Any) {
     add("testImplementation", dependencyNotation)

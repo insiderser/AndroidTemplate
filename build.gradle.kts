@@ -21,8 +21,8 @@
  */
 
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import com.insiderser.buildSrc.Versions
-import com.insiderser.buildSrc.loadLocalProperties
+import com.insiderser.android.template.buildSrc.Versions
+import com.insiderser.android.template.buildSrc.loadLocalProperties
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 // FIXME: cannot use imports in buildscript: https://github.com/gradle/gradle/issues/9270
@@ -35,9 +35,9 @@ buildscript {
         maven("https://jitpack.io")
     }
     dependencies {
-        classpath(com.insiderser.buildSrc.Libs.androidGradlePlugin)
-        classpath(com.insiderser.buildSrc.Libs.Kotlin.gradlePlugin)
-        classpath(com.insiderser.buildSrc.Libs.AndroidX.Navigation.safeArgs)
+        classpath(com.insiderser.android.template.buildSrc.Libs.androidGradlePlugin)
+        classpath(com.insiderser.android.template.buildSrc.Libs.Kotlin.gradlePlugin)
+        classpath(com.insiderser.android.template.buildSrc.Libs.AndroidX.Navigation.safeArgs)
     }
 }
 

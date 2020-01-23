@@ -20,10 +20,10 @@
  * SOFTWARE.
  */
 
-import com.insiderser.buildSrc.Libs
-import com.insiderser.buildSrc.Versions
-import com.insiderser.buildSrc.configureAndroidModule
-import com.insiderser.buildSrc.sharedTestImplementation
+import com.insiderser.android.template.buildSrc.Libs
+import com.insiderser.android.template.buildSrc.Versions
+import com.insiderser.android.template.buildSrc.configureAndroidModule
+import com.insiderser.android.template.buildSrc.sharedTestImplementation
 
 plugins {
     id("com.android.application")
@@ -124,7 +124,6 @@ dependencies {
     debugImplementation(Libs.leakCanary)
 
     sharedTestImplementation(project(":test-shared"))
-    sharedTestImplementation(Libs.Coroutines.test)
     testImplementation(Libs.Test.mockK)
 
     sharedTestImplementation(Libs.Test.Robolectric.annotations)

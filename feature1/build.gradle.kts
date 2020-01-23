@@ -20,9 +20,8 @@
  * SOFTWARE.
  */
 
-import com.insiderser.buildSrc.Libs
-import com.insiderser.buildSrc.configureAndroidModule
-import com.insiderser.buildSrc.sharedTestImplementation
+import com.insiderser.android.template.buildSrc.Libs
+import com.insiderser.android.template.buildSrc.configureAndroidModule
 
 plugins {
     id("com.android.library")
@@ -55,21 +54,15 @@ dependencies {
     implementation(Libs.Dagger.dagger)
     kapt(Libs.Dagger.compiler)
 
-    sharedTestImplementation(project(":test-shared"))
-    sharedTestImplementation(Libs.Coroutines.test)
+    testImplementation(project(":test-shared"))
     debugImplementation(Libs.AndroidX.Fragment.testing) {
         exclude(group = "androidx.test", module = "core")
     }
 
-    sharedTestImplementation(Libs.Test.Robolectric.annotations)
     testImplementation(Libs.Test.Robolectric.robolectric)
-
-    sharedTestImplementation(Libs.Test.AndroidX.core)
-    sharedTestImplementation(Libs.Test.AndroidX.runner)
-    sharedTestImplementation(Libs.Test.AndroidX.rules)
-    sharedTestImplementation(Libs.Test.AndroidX.ext)
-    sharedTestImplementation(Libs.Test.AndroidX.extTruth)
-    sharedTestImplementation(Libs.Test.AndroidX.arch)
-
-    sharedTestImplementation(Libs.Test.AndroidX.Espresso.espressoCore)
+    testImplementation(Libs.Test.AndroidX.core)
+    testImplementation(Libs.Test.AndroidX.runner)
+    testImplementation(Libs.Test.AndroidX.rules)
+    testImplementation(Libs.Test.AndroidX.ext)
+    testImplementation(Libs.Test.AndroidX.arch)
 }

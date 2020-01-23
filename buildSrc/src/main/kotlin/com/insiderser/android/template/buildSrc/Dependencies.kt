@@ -19,8 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package com.insiderser.buildSrc
+package com.insiderser.android.template.buildSrc
 
 /**
  * A wrapper for high-level version config used in build scripts.
@@ -154,6 +153,8 @@ object Libs {
             private const val version = "2.2.0-rc03"
             const val extensions = "androidx.lifecycle:lifecycle-extensions:$version"
             const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
+            const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
+            const val lifecycleKtx = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
             const val compiler = "androidx.lifecycle:lifecycle-compiler:$version"
         }
 
@@ -167,7 +168,7 @@ object Libs {
         }
 
         object Work {
-            private const val version = "2.3.0-rc01"
+            private const val version = "2.3.0"
             const val runtimeKtx = "androidx.work:work-runtime-ktx:$version"
             const val testing = "androidx.work:work-testing:$version"
         }

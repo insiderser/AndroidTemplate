@@ -19,8 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package com.insiderser.buildSrc
+package com.insiderser.android.template.buildSrc
 
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.extra

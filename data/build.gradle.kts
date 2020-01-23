@@ -20,8 +20,8 @@
  * SOFTWARE.
  */
 
-import com.insiderser.buildSrc.Libs
-import com.insiderser.buildSrc.configureAndroidModule
+import com.insiderser.android.template.buildSrc.Libs
+import com.insiderser.android.template.buildSrc.configureAndroidModule
 
 plugins {
     id("com.android.library")
