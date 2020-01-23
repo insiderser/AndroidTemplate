@@ -30,14 +30,16 @@ import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.spyk
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
+import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.withTimeoutOrNull
+import org.junit.After
 import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Rule
@@ -60,24 +62,37 @@ class UseCaseTest {
 
     private lateinit var useCaseImpl: FakeUseCase
 
+    private lateinit var channel: Channel<Result<FakeResult>>
+
+    private lateinit var dispatcher: CoroutineDispatcher
+
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
+        dispatcher = TestCoroutineDispatcher()
         useCaseImpl = spyk(FakeUseCase())
+        channel = Channel(UNLIMITED)
+    }
+
+    @After
+    fun tearDown() {
+        // If a use case is still running, the test will crash because the use case
+        // will be trying to post the result to a closed channel
+        channel.close()
     }
 
     @Test
-    fun assert_executeWasSuccessful_returnsSuccessfulResult_executeNow() = runBlocking {
-        coEvery { useCaseImpl.execute(fakeParam) } returns fakeResult
-        val result = useCaseImpl.executeNow(fakeParam)
+    fun assert_executeWasSuccessful_returnsSuccessfulResult_executeNow() =
+        runBlockingTest(dispatcher) {
+            val result = useCaseImpl.executeNow(fakeParam)
 
-        assertThat(result).isInstanceOf(Result.Success::class.java)
-        assertThat((result as Result.Success).data).isSameInstanceAs(fakeResult)
-        coVerify(exactly = 1) { useCaseImpl.execute(fakeParam) }
-    }
+            assertThat(result).isInstanceOf(Result.Success::class.java)
+            assertThat((result as Result.Success).data).isSameInstanceAs(fakeResult)
+            coVerify(exactly = 1) { useCaseImpl.execute(fakeParam) }
+        }
 
     @Test
-    fun assert_executeFailed_returnsErrorResult_executeNow() = runBlocking {
+    fun assert_executeFailed_returnsErrorResult_executeNow() = runBlockingTest(dispatcher) {
         coEvery { useCaseImpl.execute(fakeParam) } throws exception
         val result = useCaseImpl.executeNow(fakeParam)
 
@@ -87,10 +102,7 @@ class UseCaseTest {
     }
 
     @Test
-    fun assert_executeWasSuccessful_returnsSuccessfulResult_invoke() = runBlockingTest {
-        coEvery { useCaseImpl.execute(fakeParam) } returns fakeResult
-        val channel = Channel<Result<FakeResult>>(UNLIMITED)
-
+    fun assert_executeWasSuccessful_returnsSuccessfulResult_invoke() = runBlockingTest(dispatcher) {
         useCaseImpl(fakeParam, channel)
         coVerify(exactly = 1) { useCaseImpl.execute(fakeParam) }
 
@@ -100,13 +112,13 @@ class UseCaseTest {
         val secondValue = channel.receive()
         assertThat(secondValue).isInstanceOf(Result.Success::class.java)
         assertThat((secondValue as Result.Success).data).isSameInstanceAs(fakeResult)
+
+        channel.checkNothingToReceive()
     }
 
     @Test
-    fun assert_executeFailed_returnsErrorResult_invoke() = runBlockingTest {
+    fun assert_executeFailed_returnsErrorResult_invoke() = runBlockingTest(dispatcher) {
         coEvery { useCaseImpl.execute(fakeParam) } throws exception
-        val channel = Channel<Result<FakeResult>>(UNLIMITED)
-
         useCaseImpl(fakeParam, channel)
         coVerify(exactly = 1) { useCaseImpl.execute(fakeParam) }
 
@@ -116,31 +128,40 @@ class UseCaseTest {
         val secondValue = channel.receive()
         assertThat(secondValue).isInstanceOf(Result.Error::class.java)
         assertThat((secondValue as Result.Error).cause).isSameInstanceAs(exception)
+
+        channel.checkNothingToReceive()
     }
 
     @Test
-    fun assert_cancelAll_cancelsPendingJobs() = runBlockingTest {
-        coEvery { useCaseImpl.execute(fakeParam) } coAnswers {
-            delay(500L)
-            fakeResult
-        }
-        val channel = Channel<Result<FakeResult>>(UNLIMITED)
-
+    fun assert_cancelAll_cancelsPendingJobs() = runBlockingTest(dispatcher) {
         useCaseImpl(fakeParam, channel)
         useCaseImpl.cancelAll()
 
-        withTimeoutOrNull(1000L) {
-            channel.receive()
+        withTimeoutOrNull(DELAY * 2) {
+            val firstValue = channel.receive()
             // First value could've been offered, but second shouldn't
-            channel.receive()
-            fail("Job wasn't cancelled")
+            val secondValue = channel.receive()
+            fail("Job wasn't cancelled; got $firstValue and $secondValue")
         }
     }
 
-    private class FakeUseCase : UseCase<FakeParameter, FakeResult>(Dispatchers.Default) {
-        public override suspend fun execute(param: FakeParameter): FakeResult = error("stub!")
+    private suspend fun ReceiveChannel<*>.checkNothingToReceive() {
+        withTimeoutOrNull(DELAY * 2) {
+            receive()
+            fail("Too many values received")
+        }
+    }
+
+    private inner class FakeUseCase : UseCase<FakeParameter, FakeResult>(dispatcher) {
+        override suspend fun execute(param: FakeParameter): FakeResult {
+            // Simulate that we do something expensive here...
+            delay(DELAY)
+            return fakeResult
+        }
     }
 
     private class FakeParameter
     private class FakeResult
 }
+
+private const val DELAY = 1000L

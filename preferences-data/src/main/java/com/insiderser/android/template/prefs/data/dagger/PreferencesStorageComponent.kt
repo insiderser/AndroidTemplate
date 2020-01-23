@@ -19,6 +19,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.prefs.data.dagger
 
-rootProject.name = "Template"
-include ':app', ':core', ':common-ui', ':test-shared', ':data', ':feature1', ':model', ':preferences-data'
+import com.insiderser.android.template.prefs.data.AppPreferencesStorage
+
+/**
+ * Component that provides everything needed from `preferences-data` module.
+ */
+interface PreferencesStorageComponent {
+
+    val appPreferencesStorage: AppPreferencesStorage
+}

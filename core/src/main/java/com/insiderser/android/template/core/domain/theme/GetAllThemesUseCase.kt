@@ -19,6 +19,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.core.domain.theme
 
-rootProject.name = "Template"
-include ':app', ':core', ':common-ui', ':test-shared', ':data', ':feature1', ':model', ':preferences-data'
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.Q
+import com.insiderser.android.template.model.Theme
+import javax.inject.Inject
+
+/**
+ * Use case for getting all possible theme settings for the Android version that
+ * we are running on.
+ */
+class GetAllThemesUseCase @Inject constructor() {
+
+    /**
+     * Get all possible theme settings for this Android version.
+     */
+    operator fun invoke() = listOf(
+        Theme.LIGHT, Theme.DARK,
+        if (SDK_INT >= Q) Theme.FOLLOW_SYSTEM else Theme.AUTO_BATTERY
+    )
+}

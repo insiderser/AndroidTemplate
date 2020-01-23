@@ -19,6 +19,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.prefs.data.dagger
 
-rootProject.name = "Template"
-include ':app', ':core', ':common-ui', ':test-shared', ':data', ':feature1', ':model', ':preferences-data'
+/**
+ * Instances of this class can provide app-level [PreferencesStorageComponent].
+ *
+ * This should be implemented by [application][android.app.Application]s and used by
+ * feature modules to get app-level dependencies.
+ */
+interface PreferencesStorageComponentProvider {
+
+    /**
+     * [PreferencesStorageComponent] implementation that can provide dependencies.
+     */
+    val preferencesStorageComponent: PreferencesStorageComponent
+}

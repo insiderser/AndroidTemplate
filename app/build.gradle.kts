@@ -88,6 +88,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":common-ui"))
     implementation(project(":feature1"))
+    implementation(project(":preferences-data"))
 
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.Coroutines.core)

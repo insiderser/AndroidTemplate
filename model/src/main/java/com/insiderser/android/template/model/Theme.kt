@@ -19,6 +19,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.model
 
-rootProject.name = "Template"
-include ':app', ':core', ':common-ui', ':test-shared', ':data', ':feature1', ':model', ':preferences-data'
+/**
+ * Enum that represents the theme of our app.
+ *
+ * @param storageKey Key used to serialize & deserialize the given [Theme].
+ */
+enum class Theme(val storageKey: String) {
+    /** Always use the day (light) theme. */
+    LIGHT(KEY_LIGHT),
+    /** Always use the night (dark) theme. */
+    DARK(KEY_DARK),
+    /**
+     * (default) This setting follows the system’s setting,
+     * which on Android Q and above is a system setting.
+     */
+    FOLLOW_SYSTEM(KEY_SYSTEM),
+    /** Changes to dark when the device has its ‘Battery Saver’ feature enabled, light otherwise. */
+    AUTO_BATTERY(KEY_BATTERY);
+
+    companion object {
+
+        /**
+         * Find [Theme] for the given [Theme.storageKey].
+         * @throws NoSuchElementException if not found.
+         */
+        @JvmStatic
+        fun fromStorageKey(storageKey: String): Theme? =
+            values().first { it.storageKey == storageKey }
+    }
+}
+
+private const val KEY_LIGHT = "light"
+private const val KEY_DARK = "dark"
+private const val KEY_SYSTEM = "system"
+private const val KEY_BATTERY = "battery"
