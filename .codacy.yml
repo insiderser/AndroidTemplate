@@ -6,4 +6,4 @@ exclude_paths:
   - '**/sharedTest/**'
 
   # Codacy will complain about undocumented classes & properties
-  - buildSrc/src/main/kotlin/com/insiderser/buildSrc/Dependencies.kt
+  - buildSrc/src/main/kotlin/com/insiderser/android/template/buildSrc/Dependencies.kt
