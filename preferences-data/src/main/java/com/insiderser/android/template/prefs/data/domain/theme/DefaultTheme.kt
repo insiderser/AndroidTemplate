@@ -19,6 +19,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.prefs.data.domain.theme
 
-rootProject.name = "Template"
-include ':app', ':core', ':common-ui', ':test-shared', ':data', ':feature1', ':model', ':preferences-data'
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.Q
+import com.insiderser.android.template.model.Theme
+
+internal val DEFAULT_THEME = if (SDK_INT >= Q) Theme.FOLLOW_SYSTEM else Theme.AUTO_BATTERY

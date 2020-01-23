@@ -19,6 +19,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import com.insiderser.android.template.buildSrc.Libs
 
-rootProject.name = "Template"
-include ':app', ':core', ':common-ui', ':test-shared', ':data', ':feature1', ':model', ':preferences-data'
+plugins {
+    `java-library`
+    kotlin("jvm")
+}
+
+dependencies {
+    implementation(Libs.Kotlin.stdlib)
+    testImplementation(Libs.Test.junit4)
+    testImplementation(Libs.Test.truth)
+}

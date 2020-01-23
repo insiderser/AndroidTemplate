@@ -20,5 +20,39 @@
  * SOFTWARE.
  */
 
-rootProject.name = "Template"
-include ':app', ':core', ':common-ui', ':test-shared', ':data', ':feature1', ':model', ':preferences-data'
+import com.insiderser.android.template.buildSrc.Libs
+import com.insiderser.android.template.buildSrc.configureAndroidModule
+
+plugins {
+    id("com.android.library")
+    kotlin("android")
+    kotlin("android.extensions")
+    kotlin("kapt")
+}
+
+configureAndroidModule()
+
+dependencies {
+    implementation(project(":core"))
+
+    implementation(Libs.Kotlin.stdlib)
+    implementation(Libs.Coroutines.core)
+
+    implementation(Libs.AndroidX.coreKtx)
+    implementation(Libs.AndroidX.Lifecycle.extensions)
+    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+    implementation(Libs.AndroidX.preference)
+
+    implementation(Libs.Dagger.dagger)
+    kapt(Libs.Dagger.compiler)
+
+    testImplementation(project(":test-shared"))
+    testImplementation(Libs.Test.mockK)
+    testImplementation(Libs.Coroutines.test)
+    testImplementation(Libs.Test.Robolectric.robolectric)
+    testImplementation(Libs.Test.AndroidX.core)
+    testImplementation(Libs.Test.AndroidX.ext)
+    testImplementation(Libs.Test.AndroidX.rules)
+    testImplementation(Libs.Test.AndroidX.runner)
+    testImplementation(Libs.Test.AndroidX.arch)
+}

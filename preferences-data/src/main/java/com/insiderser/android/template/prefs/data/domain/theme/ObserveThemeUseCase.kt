@@ -19,6 +19,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.prefs.data.domain.theme
 
-rootProject.name = "Template"
-include ':app', ':core', ':common-ui', ':test-shared', ':data', ':feature1', ':model', ':preferences-data'
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
+import com.insiderser.android.template.model.Theme
+import com.insiderser.android.template.prefs.data.AppPreferencesStorage
+import javax.inject.Inject
+
+/**
+ * Use case for getting [LiveData] of user-selected theme settings from app preferences.
+ * This [LiveData] will be automatically updated when user changes app theme.
+ */
+class ObserveThemeUseCase @Inject constructor(
+    private val preferencesStorage: AppPreferencesStorage
+) {
+
+    /**
+     * Execute this use case.
+     * @return [LiveData] where updates will be posted.
+     */
+    operator fun invoke(): LiveData<Theme> =
+        preferencesStorage.selectedThemeObservable.map { storageKey: String? ->
+            storageKey?.let { Theme.fromStorageKey(storageKey) }
+                ?: DEFAULT_THEME
+        }
+}

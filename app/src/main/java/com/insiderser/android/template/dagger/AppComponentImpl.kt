@@ -25,6 +25,8 @@ import com.insiderser.android.template.MyApplication
 import com.insiderser.android.template.core.dagger.AppComponent
 import com.insiderser.android.template.core.dagger.CoreModule
 import com.insiderser.android.template.core.dagger.ViewModelModule
+import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponent
+import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -46,10 +48,12 @@ import javax.inject.Singleton
         CoreModule::class,
         ContextModule::class,
         ViewModelModule::class,
-        ActivityBindingModule::class
+        ActivityBindingModule::class,
+        PreferencesStorageModule::class
     ]
 )
-interface AppComponentImpl : AndroidInjector<MyApplication>, AppComponent {
+interface AppComponentImpl : AndroidInjector<MyApplication>, AppComponent,
+    PreferencesStorageComponent {
 
     /**
      * Dagger factory for building [AppComponentImpl], binding instances into a dagger graph.

@@ -19,6 +19,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.model
 
-rootProject.name = "Template"
-include ':app', ':core', ':common-ui', ':test-shared', ':data', ':feature1', ':model', ':preferences-data'
+import com.google.common.truth.Truth.assertThat
+import org.junit.Assert.assertThrows
+import org.junit.Test
+
+class ThemeTest {
+
+    @Test
+    fun assert_storageKey_isCorrect() {
+        checkStorageKey(Theme.FOLLOW_SYSTEM, "system")
+        checkStorageKey(Theme.AUTO_BATTERY, "battery")
+        checkStorageKey(Theme.DARK, "dark")
+        checkStorageKey(Theme.LIGHT, "light")
+    }
+
+    private fun checkStorageKey(theme: Theme, storageKey: String) {
+        assertThat(theme.storageKey).isEqualTo(storageKey)
+    }
+
+    @Test
+    fun assert_fromStorageKey_findsTheme() {
+        for (theme in Theme.values()) {
+            assertThat(Theme.fromStorageKey(theme.storageKey)).isSameInstanceAs(theme)
+        }
+
+        assertThrows(NoSuchElementException::class.java) {
+            Theme.fromStorageKey("")
+        }
+    }
+}

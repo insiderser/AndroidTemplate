@@ -21,6 +21,9 @@
  */
 package com.insiderser.android.template.core.util
 
+import androidx.appcompat.app.AppCompatDelegate
+import com.insiderser.android.template.model.Theme
+
 /**
  * Convenience method for callbacks/listeners whose return value indicates
  * whether the event was consumed or not.
@@ -49,3 +52,13 @@ inline fun consume(f: () -> Unit): Boolean {
  * ```
  */
 fun <T> T.checkAllMatched(): T = this
+
+/**
+ * Get [AppCompatDelegate] night mode for the given [Theme].
+ */
+fun Theme.toAppCompatNightMode(): Int = when (this) {
+    Theme.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+    Theme.DARK -> AppCompatDelegate.MODE_NIGHT_YES
+    Theme.FOLLOW_SYSTEM -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+    Theme.AUTO_BATTERY -> AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+}

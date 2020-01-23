@@ -22,7 +22,9 @@
 package com.insiderser.android.template.core.domain
 
 import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.PROTECTED
 import com.insiderser.android.template.core.result.Result
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -76,6 +78,9 @@ abstract class UseCase<in P, R>(
                 val result = execute(param)
                 Timber.v("Execution was successful, returned $result")
                 channel.offer(Result.Success(result))
+            } catch (e: CancellationException) {
+                Timber.d("Job was cancelled")
+                throw e
             } catch (e: Exception) {
                 Timber.i(e, "Use case execution failed")
                 channel.offer(Result.Error(e))
@@ -96,10 +101,17 @@ abstract class UseCase<in P, R>(
     }
 
     /**
-     * Executes core logic. Will be called on a worker thread.
+     * Executes core logic.
+     *
+     * Will be called with a [coroutineDispatcher] context passed as a parameter
+     * to [UseCase] constructor. Can be canceled at any moment.
+     *
+     * This method is fail-safe, meaning that failure here won't cause
+     * parent coroutine to crash.
      */
     @Throws(Exception::class)
-    protected abstract suspend fun execute(param: P): R
+    @VisibleForTesting(otherwise = PROTECTED)
+    abstract suspend fun execute(param: P): R
 
     /**
      * Cancel all ongoing jobs of this use case. You can still use this use case to

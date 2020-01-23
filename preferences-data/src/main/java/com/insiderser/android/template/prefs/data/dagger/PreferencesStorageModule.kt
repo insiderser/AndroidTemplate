@@ -19,6 +19,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.prefs.data.dagger
 
-rootProject.name = "Template"
-include ':app', ':core', ':common-ui', ':test-shared', ':data', ':feature1', ':model', ':preferences-data'
+import com.insiderser.android.template.prefs.data.AppPreferencesStorage
+import com.insiderser.android.template.prefs.data.AppPreferencesStorageImpl
+import dagger.Binds
+import dagger.Module
+import javax.inject.Singleton
+
+/**
+ * Dagger module that binds [AppPreferencesStorage] into a dagger graph.
+ */
+@Module
+interface PreferencesStorageModule {
+
+    @Binds
+    @Singleton
+    fun bindAppSharedPreferences(impl: AppPreferencesStorageImpl): AppPreferencesStorage
+}

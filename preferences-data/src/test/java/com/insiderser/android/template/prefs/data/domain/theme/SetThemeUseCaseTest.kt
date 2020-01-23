@@ -19,6 +19,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.prefs.data.domain.theme
 
-rootProject.name = "Template"
-include ':app', ':core', ':common-ui', ':test-shared', ':data', ':feature1', ':model', ':preferences-data'
+import com.insiderser.android.template.model.Theme
+import com.insiderser.android.template.prefs.data.AppPreferencesStorage
+import io.mockk.MockKAnnotations
+import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.verify
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Before
+import org.junit.Test
+
+@UseExperimental(ExperimentalCoroutinesApi::class)
+class SetThemeUseCaseTest {
+
+    @RelaxedMockK
+    private lateinit var preferencesStorage: AppPreferencesStorage
+
+    private lateinit var useCase: SetThemeUseCase
+
+    @Before
+    fun setUp() {
+        MockKAnnotations.init(this)
+        useCase = SetThemeUseCase(preferencesStorage)
+    }
+
+    @Test
+    fun assert_execute_setsSelectedTheme() = runBlockingTest {
+        Theme.values().forEach { theme ->
+            useCase.execute(theme)
+            verify(exactly = 1) { preferencesStorage.selectedTheme = theme.storageKey }
+        }
+    }
+}
