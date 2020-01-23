@@ -23,6 +23,7 @@ package com.insiderser.android.template.buildSrc
 
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.extra
+import java.io.File
 import java.util.Properties
 
 /**
@@ -30,11 +31,10 @@ import java.util.Properties
  *
  * Loaded properties can be retrieved from [extra] or using [Project.findProperty].
  */
-fun Project.loadLocalProperties() {
-    val localPropertiesFile = file("local.properties")
-    if (localPropertiesFile.exists()) {
+fun Project.loadProperties(file: File) {
+    if (file.exists()) {
         val localProperties = Properties()
-        localPropertiesFile.inputStream().use { inputStream ->
+        file.inputStream().use { inputStream ->
             localProperties.load(inputStream)
         }
 
