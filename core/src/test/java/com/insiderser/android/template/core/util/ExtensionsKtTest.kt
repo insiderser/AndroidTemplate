@@ -29,10 +29,8 @@ import org.junit.Test
 
 class ExtensionsKtTest {
 
-    // Jacoco currently doesn't understand Kotlin inline functions,
-    // so they are marked as not-covered. See https://github.com/jacoco/jacoco/issues/654
     @Test
-    fun consume() {
+    fun assert_consume_executesFunctionAndReturnsTrue() {
         val function = mockk<() -> Unit>(relaxed = true)
         val result = consume(function)
 
@@ -41,8 +39,8 @@ class ExtensionsKtTest {
     }
 
     @Test
-    fun checkAllMatched() {
+    fun assert_checkAllMatched_returnsSameObject() {
         val obj = SimpleTestClass()
-        assertThat(obj.checkAllMatched).isSameInstanceAs(obj)
+        assertThat(obj.checkAllMatched()).isSameInstanceAs(obj)
     }
 }

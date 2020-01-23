@@ -24,6 +24,8 @@ package com.insiderser.android.template.core.util
 /**
  * Convenience method for callbacks/listeners whose return value indicates
  * whether the event was consumed or not.
+ * @param f Function to execute (will be called only once).
+ * @return Always `true`.
  */
 inline fun consume(f: () -> Unit): Boolean {
     f()
@@ -43,8 +45,7 @@ inline fun consume(f: () -> Unit): Boolean {
  * when(sealedObject) {
  *     is OneType -> ...
  *     is AnotherType -> ...
- * }.checkAllMatched
+ * }.checkAllMatched()
  * ```
  */
-val <T> T.checkAllMatched: T
-    get() = this
+fun <T> T.checkAllMatched(): T = this
