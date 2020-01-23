@@ -123,24 +123,24 @@ object Libs {
         const val preference = "androidx.preference:preference:1.1.0"
         const val security = "androidx.security:security-crypto:1.0.0-alpha02"
 
-        object Navigation {
-            private const val version = "2.2.0-rc04"
-            const val ui = "androidx.navigation:navigation-ui-ktx:$version"
-            const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
-            const val safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:$version"
-        }
-
         object Activity {
-            private const val version = "1.1.0-rc03"
+            private const val version = "1.1.0"
             const val activity = "androidx.activity:activity:$version"
             const val activityKtx = "androidx.activity:activity-ktx:$version"
         }
 
         object Fragment {
-            private const val version = "1.2.0-rc05"
+            private const val version = "1.2.0"
             const val fragment = "androidx.fragment:fragment:$version"
             const val fragmentKtx = "androidx.fragment:fragment-ktx:$version"
             const val testing = "androidx.fragment:fragment-testing:$version"
+        }
+
+        object Navigation {
+            private const val version = "2.2.0"
+            const val ui = "androidx.navigation:navigation-ui-ktx:$version"
+            const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
+            const val safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:$version"
         }
 
         object Paging {
@@ -150,7 +150,7 @@ object Libs {
         }
 
         object Lifecycle {
-            private const val version = "2.2.0-rc03"
+            private const val version = "2.2.0"
             const val extensions = "androidx.lifecycle:lifecycle-extensions:$version"
             const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
             const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
