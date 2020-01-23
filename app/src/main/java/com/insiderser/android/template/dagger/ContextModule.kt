@@ -25,14 +25,15 @@ import android.content.Context
 import com.insiderser.android.template.MyApplication
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 /**
- * Tells dagger that [MyApplication] is our main [Context] and
- * [Application][android.app.Application].
+ * Tells dagger that [MyApplication] is our main [Context].
  */
 @Module
 internal class ContextModule {
 
+    @Singleton
     @Provides
     fun provideApplicationContext(myApplication: MyApplication): Context {
         return myApplication.applicationContext
