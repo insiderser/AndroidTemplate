@@ -47,7 +47,9 @@ sealed class Result<out R> {
     /**
      * The operation is in progress.
      */
-    object Loading : Result<Nothing>()
+    object Loading : Result<Nothing>() {
+        override fun toString(): String = javaClass.canonicalName!!
+    }
 }
 
 /**
