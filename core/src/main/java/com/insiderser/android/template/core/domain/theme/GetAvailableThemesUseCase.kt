@@ -19,33 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.dagger
+package com.insiderser.android.template.core.domain.theme
 
-import com.insiderser.android.template.core.dagger.ActivityScope
-import com.insiderser.android.template.ui.MainActivity
-import com.insiderser.android.template.ui.MainActivityModule
-import dagger.Module
-import dagger.android.ContributesAndroidInjector
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.Q
+import com.insiderser.android.template.model.Theme
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import javax.inject.Inject
 
 /**
- * We want Dagger.Android to create a SubComponent which has a parent Component of whichever module
- * ActivityBindingModule is on, in our case that will be [AppComponent]. You never
- * need to tell [AppComponent] that it is going to have all these subcomponents
- * nor do you need to tell these subcomponents that [AppComponent] exists.
- * We are also telling Dagger.Android that this generated SubComponent needs to include the
- * specified modules and be aware of a scope annotation [ActivityScope].
+ * Use case for getting all available themes for the device that
+ * we are running on.
  */
-@Module
-internal abstract class ActivityBindingModule {
+class GetAvailableThemesUseCase @Inject constructor() {
 
     /**
-     * Tell dagger to create a SubComponent for [MainActivity].
+     * Get all available themes for this device.
      */
-    @ActivityScope
-    @ContributesAndroidInjector(
-        modules = [
-            MainActivityModule::class
-        ]
+    operator fun invoke(): Flow<List<Theme>> = flowOf(
+        listOf(
+            Theme.LIGHT, Theme.DARK,
+            if (SDK_INT >= Q) Theme.FOLLOW_SYSTEM else Theme.AUTO_BATTERY
+        )
     )
-    abstract fun mainActivity(): MainActivity
 }

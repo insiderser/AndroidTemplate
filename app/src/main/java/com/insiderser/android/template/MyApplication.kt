@@ -23,34 +23,42 @@ package com.insiderser.android.template
 
 import android.os.StrictMode
 import androidx.appcompat.app.AppCompatDelegate
-import com.insiderser.android.template.core.dagger.AppComponent
-import com.insiderser.android.template.core.dagger.AppComponentProvider
+import androidx.lifecycle.Observer
+import com.insiderser.android.template.core.dagger.CoreComponent
+import com.insiderser.android.template.core.dagger.CoreComponentProvider
+import com.insiderser.android.template.core.domain.execute
 import com.insiderser.android.template.core.util.toAppCompatNightMode
-import com.insiderser.android.template.dagger.AppComponentImpl
-import com.insiderser.android.template.dagger.DaggerAppComponentImpl
+import com.insiderser.android.template.dagger.AppComponent
+import com.insiderser.android.template.dagger.DaggerAppComponent
 import com.insiderser.android.template.model.Theme
 import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponent
 import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponentProvider
-import com.insiderser.android.template.prefs.data.domain.theme.ObserveThemeUseCase
+import com.insiderser.android.template.prefs.data.domain.theme.ObservableThemeUseCase
+import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 /**
- * This is an entry point of the whole application.
+ * This is the entry point of the whole application.
  *
  * This class executes basic app configuration, such as building a
  * Dagger graph, initializing libraries that need to be initialized on startup, etc.
  */
-class MyApplication : DaggerApplication(), AppComponentProvider,
+class MyApplication : DaggerApplication(), CoreComponentProvider,
     PreferencesStorageComponentProvider {
 
-    private val appComponentImpl: AppComponentImpl by lazy {
-        DaggerAppComponentImpl.factory().create(this)
+    private val appScope = CoroutineScope(Dispatchers.Main)
+
+    private val appComponent: AppComponent by lazy {
+        DaggerAppComponent.factory().create(this)
     }
 
     @Inject
-    internal lateinit var observeThemeUseCase: ObserveThemeUseCase
+    internal lateinit var observableThemeUseCase: ObservableThemeUseCase
 
     override fun onCreate() {
         // Enable strict mode before Dagger builds graph
@@ -60,27 +68,38 @@ class MyApplication : DaggerApplication(), AppComponentProvider,
 
         super.onCreate()
 
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        } else {
-            // TODO: plant Crashlytics tree
-        }
-
-        observeThemeUseCase().observeForever(::updateAppTheme)
+        initLogging()
+        initTheme()
     }
 
     private fun enableStrictMode() {
         StrictMode.setThreadPolicy(
             StrictMode.ThreadPolicy.Builder()
                 .detectAll()
-                .penaltyLog()
+                // Doing anything expensive on the main thread is bad, so enforce that
                 .penaltyDeath()
                 .build()
         )
     }
 
+    private fun initLogging() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        } else {
+            // TODO: plant Crashlytics tree
+        }
+    }
+
+    private fun initTheme() {
+        observableThemeUseCase.observe().observeForever(Observer(::updateAppTheme))
+
+        appScope.launch {
+            observableThemeUseCase.execute()
+        }
+    }
+
     private fun updateAppTheme(selectedTheme: Theme) {
-        Timber.d("Setting theme $selectedTheme")
+        Timber.d("Setting theme to $selectedTheme")
         AppCompatDelegate.setDefaultNightMode(selectedTheme.toAppCompatNightMode())
     }
 
@@ -88,8 +107,8 @@ class MyApplication : DaggerApplication(), AppComponentProvider,
      * Returns app-level [Dagger component][dagger.Component], that is used
      * throughout the app.
      */
-    override fun applicationInjector() = appComponentImpl
+    override fun applicationInjector(): AndroidInjector<MyApplication> = appComponent
 
-    override val appComponent: AppComponent get() = appComponentImpl
-    override val preferencesStorageComponent: PreferencesStorageComponent get() = appComponentImpl
+    override val coreComponent: CoreComponent get() = appComponent
+    override val preferencesStorageComponent: PreferencesStorageComponent get() = appComponent
 }

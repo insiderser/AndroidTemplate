@@ -21,28 +21,35 @@
  */
 package com.insiderser.android.template.feature1.ui
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.insiderser.android.template.common.ui.dagger.DaggerFragmentWithViewBinding
-import com.insiderser.android.template.core.dagger.AppComponentProvider
+import com.insiderser.android.template.core.dagger.CoreComponentProvider
+import com.insiderser.android.template.core.ui.binding.FragmentWithViewBinding
 import com.insiderser.android.template.feature1.dagger.DaggerFeature1Component
-import com.insiderser.android.template.feature1.dagger.Feature1Component
 import com.insiderser.android.template.feature1.databinding.Feature1FragmentBinding
 
 /**
  * Sample [Fragment] that does nothing, except injecting into itself.
  */
-class Feature1Fragment : DaggerFragmentWithViewBinding<Feature1FragmentBinding>() {
+class Feature1Fragment : FragmentWithViewBinding<Feature1FragmentBinding>() {
+
+    override fun onAttach(context: Context) {
+        injectItself()
+        super.onAttach(context)
+    }
 
     override fun onCreateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): Feature1FragmentBinding = Feature1FragmentBinding.inflate(inflater, container, false)
 
-    override fun provideInjector(): Feature1Component {
-        val appComponentProvider = requireActivity().application as AppComponentProvider
-        val appComponent = appComponentProvider.appComponent
-        return DaggerFeature1Component.factory().create(appComponent)
+    private fun injectItself() {
+        val coreComponentProvider = requireActivity().application as CoreComponentProvider
+        val coreComponent = coreComponentProvider.coreComponent
+
+        val feature1Component = DaggerFeature1Component.factory().create(coreComponent)
+        feature1Component.inject(this)
     }
 }

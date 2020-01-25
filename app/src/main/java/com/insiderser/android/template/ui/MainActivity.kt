@@ -31,7 +31,7 @@ import de.halfbit.edgetoedge.edgeToEdge
 import javax.inject.Inject
 
 /**
- * The main activity with [androidx.fragment.app.FragmentContainerView] as its root.
+ * The main activity and navigation point.
  */
 class MainActivity : DaggerAppCompatActivity() {
 

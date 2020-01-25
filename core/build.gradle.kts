@@ -35,22 +35,36 @@ configureAndroidModule()
 dependencies {
     api(project(":model"))
 
-    implementation(Libs.Kotlin.stdlib)
-    implementation(Libs.Coroutines.core)
-    implementation(Libs.Coroutines.android)
+    api(Libs.Kotlin.stdlib)
+    api(Libs.Coroutines.core)
+    api(Libs.Coroutines.android)
 
-    implementation(Libs.AndroidX.coreKtx)
-    implementation(Libs.AndroidX.appcompat)
-    implementation(Libs.AndroidX.material)
-    implementation(Libs.AndroidX.Lifecycle.extensions)
+    api(Libs.AndroidX.coreKtx)
+    api(Libs.AndroidX.appcompat)
+    api(Libs.AndroidX.Lifecycle.extensions)
+    api(Libs.AndroidX.Lifecycle.lifecycleKtx)
+    api(Libs.AndroidX.Lifecycle.liveDataKtx)
+    api(Libs.AndroidX.Lifecycle.viewModelKtx)
 
     api(Libs.timber)
 
-    implementation(Libs.Dagger.dagger)
+    api(Libs.Dagger.dagger)
     kapt(Libs.Dagger.compiler)
+
+    implementation(Libs.AndroidX.Fragment.fragmentKtx)
+    implementation(Libs.AndroidX.material)
 
     testImplementation(project(":test-shared"))
     testImplementation(Libs.Test.mockK)
     testImplementation(Libs.Coroutines.test)
     testImplementation(Libs.Test.AndroidX.arch)
+
+    debugImplementation(Libs.AndroidX.Fragment.testing) {
+        exclude(group = "androidx.test", module = "core")
+    }
+    testImplementation(Libs.Test.Robolectric.robolectric)
+    testImplementation(Libs.Test.AndroidX.core)
+    testImplementation(Libs.Test.AndroidX.rules)
+    testImplementation(Libs.Test.AndroidX.runner)
+    testImplementation(Libs.Test.AndroidX.ext)
 }

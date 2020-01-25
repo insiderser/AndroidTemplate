@@ -19,24 +19,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.core.domain.theme
+package com.insiderser.android.template.core.domain
 
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.Q
-import com.insiderser.android.template.model.Theme
-import javax.inject.Inject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 
 /**
- * Use case for getting all possible theme settings for the Android version that
- * we are running on.
+ * Executes its business logic in [execute] method. Implementations can post the result to
+ * [`result MediatorLiveData`][result].
+ *
+ * @param P Type of parameter that will be passed to [execute] function.
+ * @param R Type that will be returned, wrapped in [LiveData].
  */
-class GetAllThemesUseCase @Inject constructor() {
+abstract class ObservableUseCase<in P, R> {
+
+    protected val result = MediatorLiveData<R>()
 
     /**
-     * Get all possible theme settings for this Android version.
+     * Returns a [LiveData] observable where all results will be posted.
+     *
+     * **Note**: this method only returns the observable. To execute this use case,
+     * call [execute] method.
      */
-    operator fun invoke() = listOf(
-        Theme.LIGHT, Theme.DARK,
-        if (SDK_INT >= Q) Theme.FOLLOW_SYSTEM else Theme.AUTO_BATTERY
-    )
+    fun observe(): LiveData<R> = result
+
+    /**
+     * Execute the logic.
+     */
+    abstract suspend fun execute(param: P)
 }
+
+/**
+ * Execute the logic.
+ *
+ * **Note**: make sure to call it on a suitable thread.
+ */
+suspend fun <R> ObservableUseCase<Unit, R>.execute() = execute(Unit)

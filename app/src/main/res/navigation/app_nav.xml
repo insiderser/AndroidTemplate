@@ -22,13 +22,15 @@
 
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_nav"
     app:startDestination="@id/feature1_dest">
 
     <fragment
         android:id="@+id/feature1_dest"
         android:name="com.insiderser.android.template.feature1.ui.Feature1Fragment"
-        android:label="@string/feature1_label">
+        android:label="@string/feature1_label"
+        tools:layout="@layout/feature1_fragment">
 
         <argument
             android:name="SomeArg"

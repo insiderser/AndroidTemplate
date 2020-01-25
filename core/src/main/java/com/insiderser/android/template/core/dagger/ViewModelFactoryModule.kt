@@ -19,43 +19,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.core.dagger
 
-import com.insiderser.android.template.buildSrc.Libs
-import com.insiderser.android.template.buildSrc.configureAndroidModule
+import androidx.lifecycle.ViewModelProvider
+import dagger.Binds
+import dagger.Module
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("android.extensions")
-}
+/**
+ * Module used to define connection between the framework's [ViewModelProvider.Factory]
+ * and out own implementation: [ViewModelFactory].
+ */
+@Module
+interface ViewModelFactoryModule {
 
-configureAndroidModule()
-
-dependencies {
-    implementation(project(":core"))
-
-    implementation(Libs.Kotlin.stdlib)
-
-    api(Libs.AndroidX.appcompat)
-    api(Libs.AndroidX.Activity.activity)
-    api(Libs.AndroidX.Activity.activityKtx)
-    api(Libs.AndroidX.Fragment.fragment)
-    api(Libs.AndroidX.Fragment.fragmentKtx)
-
-    debugImplementation(Libs.AndroidX.Fragment.testing) {
-        exclude(group = "androidx.test", module = "core")
-    }
-
-    api(Libs.Dagger.dagger)
-    api(Libs.Dagger.androidSupport)
-
-    implementation(Libs.timber)
-
-    testImplementation(project(":test-shared"))
-    testImplementation(Libs.Test.mockK)
-    testImplementation(Libs.Test.Robolectric.robolectric)
-    testImplementation(Libs.Test.AndroidX.core)
-    testImplementation(Libs.Test.AndroidX.ext)
-    testImplementation(Libs.Test.AndroidX.rules)
-    testImplementation(Libs.Test.AndroidX.runner)
+    /**
+     * Define connection between the framework's [ViewModelProvider.Factory]
+     * and out own implementation: [ViewModelFactory].
+     */
+    @Binds
+    fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }

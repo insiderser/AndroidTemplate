@@ -31,7 +31,6 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.spyk
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -45,7 +44,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-@UseExperimental(ExperimentalCoroutinesApi::class)
 class UseCaseTest {
 
     @get:Rule
