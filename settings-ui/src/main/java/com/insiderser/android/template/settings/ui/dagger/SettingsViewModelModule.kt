@@ -19,7 +19,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.settings.ui.dagger
 
-rootProject.name = "Template"
-include ':app', ':core', ':test-shared', ':data', ':feature1', ':model', ':preferences-data',
-        ':settings-ui'
+import androidx.lifecycle.ViewModel
+import com.insiderser.android.template.core.dagger.ViewModelKey
+import com.insiderser.android.template.settings.ui.SettingsViewModel
+import com.insiderser.android.template.settings.ui.theme.ThemeSettingViewModel
+import dagger.Binds
+import dagger.Module
+import dagger.multibindings.IntoMap
+
+/**
+ * Dagger module that allows our [ViewModel]s to be provided by dagger.
+ */
+@Module
+internal interface SettingsViewModelModule {
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingsViewModel::class)
+    fun bindSettingsViewModel(vm: SettingsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ThemeSettingViewModel::class)
+    fun bindThemeSettingViewModel(vm: ThemeSettingViewModel): ViewModel
+}

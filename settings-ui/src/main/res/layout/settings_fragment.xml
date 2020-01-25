@@ -20,25 +20,25 @@
   ~ SOFTWARE.
   -->
 
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/app_nav"
-    app:startDestination="@id/feature1_dest">
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <fragment
-        android:id="@+id/feature1_dest"
-        android:name="com.insiderser.android.template.feature1.ui.Feature1Fragment"
-        android:label="@string/feature1_label"
-        tools:layout="@layout/feature1_fragment">
+    <LinearLayout
+        android:id="@+id/linear_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/settings_padding_horizontal"
+        android:paddingVertical="@dimen/settings_padding_vertical">
 
-        <argument
-            android:name="SomeArg"
-            app:argType="string" />
-    </fragment>
-    <fragment
-        android:id="@+id/settings_dest"
-        android:name="com.insiderser.android.template.settings.ui.SettingsFragment"
-        android:label="@string/settings_label"
-        tools:layout="@layout/settings_fragment" />
-</navigation>
+        <TextView
+            android:id="@+id/choose_theme_button"
+            style="@style/Widget.Template.Settings.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_choose_theme" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

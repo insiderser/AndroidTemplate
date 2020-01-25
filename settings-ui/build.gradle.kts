@@ -20,6 +20,42 @@
  * SOFTWARE.
  */
 
-rootProject.name = "Template"
-include ':app', ':core', ':test-shared', ':data', ':feature1', ':model', ':preferences-data',
-        ':settings-ui'
+import com.insiderser.android.template.buildSrc.Libs
+import com.insiderser.android.template.buildSrc.configureAndroidModule
+
+plugins {
+    id("com.android.library")
+    kotlin("android")
+    kotlin("android.extensions")
+    kotlin("kapt")
+}
+
+configureAndroidModule()
+
+kapt {
+    correctErrorTypes = true
+}
+
+dependencies {
+    implementation(project(":core"))
+    implementation(project(":preferences-data"))
+
+    implementation(Libs.AndroidX.constraintlayout)
+    implementation(Libs.AndroidX.material)
+
+    implementation(Libs.AndroidX.Fragment.fragmentKtx)
+
+    kapt(Libs.Dagger.compiler)
+
+    testImplementation(project(":test-shared"))
+    debugImplementation(Libs.AndroidX.Fragment.testing) {
+        exclude(group = "androidx.test", module = "core")
+    }
+
+    testImplementation(Libs.Test.Robolectric.robolectric)
+    testImplementation(Libs.Test.AndroidX.core)
+    testImplementation(Libs.Test.AndroidX.runner)
+    testImplementation(Libs.Test.AndroidX.rules)
+    testImplementation(Libs.Test.AndroidX.ext)
+    testImplementation(Libs.Test.AndroidX.arch)
+}
