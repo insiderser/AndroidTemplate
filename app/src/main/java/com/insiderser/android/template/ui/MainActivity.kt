@@ -22,8 +22,17 @@
 package com.insiderser.android.template.ui
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.onNavDestinationSelected
+import androidx.navigation.ui.setupActionBarWithNavController
+import com.insiderser.android.template.R
 import com.insiderser.android.template.databinding.ActivityMainBinding
 import dagger.android.support.DaggerAppCompatActivity
 import de.halfbit.edgetoedge.Edge
@@ -42,16 +51,50 @@ class MainActivity : DaggerAppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private val appBarConfiguration: AppBarConfiguration by lazy {
+        AppBarConfiguration(TOP_LEVEL_DESTINATIONS)
+    }
+
+    private val navController: NavController by lazy {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.navigation_view) as NavHostFragment
+        navHostFragment.navController
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
+        setupActionBar()
+        goEdgeToEdge()
+    }
 
+    private fun setupActionBar() {
+        setSupportActionBar(binding.toolbar)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    private fun goEdgeToEdge() {
         edgeToEdge {
             binding.appBar.fit { Edge.Left + Edge.Top + Edge.Right }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.app_menu, menu)
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
+
+    override fun onSupportNavigateUp(): Boolean = navController.navigateUp(appBarConfiguration)
+
+    companion object {
+
+        private val TOP_LEVEL_DESTINATIONS = setOf(R.id.feature1_dest)
     }
 }

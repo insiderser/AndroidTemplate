@@ -19,7 +19,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.settings.ui.dagger
 
-rootProject.name = "Template"
-include ':app', ':core', ':test-shared', ':data', ':feature1', ':model', ':preferences-data',
-        ':settings-ui'
+import com.insiderser.android.template.core.dagger.FeatureScope
+import com.insiderser.android.template.core.dagger.ViewModelFactoryModule
+import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponent
+import com.insiderser.android.template.settings.ui.SettingsFragment
+import com.insiderser.android.template.settings.ui.theme.ThemeSettingDialogFragment
+import dagger.Component
+
+/**
+ * Dagger component for settings.
+ * @see DaggerSettingsComponent.factory
+ */
+@Component(
+    modules = [
+        SettingsViewModelModule::class,
+        ViewModelFactoryModule::class
+    ],
+    dependencies = [PreferencesStorageComponent::class]
+)
+@FeatureScope
+internal interface SettingsComponent {
+
+    fun inject(fragment: SettingsFragment)
+    fun inject(fragment: ThemeSettingDialogFragment)
+
+    @Component.Factory
+    interface Factory {
+
+        fun create(
+            preferencesStorageComponent: PreferencesStorageComponent
+        ): SettingsComponent
+    }
+}

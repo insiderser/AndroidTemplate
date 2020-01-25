@@ -19,26 +19,9 @@
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
   -->
+<resources>
+    <dimen name="settings_padding_horizontal">24dp</dimen>
+    <dimen name="settings_padding_vertical">32dp</dimen>
 
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/app_nav"
-    app:startDestination="@id/feature1_dest">
-
-    <fragment
-        android:id="@+id/feature1_dest"
-        android:name="com.insiderser.android.template.feature1.ui.Feature1Fragment"
-        android:label="@string/feature1_label"
-        tools:layout="@layout/feature1_fragment">
-
-        <argument
-            android:name="SomeArg"
-            app:argType="string" />
-    </fragment>
-    <fragment
-        android:id="@+id/settings_dest"
-        android:name="com.insiderser.android.template.settings.ui.SettingsFragment"
-        android:label="@string/settings_label"
-        tools:layout="@layout/settings_fragment" />
-</navigation>
+    <dimen name="settings_item_padding_vertical">8dp</dimen>
+</resources>

@@ -19,7 +19,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.settings.ui
 
-rootProject.name = "Template"
-include ':app', ':core', ':test-shared', ':data', ':feature1', ':model', ':preferences-data',
-        ':settings-ui'
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.insiderser.android.template.core.result.Event
+import javax.inject.Inject
+
+/**
+ * [ViewModel] for [SettingsFragment] that manages preferences.
+ */
+internal class SettingsViewModel @Inject constructor() : ViewModel() {
+
+    private val _openThemeSettingDialog = MutableLiveData<Event<Unit>>()
+    /**
+     * Tells the fragment when to show
+     * [ThemeSettingDialogFragment][com.insiderser.android.template.settings.ui.theme.ThemeSettingDialogFragment]
+     */
+    val showThemeSettingDialog: LiveData<Event<Unit>> get() = _openThemeSettingDialog
+
+    /**
+     * Called when user clicks on "Choose theme" setting.
+     */
+    fun onThemeSettingClicked() {
+        _openThemeSettingDialog.value = Event(Unit)
+    }
+}
