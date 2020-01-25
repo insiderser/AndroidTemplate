@@ -21,6 +21,10 @@
  */
 package com.insiderser.android.template.core.util
 
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatDelegate
 import com.insiderser.android.template.model.Theme
 
@@ -52,6 +56,13 @@ inline fun consume(f: () -> Unit): Boolean {
  * ```
  */
 fun <T> T.checkAllMatched(): T = this
+
+/**
+ * Inflate layout from the given [layout resource][resource].
+ * @see LayoutInflater.inflate
+ */
+fun ViewGroup.inflate(@LayoutRes resource: Int, attachToRoot: Boolean = false): View =
+    LayoutInflater.from(context).inflate(resource, this, attachToRoot)
 
 /**
  * Get [AppCompatDelegate] night mode for the given [Theme].

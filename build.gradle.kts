@@ -77,8 +77,12 @@ subprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             jvmTarget = Versions.jvmTarget
-            allWarningsAsErrors = true
-            freeCompilerArgs = listOf("-Xjsr305=strict", "-Xuse-experimental=kotlin.Experimental")
+            freeCompilerArgs = listOf(
+                "-Xjsr305=strict",
+                "-Xuse-experimental=kotlin.Experimental",
+                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-Xuse-experimental=kotlinx.coroutines.FlowPreview"
+            )
         }
     }
 }

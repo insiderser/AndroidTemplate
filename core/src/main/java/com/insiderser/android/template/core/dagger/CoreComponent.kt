@@ -21,21 +21,13 @@
  */
 package com.insiderser.android.template.core.dagger
 
-import androidx.lifecycle.ViewModelProvider
-import dagger.Binds
-import dagger.Module
-
 /**
- * Module used to define connection between the framework's [ViewModelProvider.Factory]
- * and out own implementation: [ViewModelFactory].
+ * Main component that feature modules can use to get app-level dependencies.
+ *
+ * Usage:
+ *   - Create feature module with component that depends on [CoreComponent],
+ *     e.g. `@Component(dependencies = [CoreComponent::class])`.
+ *   - In the component, add factory that binds an instance of [CoreComponent] to get
+ *     [CoreComponent] into the loop.
  */
-@Module
-interface ViewModelModule {
-
-    /**
-     * Define connection between the framework's [ViewModelProvider.Factory]
-     * and out own implementation: [ViewModelFactory].
-     */
-    @Binds
-    fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
-}
+interface CoreComponent

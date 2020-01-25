@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.common.ui.binding
+package com.insiderser.android.template.core.ui.binding
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,7 +28,6 @@ import android.view.ViewGroup
 import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import timber.log.Timber
 
 /**
  * [Fragment] wrapper that uses [ViewBinding] to manage its views.
@@ -71,8 +70,6 @@ abstract class FragmentWithViewBinding<B : ViewBinding> : Fragment() {
 
     final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Timber.v("onBindingCreated")
         onBindingCreated(requireBinding(), savedInstanceState)
     }
 
@@ -91,6 +88,7 @@ abstract class FragmentWithViewBinding<B : ViewBinding> : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        // Make sure we don't leak our views
         binding = null
     }
 }

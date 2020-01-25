@@ -21,22 +21,24 @@
  */
 package com.insiderser.android.template.feature1.dagger
 
-import com.insiderser.android.template.core.dagger.AppComponent
-import com.insiderser.android.template.core.dagger.FeatureScoped
+import com.insiderser.android.template.core.dagger.CoreComponent
+import com.insiderser.android.template.core.dagger.FeatureScope
 import com.insiderser.android.template.feature1.ui.Feature1Fragment
 import dagger.Component
-import dagger.android.AndroidInjector
 
 /**
  * Component for feature 1. This is used throughout the module.
  *
- * App-level dependencies come from [AppComponent].
+ * App-level dependencies come from [CoreComponent].
  *
  * @see com.insiderser.android.template.feature1.dagger.DaggerFeature1Component.factory
  */
-@FeatureScoped
-@Component(dependencies = [AppComponent::class])
-interface Feature1Component : AndroidInjector<Feature1Fragment> {
+@FeatureScope
+@Component(dependencies = [CoreComponent::class])
+internal interface Feature1Component {
+
+    /** Inject dependencies into [Feature1Fragment]. */
+    fun inject(fragment: Feature1Fragment)
 
     /**
      * Dagger factory for building [Feature1Component].
@@ -47,10 +49,10 @@ interface Feature1Component : AndroidInjector<Feature1Fragment> {
     interface Factory {
 
         /**
-         * Put [AppComponent] into a dagger graph and create [Feature1Component].
+         * Put [CoreComponent] into a dagger graph and create [Feature1Component].
          */
         fun create(
-            appComponent: AppComponent
+            coreComponent: CoreComponent
         ): Feature1Component
     }
 }

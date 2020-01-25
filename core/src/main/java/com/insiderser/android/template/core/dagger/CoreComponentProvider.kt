@@ -22,12 +22,15 @@
 package com.insiderser.android.template.core.dagger
 
 /**
- * Main component that feature modules can use to get app-level dependencies.
+ * Instances of this class can provide app-level [CoreComponent].
  *
- * Usage:
- *   - Create feature module with component that depends on [AppComponent],
- *     e.g. `@Component(dependencies = [AppComponent::class])`.
- *   - In the component, add factory that binds an instance of [AppComponent] to get
- *     [AppComponent] into the loop.
+ * This should be implemented by [application][android.app.Application]s and used by
+ * feature modules to get app-level dependencies.
  */
-interface AppComponent
+interface CoreComponentProvider {
+
+    /**
+     * [CoreComponent] component implementation that can provide dependencies.
+     */
+    val coreComponent: CoreComponent
+}

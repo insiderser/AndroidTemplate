@@ -19,18 +19,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.core.dagger
+package com.insiderser.android.template.prefs.data.delegate
+
+import android.content.SharedPreferences
+import androidx.annotation.WorkerThread
+import androidx.core.content.edit
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
 /**
- * Instances of this class can provide app-level [AppComponent].
+ * Property delegate that manages a single entry in [SharedPreferences].
  *
- * This should be implemented by [application][android.app.Application]s and used by
- * feature modules to get app-level dependencies.
+ * **Note**: all get operations are done synchronously on the calling thread.
+ * Make sure to call it on a worker thread.
  */
-interface AppComponentProvider {
+internal class StringPreference(
+    private val sharedPreferences: Lazy<SharedPreferences>,
+    private val preferenceKey: String,
+    private val defaultValue: String? = null
+) : ReadWriteProperty<Any, String?> {
 
-    /**
-     * [AppComponent] component implementation that can provide dependencies.
-     */
-    val appComponent: AppComponent
+    @WorkerThread
+    override fun getValue(thisRef: Any, property: KProperty<*>): String? =
+        sharedPreferences.value.getString(preferenceKey, defaultValue)
+
+    override fun setValue(thisRef: Any, property: KProperty<*>, value: String?) {
+        sharedPreferences.value.edit {
+            putString(preferenceKey, value)
+        }
+    }
 }

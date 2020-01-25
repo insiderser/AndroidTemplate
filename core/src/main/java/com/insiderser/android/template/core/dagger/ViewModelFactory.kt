@@ -36,7 +36,7 @@ class ViewModelFactory @Inject constructor(
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        Timber.d("Creating instance of ${modelClass.name}")
+        Timber.v("Creating instance of ${modelClass.name}")
 
         val found = creators.entries.find { modelClass.isAssignableFrom(it.key) }
         val creator = found?.value

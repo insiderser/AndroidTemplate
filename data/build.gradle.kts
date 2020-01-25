@@ -49,17 +49,11 @@ android {
 dependencies {
     implementation(project(":core"))
 
-    implementation(Libs.Kotlin.stdlib)
-
-    implementation(Libs.AndroidX.coreKtx)
-    implementation(Libs.AndroidX.Lifecycle.extensions)
-
     implementation(Libs.AndroidX.Room.common)
     implementation(Libs.AndroidX.Room.runtime)
     implementation(Libs.AndroidX.Room.ktx)
     kapt(Libs.AndroidX.Room.compiler)
 
-    implementation(Libs.Dagger.dagger)
     kapt(Libs.Dagger.compiler)
 
     testImplementation(project(":test-shared"))

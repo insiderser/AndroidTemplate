@@ -27,8 +27,6 @@ import com.insiderser.android.template.core.result.Result
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
@@ -44,10 +42,9 @@ import timber.log.Timber
  *
  * @param coroutineDispatcher Dispatcher that [execute] will be called on.
  * @param P Type of parameter that will be passed to [execute] function.
- * @param R Type that will be returned, wrapped in `LiveData<Result>`.
+ * @param R Type that will be returned, wrapped in `Flow<Result<R>>`.
  * @see kotlinx.coroutines.Dispatchers
  */
-@UseExperimental(FlowPreview::class, ExperimentalCoroutinesApi::class)
 abstract class UseCase<in P, R>(
     private val coroutineDispatcher: CoroutineDispatcher
 ) {

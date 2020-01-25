@@ -34,14 +34,7 @@ configureAndroidModule()
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":common-ui"))
 
-    implementation(Libs.Kotlin.stdlib)
-    implementation(Libs.Coroutines.core)
-    implementation(Libs.Coroutines.android)
-
-    implementation(Libs.AndroidX.appcompat)
-    implementation(Libs.AndroidX.coreKtx)
     implementation(Libs.AndroidX.constraintlayout)
     implementation(Libs.AndroidX.material)
 

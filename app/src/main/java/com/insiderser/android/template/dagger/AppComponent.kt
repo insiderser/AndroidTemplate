@@ -22,9 +22,9 @@
 package com.insiderser.android.template.dagger
 
 import com.insiderser.android.template.MyApplication
-import com.insiderser.android.template.core.dagger.AppComponent
+import com.insiderser.android.template.core.dagger.CoreComponent
 import com.insiderser.android.template.core.dagger.CoreModule
-import com.insiderser.android.template.core.dagger.ViewModelModule
+import com.insiderser.android.template.core.dagger.ViewModelFactoryModule
 import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponent
 import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageModule
 import dagger.BindsInstance
@@ -36,10 +36,10 @@ import javax.inject.Singleton
 /**
  * Main application-level dagger component that holds everything together.
  *
- * Use [DaggerAppComponentImpl.factory] to create [AppComponentImpl].
+ * Use [DaggerAppComponent.factory] to create [AppComponent].
  *
  * Feature modules may create separate module components
- * that depend on one of [AppComponentImpl]'s parent components.
+ * that depend on one of [AppComponent]'s parent components.
  */
 @Singleton
 @Component(
@@ -47,23 +47,23 @@ import javax.inject.Singleton
         AndroidInjectionModule::class,
         CoreModule::class,
         ContextModule::class,
-        ViewModelModule::class,
+        ViewModelFactoryModule::class,
         ActivityBindingModule::class,
         PreferencesStorageModule::class
     ]
 )
-interface AppComponentImpl : AndroidInjector<MyApplication>, AppComponent,
+internal interface AppComponent : AndroidInjector<MyApplication>, CoreComponent,
     PreferencesStorageComponent {
 
     /**
-     * Dagger factory for building [AppComponentImpl], binding instances into a dagger graph.
+     * Dagger factory for building [AppComponent], binding instances into a dagger graph.
      */
     @Component.Factory
     interface Factory {
 
         /**
-         * Create [AppComponentImpl] & bind [MyApplication] into a dagger graph.
+         * Create [AppComponent] & bind [MyApplication] into a dagger graph.
          */
-        fun create(@BindsInstance application: MyApplication): AppComponentImpl
+        fun create(@BindsInstance application: MyApplication): AppComponent
     }
 }

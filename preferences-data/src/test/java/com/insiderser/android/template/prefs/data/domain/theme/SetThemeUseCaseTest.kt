@@ -26,12 +26,10 @@ import com.insiderser.android.template.prefs.data.AppPreferencesStorage
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.verify
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
 
-@UseExperimental(ExperimentalCoroutinesApi::class)
 class SetThemeUseCaseTest {
 
     @RelaxedMockK

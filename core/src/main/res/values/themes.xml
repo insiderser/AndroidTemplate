@@ -27,9 +27,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorSecondary">@color/colorSecondary</item>
 
-        <item name="appBarLayoutStyle">@style/Widget.Template.AppBar</item>
-        <item name="toolbarStyle">@style/Widget.Template.Toolbar</item>
-
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">false</item>

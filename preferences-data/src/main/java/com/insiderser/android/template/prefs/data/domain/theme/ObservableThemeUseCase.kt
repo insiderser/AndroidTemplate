@@ -22,26 +22,44 @@
 package com.insiderser.android.template.prefs.data.domain.theme
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
+import androidx.lifecycle.asLiveData
+import com.insiderser.android.template.core.domain.ObservableUseCase
+import com.insiderser.android.template.core.result.Result
 import com.insiderser.android.template.model.Theme
 import com.insiderser.android.template.prefs.data.AppPreferencesStorage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 /**
  * Use case for getting [LiveData] of user-selected theme settings from app preferences.
- * This [LiveData] will be automatically updated when user changes app theme.
+ * The [Result] is always [Result.Success].
  */
-class ObserveThemeUseCase @Inject constructor(
+class ObservableThemeUseCase @Inject constructor(
     private val preferencesStorage: AppPreferencesStorage
-) {
+) : ObservableUseCase<Unit, Theme>() {
 
-    /**
-     * Execute this use case.
-     * @return [LiveData] where updates will be posted.
-     */
-    operator fun invoke(): LiveData<Theme> =
-        preferencesStorage.selectedThemeObservable.map { storageKey: String? ->
-            storageKey?.let { Theme.fromStorageKey(storageKey) }
-                ?: DEFAULT_THEME
+    private val executed = AtomicBoolean(false)
+
+    override suspend fun execute(param: Unit) {
+        if (executed.getAndSet(true)) {
+            // We're already observing changes in app preferences. No need to do anything again.
+            return
         }
+
+        val themeLiveData = withContext(Dispatchers.IO) {
+            preferencesStorage.selectedThemeObservable.map { storageKey: String? ->
+                storageKey?.let { Theme.fromStorageKey(storageKey) }
+                    ?: DEFAULT_THEME
+            }.asLiveData()
+        }
+
+        withContext(Dispatchers.Main) {
+            result.addSource(themeLiveData) { themeResult ->
+                result.value = themeResult
+            }
+        }
+    }
 }

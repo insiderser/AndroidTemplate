@@ -1,11 +1,6 @@
 <component name="CopyrightManager">
   <settings default="MIT">
-    <LanguageOptions name="JAVA">
-      <option name="fileTypeOverride" value="3" />
-      <option name="addBlankAfter" value="false" />
-    </LanguageOptions>
-    <LanguageOptions name="Kotlin">
-      <option name="fileTypeOverride" value="3" />
+    <LanguageOptions name="__TEMPLATE__">
       <option name="addBlankAfter" value="false" />
     </LanguageOptions>
   </settings>

@@ -24,15 +24,12 @@ package com.insiderser.android.template.prefs.data
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
-import androidx.core.content.edit
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import com.insiderser.android.template.prefs.data.delegate.ObservableStringPreference
+import com.insiderser.android.template.prefs.data.delegate.StringPreference
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.properties.ReadWriteProperty
-import kotlin.reflect.KProperty
 
 /**
  * Storage for app's and user's preferences.
@@ -47,10 +44,11 @@ interface AppPreferencesStorage {
     var selectedTheme: String?
 
     /**
-     * [LiveData] with up-to-date theme storage key that is currently selected.
+     * A [Flow] with up-to-date theme storage key that is currently selected.
      * @see com.insiderser.android.template.model.Theme
      */
-    val selectedThemeObservable: LiveData<String>
+    @get:WorkerThread
+    val selectedThemeObservable: Flow<String?>
 }
 
 /**
@@ -61,49 +59,19 @@ class AppPreferencesStorageImpl @Inject constructor(context: Context) : AppPrefe
 
     // Lazy to prevent IO on the main thread
     private val sharedPreferences: Lazy<SharedPreferences> = lazy {
-        context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE).apply {
-            registerOnSharedPreferenceChangeListener(onChangeListener)
-        }
+        context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
     }
 
-    // SharedPreferences doesn't store a strong reference to listeners,
-    // so make this a field to make sure it isn't GCed.
-    private val onChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-        when (key) {
-            KEY_THEME -> _selectedThemeLiveData.value = selectedTheme
-        }
-    }
+    override var selectedTheme: String?
+        by StringPreference(sharedPreferences, KEY_THEME)
 
-    override var selectedTheme: String? by StringPreference(sharedPreferences, KEY_THEME)
-
-    private val _selectedThemeLiveData = MutableLiveData<String>()
-    override val selectedThemeObservable: LiveData<String> get() = _selectedThemeLiveData
+    override val selectedThemeObservable: Flow<String?>
+        by ObservableStringPreference(sharedPreferences, KEY_THEME)
 
     companion object {
 
         private const val PREFS_NAME = "preferences"
 
         private const val KEY_THEME = "selected_theme"
-    }
-}
-
-/**
- * Property delegate that manages a single entry in [SharedPreferences].
- */
-@VisibleForTesting
-class StringPreference(
-    private val sharedPreferences: Lazy<SharedPreferences>,
-    private val preferenceKey: String,
-    private val defaultValue: String? = null
-) : ReadWriteProperty<Any, String?> {
-
-    @WorkerThread
-    override fun getValue(thisRef: Any, property: KProperty<*>): String? =
-        sharedPreferences.value.getString(preferenceKey, defaultValue)
-
-    override fun setValue(thisRef: Any, property: KProperty<*>, value: String?) {
-        sharedPreferences.value.edit {
-            putString(preferenceKey, value)
-        }
     }
 }

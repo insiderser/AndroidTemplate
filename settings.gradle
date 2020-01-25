@@ -21,4 +21,4 @@
  */
 
 rootProject.name = "Template"
-include ':app', ':core', ':common-ui', ':test-shared', ':data', ':feature1', ':model', ':preferences-data'
+include ':app', ':core', ':test-shared', ':data', ':feature1', ':model', ':preferences-data'

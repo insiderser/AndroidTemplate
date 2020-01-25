@@ -35,36 +35,36 @@ import kotlin.annotation.AnnotationRetention.RUNTIME
  *  - `@CustomScope` = instance reused depending on the component’s lifecycle
  *
  * In Dagger, an unscoped component cannot depend on a scoped component. As
- * AppComponent is a scoped component (`@Singleton`, we create a custom
+ * CoreComponent is a scoped component (`@Singleton`, we create a custom
  * scope to be used by all fragment components. Additionally, a component with a specific scope
  * cannot have a sub component with the same scope.
  *
- * The [ActivityScoped] scoping annotation specifies that the lifespan of a dependency be the same
+ * The [ActivityScope] scoping annotation specifies that the lifespan of a dependency be the same
  * as that of an [activity][android.app.Activity]. This is used to annotate dependencies that behave
  * like a singleton within the lifespan of an [android.app.Activity].
  *
  * `@Singleton` is used to specify that the lifespan
  * of a dependency be the same as that of the [android.app.Application].
  *
- * @see FragmentScoped
- * @see FeatureScoped
+ * @see FragmentScope
+ * @see FeatureScope
  */
 @MustBeDocumented
 @Retention(RUNTIME)
 @Scope
-annotation class ActivityScoped
+annotation class ActivityScope
 
 /**
- * Just like [ActivityScoped], this annotation tells dagger that the lifespan of
+ * Just like [ActivityScope], this annotation tells dagger that the lifespan of
  * a dependency should be the same as that of a [android.app.Fragment].
  *
- * @see ActivityScoped
- * @see FeatureScoped
+ * @see ActivityScope
+ * @see FeatureScope
  */
 @MustBeDocumented
 @Retention(RUNTIME)
 @Scope
-annotation class FragmentScoped
+annotation class FragmentScope
 
 /**
  * Tells Dagger that the lifespan of a dependency
@@ -73,10 +73,10 @@ annotation class FragmentScoped
  * Use this only when the dependency is bound to that feature and
  * you have a *multi-module project*, where your feature has its own module.
  *
- * @see ActivityScoped
- * @see FragmentScoped
+ * @see ActivityScope
+ * @see FragmentScope
  */
 @MustBeDocumented
 @Retention(RUNTIME)
 @Scope
-annotation class FeatureScoped
+annotation class FeatureScope

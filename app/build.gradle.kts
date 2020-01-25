@@ -86,38 +86,20 @@ kapt {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":common-ui"))
     implementation(project(":feature1"))
     implementation(project(":preferences-data"))
 
-    implementation(Libs.Kotlin.stdlib)
-    implementation(Libs.Coroutines.core)
-    implementation(Libs.Coroutines.android)
-
-    implementation(Libs.AndroidX.appcompat)
-    implementation(Libs.AndroidX.coreKtx)
     implementation(Libs.AndroidX.coordinatorLayout)
     implementation(Libs.AndroidX.material)
 
-    implementation(Libs.AndroidX.Lifecycle.extensions)
-    implementation(Libs.AndroidX.Lifecycle.viewModelKtx)
-
-    implementation(Libs.AndroidX.Activity.activity)
     implementation(Libs.AndroidX.Activity.activityKtx)
-
-    implementation(Libs.AndroidX.Fragment.fragment)
     implementation(Libs.AndroidX.Fragment.fragmentKtx)
-    // FIXME: should be sharedTestImplementation: https://issuetracker.google.com/issues/127986458
-    debugImplementation(Libs.AndroidX.Fragment.testing) {
-        exclude(group = "androidx.test", module = "core")
-    }
 
     implementation(Libs.edgeToEdge)
 
     implementation(Libs.AndroidX.Navigation.ui)
     implementation(Libs.AndroidX.Navigation.fragment)
 
-    implementation(Libs.Dagger.dagger)
     implementation(Libs.Dagger.androidSupport)
     kapt(Libs.Dagger.compiler)
     kapt(Libs.Dagger.androidProcessor)
@@ -129,6 +111,11 @@ dependencies {
 
     sharedTestImplementation(Libs.Test.Robolectric.annotations)
     testImplementation(Libs.Test.Robolectric.robolectric)
+
+    // FIXME: should be sharedTestImplementation: https://issuetracker.google.com/issues/127986458
+    debugImplementation(Libs.AndroidX.Fragment.testing) {
+        exclude(group = "androidx.test", module = "core")
+    }
 
     sharedTestImplementation(Libs.Test.AndroidX.core)
     sharedTestImplementation(Libs.Test.AndroidX.runner)
