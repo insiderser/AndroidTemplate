@@ -24,7 +24,6 @@ package com.insiderser.android.template.settings.ui.dagger
 import androidx.lifecycle.ViewModel
 import com.insiderser.android.template.core.dagger.ViewModelKey
 import com.insiderser.android.template.settings.ui.SettingsViewModel
-import com.insiderser.android.template.settings.ui.theme.ThemeSettingViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -39,9 +38,4 @@ internal interface SettingsViewModelModule {
     @IntoMap
     @ViewModelKey(SettingsViewModel::class)
     fun bindSettingsViewModel(vm: SettingsViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(ThemeSettingViewModel::class)
-    fun bindThemeSettingViewModel(vm: ThemeSettingViewModel): ViewModel
 }

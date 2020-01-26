@@ -19,26 +19,9 @@
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
   -->
+<resources>
 
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scroll_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:id="@+id/linear_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/settings_padding_horizontal"
-        android:paddingVertical="@dimen/settings_padding_vertical">
-
-        <TextView
-            android:id="@+id/choose_theme_button"
-            style="@style/Widget.Template.Settings.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_choose_theme" />
-
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+    <style name="AppTheme" parent="Base.AppTheme">
+        <item name="preferenceTheme">@style/Template.Settings.PreferenceThemeOverlay</item>
+    </style>
+</resources>

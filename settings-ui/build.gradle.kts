@@ -42,7 +42,7 @@ dependencies {
 
     implementation(Libs.AndroidX.constraintlayout)
     implementation(Libs.AndroidX.material)
-
+    api(Libs.AndroidX.preference)
     implementation(Libs.AndroidX.Fragment.fragmentKtx)
 
     kapt(Libs.Dagger.compiler)

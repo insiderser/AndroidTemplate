@@ -19,9 +19,14 @@
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
   -->
-<resources>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <style name="Base.AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:navigationBarColor">@color/transparent</item>
-    </style>
-</resources>
+    <PreferenceCategory app:title="@string/settings_theme_group_label">
+
+        <Preference
+            app:key="choose-theme"
+            app:title="@string/settings_choose_theme" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
