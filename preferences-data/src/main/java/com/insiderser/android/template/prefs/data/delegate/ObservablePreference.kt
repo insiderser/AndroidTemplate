@@ -68,9 +68,7 @@ internal sealed class ObservablePreference<T>(
 
     private fun updateValue() {
         val newValue = getCurrentPreferenceValue(sharedPreferences.value, preferenceKey)
-        if (newValue != channel.valueOrNull) {
-            channel.offer(newValue)
-        }
+        channel.offer(newValue)
     }
 
     protected abstract fun getCurrentPreferenceValue(
