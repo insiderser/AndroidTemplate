@@ -36,7 +36,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.insiderser.android.template.model.Theme
 import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponentProvider
 import com.insiderser.android.template.settings.ui.R
+import com.insiderser.android.template.settings.ui.SettingsViewModel
 import com.insiderser.android.template.settings.ui.dagger.DaggerSettingsComponent
+import com.insiderser.android.template.settings.ui.util.findTitleForTheme
 import javax.inject.Inject
 
 /**
@@ -50,7 +52,7 @@ internal class ThemeSettingDialogFragment : AppCompatDialogFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel: ThemeSettingViewModel by viewModels { viewModelFactory }
+    private val viewModel: SettingsViewModel by viewModels { viewModelFactory }
 
     private val adapter: ArrayAdapter<ThemeHolder> by lazy {
         ArrayAdapter<ThemeHolder>(
@@ -92,15 +94,6 @@ internal class ThemeSettingDialogFragment : AppCompatDialogFragment() {
         }
         (dialog as AlertDialog).listView.setItemChecked(selectedIndex, true)
     }
-
-    private fun findTitleForTheme(theme: Theme) = getString(
-        when (theme) {
-            Theme.LIGHT -> R.string.settings_theme_light
-            Theme.DARK -> R.string.settings_theme_dark
-            Theme.FOLLOW_SYSTEM -> R.string.settings_theme_follow_system
-            Theme.AUTO_BATTERY -> R.string.settings_theme_auto_battery
-        }
-    )
 
     override fun onAttach(context: Context) {
         injectItself()

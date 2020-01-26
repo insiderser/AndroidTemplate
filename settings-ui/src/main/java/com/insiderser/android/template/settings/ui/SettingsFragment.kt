@@ -23,45 +23,48 @@ package com.insiderser.android.template.settings.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import com.insiderser.android.template.core.result.EventObserver
-import com.insiderser.android.template.core.ui.binding.FragmentWithViewBinding
 import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponentProvider
 import com.insiderser.android.template.settings.ui.dagger.DaggerSettingsComponent
-import com.insiderser.android.template.settings.ui.databinding.SettingsFragmentBinding
 import com.insiderser.android.template.settings.ui.theme.ThemeSettingDialogFragment
+import com.insiderser.android.template.settings.ui.util.consumeOnPreferenceClick
+import com.insiderser.android.template.settings.ui.util.findTitleForTheme
 import javax.inject.Inject
 
 /**
  * A [fragment][androidx.fragment.app.Fragment] that lets users to change app's preferences.
  */
-class SettingsFragment : FragmentWithViewBinding<SettingsFragmentBinding>() {
+class SettingsFragment : PreferenceFragmentCompat() {
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: SettingsViewModel by viewModels { viewModelFactory }
 
-    override fun onCreateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): SettingsFragmentBinding =
-        SettingsFragmentBinding.inflate(inflater, container, false)
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        setPreferencesFromResource(R.xml.preferences, rootKey)
 
-    override fun onBindingCreated(
-        binding: SettingsFragmentBinding,
-        savedInstanceState: Bundle?
-    ) {
-        binding.chooseThemeButton.setOnClickListener {
+        findPreference<Preference>("choose-theme")?.consumeOnPreferenceClick {
             viewModel.onThemeSettingClicked()
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         viewModel.showThemeSettingDialog.observe(viewLifecycleOwner, EventObserver {
             val dialogFragment = ThemeSettingDialogFragment()
             dialogFragment.show(childFragmentManager)
+        })
+
+        viewModel.selectedTheme.observe(viewLifecycleOwner, Observer { selectedTheme ->
+            findPreference<Preference>("choose-theme")?.summary = findTitleForTheme(selectedTheme)
         })
     }
 

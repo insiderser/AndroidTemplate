@@ -19,13 +19,23 @@
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
   -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
-    <style name="Widget.Template.Settings.Button" parent="TextAppearance.MaterialComponents.Button">
-        <item name="textAllCaps">false</item>
-        <item name="android:letterSpacing">0</item>
-        <item name="android:paddingVertical" tools:ignore="NewApi">
-            @dimen/settings_item_padding_vertical
-        </item>
+    <style name="Template.Settings.PreferenceThemeOverlay" parent="PreferenceThemeOverlay">
+        <!-- Have to customize each component we use -->
+        <item name="preferenceStyle">@style/Template.Settings.PreferenceStyle</item>
+        <item name="preferenceCategoryStyle">@style/Template.Settings.PreferenceCategoryStyle</item>
+    </style>
+
+    <style name="Template.Settings.PreferenceStyle" parent="Preference.Material">
+        <!-- We handle all persistence logic ourselves -->
+        <item name="persistent">false</item>
+        <item name="iconSpaceReserved">false</item>
+    </style>
+
+    <!-- Have to copy-paste -->
+    <style name="Template.Settings.PreferenceCategoryStyle" parent="Preference.Category.Material">
+        <item name="persistent">false</item>
+        <item name="iconSpaceReserved">false</item>
     </style>
 </resources>

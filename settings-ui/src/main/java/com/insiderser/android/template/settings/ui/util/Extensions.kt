@@ -19,31 +19,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.settings.ui.util
 
-import com.insiderser.android.template.buildSrc.Libs
-import com.insiderser.android.template.buildSrc.configureAndroidModule
+import androidx.fragment.app.Fragment
+import androidx.preference.Preference
+import com.insiderser.android.template.core.util.consume
+import com.insiderser.android.template.model.Theme
+import com.insiderser.android.template.settings.ui.R
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("android.extensions")
-    kotlin("kapt")
+/**
+ * Add [OnPreferenceClickListener][androidx.preference.Preference.OnPreferenceClickListener]
+ * to this [Preference] that consumes the click.
+ */
+internal fun Preference.consumeOnPreferenceClick(consumer: () -> Unit) {
+    setOnPreferenceClickListener {
+        consume {
+            consumer()
+        }
+    }
 }
 
-configureAndroidModule()
-
-dependencies {
-    implementation(project(":core"))
-
-    kapt(Libs.Dagger.compiler)
-
-    testImplementation(project(":test-shared"))
-    testImplementation(Libs.Test.mockK)
-    testImplementation(Libs.Coroutines.test)
-    testImplementation(Libs.Test.Robolectric.robolectric)
-    testImplementation(Libs.Test.AndroidX.core)
-    testImplementation(Libs.Test.AndroidX.ext)
-    testImplementation(Libs.Test.AndroidX.rules)
-    testImplementation(Libs.Test.AndroidX.runner)
-    testImplementation(Libs.Test.AndroidX.arch)
-}
+/**
+ * Get short description of the given [Theme].
+ */
+internal fun Fragment.findTitleForTheme(theme: Theme) = getString(
+    when (theme) {
+        Theme.LIGHT -> R.string.settings_theme_light
+        Theme.DARK -> R.string.settings_theme_dark
+        Theme.FOLLOW_SYSTEM -> R.string.settings_theme_follow_system
+        Theme.AUTO_BATTERY -> R.string.settings_theme_auto_battery
+    }
+)
