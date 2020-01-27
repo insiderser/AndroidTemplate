@@ -63,14 +63,11 @@ jobs:
         with:
           token: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Check code
-        run: ./gradlew dependencyUpdates spotlessCheck app:lintDebug
-
-      - name: Test
-        run: ./gradlew testDebugUnitTest
-
       - name: Build
-        run: ./gradlew app:assembleDebug app:assembleRelease -Papp.versionCode=$BUILD_NUMBER
+        run: >
+          ./gradlew dependencyUpdates spotlessCheck app:lintDebug
+          testDebugUnitTest app:assembleDebug app:assembleRelease
+          -Papp.versionCode=$BUILD_NUMBER
 
       - name: Upload build outputs
         if: always()
