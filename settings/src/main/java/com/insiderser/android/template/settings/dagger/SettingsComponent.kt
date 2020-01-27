@@ -19,34 +19,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.settings.ui.util
+package com.insiderser.android.template.settings.dagger
 
-import androidx.fragment.app.Fragment
-import androidx.preference.Preference
-import com.insiderser.android.template.core.util.consume
-import com.insiderser.android.template.model.Theme
-import com.insiderser.android.template.settings.ui.R
+import com.insiderser.android.template.core.dagger.FeatureScope
+import com.insiderser.android.template.core.dagger.ViewModelFactoryModule
+import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponent
+import com.insiderser.android.template.settings.ui.SettingsFragment
+import com.insiderser.android.template.settings.ui.theme.ThemeSettingDialogFragment
+import dagger.Component
 
 /**
- * Add [OnPreferenceClickListener][androidx.preference.Preference.OnPreferenceClickListener]
- * to this [Preference] that consumes the click.
+ * Dagger component for settings.
+ * @see DaggerSettingsComponent.factory
  */
-internal fun Preference.consumeOnPreferenceClick(consumer: () -> Unit) {
-    setOnPreferenceClickListener {
-        consume {
-            consumer()
-        }
+@Component(
+    modules = [
+        SettingsViewModelModule::class,
+        ViewModelFactoryModule::class
+    ],
+    dependencies = [PreferencesStorageComponent::class]
+)
+@FeatureScope
+internal interface SettingsComponent {
+
+    fun inject(fragment: SettingsFragment)
+    fun inject(fragment: ThemeSettingDialogFragment)
+
+    @Component.Factory
+    interface Factory {
+
+        fun create(
+            preferencesStorageComponent: PreferencesStorageComponent
+        ): SettingsComponent
     }
 }
-
-/**
- * Get short description of the given [Theme].
- */
-internal fun Fragment.findTitleForTheme(theme: Theme) = getString(
-    when (theme) {
-        Theme.LIGHT -> R.string.settings_theme_light
-        Theme.DARK -> R.string.settings_theme_dark
-        Theme.FOLLOW_SYSTEM -> R.string.settings_theme_follow_system
-        Theme.AUTO_BATTERY -> R.string.settings_theme_auto_battery
-    }
-)

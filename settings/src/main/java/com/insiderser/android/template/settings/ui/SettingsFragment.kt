@@ -31,10 +31,11 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.insiderser.android.template.core.result.EventObserver
 import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponentProvider
-import com.insiderser.android.template.settings.ui.dagger.DaggerSettingsComponent
+import com.insiderser.android.template.settings.R
+import com.insiderser.android.template.settings.dagger.DaggerSettingsComponent
 import com.insiderser.android.template.settings.ui.theme.ThemeSettingDialogFragment
-import com.insiderser.android.template.settings.ui.util.consumeOnPreferenceClick
-import com.insiderser.android.template.settings.ui.util.findTitleForTheme
+import com.insiderser.android.template.settings.util.consumeOnPreferenceClick
+import com.insiderser.android.template.settings.util.findTitleForTheme
 import javax.inject.Inject
 
 /**

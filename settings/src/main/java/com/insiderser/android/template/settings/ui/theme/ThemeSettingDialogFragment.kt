@@ -35,10 +35,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.insiderser.android.template.model.Theme
 import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponentProvider
-import com.insiderser.android.template.settings.ui.R
+import com.insiderser.android.template.settings.R
+import com.insiderser.android.template.settings.dagger.DaggerSettingsComponent
 import com.insiderser.android.template.settings.ui.SettingsViewModel
-import com.insiderser.android.template.settings.ui.dagger.DaggerSettingsComponent
-import com.insiderser.android.template.settings.ui.util.findTitleForTheme
+import com.insiderser.android.template.settings.util.findTitleForTheme
 import javax.inject.Inject
 
 /**

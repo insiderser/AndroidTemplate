@@ -19,37 +19,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.settings.ui.dagger
+package com.insiderser.android.template.settings.dagger
 
-import com.insiderser.android.template.core.dagger.FeatureScope
-import com.insiderser.android.template.core.dagger.ViewModelFactoryModule
-import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponent
-import com.insiderser.android.template.settings.ui.SettingsFragment
-import com.insiderser.android.template.settings.ui.theme.ThemeSettingDialogFragment
-import dagger.Component
+import androidx.lifecycle.ViewModel
+import com.insiderser.android.template.core.dagger.ViewModelKey
+import com.insiderser.android.template.settings.ui.SettingsViewModel
+import dagger.Binds
+import dagger.Module
+import dagger.multibindings.IntoMap
 
 /**
- * Dagger component for settings.
- * @see DaggerSettingsComponent.factory
+ * Dagger module that allows our [ViewModel]s to be provided by dagger.
  */
-@Component(
-    modules = [
-        SettingsViewModelModule::class,
-        ViewModelFactoryModule::class
-    ],
-    dependencies = [PreferencesStorageComponent::class]
-)
-@FeatureScope
-internal interface SettingsComponent {
+@Module
+internal interface SettingsViewModelModule {
 
-    fun inject(fragment: SettingsFragment)
-    fun inject(fragment: ThemeSettingDialogFragment)
-
-    @Component.Factory
-    interface Factory {
-
-        fun create(
-            preferencesStorageComponent: PreferencesStorageComponent
-        ): SettingsComponent
-    }
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingsViewModel::class)
+    fun bindSettingsViewModel(vm: SettingsViewModel): ViewModel
 }
