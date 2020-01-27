@@ -19,23 +19,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.settings.ui.dagger
+package com.insiderser.android.template.settings.util
 
-import androidx.lifecycle.ViewModel
-import com.insiderser.android.template.core.dagger.ViewModelKey
-import com.insiderser.android.template.settings.ui.SettingsViewModel
-import dagger.Binds
-import dagger.Module
-import dagger.multibindings.IntoMap
+import androidx.fragment.app.Fragment
+import androidx.preference.Preference
+import com.insiderser.android.template.core.util.consume
+import com.insiderser.android.template.model.Theme
+import com.insiderser.android.template.settings.R
 
 /**
- * Dagger module that allows our [ViewModel]s to be provided by dagger.
+ * Add [OnPreferenceClickListener][androidx.preference.Preference.OnPreferenceClickListener]
+ * to this [Preference] that consumes the click.
  */
-@Module
-internal interface SettingsViewModelModule {
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(SettingsViewModel::class)
-    fun bindSettingsViewModel(vm: SettingsViewModel): ViewModel
+internal fun Preference.consumeOnPreferenceClick(consumer: () -> Unit) {
+    setOnPreferenceClickListener {
+        consume {
+            consumer()
+        }
+    }
 }
+
+/**
+ * Get short description of the given [Theme].
+ */
+internal fun Fragment.findTitleForTheme(theme: Theme) = getString(
+    when (theme) {
+        Theme.LIGHT -> R.string.settings_theme_light
+        Theme.DARK -> R.string.settings_theme_dark
+        Theme.FOLLOW_SYSTEM -> R.string.settings_theme_follow_system
+        Theme.AUTO_BATTERY -> R.string.settings_theme_auto_battery
+    }
+)

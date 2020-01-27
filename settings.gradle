@@ -22,4 +22,4 @@
 
 rootProject.name = "Template"
 include ':app', ':core', ':test-shared', ':data', ':feature1', ':model', ':preferences-data',
-        ':settings-ui'
+        ':settings'

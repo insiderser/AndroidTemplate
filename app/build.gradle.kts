@@ -88,7 +88,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":feature1"))
     implementation(project(":preferences-data"))
-    implementation(project(":settings-ui"))
+    implementation(project(":settings"))
 
     implementation(Libs.AndroidX.coordinatorLayout)
     implementation(Libs.AndroidX.material)
