@@ -24,30 +24,34 @@ package com.insiderser.android.template.prefs.data
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import androidx.annotation.WorkerThread
-import com.insiderser.android.template.prefs.data.delegate.ObservableStringPreference
 import com.insiderser.android.template.prefs.data.delegate.StringPreference
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
  * Storage for app's and user's preferences.
  */
+@WorkerThread
 interface AppPreferencesStorage {
 
     /**
-     * Theme storage key that is currently selected.
+     * Theme storage key that is currently selected, or `null` if nothing selected.
      * @see com.insiderser.android.template.model.Theme
      */
-    @get:WorkerThread
     var selectedTheme: String?
 
     /**
      * A [Flow] with up-to-date theme storage key that is currently selected.
      * @see com.insiderser.android.template.model.Theme
      */
-    @get:WorkerThread
     val selectedThemeObservable: Flow<String?>
 }
 
@@ -57,21 +61,42 @@ interface AppPreferencesStorage {
 @Singleton
 class AppPreferencesStorageImpl @Inject constructor(context: Context) : AppPreferencesStorage {
 
+    private val storageIOScope = CoroutineScope(Dispatchers.IO)
+
     // Lazy to prevent IO on the main thread
     private val sharedPreferences: Lazy<SharedPreferences> = lazy {
-        context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+        context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE).apply {
+            registerOnSharedPreferenceChangeListener(onChangedListener)
+        }
+    }
+
+    private val onChangedListener = OnSharedPreferenceChangeListener { _, key ->
+        when (key) {
+            KEY_THEME -> updateTheme()
+        }
     }
 
     override var selectedTheme: String?
         by StringPreference(sharedPreferences, KEY_THEME)
 
+    private val selectedThemeChannel = ConflatedBroadcastChannel<String?>()
     override val selectedThemeObservable: Flow<String?>
-        by ObservableStringPreference(sharedPreferences, KEY_THEME)
+        get() = selectedThemeChannel.asFlow()
+
+    init {
+        updateTheme()
+    }
+
+    private fun updateTheme() {
+        storageIOScope.launch {
+            selectedThemeChannel.offer(selectedTheme)
+        }
+    }
 
     companion object {
 
-        private const val PREFS_NAME = "preferences"
+        const val PREFS_NAME = "preferences"
 
-        private const val KEY_THEME = "selected_theme"
+        const val KEY_THEME = "selected_theme"
     }
 }

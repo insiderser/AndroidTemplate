@@ -19,28 +19,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.core.domain.theme
+package com.insiderser.android.template.prefs.data.fake
 
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.Q
-import com.insiderser.android.template.model.Theme
+import com.insiderser.android.template.prefs.data.AppPreferencesStorage
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
-import javax.inject.Inject
+import kotlinx.coroutines.flow.asFlow
 
-/**
- * Use case for getting all available themes for the device that
- * we are running on.
- */
-class GetAvailableThemesUseCase @Inject constructor() {
+class FakeAppPreferencesStorage : AppPreferencesStorage {
 
-    /**
-     * Get all available themes for this device.
-     */
-    operator fun invoke(): Flow<List<Theme>> = flowOf(
-        listOf(
-            Theme.LIGHT, Theme.DARK,
-            if (SDK_INT >= Q) Theme.FOLLOW_SYSTEM else Theme.AUTO_BATTERY
-        )
-    )
+    override var selectedTheme: String? = null
+        set(value) {
+            field = value
+            channel.offer(value)
+        }
+
+    private val channel =
+        ConflatedBroadcastChannel(selectedTheme)
+    override val selectedThemeObservable: Flow<String?>
+        get() = channel.asFlow()
 }

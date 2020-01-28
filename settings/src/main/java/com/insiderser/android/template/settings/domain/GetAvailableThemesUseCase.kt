@@ -19,36 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.settings.domain
 
-import com.insiderser.android.template.buildSrc.Libs
-import com.insiderser.android.template.buildSrc.configureAndroidModule
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.Q
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.insiderser.android.template.model.Theme
+import javax.inject.Inject
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("android.extensions")
-    kotlin("kapt")
-}
+/**
+ * Use case for getting all available themes for the device that
+ * we are running on.
+ */
+class GetAvailableThemesUseCase @Inject constructor() {
 
-configureAndroidModule()
-
-kapt {
-    correctErrorTypes = true
-}
-
-dependencies {
-    implementation(project(":core"))
-    implementation(project(":preferences-data"))
-
-    implementation(Libs.AndroidX.constraintlayout)
-    implementation(Libs.AndroidX.material)
-    api(Libs.AndroidX.preference)
-    implementation(Libs.AndroidX.Fragment.fragmentKtx)
-
-    kapt(Libs.Dagger.compiler)
-
-    testImplementation(project(":test-shared"))
-    testImplementation(Libs.Test.mockK)
-    testImplementation(Libs.Coroutines.test)
-    testImplementation(Libs.Test.AndroidX.arch)
+    /**
+     * Get all available themes for this device.
+     */
+    operator fun invoke(): LiveData<List<Theme>> = MutableLiveData(
+        listOf(
+            Theme.LIGHT, Theme.DARK,
+            if (SDK_INT >= Q) Theme.FOLLOW_SYSTEM else Theme.AUTO_BATTERY
+        )
+    )
 }

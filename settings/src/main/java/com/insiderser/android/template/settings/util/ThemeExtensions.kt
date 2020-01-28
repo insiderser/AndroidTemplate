@@ -19,36 +19,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.settings.util
 
-import com.insiderser.android.template.buildSrc.Libs
-import com.insiderser.android.template.buildSrc.configureAndroidModule
+import androidx.fragment.app.Fragment
+import com.insiderser.android.template.model.Theme
+import com.insiderser.android.template.settings.R
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("android.extensions")
-    kotlin("kapt")
-}
-
-configureAndroidModule()
-
-kapt {
-    correctErrorTypes = true
-}
-
-dependencies {
-    implementation(project(":core"))
-    implementation(project(":preferences-data"))
-
-    implementation(Libs.AndroidX.constraintlayout)
-    implementation(Libs.AndroidX.material)
-    api(Libs.AndroidX.preference)
-    implementation(Libs.AndroidX.Fragment.fragmentKtx)
-
-    kapt(Libs.Dagger.compiler)
-
-    testImplementation(project(":test-shared"))
-    testImplementation(Libs.Test.mockK)
-    testImplementation(Libs.Coroutines.test)
-    testImplementation(Libs.Test.AndroidX.arch)
-}
+/**
+ * Get short description of the given [Theme].
+ */
+internal fun Fragment.findTitleForTheme(theme: Theme) = getString(
+    when (theme) {
+        Theme.LIGHT -> R.string.settings_theme_light
+        Theme.DARK -> R.string.settings_theme_dark
+        Theme.FOLLOW_SYSTEM -> R.string.settings_theme_follow_system
+        Theme.AUTO_BATTERY -> R.string.settings_theme_auto_battery
+    }
+)

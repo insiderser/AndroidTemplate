@@ -24,6 +24,7 @@ package com.insiderser.android.template.prefs.data.delegate
 import android.content.SharedPreferences
 import androidx.annotation.WorkerThread
 import androidx.core.content.edit
+import timber.log.Timber
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -43,8 +44,10 @@ internal class StringPreference(
     override fun getValue(thisRef: Any, property: KProperty<*>): String? =
         sharedPreferences.value.getString(preferenceKey, defaultValue)
 
+    @WorkerThread
     override fun setValue(thisRef: Any, property: KProperty<*>, value: String?) {
-        sharedPreferences.value.edit {
+        Timber.v("Changing value of property with key $preferenceKey to $value")
+        sharedPreferences.value.edit(commit = true) {
             putString(preferenceKey, value)
         }
     }

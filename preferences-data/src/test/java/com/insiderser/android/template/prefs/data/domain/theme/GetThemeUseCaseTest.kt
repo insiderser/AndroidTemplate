@@ -45,12 +45,12 @@ class GetThemeUseCaseTest {
     }
 
     @Test
-    fun assert_execute_returnsTheme_whenThemeKeyIsSet() = runBlockingTest {
+    fun assert_whenThemeKeyIsSet_execute_returnsTheme() = runBlockingTest {
         Theme.values().forEach { checkForTheme(it) }
     }
 
     @Test
-    fun assert_execute_returnsTheme_whenThemeKeyIsNull() = runBlockingTest {
+    fun assert_whenThemeKeyIsNull_execute_returnsDefaultTheme() = runBlockingTest {
         checkForTheme(null)
     }
 

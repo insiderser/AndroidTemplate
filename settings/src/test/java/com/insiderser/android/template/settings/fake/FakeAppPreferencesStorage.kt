@@ -19,34 +19,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.settings.util
+package com.insiderser.android.template.settings.fake
 
-import androidx.fragment.app.Fragment
-import androidx.preference.Preference
-import com.insiderser.android.template.core.util.consume
-import com.insiderser.android.template.model.Theme
-import com.insiderser.android.template.settings.R
+import com.insiderser.android.template.prefs.data.AppPreferencesStorage
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 
-/**
- * Add [OnPreferenceClickListener][androidx.preference.Preference.OnPreferenceClickListener]
- * to this [Preference] that consumes the click.
- */
-internal fun Preference.consumeOnPreferenceClick(consumer: () -> Unit) {
-    setOnPreferenceClickListener {
-        consume {
-            consumer()
+class FakeAppPreferencesStorage : AppPreferencesStorage {
+
+    override var selectedTheme: String? = null
+        set(value) {
+            field = value
+            channel.offer(value)
         }
-    }
-}
 
-/**
- * Get short description of the given [Theme].
- */
-internal fun Fragment.findTitleForTheme(theme: Theme) = getString(
-    when (theme) {
-        Theme.LIGHT -> R.string.settings_theme_light
-        Theme.DARK -> R.string.settings_theme_dark
-        Theme.FOLLOW_SYSTEM -> R.string.settings_theme_follow_system
-        Theme.AUTO_BATTERY -> R.string.settings_theme_auto_battery
-    }
-)
+    private val channel =
+        ConflatedBroadcastChannel(selectedTheme)
+    override val selectedThemeObservable: Flow<String?>
+        get() = channel.asFlow()
+}
