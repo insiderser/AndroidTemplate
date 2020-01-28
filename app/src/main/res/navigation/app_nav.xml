@@ -39,6 +39,5 @@
     <fragment
         android:id="@+id/settings_dest"
         android:name="com.insiderser.android.template.settings.ui.SettingsFragment"
-        android:label="@string/settings_label"
-        tools:layout="@layout/settings_fragment" />
+        android:label="@string/settings_label" />
 </navigation>
