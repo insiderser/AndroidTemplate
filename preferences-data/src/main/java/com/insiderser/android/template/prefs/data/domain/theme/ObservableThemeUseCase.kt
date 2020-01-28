@@ -49,15 +49,15 @@ class ObservableThemeUseCase @Inject constructor(
             return
         }
 
-        val themeLiveData = withContext(Dispatchers.IO) {
+        val themeFlow = withContext(Dispatchers.IO) {
             preferencesStorage.selectedThemeObservable.map { storageKey: String? ->
                 storageKey?.let { Theme.fromStorageKey(storageKey) }
                     ?: DEFAULT_THEME
-            }.asLiveData()
+            }
         }
 
         withContext(Dispatchers.Main) {
-            result.addSource(themeLiveData) { themeResult ->
+            result.addSource(themeFlow.asLiveData()) { themeResult ->
                 result.value = themeResult
             }
         }

@@ -24,14 +24,13 @@ package com.insiderser.android.template.settings.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.insiderser.android.template.core.domain.execute
-import com.insiderser.android.template.core.domain.theme.GetAvailableThemesUseCase
 import com.insiderser.android.template.core.result.Event
 import com.insiderser.android.template.model.Theme
 import com.insiderser.android.template.prefs.data.domain.theme.ObservableThemeUseCase
 import com.insiderser.android.template.prefs.data.domain.theme.SetThemeUseCase
+import com.insiderser.android.template.settings.domain.GetAvailableThemesUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -39,7 +38,7 @@ import javax.inject.Inject
  * [ViewModel] for [SettingsFragment] that manages preferences.
  */
 internal class SettingsViewModel @Inject constructor(
-    availableThemesUseCase: GetAvailableThemesUseCase,
+    getAvailableThemesUseCase: GetAvailableThemesUseCase,
     observableThemeUseCase: ObservableThemeUseCase,
     private val setThemeUseCase: SetThemeUseCase
 ) : ViewModel() {
@@ -52,8 +51,7 @@ internal class SettingsViewModel @Inject constructor(
     val showThemeSettingDialog: LiveData<Event<Unit>> get() = _openThemeSettingDialog
 
     /** All themes that user can choose from. */
-    val availableThemes: LiveData<List<Theme>> = availableThemesUseCase()
-        .asLiveData(viewModelScope.coroutineContext)
+    val availableThemes: LiveData<List<Theme>> = getAvailableThemesUseCase()
 
     /** Currently selected theme by the user, or (if nothing selected) a default value. */
     val selectedTheme: LiveData<Theme> = observableThemeUseCase.observe()

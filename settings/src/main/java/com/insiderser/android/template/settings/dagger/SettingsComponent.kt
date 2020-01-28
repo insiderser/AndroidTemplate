@@ -21,10 +21,12 @@
  */
 package com.insiderser.android.template.settings.dagger
 
+import androidx.annotation.VisibleForTesting
 import com.insiderser.android.template.core.dagger.FeatureScope
 import com.insiderser.android.template.core.dagger.ViewModelFactoryModule
 import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponent
 import com.insiderser.android.template.settings.ui.SettingsFragment
+import com.insiderser.android.template.settings.ui.SettingsViewModel
 import com.insiderser.android.template.settings.ui.theme.ThemeSettingDialogFragment
 import dagger.Component
 
@@ -44,6 +46,9 @@ internal interface SettingsComponent {
 
     fun inject(fragment: SettingsFragment)
     fun inject(fragment: ThemeSettingDialogFragment)
+
+    @VisibleForTesting
+    val settingsViewModel: SettingsViewModel
 
     @Component.Factory
     interface Factory {

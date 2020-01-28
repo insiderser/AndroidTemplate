@@ -19,36 +19,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.settings.util
 
-import com.insiderser.android.template.buildSrc.Libs
-import com.insiderser.android.template.buildSrc.configureAndroidModule
+import androidx.preference.Preference
+import com.insiderser.android.template.core.util.consume
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("android.extensions")
-    kotlin("kapt")
-}
-
-configureAndroidModule()
-
-kapt {
-    correctErrorTypes = true
-}
-
-dependencies {
-    implementation(project(":core"))
-    implementation(project(":preferences-data"))
-
-    implementation(Libs.AndroidX.constraintlayout)
-    implementation(Libs.AndroidX.material)
-    api(Libs.AndroidX.preference)
-    implementation(Libs.AndroidX.Fragment.fragmentKtx)
-
-    kapt(Libs.Dagger.compiler)
-
-    testImplementation(project(":test-shared"))
-    testImplementation(Libs.Test.mockK)
-    testImplementation(Libs.Coroutines.test)
-    testImplementation(Libs.Test.AndroidX.arch)
+/**
+ * Add [OnPreferenceClickListener][androidx.preference.Preference.OnPreferenceClickListener]
+ * to this [Preference] that consumes the click.
+ */
+internal fun Preference.consumeOnPreferenceClick(consumer: () -> Unit) {
+    setOnPreferenceClickListener {
+        consume {
+            consumer()
+        }
+    }
 }
