@@ -76,13 +76,25 @@ subprojects {
 
     tasks.withType<KotlinCompile> {
         kotlinOptions {
+            allWarningsAsErrors = true
             jvmTarget = Versions.jvmTarget
-            freeCompilerArgs = listOf(
+
+            val compilerArgs = mutableListOf(
                 "-Xjsr305=strict",
-                "-Xuse-experimental=kotlin.Experimental",
-                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                "-Xuse-experimental=kotlinx.coroutines.FlowPreview"
+                "-Xuse-experimental=kotlin.Experimental"
             )
+
+            // We don't use coroutines or flow in those projects. Because of this,
+            // Kotlin compiler will generate a warning that will fail our build
+            // because we have `allWarningsAsErrors = true`
+            val projectNamesWithoutCoroutinesFlow = arrayOf("model", "test-shared")
+            if (this@subprojects.name !in projectNamesWithoutCoroutinesFlow) {
+                compilerArgs += listOf(
+                    "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                    "-Xuse-experimental=kotlinx.coroutines.FlowPreview"
+                )
+            }
+            freeCompilerArgs = compilerArgs
         }
     }
 }
