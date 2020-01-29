@@ -37,12 +37,10 @@ dependencies {
 
     implementation(Libs.AndroidX.constraintlayout)
     implementation(Libs.AndroidX.material)
+    implementation(Libs.AndroidX.Fragment.fragmentKtx)
 
     implementation(Libs.AndroidX.Lifecycle.extensions)
     implementation(Libs.AndroidX.Lifecycle.viewModelKtx)
-
-    implementation(Libs.AndroidX.Fragment.fragment)
-    implementation(Libs.AndroidX.Fragment.fragmentKtx)
 
     implementation(Libs.Dagger.dagger)
     kapt(Libs.Dagger.compiler)
@@ -51,7 +49,6 @@ dependencies {
     debugImplementation(Libs.AndroidX.Fragment.testing) {
         exclude(group = "androidx.test", module = "core")
     }
-
     testImplementation(Libs.Test.Robolectric.robolectric)
     testImplementation(Libs.Test.AndroidX.core)
     testImplementation(Libs.Test.AndroidX.runner)

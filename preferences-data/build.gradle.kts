@@ -40,10 +40,4 @@ dependencies {
     testImplementation(project(":test-shared"))
     testImplementation(Libs.Test.mockK)
     testImplementation(Libs.Coroutines.test)
-    testImplementation(Libs.Test.Robolectric.robolectric)
-    testImplementation(Libs.Test.AndroidX.core)
-    testImplementation(Libs.Test.AndroidX.ext)
-    testImplementation(Libs.Test.AndroidX.rules)
-    testImplementation(Libs.Test.AndroidX.runner)
-    testImplementation(Libs.Test.AndroidX.arch)
 }

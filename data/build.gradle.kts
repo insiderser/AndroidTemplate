@@ -65,5 +65,4 @@ dependencies {
     testImplementation(Libs.Test.AndroidX.rules)
     testImplementation(Libs.Test.AndroidX.runner)
     testImplementation(Libs.Test.AndroidX.arch)
-    testImplementation(Libs.Test.AndroidX.Espresso.espressoCore)
 }
