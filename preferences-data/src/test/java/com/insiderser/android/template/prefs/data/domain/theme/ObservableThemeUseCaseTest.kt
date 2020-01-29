@@ -53,13 +53,13 @@ class ObservableThemeUseCaseTest {
         }
         useCase()
 
-        val defaultValue = currentThemeSubscription.receiveWithTimeout(100L)
+        val defaultValue = currentThemeSubscription.receiveWithTimeout(250L)
         assertThat(defaultValue).isAnyOf(Theme.AUTO_BATTERY, Theme.FOLLOW_SYSTEM)
 
         Theme.values().forEach { theme ->
             storage.selectedTheme = theme.storageKey
 
-            val postedTheme = currentThemeSubscription.receiveWithTimeout(100L)
+            val postedTheme = currentThemeSubscription.receiveWithTimeout(250L)
             assertThat(postedTheme).isEqualTo(theme)
             assertThat(storage.selectedTheme).isEqualTo(theme.storageKey)
         }
