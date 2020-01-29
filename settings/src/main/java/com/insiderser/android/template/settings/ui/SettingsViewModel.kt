@@ -24,8 +24,9 @@ package com.insiderser.android.template.settings.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.insiderser.android.template.core.domain.execute
+import com.insiderser.android.template.core.domain.invoke
 import com.insiderser.android.template.core.result.Event
 import com.insiderser.android.template.model.Theme
 import com.insiderser.android.template.prefs.data.domain.theme.ObservableThemeUseCase
@@ -55,6 +56,7 @@ internal class SettingsViewModel @Inject constructor(
 
     /** Currently selected theme by the user, or (if nothing selected) a default value. */
     val selectedTheme: LiveData<Theme> = observableThemeUseCase.observe()
+        .asLiveData(viewModelScope.coroutineContext)
 
     /**
      * Set given [theme][Theme] as app's theme.
@@ -72,7 +74,7 @@ internal class SettingsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            observableThemeUseCase.execute()
+            observableThemeUseCase()
         }
     }
 }

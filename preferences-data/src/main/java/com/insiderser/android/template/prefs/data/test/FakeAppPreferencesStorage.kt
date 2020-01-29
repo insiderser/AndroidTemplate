@@ -19,23 +19,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.settings.fake
+package com.insiderser.android.template.prefs.data.test
 
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope.TESTS
 import com.insiderser.android.template.prefs.data.AppPreferencesStorage
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 
+/**
+ * Fake [AppPreferencesStorage] implementation that doesn't use [android.content.SharedPreferences].
+ *
+ * **For testing purposes only!**
+ */
+@RestrictTo(TESTS)
 class FakeAppPreferencesStorage : AppPreferencesStorage {
 
     override var selectedTheme: String? = null
         set(value) {
             field = value
-            channel.offer(value)
+            selectedThemeChannel.offer(value)
         }
 
-    private val channel =
-        ConflatedBroadcastChannel(selectedTheme)
+    private val selectedThemeChannel = ConflatedBroadcastChannel(selectedTheme)
     override val selectedThemeObservable: Flow<String?>
-        get() = channel.asFlow()
+        get() = selectedThemeChannel.asFlow()
 }

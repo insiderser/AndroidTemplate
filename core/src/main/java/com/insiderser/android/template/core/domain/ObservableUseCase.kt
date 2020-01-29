@@ -21,37 +21,50 @@
  */
 package com.insiderser.android.template.core.domain
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
 
 /**
- * Executes its business logic in [execute] method. Implementations can post the result to
- * [`result MediatorLiveData`][result].
+ * Executes its business logic in [createObservable] method.
  *
- * @param P Type of parameter that will be passed to [execute] function.
- * @param R Type that will be returned, wrapped in [LiveData].
+ * @param P Type of parameter that will be passed to [createObservable] function.
+ * @param R Type that will be returned, wrapped in [Flow].
  */
 abstract class ObservableUseCase<in P, R> {
 
-    protected val result = MediatorLiveData<R>()
+    private val channel = ConflatedBroadcastChannel<P>()
 
     /**
-     * Returns a [LiveData] observable where all results will be posted.
+     * Execute the logic with the given [parameters][params]. This method is non-blocking,
+     * meaning that it's safe to call it on any thread.
+     */
+    operator fun invoke(params: P) {
+        channel.offer(params)
+    }
+
+    /**
+     * Executes the logic. Won't be called if [params] haven't changed.
+     *
+     * **Note**: it's implementation's responsibility to make sure that
+     * no heavy logic is executed on the main thread.
+     */
+    protected abstract suspend fun createObservable(params: P): Flow<R>
+
+    /**
+     * Returns observable [Flow] that will be updated with new values.
      *
      * **Note**: this method only returns the observable. To execute this use case,
-     * call [execute] method.
+     * call [invoke] method.
      */
-    fun observe(): LiveData<R> = result
-
-    /**
-     * Execute the logic.
-     */
-    abstract suspend fun execute(param: P)
+    fun observe(): Flow<R> = channel.asFlow()
+        .distinctUntilChanged()
+        .flatMapLatest { createObservable(it) }
 }
 
 /**
- * Execute the logic.
- *
- * **Note**: make sure to call it on a suitable thread.
+ * Execute the logic. This method is non-blocking, meaning that it's safe to call it on any thread.
  */
-suspend fun <R> ObservableUseCase<Unit, R>.execute() = execute(Unit)
+operator fun <R> ObservableUseCase<Unit, R>.invoke() = invoke(Unit)

@@ -21,45 +21,28 @@
  */
 package com.insiderser.android.template.prefs.data.domain.theme
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
 import com.insiderser.android.template.core.domain.ObservableUseCase
-import com.insiderser.android.template.core.result.Result
 import com.insiderser.android.template.model.Theme
 import com.insiderser.android.template.prefs.data.AppPreferencesStorage
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 /**
- * Use case for getting [LiveData] of user-selected theme settings from app preferences.
- * The [Result] is always [Result.Success].
+ * Use case for getting observable [Flow] of user-selected theme settings from app preferences.
+ * @see observe
+ * @see invoke
  */
 class ObservableThemeUseCase @Inject constructor(
     private val preferencesStorage: AppPreferencesStorage
 ) : ObservableUseCase<Unit, Theme>() {
 
-    private val executed = AtomicBoolean(false)
-
-    override suspend fun execute(param: Unit) {
-        if (executed.getAndSet(true)) {
-            // We're already observing changes in app preferences. No need to do anything again.
-            return
-        }
-
-        val themeFlow = withContext(Dispatchers.IO) {
-            preferencesStorage.selectedThemeObservable.map { storageKey: String? ->
-                storageKey?.let { Theme.fromStorageKey(storageKey) }
-                    ?: DEFAULT_THEME
-            }
-        }
-
-        withContext(Dispatchers.Main) {
-            result.addSource(themeFlow.asLiveData()) { themeResult ->
-                result.value = themeResult
-            }
+    override suspend fun createObservable(params: Unit): Flow<Theme> = withContext(Dispatchers.IO) {
+        preferencesStorage.selectedThemeObservable.map { storageKey: String? ->
+            storageKey?.let { Theme.fromStorageKey(storageKey) }
+                ?: DEFAULT_THEME
         }
     }
 }

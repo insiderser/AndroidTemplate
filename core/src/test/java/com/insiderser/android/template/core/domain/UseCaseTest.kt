@@ -30,7 +30,6 @@ import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.spyk
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -46,7 +45,8 @@ import org.junit.Test
 
 class UseCaseTest {
 
-    @get:Rule
+    @Rule
+    @JvmField
     val executor = InstantTaskExecutorRule()
 
     @MockK
@@ -60,16 +60,14 @@ class UseCaseTest {
 
     private lateinit var useCaseImpl: FakeUseCase
 
-    private lateinit var channel: Channel<Result<FakeResult>>
+    private val channel = Channel<Result<FakeResult>>(UNLIMITED)
 
-    private lateinit var dispatcher: CoroutineDispatcher
+    private val dispatcher = TestCoroutineDispatcher()
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        dispatcher = TestCoroutineDispatcher()
         useCaseImpl = spyk(FakeUseCase())
-        channel = Channel(UNLIMITED)
     }
 
     @After
@@ -80,22 +78,10 @@ class UseCaseTest {
     }
 
     @Test
-    fun assert_executeWasSuccessful_returnsSuccessfulResult_executeNow() =
-        runBlockingTest(dispatcher) {
-            val result = useCaseImpl.executeNow(fakeParam)
-
-            assertThat(result).isInstanceOf(Result.Success::class.java)
-            assertThat((result as Result.Success).data).isSameInstanceAs(fakeResult)
-            coVerify(exactly = 1) { useCaseImpl.execute(fakeParam) }
-        }
-
-    @Test
-    fun assert_executeFailed_returnsErrorResult_executeNow() = runBlockingTest(dispatcher) {
-        coEvery { useCaseImpl.execute(fakeParam) } throws exception
+    fun assert_executeNow_callsExecute() = runBlockingTest(dispatcher) {
         val result = useCaseImpl.executeNow(fakeParam)
 
-        assertThat(result).isInstanceOf(Result.Error::class.java)
-        assertThat((result as Result.Error).cause).isSameInstanceAs(exception)
+        assertThat(result).isSameInstanceAs(fakeResult)
         coVerify(exactly = 1) { useCaseImpl.execute(fakeParam) }
     }
 
@@ -131,9 +117,9 @@ class UseCaseTest {
     }
 
     @Test
-    fun assert_cancelAll_cancelsPendingJobs() = runBlockingTest(dispatcher) {
+    fun assert_cancel_cancelsPendingJobs() = runBlockingTest(dispatcher) {
         useCaseImpl(fakeParam, channel)
-        useCaseImpl.cancelAll()
+        useCaseImpl.cancel()
 
         withTimeoutOrNull(DELAY * 2) {
             val firstValue = channel.receive()

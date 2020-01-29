@@ -34,7 +34,7 @@ import kotlinx.coroutines.asExecutor
  * You don't need to use this class directly. Instead, get one of DAOs using Dagger.
  *
  * In big projects, it's preferable to create separate database classes for each
- * feature/module. That's due to the fact that if you have one DB for the whole app,
+ * feature/module. That's because if you have one DB for the whole app,
  * it won't scale very well and has no isolation. On the other hand,
  * with feature-based DBs you create separate DBs for each feature,
  * which scales very well and has perfect isolation, but it costs more because

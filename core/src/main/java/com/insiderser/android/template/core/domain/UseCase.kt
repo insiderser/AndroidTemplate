@@ -28,7 +28,6 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.flow.Flow
@@ -68,12 +67,10 @@ abstract class UseCase<in P, R>(
      */
     @VisibleForTesting
     operator fun invoke(param: P, channel: SendChannel<Result<R>>) {
-        Timber.v("Executing ${javaClass.canonicalName} with parameter $param")
         coroutineScope.launch {
             channel.offer(Result.Loading)
             try {
                 val result = execute(param)
-                Timber.v("Execution was successful, returned $result")
                 channel.offer(Result.Success(result))
             } catch (e: CancellationException) {
                 Timber.d("Job was cancelled")
@@ -87,41 +84,34 @@ abstract class UseCase<in P, R>(
 
     /**
      * Execute this use case, suspending calling coroutine until finished.
-     * @return Either [Result.Success] or [Result.Error].
      */
-    suspend fun executeNow(param: P): Result<R> = withContext(coroutineScope.coroutineContext) {
-        try {
-            Result.Success(execute(param))
-        } catch (e: Exception) {
-            Result.Error(e)
-        }
+    suspend fun executeNow(param: P): R = withContext(coroutineDispatcher) {
+        execute(param)
     }
 
     /**
      * Executes core logic.
      *
-     * Will be called with a [coroutineDispatcher] context passed as a parameter
+     * Will be called on a [coroutineDispatcher] passed as a parameter
      * to [UseCase] constructor. Can be canceled at any moment.
      *
-     * This method is fail-safe, meaning that failure here won't cause
-     * parent coroutine to crash.
+     * Execution is considered successful if it returns without any [Exception].
      */
     @Throws(Exception::class)
     @VisibleForTesting(otherwise = PROTECTED)
     abstract suspend fun execute(param: P): R
 
     /**
-     * Cancel all ongoing jobs of this use case. You can still use this use case to
-     * execute new jobs.
+     * Cancel all ongoing jobs of this use case. This use case can't be used anymore.
      */
-    fun cancelAll() {
-        job.cancelChildren()
+    fun cancel() {
+        job.cancel()
     }
 }
 
 /**
  * Execute this use case. Can be called on any thread.
- * @return [Flow] where the result will be posted.
+ * @return A [Flow] where the result will be posted.
  */
 operator fun <R> UseCase<Unit, R>.invoke(): Flow<Result<R>> = invoke(Unit)
 
@@ -129,4 +119,4 @@ operator fun <R> UseCase<Unit, R>.invoke(): Flow<Result<R>> = invoke(Unit)
  * Execute this use case, suspending calling coroutine until finished.
  * @return Either [Result.Success] or [Result.Error].
  */
-suspend fun <R> UseCase<Unit, R>.executeNow(): Result<R> = executeNow(Unit)
+suspend fun <R> UseCase<Unit, R>.executeNow(): R = executeNow(Unit)

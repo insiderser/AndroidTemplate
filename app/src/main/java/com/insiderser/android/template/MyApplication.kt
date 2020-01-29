@@ -23,10 +23,9 @@ package com.insiderser.android.template
 
 import android.os.StrictMode
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.lifecycle.Observer
 import com.insiderser.android.template.core.dagger.CoreComponent
 import com.insiderser.android.template.core.dagger.CoreComponentProvider
-import com.insiderser.android.template.core.domain.execute
+import com.insiderser.android.template.core.domain.invoke
 import com.insiderser.android.template.core.util.toAppCompatNightMode
 import com.insiderser.android.template.dagger.AppComponent
 import com.insiderser.android.template.dagger.DaggerAppComponent
@@ -38,6 +37,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -91,15 +91,14 @@ class MyApplication : DaggerApplication(), CoreComponentProvider,
     }
 
     private fun initTheme() {
-        observableThemeUseCase.observe().observeForever(Observer(::updateAppTheme))
-
         appScope.launch {
-            observableThemeUseCase.execute()
+            observableThemeUseCase()
+            observableThemeUseCase.observe().collect { updateAppTheme(it) }
         }
     }
 
     private fun updateAppTheme(selectedTheme: Theme) {
-        Timber.d("Setting theme to $selectedTheme")
+        Timber.d("Setting app theme to $selectedTheme")
         AppCompatDelegate.setDefaultNightMode(selectedTheme.toAppCompatNightMode())
     }
 

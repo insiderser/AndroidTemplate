@@ -21,78 +21,56 @@
  */
 package com.insiderser.android.template.prefs.data.domain.theme
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.template.core.domain.execute
+import com.insiderser.android.template.core.domain.invoke
 import com.insiderser.android.template.model.Theme
-import com.insiderser.android.template.prefs.data.fake.FakeAppPreferencesStorage
-import kotlinx.coroutines.Dispatchers
+import com.insiderser.android.template.prefs.data.test.FakeAppPreferencesStorage
 import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
+import kotlinx.coroutines.withTimeout
 import org.junit.Test
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
 
 @ObsoleteCoroutinesApi
 class ObservableThemeUseCaseTest {
 
-    @Rule
-    @JvmField
-    val executorRule = InstantTaskExecutorRule()
-
-    private val storage = FakeAppPreferencesStorage()
+    private val storage =
+        FakeAppPreferencesStorage()
 
     private val useCase = ObservableThemeUseCase(storage)
 
-    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
-
-    @Before
-    fun setUp() {
-        Dispatchers.setMain(mainThreadSurrogate)
-    }
-
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
-        mainThreadSurrogate.close()
-    }
-
     @Test
-    fun test() {
-        val observable = useCase.observe()
-
-        var latch = CountDownLatch(1)
-        var postedTheme: Theme? = null
-        observable.observeForever {
-            postedTheme = it
-            latch.countDown()
+    fun assert_whenPreferenceUpdated_flowIsUpdated() = runBlocking {
+        val channel = ConflatedBroadcastChannel<Theme>()
+        val currentThemeSubscription = channel.openSubscription()
+        val collectJob = launch {
+            useCase.observe().collect { channel.offer(it) }
         }
+        useCase()
 
-        runBlocking { useCase.execute() }
-
-        // Check default value
-        latch.await(500, TimeUnit.MILLISECONDS)
-        assertThat(postedTheme).isAnyOf(Theme.AUTO_BATTERY, Theme.FOLLOW_SYSTEM)
+        val defaultValue = currentThemeSubscription.receiveWithTimeout(100L)
+        assertThat(defaultValue).isAnyOf(Theme.AUTO_BATTERY, Theme.FOLLOW_SYSTEM)
 
         Theme.values().forEach { theme ->
-            latch = CountDownLatch(1)
             storage.selectedTheme = theme.storageKey
 
-            latch.await(500, TimeUnit.MILLISECONDS)
+            val postedTheme = currentThemeSubscription.receiveWithTimeout(100L)
             assertThat(postedTheme).isEqualTo(theme)
             assertThat(storage.selectedTheme).isEqualTo(theme.storageKey)
         }
 
-        // Check no more posted values
-        postedTheme = null
-        latch = CountDownLatch(1)
-        latch.await(500, TimeUnit.MILLISECONDS)
-        assertThat(postedTheme as Any?).isNull()
+        channel.cancel()
+        collectJob.cancelAndJoin()
     }
+
+    @Throws(TimeoutCancellationException::class)
+    private suspend fun <T> ReceiveChannel<T>.receiveWithTimeout(timeoutMs: Long) =
+        withTimeout(timeoutMs) {
+            receive()
+        }
 }

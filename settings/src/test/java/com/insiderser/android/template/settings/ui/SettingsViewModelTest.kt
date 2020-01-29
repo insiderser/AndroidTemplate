@@ -25,8 +25,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.template.model.Theme
 import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponent
+import com.insiderser.android.template.prefs.data.test.FakeAppPreferencesStorage
 import com.insiderser.android.template.settings.dagger.DaggerSettingsComponent
-import com.insiderser.android.template.settings.fake.FakeAppPreferencesStorage
 import com.insiderser.android.template.test.shared.util.await
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -50,8 +50,7 @@ class SettingsViewModelTest {
     @JvmField
     val executorRule = InstantTaskExecutorRule()
 
-    private val storage =
-        FakeAppPreferencesStorage()
+    private val storage = FakeAppPreferencesStorage()
 
     @MockK
     private lateinit var storageComponent: PreferencesStorageComponent
