@@ -45,7 +45,7 @@ object Versions {
  */
 object Libs {
     // Updating gradle version? See buildSrc/build.gradle.kts
-    const val androidGradlePlugin = "com.android.tools.build:gradle:3.6.0-rc01"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:3.6.0-rc02"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
@@ -71,19 +71,6 @@ object Libs {
             const val rules = "androidx.test:rules:$version"
             const val ext = "androidx.test.ext:junit:1.1.1"
             const val extTruth = "androidx.test.ext:truth:1.2.0"
-
-            /**
-             * This artifact provides `InstantTaskExecutorRule`,
-             * that can be used from JUnit-based tests to replace
-             * the Architecture Components’ standard `Executor`
-             * with one that runs everything on the current thread.
-             * This turns formerly asynchronous operations into synchronous ones,
-             * which streamlines testing.
-             *
-             * `InstantTaskExecutorRule` is good for testing `LiveData`,
-             * particularly when returned from `Room`.
-             * (from [AndroidX Tech](https://androidx.tech/artifacts/arch.core/core-testing/))
-             */
             const val arch = "androidx.arch.core:core-testing:2.1.0"
 
             object Espresso {
@@ -175,7 +162,7 @@ object Libs {
     }
 
     object Dagger {
-        private const val version = "2.25.4"
+        private const val version = "2.26"
         const val dagger = "com.google.dagger:dagger:$version"
         const val androidSupport = "com.google.dagger:dagger-android-support:$version"
         const val compiler = "com.google.dagger:dagger-compiler:$version"

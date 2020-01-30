@@ -30,5 +30,5 @@ repositories {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:3.6.0-rc01")
+    implementation("com.android.tools.build:gradle:3.6.0-rc02")
 }
