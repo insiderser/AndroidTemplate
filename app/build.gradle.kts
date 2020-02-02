@@ -76,8 +76,9 @@ kapt {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":feature1"))
     implementation(project(":preferences-data"))
+    implementation(project(":navigation"))
+    implementation(project(":feature1"))
     implementation(project(":settings"))
 
     implementation(Libs.AndroidX.material)
@@ -85,9 +86,6 @@ dependencies {
     implementation(Libs.AndroidX.Fragment.fragmentKtx)
 
     implementation(Libs.edgeToEdge)
-
-    implementation(Libs.AndroidX.Navigation.ui)
-    implementation(Libs.AndroidX.Navigation.fragment)
 
     implementation(Libs.Dagger.androidSupport)
     kapt(Libs.Dagger.compiler)

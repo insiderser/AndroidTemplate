@@ -38,6 +38,7 @@ kapt {
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":navigation"))
     implementation(project(":preferences-data"))
 
     implementation(Libs.AndroidX.constraintLayout)

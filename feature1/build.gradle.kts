@@ -34,6 +34,8 @@ configureAndroidModule()
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":navigation"))
+    implementation(project(":data"))
 
     implementation(Libs.AndroidX.constraintLayout)
     implementation(Libs.AndroidX.material)

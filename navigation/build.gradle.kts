@@ -19,28 +19,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.core.util
 
-import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.template.test.shared.util.SimpleTestClass
-import io.mockk.mockk
-import io.mockk.verify
-import org.junit.Test
+import com.insiderser.android.template.buildSrc.Libs
+import com.insiderser.android.template.buildSrc.configureAndroidModule
 
-class ExtensionsKtTest {
+plugins {
+    id("com.android.library")
+    kotlin("android")
+    kotlin("android.extensions")
+    id("androidx.navigation.safeargs.kotlin")
+}
 
-    @Test
-    fun assert_consume_executesFunctionAndReturnsTrue() {
-        val function = mockk<() -> Unit>(relaxed = true)
-        val result = consume(function)
+configureAndroidModule()
 
-        verify(exactly = 1) { function.invoke() }
-        assertThat(result).isTrue()
-    }
-
-    @Test
-    fun assert_checkAllMatched_returnsSameObject() {
-        val obj = SimpleTestClass()
-        assertThat(obj.checkAllMatched()).isSameInstanceAs(obj)
-    }
+dependencies {
+    api(Libs.AndroidX.Navigation.fragment)
+    api(Libs.AndroidX.Navigation.ui)
 }

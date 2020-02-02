@@ -19,7 +19,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.navigation
 
-rootProject.name = "Template"
-include ':app', ':core', ':test-shared', ':data', ':feature1', ':model', ':preferences-data',
-        ':settings', ':navigation'
+import androidx.appcompat.widget.Toolbar
+
+/**
+ * Should be implemented by [activities][android.app.Activity] that
+ * have child [fragments][androidx.fragment.app.Fragment] that create their own [Toolbar].
+ */
+interface NavigationHost {
+
+    /**
+     * Child [Fragment][androidx.fragment.app.Fragment] has the given [toolbar]. Please,
+     * initialize all the navigation boilerplate, such as up or hamburger buttons,
+     * menus, etc.
+     */
+    fun registerToolbarWithNavigation(toolbar: Toolbar)
+}
