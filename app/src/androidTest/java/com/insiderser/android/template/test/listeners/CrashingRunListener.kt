@@ -1,6 +1,5 @@
 /*
  * Copyright 2020 Oleksandr Bezushko
- * Copyright 2020 pyricau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -55,6 +54,8 @@ import org.junit.runner.notification.RunListener
  * -e listener com.insiderser.android.template.test.shared.util.CrashingRunListener
  * ```
  */
+// Credits to pyricau https://gist.github.com/pyricau/970b95a4757a99b26562fd95e146f38f
+@Suppress("unused")
 class CrashingRunListener : RunListener() {
 
     @Volatile

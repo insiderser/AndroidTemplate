@@ -38,7 +38,8 @@ import com.insiderser.android.template.settings.R
  */
 @Suppress("MemberVisibilityCanBePrivate")
 internal class PreferenceView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null,
+    context: Context,
+    attrs: AttributeSet? = null,
     @AttrRes defStyleAttr: Int = R.attr.preferenceStyle,
     @StyleRes defStyleRes: Int = R.style.Widget_Template_Settings_PreferenceView
 ) : LinearLayoutCompat(context, attrs, defStyleAttr) {
