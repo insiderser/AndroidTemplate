@@ -167,11 +167,11 @@ jobs:
         if: always()
         run: |
           mkdir -p android-junit
-          find . -type d -regex ".*/build/reports/androidTests/connected" -exec cp -r {}/* android-junit/ \;
+          find . -type d -regex ".*/build/reports/androidTests/connected" -exec cp -r {} android-junit/ \;
 
       - name: Upload reports
         if: always()
         uses: actions/upload-artifact@v1
         with:
-          name: android-junit
+          name: android-junit-${{ matrix.api-level }}
           path: android-junit
