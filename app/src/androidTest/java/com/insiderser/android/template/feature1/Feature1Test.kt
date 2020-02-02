@@ -28,6 +28,7 @@ import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.RootMatchers.isPlatformPopup
 import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
@@ -67,7 +68,10 @@ class Feature1Test {
     fun assert_clickingOnSettingsMenu_navigatesToSettings_then_navigateBack_returnsToFeature1() {
         openActionBarOverflowOrOptionsMenu(getApplicationContext())
 
+        Thread.sleep(2000L)
+
         onView(withText(R.string.settings))
+            .inRoot(isPlatformPopup())
             .check(matches(isCompletelyDisplayed()))
             .perform(click())
 
