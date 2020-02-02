@@ -68,7 +68,7 @@
                 app:title="@string/settings_choose_theme"
                 tools:summary="@string/settings_theme_follow_system" />
 
-            <include layout="@layout/settings_divider" />
+            <View style="@style/Widget.Template.Settings.Divider" />
 
             <TextView
                 android:id="@+id/about_group_label"
