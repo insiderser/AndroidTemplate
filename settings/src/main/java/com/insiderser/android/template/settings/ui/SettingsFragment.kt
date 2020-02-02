@@ -41,6 +41,10 @@ import com.insiderser.android.template.settings.util.findTitleForTheme
 import dev.chrisbanes.insetter.doOnApplyWindowInsets
 import javax.inject.Inject
 
+/**
+ * A root [fragment][androidx.fragment.app.Fragment] that displays a list of preferences.
+ * All preferences are stored in preferences storage.
+ */
 class SettingsFragment : FragmentWithViewBinding<SettingsFragmentBinding>() {
 
     @Inject
