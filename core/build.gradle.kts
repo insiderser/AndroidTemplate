@@ -47,6 +47,7 @@ dependencies {
     api(Libs.AndroidX.Lifecycle.viewModelKtx)
 
     api(Libs.timber)
+    api(Libs.Insetter.ktx)
 
     api(Libs.Dagger.dagger)
     kapt(Libs.Dagger.compiler)
@@ -59,6 +60,7 @@ dependencies {
     testImplementation(Libs.Coroutines.test)
     testImplementation(Libs.Test.AndroidX.arch)
 
+    // FIXME: should be sharedTestImplementation: https://issuetracker.google.com/issues/127986458
     debugImplementation(Libs.AndroidX.Fragment.testing) {
         exclude(group = "androidx.test", module = "core")
     }

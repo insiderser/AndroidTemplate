@@ -29,7 +29,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.spyk
+import io.mockk.impl.annotations.SpyK
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -58,16 +58,16 @@ class UseCaseTest {
     @RelaxedMockK
     private lateinit var exception: Exception
 
-    private lateinit var useCaseImpl: FakeUseCase
-
     private val channel = Channel<Result<FakeResult>>(UNLIMITED)
 
     private val dispatcher = TestCoroutineDispatcher()
 
+    @SpyK
+    private var useCaseImpl = FakeUseCase()
+
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        useCaseImpl = spyk(FakeUseCase())
     }
 
     @After

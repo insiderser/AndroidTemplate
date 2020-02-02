@@ -54,11 +54,12 @@ class AndroidExtensionNotFoundError(message: String) : Error(message)
 /**
  * Apply default Android configuration to this module.
  *
- * This is a convenience method that allows us to have the configuration in one place.
- *
  * **Note**: an Android plugin must be applied before calling this method.
  */
 fun Project.configureAndroidModule() {
+    val ciVersionName = findProperty("app.versionName") as String?
+    val ciVersionCode = findProperty("app.versionCode") as String?
+
     android {
         compileSdkVersion(Versions.Sdk.compile)
         buildToolsVersion(Versions.buildToolsVersion)
@@ -66,6 +67,9 @@ fun Project.configureAndroidModule() {
         defaultConfig {
             targetSdkVersion(Versions.Sdk.target)
             minSdkVersion(Versions.Sdk.min)
+
+            versionName = ciVersionName?.takeIf { it.isNotBlank() } ?: Versions.versionName
+            versionCode = ciVersionCode?.takeIf { it.isNotBlank() }?.toInt() ?: 1
 
             if (this@android is LibraryExtension) {
                 consumerProguardFiles("consumer-rules.pro")
@@ -83,17 +87,28 @@ fun Project.configureAndroidModule() {
             sourceCompatibility = JavaVersion.VERSION_1_8
         }
 
+        buildTypes {
+            named("debug") {
+                versionNameSuffix = "-debug"
+            }
+        }
+
+        sourceSets {
+            named("test") {
+                java.srcDir("src/sharedTest/java")
+            }
+            named("androidTest") {
+                java.srcDir("src/sharedTest/java")
+            }
+        }
+
         lintOptions {
-            // TODO: uncomment line below for new projects
-            // isWarningsAsErrors = true
+            isWarningsAsErrors = true
             isAbortOnError = true
             isCheckTestSources = false
-            isCheckGeneratedSources = true
+            isCheckGeneratedSources = false
             isCheckDependencies = true
             lintConfig = rootProject.file("lint.xml")
-
-            textReport = true
-            textOutput("stdout")
         }
 
         testOptions {

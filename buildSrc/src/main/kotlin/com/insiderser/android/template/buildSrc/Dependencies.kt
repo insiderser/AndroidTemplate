@@ -35,7 +35,7 @@ object Versions {
 
     const val jvmTarget = "1.8"
 
-    const val buildToolsVersion = "29.0.2"
+    const val buildToolsVersion = "29.0.3"
 
     const val ktlint = "0.36.0"
 }
@@ -44,7 +44,7 @@ object Versions {
  * A wrapper for all dependencies' notations used in the project together with their versions.
  */
 object Libs {
-    // Updating gradle version? See buildSrc/build.gradle.kts
+    // Don't forget to update version in buildSrc/build.gradle.kts
     const val androidGradlePlugin = "com.android.tools.build:gradle:3.6.0-rc02"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
@@ -75,7 +75,7 @@ object Libs {
 
             object Espresso {
                 private const val version = "3.2.0"
-                const val espressoCore = "androidx.test.espresso:espresso-core:$version"
+                const val core = "androidx.test.espresso:espresso-core:$version"
                 const val intents = "androidx.test.espresso:espresso-intents:$version"
             }
         }
@@ -101,11 +101,9 @@ object Libs {
         const val material = "com.google.android.material:material:1.1.0-rc02"
         const val browser = "androidx.browser:browser:1.2.0"
         const val collection = "androidx.collection:collection-ktx:1.1.0"
-        const val recyclerview = "androidx.recyclerview:recyclerview:1.1.0"
-        const val cardView = "androidx.cardview:cardview:1.0.0"
-        const val swiperefresh = "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-        const val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.0-beta4"
-        const val coordinatorLayout = "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
+        const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
+        const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+        const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.0-beta4"
         const val drawerLayout = "androidx.drawerlayout:drawerlayout:1.0.0"
         const val preference = "androidx.preference:preference:1.1.0"
         const val security = "androidx.security:security-crypto:1.0.0-alpha02"
@@ -164,8 +162,8 @@ object Libs {
     object Dagger {
         private const val version = "2.26"
         const val dagger = "com.google.dagger:dagger:$version"
-        const val androidSupport = "com.google.dagger:dagger-android-support:$version"
         const val compiler = "com.google.dagger:dagger-compiler:$version"
+        const val androidSupport = "com.google.dagger:dagger-android-support:$version"
         const val androidProcessor = "com.google.dagger:dagger-android-processor:$version"
     }
 

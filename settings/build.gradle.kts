@@ -40,7 +40,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":preferences-data"))
 
-    implementation(Libs.AndroidX.constraintlayout)
+    implementation(Libs.AndroidX.constraintLayout)
     implementation(Libs.AndroidX.material)
     api(Libs.AndroidX.preference)
     implementation(Libs.AndroidX.Fragment.fragmentKtx)

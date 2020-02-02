@@ -20,17 +20,19 @@
   ~ SOFTWARE.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Base.AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorSecondary">@color/colorSecondary</item>
 
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">?attr/isLightTheme</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">?attr/isLightTheme
+        </item>
     </style>
+
+    <style name="AppTheme" parent="Base.AppTheme" />
 
 </resources>

@@ -21,21 +21,15 @@
  */
 package com.insiderser.android.template.core.util
 
-import android.net.ConnectivityManager
-import javax.inject.Inject
+import androidx.appcompat.app.AppCompatDelegate
+import com.insiderser.android.template.model.Theme
 
 /**
- * Utility class that checks whether device is connected to the Internet.
+ * Get [AppCompatDelegate] night mode for the given [Theme].
  */
-class NetworkUtils @Inject constructor(private val cm: ConnectivityManager?) {
-
-    /**
-     * Checks whether the device is connected or connecting to the internet.
-     */
-    // FIXME: deprecated. Alternative method requires API 23+.
-    @Suppress("DEPRECATION")
-    fun hasNetworkConnection(): Boolean {
-        val activeNetworkInfo = cm?.activeNetworkInfo
-        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting
-    }
+fun Theme.toAppCompatNightMode(): Int = when (this) {
+    Theme.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+    Theme.DARK -> AppCompatDelegate.MODE_NIGHT_YES
+    Theme.FOLLOW_SYSTEM -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+    Theme.AUTO_BATTERY -> AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
 }

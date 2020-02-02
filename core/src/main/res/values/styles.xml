@@ -22,7 +22,7 @@
 
 <resources>
 
-    <style name="Widget.Template.Toolbar" parent="Widget.MaterialComponents.Toolbar.PrimarySurface" />
+    <style name="Widget.Template.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface" />
 
-    <style name="Widget.Template.AppBar" parent="Widget.MaterialComponents.AppBarLayout.PrimarySurface" />
+    <style name="Widget.Template.AppBar" parent="Widget.MaterialComponents.AppBarLayout.Surface" />
 </resources>

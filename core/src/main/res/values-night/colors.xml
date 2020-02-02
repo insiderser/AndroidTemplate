@@ -19,18 +19,9 @@
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
   -->
-
 <resources>
-    <color name="colorPrimary">@color/blue</color>
-    <color name="colorPrimaryDark">@color/darkBlue</color>
-    <color name="colorSecondary">@color/darkGreen</color>
 
-    <color name="transparent">#0fff</color>
-    <color name="blue">#6200EE</color>
-    <color name="darkBlue">#3700B3</color>
-    <color name="lightGreen">#b2ff59</color>
-    <color name="darkGreen">#7ecb20</color>
+    <color name="colorSecondary">@color/lightGreen</color>
 
-    <color name="scrim">@color/scrimDark</color>
-    <color name="scrimDark">#40000000</color>
+    <color name="scrim">@color/transparent</color>
 </resources>

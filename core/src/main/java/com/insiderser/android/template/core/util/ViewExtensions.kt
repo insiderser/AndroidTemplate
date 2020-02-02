@@ -25,51 +25,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AppCompatDelegate
-import com.insiderser.android.template.model.Theme
-
-/**
- * Convenience method for callbacks/listeners whose return value indicates
- * whether the event was consumed or not.
- * @param f Function to execute (will be called only once).
- * @return Always `true`.
- */
-inline fun consume(f: () -> Unit): Boolean {
-    f()
-    return true
-}
-
-/**
- * Force Kotlin to check that all variants in `when` statement are matched.
- *
- * By default, Kotlin doesn't care whether we consumed all possible variants
- * in `when` statements as long as the statement doesn't return any value.
- *
- * This extension allows us to force Kotlin to check that all variants are matched.
- *
- * Example:
- * ```
- * when(sealedObject) {
- *     is OneType -> ...
- *     is AnotherType -> ...
- * }.checkAllMatched()
- * ```
- */
-fun <T> T.checkAllMatched(): T = this
 
 /**
  * Inflate layout from the given [layout resource][resource].
  * @see LayoutInflater.inflate
  */
-fun ViewGroup.inflate(@LayoutRes resource: Int, attachToRoot: Boolean = false): View =
+fun ViewGroup.inflate(@LayoutRes resource: Int, attachToRoot: Boolean = true): View =
     LayoutInflater.from(context).inflate(resource, this, attachToRoot)
-
-/**
- * Get [AppCompatDelegate] night mode for the given [Theme].
- */
-fun Theme.toAppCompatNightMode(): Int = when (this) {
-    Theme.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
-    Theme.DARK -> AppCompatDelegate.MODE_NIGHT_YES
-    Theme.FOLLOW_SYSTEM -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-    Theme.AUTO_BATTERY -> AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
-}

@@ -21,7 +21,7 @@
   -->
 <resources>
 
-    <style name="Base.AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppTheme" parent="Base.AppTheme">
         <item name="android:navigationBarColor">@color/transparent</item>
     </style>
 </resources>

@@ -35,7 +35,7 @@ configureAndroidModule()
 dependencies {
     implementation(project(":core"))
 
-    implementation(Libs.AndroidX.constraintlayout)
+    implementation(Libs.AndroidX.constraintLayout)
     implementation(Libs.AndroidX.material)
     implementation(Libs.AndroidX.Fragment.fragmentKtx)
 

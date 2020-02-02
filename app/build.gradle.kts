@@ -21,7 +21,6 @@
  */
 
 import com.insiderser.android.template.buildSrc.Libs
-import com.insiderser.android.template.buildSrc.Versions
 import com.insiderser.android.template.buildSrc.configureAndroidModule
 import com.insiderser.android.template.buildSrc.sharedTestImplementation
 
@@ -34,18 +33,18 @@ plugins {
 
 configureAndroidModule()
 
-val ciVersionName = findProperty("app.versionName") as String?
-val ciVersionCode = findProperty("app.versionCode") as String?
-
 android {
     defaultConfig {
         applicationId = "com.insiderser.android.template"
-        versionName = ciVersionName?.takeIf { it.isNotBlank() } ?: Versions.versionName
-        versionCode = ciVersionCode?.takeIf { it.isNotBlank() }?.toInt() ?: 1
+
+        testInstrumentationRunnerArgument(
+            "listener",
+            "com.insiderser.android.template.test.listeners.CrashingRunListener"
+        )
     }
 
     signingConfigs {
-        getByName("debug") {
+        named("debug") {
             storeFile = rootProject.file("debug.jks")
             storePassword = "android"
             keyAlias = "android"
@@ -53,17 +52,8 @@ android {
         }
     }
 
-    sourceSets {
-        findByName("test")!!.apply {
-            java.srcDir("src/sharedTest/java")
-        }
-        findByName("androidTest")!!.apply {
-            java.srcDir("src/sharedTest/java")
-        }
-    }
-
     buildTypes {
-        getByName("release") {
+        named("release") {
             isMinifyEnabled = true
             isShrinkResources = true
             signingConfig = signingConfigs.getByName("debug")
@@ -73,8 +63,9 @@ android {
                 "proguard-rules.pro"
             )
         }
-        getByName("debug") {
+        named("debug") {
             signingConfig = signingConfigs.getByName("debug")
+            applicationIdSuffix = ".debug"
         }
     }
 }
@@ -89,9 +80,7 @@ dependencies {
     implementation(project(":preferences-data"))
     implementation(project(":settings"))
 
-    implementation(Libs.AndroidX.coordinatorLayout)
     implementation(Libs.AndroidX.material)
-
     implementation(Libs.AndroidX.Activity.activityKtx)
     implementation(Libs.AndroidX.Fragment.fragmentKtx)
 
@@ -107,21 +96,14 @@ dependencies {
     debugImplementation(Libs.leakCanary)
 
     sharedTestImplementation(project(":test-shared"))
-    testImplementation(Libs.Test.mockK)
-
-    sharedTestImplementation(Libs.Test.Robolectric.annotations)
-    testImplementation(Libs.Test.Robolectric.robolectric)
-
-    // FIXME: should be sharedTestImplementation: https://issuetracker.google.com/issues/127986458
-    debugImplementation(Libs.AndroidX.Fragment.testing) {
-        exclude(group = "androidx.test", module = "core")
-    }
 
     sharedTestImplementation(Libs.Test.AndroidX.core)
     sharedTestImplementation(Libs.Test.AndroidX.runner)
     sharedTestImplementation(Libs.Test.AndroidX.rules)
     sharedTestImplementation(Libs.Test.AndroidX.ext)
+    sharedTestImplementation(Libs.Test.AndroidX.extTruth)
     sharedTestImplementation(Libs.Test.AndroidX.arch)
 
-    sharedTestImplementation(Libs.Test.AndroidX.Espresso.espressoCore)
+    androidTestImplementation(Libs.Test.AndroidX.Espresso.core)
+    androidTestImplementation(Libs.Test.AndroidX.Espresso.intents)
 }
