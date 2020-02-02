@@ -8,16 +8,23 @@ logic that I use (or plan to use) to build Android apps.
 
 This template includes:
 
-  - boilerplate code that we do in most Android apps nowadays
-  - multi-module setup with reusable build logic in [buildSrc](buildSrc/)
-  - CI configuration with GitHub Actions
-  - Dagger setup
+- boilerplate code that we do in most Android apps nowadays
+- multi-module setup with reusable build logic in [buildSrc](buildSrc/)
+- CI configuration with GitHub Actions
+- Dagger setup
+- settings
 
-Inspired by:
+### Architecture
 
-  - [iosched](https://github.com/google/iosched/)
-  - [tivi](https://github.com/chrisbanes/tivi)
-  - numerous articles & docs
+![App hierarchy](hierarchy.png)
+
+The project is multi-module. All feature modules have their own modules.
+Notice we have this `navigation` module which (you guessed it) contains
+everything needed for navigation between features. Also we have those
+shared modules that share code between different modules.
+
+The architecture was heavily inspired by
+[this presentation](https://youtu.be/jrnhIgFzgns).
 
 ### License
 
