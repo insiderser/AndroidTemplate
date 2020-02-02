@@ -67,6 +67,7 @@ class Feature1Test {
 
     @Test
     fun assert_clickingOnSettingsMenu_navigatesToSettings_then_navigateBack_returnsToFeature1() {
+        // openActionBarOverflowOrOptionsMenu(...) doesn't pass in CI
         openContextualActionModeOverflowMenu()
 
         onView(withText(R.string.settings))
