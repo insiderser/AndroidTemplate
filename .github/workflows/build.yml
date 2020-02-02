@@ -1,16 +1,13 @@
 name: Build
 
 on:
+  pull_request:
   push:
     branches:
       - master
     paths-ignore:
       - '.idea/**'
-  pull_request:
-    branches:
-      - master
-    paths-ignore:
-      - '.idea/**'
+      - '**.md'
 
 jobs:
   build:
@@ -65,9 +62,8 @@ jobs:
 
       - name: Build
         run: >
-          ./gradlew dependencyUpdates spotlessCheck app:lintDebug
-          testDebugUnitTest app:assembleDebug app:assembleRelease
-          -Papp.versionCode=$BUILD_NUMBER
+          ./gradlew dependencyUpdates spotlessCheck app:lintDebug testDebugUnitTest
+          app:assembleDebug app:assembleRelease -Papp.versionCode=$BUILD_NUMBER
 
       - name: Upload build outputs
         if: always()
