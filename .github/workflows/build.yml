@@ -31,10 +31,11 @@ jobs:
       - name: Generate cache key
         run: ./checksum.sh checksum.txt
 
-      - name: Copy CI gradle.properties
+      - name: Copy CI properties
         run: |
           mkdir -p ~/.gradle
           cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+          cp -f .github/ci-robolectric.properties test-shared/src/main/resources/robolectric.properties
 
       - name: Restore Gradle cache
         uses: actions/cache@v1
@@ -54,9 +55,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ~/.m2/repository/org/robolectric/android-all
-          key: ${{ runner.os }}-robolectric-${{ hashFiles('test-shared/src/main/resources/robolectric.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-robolectric-
+          key: ${{ runner.os }}-robolectric-${{ hashFiles('.github/ci-robolectric.properties') }}
 
       - name: Generate build number
         uses: einaregilsson/build-number@v1
@@ -132,10 +131,11 @@ jobs:
       - name: Generate cache key
         run: ./checksum.sh checksum.txt
 
-      - name: Copy CI gradle.properties
+      - name: Copy CI properties
         run: |
           mkdir -p ~/.gradle
           cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+          cp -f .github/ci-robolectric.properties test-shared/src/main/resources/robolectric.properties
 
       - name: Restore Gradle cache
         uses: actions/cache@v1
