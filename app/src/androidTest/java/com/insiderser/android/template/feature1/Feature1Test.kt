@@ -22,9 +22,8 @@
 package com.insiderser.android.template.feature1
 
 import android.widget.TextView
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
+import androidx.test.espresso.Espresso.openContextualActionModeOverflowMenu
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -34,6 +33,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.MediumTest
 import com.insiderser.android.template.R
 import com.insiderser.android.template.test.rules.MainActivityRule
 import com.insiderser.android.template.test.rules.TestPreferencesRule
@@ -43,6 +43,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@MediumTest
 @RunWith(AndroidJUnit4::class)
 class Feature1Test {
 
@@ -66,9 +67,7 @@ class Feature1Test {
 
     @Test
     fun assert_clickingOnSettingsMenu_navigatesToSettings_then_navigateBack_returnsToFeature1() {
-        openActionBarOverflowOrOptionsMenu(getApplicationContext())
-
-        Thread.sleep(2000L)
+        openContextualActionModeOverflowMenu()
 
         onView(withText(R.string.settings))
             .inRoot(isPlatformPopup())
