@@ -39,8 +39,7 @@ import org.junit.Test
 @ObsoleteCoroutinesApi
 class ObservableThemeUseCaseTest {
 
-    private val storage =
-        FakeAppPreferencesStorage()
+    private val storage = FakeAppPreferencesStorage()
 
     private val useCase = ObservableThemeUseCase(storage)
 
