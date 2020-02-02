@@ -74,12 +74,18 @@ jobs:
           name: build-outputs
           path: app/build/outputs
 
-      - name: Upload build reports
+      - name: Copy lint reports
+        if: always()
+        run: |
+          mkdir -p lint
+          find ./app/build/reports -type f -name "lint*" -exec cp {} lint/ \;
+
+      - name: Upload lint reports
         if: always()
         uses: actions/upload-artifact@v1
         with:
-          name: build-reports
-          path: app/build/reports
+          name: lint
+          path: lint
 
       - name: Upload dependency updates report
         if: always()
@@ -161,7 +167,7 @@ jobs:
         if: always()
         run: |
           mkdir -p android-junit
-          find . -type f -regex ".*/build/reports/androidTests/connected/*.html" -exec cp {} android-junit/ \;
+          find . -type f -regex ".*/build/reports/androidTests/connected/.*" -exec cp {} android-junit/ \;
 
       - name: Upload reports
         if: always()
