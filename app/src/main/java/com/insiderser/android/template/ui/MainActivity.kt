@@ -21,28 +21,32 @@
  */
 package com.insiderser.android.template.ui
 
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.M
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
+import androidx.annotation.IdRes
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.onNavDestinationSelected
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.insiderser.android.template.R
 import com.insiderser.android.template.databinding.ActivityMainBinding
+import com.insiderser.android.template.navigation.NavigationHost
 import dagger.android.support.DaggerAppCompatActivity
-import de.halfbit.edgetoedge.Edge
-import de.halfbit.edgetoedge.edgeToEdge
+import dev.chrisbanes.insetter.doOnApplyWindowInsets
 import javax.inject.Inject
 
 /**
  * The main activity and navigation point.
  */
-class MainActivity : DaggerAppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity(), NavigationHost {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -56,8 +60,8 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     private val navController: NavController by lazy {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.navigation_view) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navigation_view)
+            as NavHostFragment
         navHostFragment.navController
     }
 
@@ -67,34 +71,46 @@ class MainActivity : DaggerAppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupActionBar()
-        goEdgeToEdge()
-    }
+        binding.navigationView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 
-    private fun setupActionBar() {
-        setSupportActionBar(binding.toolbar)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-    }
+        binding.root.doOnApplyWindowInsets { view, insets, initial ->
+            // Avoid drawing behind navigation bar in landscape with button mode
+            view.updatePadding(
+                left = initial.paddings.left + insets.systemWindowInsetLeft,
+                right = initial.paddings.right + insets.systemWindowInsetRight
+            )
 
-    private fun goEdgeToEdge() {
-        edgeToEdge {
-            binding.appBar.fit { Edge.Left + Edge.Top + Edge.Right }
+            if (SDK_INT < M) {
+                // Light status bar is supported only on API 23+,
+                // so show scrim beneath status bar on those devices.
+                binding.statusBarScrim.run {
+                    layoutParams.height = insets.systemWindowInsetTop
+                    isVisible = layoutParams.height > 0
+                    requestLayout()
+                }
+            }
+        }
+
+        if (savedInstanceState == null && intent.hasExtra(EXTRA_DESTINATION)) {
+            navigateTo(intent.getIntExtra(EXTRA_DESTINATION, 0))
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.app_menu, menu)
-
-        return super.onCreateOptionsMenu(menu)
+    override fun registerToolbarWithNavigation(toolbar: Toolbar) {
+        toolbar.setupWithNavController(navController, appBarConfiguration)
+        toolbar.setOnMenuItemClickListener { it.onNavDestinationSelected(navController) }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean =
-        item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
-
-    override fun onSupportNavigateUp(): Boolean = navController.navigateUp(appBarConfiguration)
+    private fun navigateTo(@IdRes destination: Int) {
+        navController.navigate(destination)
+    }
 
     companion object {
 
-        private val TOP_LEVEL_DESTINATIONS = setOf(R.id.feature1_dest)
+        private val TOP_LEVEL_DESTINATIONS = setOf(R.id.feature1)
+
+        const val EXTRA_DESTINATION = "extra.destination"
     }
 }

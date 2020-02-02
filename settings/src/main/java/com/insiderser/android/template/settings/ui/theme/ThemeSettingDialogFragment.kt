@@ -121,8 +121,8 @@ internal class ThemeSettingDialogFragment : AppCompatDialogFragment() {
         @JvmField
         val TAG = ThemeSettingDialogFragment::class.java.name
     }
-}
 
-private data class ThemeHolder(val theme: Theme, val title: String) {
-    override fun toString(): String = title
+    private data class ThemeHolder(val theme: Theme, val title: String) {
+        override fun toString(): String = title
+    }
 }

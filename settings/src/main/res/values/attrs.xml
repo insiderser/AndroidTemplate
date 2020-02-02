@@ -19,14 +19,13 @@
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
   -->
+<resources>
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <item
-        android:id="@+id/settings_dest"
-        android:menuCategory="secondary"
-        android:title="@string/settings_label"
-        app:showAsAction="never" />
-
-</menu>
+    <attr name="preferenceStyle" format="reference" />
+    <declare-styleable name="PreferenceView">
+        <!-- How the preference should be titled? -->
+        <attr name="title" format="string" />
+        <!-- Short summary of the current value of the preference. -->
+        <attr name="summary" format="string" />
+    </declare-styleable>
+</resources>

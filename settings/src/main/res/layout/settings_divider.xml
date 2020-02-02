@@ -19,14 +19,9 @@
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
   -->
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <PreferenceCategory app:title="@string/settings_theme_group_label">
-
-        <Preference
-            app:key="choose-theme"
-            app:title="@string/settings_choose_theme" />
-
-    </PreferenceCategory>
-
-</PreferenceScreen>
+<View xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="?attr/dividerHorizontal"
+    tools:showIn="@layout/settings_fragment" />

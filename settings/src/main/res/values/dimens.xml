@@ -20,8 +20,14 @@
   ~ SOFTWARE.
   -->
 <resources>
-    <dimen name="settings_padding_horizontal">24dp</dimen>
-    <dimen name="settings_padding_vertical">32dp</dimen>
+    <dimen name="settings_items_alignment_horizontal">32dp</dimen>
 
-    <dimen name="settings_item_padding_vertical">8dp</dimen>
+    <dimen name="settings_preference_padding_vertical">16dp</dimen>
+    <dimen name="settings_preference_padding_horizontal">
+        @dimen/settings_items_alignment_horizontal
+    </dimen>
+
+    <dimen name="settings_category_margin_horizontal">@dimen/settings_items_alignment_horizontal
+    </dimen>
+    <dimen name="settings_category_margin_top">16dp</dimen>
 </resources>

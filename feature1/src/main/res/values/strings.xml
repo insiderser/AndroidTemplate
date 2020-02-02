@@ -21,5 +21,5 @@
   -->
 
 <resources>
-    <string name="feature1_label">Feature1</string>
+    <string name="feature1_title">Feature1</string>
 </resources>

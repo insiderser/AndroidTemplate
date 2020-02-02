@@ -23,41 +23,52 @@ package com.insiderser.android.template.settings.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
 import com.insiderser.android.template.core.result.EventObserver
+import com.insiderser.android.template.core.ui.binding.FragmentWithViewBinding
+import com.insiderser.android.template.navigation.NavigationHost
 import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponentProvider
-import com.insiderser.android.template.settings.R
+import com.insiderser.android.template.settings.BuildConfig
 import com.insiderser.android.template.settings.dagger.DaggerSettingsComponent
+import com.insiderser.android.template.settings.databinding.SettingsFragmentBinding
 import com.insiderser.android.template.settings.ui.theme.ThemeSettingDialogFragment
-import com.insiderser.android.template.settings.util.consumeOnPreferenceClick
 import com.insiderser.android.template.settings.util.findTitleForTheme
+import dev.chrisbanes.insetter.doOnApplyWindowInsets
 import javax.inject.Inject
 
-/**
- * A [fragment][androidx.fragment.app.Fragment] that lets users to change app's preferences.
- */
-class SettingsFragment : PreferenceFragmentCompat() {
+class SettingsFragment : FragmentWithViewBinding<SettingsFragmentBinding>() {
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: SettingsViewModel by viewModels { viewModelFactory }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.preferences, rootKey)
+    override fun onCreateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): SettingsFragmentBinding = SettingsFragmentBinding.inflate(inflater, container, false)
 
-        findPreference<Preference>("choose-theme")?.consumeOnPreferenceClick {
+    override fun onBindingCreated(binding: SettingsFragmentBinding, savedInstanceState: Bundle?) {
+        (activity as? NavigationHost)?.registerToolbarWithNavigation(binding.toolbar)
+
+        binding.appBar.doOnApplyWindowInsets { view, insets, initial ->
+            view.updatePadding(top = initial.paddings.top + insets.systemWindowInsetTop)
+        }
+
+        binding.scrollView.doOnApplyWindowInsets { view, insets, initial ->
+            view.updatePadding(bottom = initial.paddings.bottom + insets.systemWindowInsetBottom)
+        }
+
+        binding.chooseThemePreference.setOnClickListener {
             viewModel.onThemeSettingClicked()
         }
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        binding.versionName.summary = BuildConfig.VERSION_NAME
 
         viewModel.showThemeSettingDialog.observe(viewLifecycleOwner, EventObserver {
             val dialogFragment = ThemeSettingDialogFragment()
@@ -65,7 +76,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         })
 
         viewModel.selectedTheme.observe(viewLifecycleOwner, Observer { selectedTheme ->
-            findPreference<Preference>("choose-theme")?.summary = findTitleForTheme(selectedTheme)
+            binding.chooseThemePreference.summary = findTitleForTheme(selectedTheme)
         })
     }
 

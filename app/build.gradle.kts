@@ -85,8 +85,6 @@ dependencies {
     implementation(Libs.AndroidX.Activity.activityKtx)
     implementation(Libs.AndroidX.Fragment.fragmentKtx)
 
-    implementation(Libs.edgeToEdge)
-
     implementation(Libs.Dagger.androidSupport)
     kapt(Libs.Dagger.compiler)
     kapt(Libs.Dagger.androidProcessor)

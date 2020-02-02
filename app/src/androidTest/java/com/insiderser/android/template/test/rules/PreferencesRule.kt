@@ -19,36 +19,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.test.rules
 
-import com.insiderser.android.template.buildSrc.Libs
-import com.insiderser.android.template.buildSrc.configureAndroidModule
+import androidx.test.core.app.ApplicationProvider
+import com.insiderser.android.template.prefs.data.AppPreferencesStorage
+import com.insiderser.android.template.prefs.data.AppPreferencesStorageImpl
+import org.junit.rules.TestWatcher
+import org.junit.runner.Description
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("android.extensions")
-    kotlin("kapt")
-}
+/**
+ * A simple test rule that resets app preferences to default or testable.
+ * For example, we don't want to show boarding screen every time we launch a test.
+ * You can set custom preferences by passing configuration function to a constructor.
+ */
+class TestPreferencesRule(
+    private val configurator: (AppPreferencesStorage.() -> Unit)? = null
+) : TestWatcher() {
 
-configureAndroidModule()
+    override fun starting(description: Description?) {
+        super.starting(description)
+        AppPreferencesStorageImpl(ApplicationProvider.getApplicationContext()).run {
+            selectedTheme = null
 
-kapt {
-    correctErrorTypes = true
-}
-
-dependencies {
-    implementation(project(":core"))
-    implementation(project(":navigation"))
-    implementation(project(":preferences-data"))
-
-    implementation(Libs.AndroidX.constraintLayout)
-    implementation(Libs.AndroidX.material)
-    implementation(Libs.AndroidX.Fragment.fragmentKtx)
-
-    kapt(Libs.Dagger.compiler)
-
-    testImplementation(project(":test-shared"))
-    testImplementation(Libs.Test.mockK)
-    testImplementation(Libs.Coroutines.test)
-    testImplementation(Libs.Test.AndroidX.arch)
+            configurator?.invoke(this)
+        }
+    }
 }

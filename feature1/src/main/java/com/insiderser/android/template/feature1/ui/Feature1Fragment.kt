@@ -22,13 +22,18 @@
 package com.insiderser.android.template.feature1.ui
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import com.insiderser.android.template.core.dagger.CoreComponentProvider
 import com.insiderser.android.template.core.ui.binding.FragmentWithViewBinding
 import com.insiderser.android.template.feature1.dagger.DaggerFeature1Component
 import com.insiderser.android.template.feature1.databinding.Feature1FragmentBinding
+import com.insiderser.android.template.navigation.NavigationHost
+import dev.chrisbanes.insetter.doOnApplyWindowInsets
 
 /**
  * Sample [Fragment] that does nothing, except injecting into itself.
@@ -44,6 +49,16 @@ class Feature1Fragment : FragmentWithViewBinding<Feature1FragmentBinding>() {
         inflater: LayoutInflater,
         container: ViewGroup?
     ): Feature1FragmentBinding = Feature1FragmentBinding.inflate(inflater, container, false)
+
+    override fun onBindingCreated(binding: Feature1FragmentBinding, savedInstanceState: Bundle?) {
+        (activity as? NavigationHost)?.registerToolbarWithNavigation(binding.toolbar)
+
+        binding.statusBar.doOnApplyWindowInsets { view, insets, _ ->
+            view.updateLayoutParams<LinearLayout.LayoutParams> {
+                height = insets.systemWindowInsetTop
+            }
+        }
+    }
 
     private fun injectItself() {
         val coreComponentProvider = requireActivity().application as CoreComponentProvider

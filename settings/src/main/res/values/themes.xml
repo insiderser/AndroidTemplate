@@ -21,7 +21,7 @@
   -->
 <resources>
 
-    <style name="AppTheme" parent="Base.AppTheme">
-        <item name="preferenceTheme">@style/Template.Settings.PreferenceThemeOverlay</item>
+    <style name="AppTheme.Settings">
+        <item name="preferenceStyle">@style/Widget.Template.Settings.PreferenceView</item>
     </style>
 </resources>

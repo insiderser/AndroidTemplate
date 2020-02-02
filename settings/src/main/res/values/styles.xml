@@ -21,21 +21,35 @@
   -->
 <resources>
 
-    <style name="Template.Settings.PreferenceThemeOverlay" parent="PreferenceThemeOverlay">
-        <!-- Have to customize each component we use -->
-        <item name="preferenceStyle">@style/Template.Settings.PreferenceStyle</item>
-        <item name="preferenceCategoryStyle">@style/Template.Settings.PreferenceCategoryStyle</item>
+    <style name="Widget.Template.Settings.PreferenceView" parent="">
+        <item name="android:paddingTop">@dimen/settings_preference_padding_vertical</item>
+        <item name="android:paddingBottom">@dimen/settings_preference_padding_vertical</item>
+        <item name="android:paddingStart">@dimen/settings_preference_padding_horizontal</item>
+        <item name="android:paddingEnd">@dimen/settings_preference_padding_horizontal</item>
+
+        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
-    <style name="Template.Settings.PreferenceStyle" parent="Preference.Material">
-        <!-- We handle all persistence logic ourselves -->
-        <item name="persistent">false</item>
-        <item name="iconSpaceReserved">false</item>
+    <style name="Widget.Template.Settings.PreferenceTitle" parent="Widget.MaterialComponents.TextView">
+        <item name="singleLine">true</item>
+        <item name="android:textAppearance">?attr/textAppearanceListItem</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:fadingEdge">horizontal</item>
     </style>
 
-    <!-- Have to copy-paste -->
-    <style name="Template.Settings.PreferenceCategoryStyle" parent="Preference.Category.Material">
-        <item name="persistent">false</item>
-        <item name="iconSpaceReserved">false</item>
+    <style name="Widget.Template.Settings.PreferenceSummary" parent="Widget.MaterialComponents.TextView">
+        <item name="android:maxLines">4</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:textAppearance">?attr/textAppearanceListItemSecondary</item>
+    </style>
+
+    <style name="Widget.Template.Settings.PreferenceGroupTitle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:layout_marginStart">@dimen/settings_category_margin_horizontal</item>
+        <item name="android:layout_marginEnd">@dimen/settings_category_margin_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/settings_category_margin_top</item>
+
+        <item name="android:textAppearance">?attr/textAppearanceBody2</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 </resources>

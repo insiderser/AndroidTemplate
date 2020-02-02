@@ -19,37 +19,22 @@
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
   -->
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraint_container_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <View
-        android:id="@+id/statusBar"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:visibility="invisible" />
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/Widget.Template.Toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:menu="@menu/feature1_menu"
-        app:title="@string/feature1_title" />
+    tools:orientation="vertical"
+    tools:parentTag="com.insiderser.android.template.settings.widget.PreferenceView">
 
     <TextView
-        android:id="@+id/i_am_a_fragment_text_view"
+        android:id="@+id/title"
+        style="@style/Widget.Template.Settings.PreferenceTitle"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="I am a Fragment"
-        android:textAppearance="?attr/textAppearanceHeadline5"
-        tools:ignore="HardcodedText" />
+        android:layout_height="wrap_content" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/summary"
+        style="@style/Widget.Template.Settings.PreferenceSummary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+</merge>
