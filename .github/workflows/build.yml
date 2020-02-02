@@ -18,6 +18,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
+      - name: Validate gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+
         # Robolectric needs Java 9+ to run tests with Android 10. On Java 12+, it fails.
         # JDK 11 has fixes for Room. See https://bugs.openjdk.java.net/browse/JDK-8007720
       - name: Set up JDK 11
