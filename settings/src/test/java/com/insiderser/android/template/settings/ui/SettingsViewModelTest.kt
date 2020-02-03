@@ -109,14 +109,14 @@ class SettingsViewModelTest {
         }
 
         // Check default value
-        latch.await(500, TimeUnit.MILLISECONDS)
+        latch.await(1, TimeUnit.SECONDS)
         assertThat(postedValue).isAnyOf(Theme.AUTO_BATTERY, Theme.FOLLOW_SYSTEM)
 
         Theme.values().forEach { theme ->
             latch = CountDownLatch(1)
             viewModel.setSelectedTheme(theme)
 
-            latch.await(500, TimeUnit.MILLISECONDS)
+            latch.await(1, TimeUnit.SECONDS)
             assertThat(postedValue).isEqualTo(theme)
             assertThat(storage.selectedTheme).isEqualTo(theme.storageKey)
         }
