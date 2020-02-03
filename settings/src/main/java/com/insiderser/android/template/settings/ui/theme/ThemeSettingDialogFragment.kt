@@ -30,8 +30,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.insiderser.android.template.model.Theme
 import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponentProvider
@@ -76,8 +76,8 @@ internal class ThemeSettingDialogFragment : AppCompatDialogFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.availableThemes.observe(this, Observer(::setAvailableThemes))
-        viewModel.selectedTheme.observe(this, Observer(::setSelectedTheme))
+        viewModel.availableThemes.observe(this, ::setAvailableThemes)
+        viewModel.selectedTheme.observe(this, ::setSelectedTheme)
     }
 
     private fun setAvailableThemes(themes: List<Theme>) {

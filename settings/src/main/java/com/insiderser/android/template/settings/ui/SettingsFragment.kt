@@ -27,10 +27,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.insiderser.android.template.core.result.EventObserver
+import androidx.lifecycle.observe
 import com.insiderser.android.template.core.ui.binding.FragmentWithViewBinding
+import com.insiderser.android.template.core.util.observeEvent
 import com.insiderser.android.template.navigation.NavigationHost
 import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponentProvider
 import com.insiderser.android.template.settings.BuildConfig
@@ -74,14 +74,14 @@ class SettingsFragment : FragmentWithViewBinding<SettingsFragmentBinding>() {
 
         binding.versionName.summary = BuildConfig.VERSION_NAME
 
-        viewModel.showThemeSettingDialog.observe(viewLifecycleOwner, EventObserver {
+        viewModel.showThemeSettingDialog.observeEvent(viewLifecycleOwner) {
             val dialogFragment = ThemeSettingDialogFragment()
             dialogFragment.show(childFragmentManager)
-        })
+        }
 
-        viewModel.selectedTheme.observe(viewLifecycleOwner, Observer { selectedTheme ->
+        viewModel.selectedTheme.observe(viewLifecycleOwner) { selectedTheme ->
             binding.chooseThemePreference.summary = findTitleForTheme(selectedTheme)
-        })
+        }
     }
 
     override fun onAttach(context: Context) {
