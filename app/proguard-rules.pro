@@ -22,3 +22,14 @@
 # If you use Crashlytics, uncomment this:
 #-keep class com.crashlytics.** { *; }
 #-dontwarn com.crashlytics.**
+
+# If you use KotlinX seriazization, uncomment this:
+#-keepattributes *Annotation*, InnerClasses
+#-dontnote kotlinx.serialization.SerializationKt
+#-keep,includedescriptorclasses class com.insiderser.android.template.**$$serializer { *; }
+#-keepclassmembers class com.insiderser.android.template.** {
+#    *** Companion;
+#}
+#-keepclasseswithmembers class com.insiderser.android.template.** {
+#    kotlinx.serialization.KSerializer serializer(...);
+#}

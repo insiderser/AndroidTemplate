@@ -36,8 +36,8 @@ dependencies {
     api(project(":model"))
 
     api(Libs.Kotlin.stdlib)
-    api(Libs.Coroutines.core)
-    api(Libs.Coroutines.android)
+    api(Libs.Kotlin.Coroutines.core)
+    api(Libs.Kotlin.Coroutines.android)
 
     api(Libs.AndroidX.coreKtx)
     api(Libs.AndroidX.appcompat)
@@ -57,7 +57,7 @@ dependencies {
 
     testImplementation(project(":test-shared"))
     testImplementation(Libs.Test.mockK)
-    testImplementation(Libs.Coroutines.test)
+    testImplementation(Libs.Kotlin.Coroutines.test)
     testImplementation(Libs.Test.AndroidX.arch)
 
     // FIXME: should be sharedTestImplementation: https://issuetracker.google.com/issues/127986458

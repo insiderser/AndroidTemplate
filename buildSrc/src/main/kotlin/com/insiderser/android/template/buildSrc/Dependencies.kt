@@ -80,17 +80,23 @@ object Libs {
     }
 
     object Kotlin {
-        private const val version = "1.3.61"
-        const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
-        const val reflect = "org.jetbrains.kotlin:kotlin-reflect:$version"
-        const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
-    }
+        private const val kotlinVersion = "1.3.61"
+        const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+        const val reflect = "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+        const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
-    object Coroutines {
-        private const val version = "1.3.3"
-        const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
-        const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
-        const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
+        object Coroutines {
+            private const val version = "1.3.3"
+            const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
+            const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
+            const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
+        }
+
+        object Serialization {
+            private const val version = "0.14.0"
+            const val runtime = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$version"
+            const val gradlePlugin = "org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion"
+        }
     }
 
     object AndroidX {

@@ -39,5 +39,5 @@ dependencies {
 
     testImplementation(project(":test-shared"))
     testImplementation(Libs.Test.mockK)
-    testImplementation(Libs.Coroutines.test)
+    testImplementation(Libs.Kotlin.Coroutines.test)
 }
