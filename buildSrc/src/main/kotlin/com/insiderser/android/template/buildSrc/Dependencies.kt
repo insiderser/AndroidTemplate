@@ -49,7 +49,7 @@ object Libs {
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
-    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.1"
+    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.2"
 
     object Test {
         const val junit4 = "junit:junit:4.13"
@@ -91,18 +91,12 @@ object Libs {
             const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
             const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
         }
-
-        object Serialization {
-            private const val version = "0.14.0"
-            const val runtime = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$version"
-            const val gradlePlugin = "org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion"
-        }
     }
 
     object AndroidX {
         const val coreKtx = "androidx.core:core-ktx:1.2.0-rc01"
         const val appcompat = "androidx.appcompat:appcompat:1.1.0"
-        const val material = "com.google.android.material:material:1.1.0-rc02"
+        const val material = "com.google.android.material:material:1.1.0"
         const val browser = "androidx.browser:browser:1.2.0"
         const val collection = "androidx.collection:collection-ktx:1.1.0"
         const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
@@ -126,7 +120,7 @@ object Libs {
         }
 
         object Navigation {
-            private const val version = "2.2.0"
+            private const val version = "2.2.1"
             const val ui = "androidx.navigation:navigation-ui-ktx:$version"
             const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
             const val safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:$version"
@@ -175,6 +169,7 @@ object Libs {
         private const val version = "2.7.1"
         const val retrofit = "com.squareup.retrofit2:retrofit:$version"
         const val mock = "com.squareup.retrofit2:retrofit-mock:$version"
+        const val moshiConverter = "com.squareup.retrofit2:converter-moshi:$version"
     }
 
     object OkHttp {
@@ -182,6 +177,12 @@ object Libs {
         const val okHttp = "com.squareup.okhttp3:okhttp:$version"
         const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
         const val mockWebServer = "com.squareup.okhttp3:mockwebserver:$version"
+    }
+
+    object Moshi {
+        private const val version = "1.9.2"
+        const val moshi = "com.squareup.moshi:moshi:$version"
+        const val codeGenerator = "com.squareup.moshi:moshi-kotlin-codegen:$version"
     }
 
     object Insetter {
