@@ -65,14 +65,14 @@ jobs:
       - name: Build
         run: >
           ./gradlew dependencyUpdates spotlessCheck app:lintDebug testDebugUnitTest
-          app:assembleDebug app:assembleRelease -Papp.versionCode=$BUILD_NUMBER
+          app:assembleDebug -Papp.versionCode=$BUILD_NUMBER
 
-      - name: Upload build outputs
+      - name: Upload debug APK
         if: always()
         uses: actions/upload-artifact@v1
         with:
-          name: build-outputs
-          path: app/build/outputs
+          name: app-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
 
       - name: Copy lint reports
         if: always()
@@ -119,7 +119,7 @@ jobs:
           path: schemas
 
   ui-test:
-    name: UI test
+    name: UI tests
     runs-on: macos-latest
     needs: build
     strategy:
