@@ -23,16 +23,20 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Base.AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/blue</item>
-        <item name="colorPrimaryDark">@color/darkBlue</item>
-        <item name="colorSecondary">@color/darkGreen</item>
-
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">?attr/isLightTheme</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">?attr/isLightTheme
         </item>
     </style>
 
-    <style name="AppTheme" parent="Base.AppTheme" />
+    <style name="Base.AppTheme.DayNightColors">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/blueDark</item>
+        <item name="colorSecondary">@color/greenDark</item>
+    </style>
+
+    <style name="Base.AppTheme.DayNightColors.EdgeToEdge" />
+
+    <style name="AppTheme" parent="Base.AppTheme.DayNightColors.EdgeToEdge" />
 
 </resources>

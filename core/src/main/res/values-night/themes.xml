@@ -19,15 +19,11 @@
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
   -->
-
 <resources>
 
-    <color name="transparent">#0fff</color>
-
-    <color name="blueLight">#448AFF</color>
-    <color name="blue">#6200EE</color>
-    <color name="blueDark">#3700B3</color>
-
-    <color name="greenLight">#00E676</color>
-    <color name="greenDark">#4CAF50</color>
+    <style name="Base.AppTheme.DayNightColors">
+        <item name="colorPrimary">@color/blueLight</item>
+        <item name="colorPrimaryDark">@color/blue</item>
+        <item name="colorSecondary">@color/greenLight</item>
+    </style>
 </resources>
