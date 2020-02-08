@@ -50,7 +50,7 @@
         <item name="android:layout_marginTop">@dimen/settings_category_margin_top</item>
 
         <item name="android:textAppearance">?attr/textAppearanceBody2</item>
-        <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
     <style name="Widget.Template.Settings.Divider" parent="">
