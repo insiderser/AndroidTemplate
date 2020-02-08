@@ -22,7 +22,6 @@
 package com.insiderser.android.template.buildSrc
 
 import com.android.build.gradle.BaseExtension
-import com.android.build.gradle.LibraryExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.DependencyHandler
@@ -70,10 +69,6 @@ fun Project.configureAndroidModule() {
 
             versionName = ciVersionName?.takeIf { it.isNotBlank() } ?: Versions.versionName
             versionCode = ciVersionCode?.takeIf { it.isNotBlank() }?.toInt() ?: 1
-
-            if (this@android is LibraryExtension) {
-                consumerProguardFiles("consumer-rules.pro")
-            }
 
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
