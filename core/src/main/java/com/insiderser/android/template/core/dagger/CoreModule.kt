@@ -21,19 +21,10 @@
  */
 package com.insiderser.android.template.core.dagger
 
-import android.content.Context
-import android.net.ConnectivityManager
-import androidx.core.content.getSystemService
 import dagger.Module
-import dagger.Provides
 
 /**
  * Dagger module used throughout the app.
  */
 @Module
-class CoreModule {
-
-    @Provides
-    fun provideConnectivityManager(context: Context): ConnectivityManager? =
-        context.getSystemService()
-}
+class CoreModule
