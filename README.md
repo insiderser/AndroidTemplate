@@ -20,11 +20,10 @@ This template includes:
 
 The project is multi-module. All feature modules have their own modules.
 Notice we have this `navigation` module which (you guessed it) contains
-everything needed for navigation between features. Also we have those
+everything needed for navigation between features. Also, we have those
 shared modules that share code between different modules.
 
-The architecture was heavily inspired by
-[this presentation](https://youtu.be/jrnhIgFzgns).
+The architecture was heavily inspired by [this presentation](https://youtu.be/jrnhIgFzgns).
 
 ### License
 
