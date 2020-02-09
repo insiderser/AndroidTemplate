@@ -34,7 +34,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.insiderser.android.template.R
-import com.insiderser.android.template.databinding.ActivityMainBinding
+import com.insiderser.android.template.databinding.MainActivityBinding
 import com.insiderser.android.template.navigation.NavigationHost
 import dagger.android.support.DaggerAppCompatActivity
 import dev.chrisbanes.insetter.doOnApplyWindowInsets
@@ -50,7 +50,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationHost {
 
     private val viewModel: MainActivityViewModel by viewModels { viewModelFactory }
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: MainActivityBinding
 
     private val appBarConfiguration: AppBarConfiguration by lazy {
         AppBarConfiguration(navController.graph)
@@ -65,7 +65,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationHost {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.navigationView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
