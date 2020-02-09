@@ -24,6 +24,6 @@
     <style name="Base.AppTheme.DayNightColors">
         <item name="colorPrimary">@color/blueLight</item>
         <item name="colorPrimaryDark">@color/blue</item>
-        <item name="colorSecondary">@color/greenLight</item>
+        <item name="colorSecondary">@color/blueLight</item>
     </style>
 </resources>

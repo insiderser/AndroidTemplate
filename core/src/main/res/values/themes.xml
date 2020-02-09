@@ -31,7 +31,7 @@
     <style name="Base.AppTheme.DayNightColors">
         <item name="colorPrimary">@color/blue</item>
         <item name="colorPrimaryDark">@color/blueDark</item>
-        <item name="colorSecondary">@color/greenDark</item>
+        <item name="colorSecondary">@color/blue</item>
     </style>
 
     <style name="Base.AppTheme.DayNightColors.EdgeToEdge" />
