@@ -57,8 +57,8 @@ class MainActivity : DaggerAppCompatActivity(), NavigationHost {
     }
 
     private val navController: NavController by lazy {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navigation_view)
-            as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.navigation_view) as NavHostFragment
         navHostFragment.navController
     }
 
