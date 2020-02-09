@@ -21,14 +21,11 @@
  */
 package com.insiderser.android.template.ui
 
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.M
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -56,7 +53,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationHost {
     private lateinit var binding: ActivityMainBinding
 
     private val appBarConfiguration: AppBarConfiguration by lazy {
-        AppBarConfiguration(TOP_LEVEL_DESTINATIONS)
+        AppBarConfiguration(navController.graph)
     }
 
     private val navController: NavController by lazy {
@@ -81,16 +78,6 @@ class MainActivity : DaggerAppCompatActivity(), NavigationHost {
                 left = initial.paddings.left + insets.systemWindowInsetLeft,
                 right = initial.paddings.right + insets.systemWindowInsetRight
             )
-
-            if (SDK_INT < M) {
-                // Light status bar is supported only on API 23+,
-                // so show scrim beneath status bar on those devices.
-                binding.statusBarScrim.run {
-                    layoutParams.height = insets.systemWindowInsetTop
-                    isVisible = layoutParams.height > 0
-                    requestLayout()
-                }
-            }
         }
 
         if (savedInstanceState == null && intent.hasExtra(EXTRA_DESTINATION)) {
@@ -108,8 +95,6 @@ class MainActivity : DaggerAppCompatActivity(), NavigationHost {
     }
 
     companion object {
-
-        private val TOP_LEVEL_DESTINATIONS = setOf(R.id.feature1)
 
         const val EXTRA_DESTINATION = "extra.destination"
     }
