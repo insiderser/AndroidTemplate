@@ -19,31 +19,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.core.dagger
+package com.insiderser.android.template.feature1.ui
 
-import androidx.lifecycle.ViewModelProvider
-import dagger.Binds
-import dagger.Module
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import com.insiderser.android.template.core.dagger.AssistedViewModelFactory
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 
 /**
- * Module used to define connection between the framework's [ViewModelProvider.Factory]
- * and out own implementation: [ViewModelFactory].
+ * A [ViewModel] for [Feature1Fragment] that demonstrates how to use dagger to create
+ * SavedState ViewModel.
  */
-@Module
-interface ViewModelFactoryModule {
+internal class Feature1FragmentViewModel @AssistedInject constructor(
+    @Assisted private val savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
     /**
-     * Define connection between the framework's [ViewModelProvider.Factory]
-     * and out own implementation: [ViewModelFactory].
+     * Tells AssistedInject to generate a factory for [Feature1FragmentViewModel].
+     * Must be inside of the target [ViewModel] class.
      */
-    @Binds
-    fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
-
-    /**
-     * Define connection between the framework's [ViewModelProvider.Factory]
-     * and out own implementation: [SavedStateViewModelFactory].
-     */
-    @Binds
-    @SavedStateFactory
-    fun bindSavedStateViewModelFactory(factory: SavedStateViewModelFactory): ViewModelProvider.Factory
+    @AssistedInject.Factory
+    interface Factory : AssistedViewModelFactory<Feature1FragmentViewModel> {
+        // TODO remove create() override after https://github.com/square/AssistedInject/pull/121 is merged
+        override fun create(savedStateHandle: SavedStateHandle): Feature1FragmentViewModel
+    }
 }

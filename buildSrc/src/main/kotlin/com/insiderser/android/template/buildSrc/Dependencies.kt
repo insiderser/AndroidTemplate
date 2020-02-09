@@ -165,6 +165,12 @@ object Libs {
         const val androidProcessor = "com.google.dagger:dagger-android-processor:$version"
     }
 
+    object AssistedInject {
+        private const val version = "0.5.2"
+        const val annotations = "com.squareup.inject:assisted-inject-annotations-dagger2:$version"
+        const val processor = "com.squareup.inject:assisted-inject-processor-dagger2:$version"
+    }
+
     object Retrofit {
         private const val version = "2.7.1"
         const val retrofit = "com.squareup.retrofit2:retrofit:$version"

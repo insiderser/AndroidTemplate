@@ -21,9 +21,14 @@
  */
 package com.insiderser.android.template.feature1.dagger
 
+import android.os.Bundle
+import androidx.savedstate.SavedStateRegistryOwner
 import com.insiderser.android.template.core.dagger.CoreComponent
+import com.insiderser.android.template.core.dagger.DefaultArgs
 import com.insiderser.android.template.core.dagger.FeatureScope
+import com.insiderser.android.template.core.dagger.ViewModelFactoryModule
 import com.insiderser.android.template.feature1.ui.Feature1Fragment
+import dagger.BindsInstance
 import dagger.Component
 
 /**
@@ -34,7 +39,13 @@ import dagger.Component
  * @see com.insiderser.android.template.feature1.dagger.DaggerFeature1Component.factory
  */
 @FeatureScope
-@Component(dependencies = [CoreComponent::class])
+@Component(
+    dependencies = [CoreComponent::class],
+    modules = [
+        ViewModelFactoryModule::class,
+        Feature1Module::class
+    ]
+)
 internal interface Feature1Component {
 
     /** Inject dependencies into [Feature1Fragment]. */
@@ -52,7 +63,9 @@ internal interface Feature1Component {
          * Put [CoreComponent] into a dagger graph and create [Feature1Component].
          */
         fun create(
-            coreComponent: CoreComponent
+            coreComponent: CoreComponent,
+            @BindsInstance savedStateRegistryOwner: SavedStateRegistryOwner,
+            @BindsInstance @DefaultArgs defaultArgs: Bundle? = null
         ): Feature1Component
     }
 }

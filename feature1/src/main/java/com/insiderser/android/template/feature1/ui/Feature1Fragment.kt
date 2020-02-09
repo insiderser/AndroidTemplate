@@ -25,20 +25,29 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.insiderser.android.template.core.dagger.CoreComponentProvider
+import com.insiderser.android.template.core.dagger.SavedStateFactory
 import com.insiderser.android.template.core.ui.binding.FragmentWithViewBinding
 import com.insiderser.android.template.feature1.dagger.DaggerFeature1Component
 import com.insiderser.android.template.feature1.databinding.Feature1FragmentBinding
 import com.insiderser.android.template.navigation.NavigationHost
 import dev.chrisbanes.insetter.doOnApplyWindowInsets
+import javax.inject.Inject
 
 /**
  * Sample [Fragment] that does nothing, except injecting into itself.
  */
 class Feature1Fragment : FragmentWithViewBinding<Feature1FragmentBinding>() {
+
+    @Inject
+    @SavedStateFactory
+    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: Feature1FragmentViewModel by viewModels { viewModelFactory }
 
     override fun onAttach(context: Context) {
         injectItself()
@@ -54,17 +63,20 @@ class Feature1Fragment : FragmentWithViewBinding<Feature1FragmentBinding>() {
         (activity as? NavigationHost)?.registerToolbarWithNavigation(binding.toolbar)
 
         binding.statusBar.doOnApplyWindowInsets { view, insets, _ ->
-            view.updateLayoutParams<LinearLayout.LayoutParams> {
+            view.updateLayoutParams<ViewGroup.LayoutParams> {
                 height = insets.systemWindowInsetTop
             }
         }
+
+        // Make sure view model is created (we don't use it)
+        viewModel
     }
 
     private fun injectItself() {
         val coreComponentProvider = requireActivity().application as CoreComponentProvider
         val coreComponent = coreComponentProvider.coreComponent
 
-        val feature1Component = DaggerFeature1Component.factory().create(coreComponent)
+        val feature1Component = DaggerFeature1Component.factory().create(coreComponent, this)
         feature1Component.inject(this)
     }
 }

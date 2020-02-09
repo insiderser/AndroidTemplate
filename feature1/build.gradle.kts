@@ -46,6 +46,8 @@ dependencies {
 
     implementation(Libs.Dagger.dagger)
     kapt(Libs.Dagger.compiler)
+    compileOnly(Libs.AssistedInject.annotations)
+    kapt(Libs.AssistedInject.processor)
 
     testImplementation(project(":test-shared"))
     debugImplementation(Libs.AndroidX.Fragment.testing) {
