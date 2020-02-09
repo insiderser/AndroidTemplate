@@ -23,14 +23,14 @@ package com.insiderser.android.template.settings.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.TextView
+import android.view.LayoutInflater
 import androidx.annotation.AttrRes
 import androidx.annotation.StyleRes
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.withStyledAttributes
 import androidx.core.view.isVisible
-import com.insiderser.android.template.core.util.inflate
 import com.insiderser.android.template.settings.R
+import com.insiderser.android.template.settings.databinding.PreferenceViewBinding
 
 /**
  * A view that represents a single user preference.
@@ -44,31 +44,28 @@ internal class PreferenceView @JvmOverloads constructor(
     @StyleRes defStyleRes: Int = R.style.Widget_Template_Settings_PreferenceView
 ) : LinearLayoutCompat(context, attrs, defStyleAttr) {
 
+    init {
+        orientation = VERTICAL
+    }
+
+    private val binding = PreferenceViewBinding.inflate(LayoutInflater.from(context), this)
+
     /** Current title of the preference. */
     var title: CharSequence?
-        get() = titleView.text
+        get() = binding.title.text
         set(value) {
-            titleView.text = value
+            binding.title.text = value
         }
 
     /** Short summary of the current value of the preference. */
     var summary: CharSequence?
-        get() = summaryView.text
+        get() = binding.summary.text
         set(value) {
-            summaryView.text = value
-            summaryView.isVisible = value?.isNotEmpty() == true
+            binding.summary.text = value
+            binding.summary.isVisible = value?.isNotEmpty() == true
         }
 
-    private val titleView: TextView
-    private val summaryView: TextView
-
     init {
-        orientation = VERTICAL
-
-        inflate(R.layout.preference_view)
-        titleView = findViewById(R.id.title)
-        summaryView = findViewById(R.id.summary)
-
         context.withStyledAttributes(
             attrs, R.styleable.PreferenceView, defStyleAttr, defStyleRes
         ) {
