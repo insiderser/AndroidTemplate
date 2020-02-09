@@ -45,7 +45,7 @@ import org.junit.runner.RunWith
 
 @MediumTest
 @RunWith(AndroidJUnit4::class)
-class Feature1Test {
+class Feature1FragmentTest {
 
     @Rule
     @JvmField
