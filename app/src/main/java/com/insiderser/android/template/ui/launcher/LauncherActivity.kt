@@ -30,6 +30,10 @@ import com.insiderser.android.template.ui.MainActivity
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
+/**
+ * Activity that is first launched. It displays a splash screen, then navigates to
+ * the appropriate activity (for now it's always [MainActivity]).
+ */
 class LauncherActivity : DaggerAppCompatActivity() {
 
     @Inject
