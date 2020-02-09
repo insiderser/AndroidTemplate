@@ -48,7 +48,9 @@ class SavedStateViewModelFactory @Inject constructor(
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(
-        key: String, modelClass: Class<T>, handle: SavedStateHandle
+        key: String,
+        modelClass: Class<T>,
+        handle: SavedStateHandle
     ): T {
         Timber.v("Creating instance of ${modelClass.name}")
 
