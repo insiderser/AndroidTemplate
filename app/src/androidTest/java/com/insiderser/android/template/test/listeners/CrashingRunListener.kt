@@ -50,8 +50,8 @@ import org.junit.runner.notification.RunListener
  *
  * ```
  * adb shell am instrument \\
- * -w com.android.foo/android.support.test.runner.AndroidJUnitRunner \\
- * -e listener com.insiderser.android.template.test.shared.util.CrashingRunListener
+ *  -w com.android.foo/android.support.test.runner.AndroidJUnitRunner \\
+ *  -e listener com.insiderser.android.template.test.listeners.CrashingRunListener
  * ```
  */
 // Credits to pyricau https://gist.github.com/pyricau/970b95a4757a99b26562fd95e146f38f
