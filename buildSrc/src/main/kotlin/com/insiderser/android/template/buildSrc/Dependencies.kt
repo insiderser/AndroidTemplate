@@ -139,6 +139,7 @@ object Libs {
             const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
             const val lifecycleKtx = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
             const val compiler = "androidx.lifecycle:lifecycle-compiler:$version"
+            const val savedState = "androidx.lifecycle:lifecycle-viewmodel-savedstate:$version"
         }
 
         object Room {

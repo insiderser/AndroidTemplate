@@ -45,6 +45,7 @@ dependencies {
     api(Libs.AndroidX.Lifecycle.lifecycleKtx)
     api(Libs.AndroidX.Lifecycle.liveDataKtx)
     api(Libs.AndroidX.Lifecycle.viewModelKtx)
+    api(Libs.AndroidX.Lifecycle.savedState)
 
     api(Libs.timber)
     api(Libs.Insetter.ktx)
