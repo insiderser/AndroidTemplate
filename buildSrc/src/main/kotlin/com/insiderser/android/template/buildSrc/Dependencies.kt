@@ -35,7 +35,7 @@ object Versions {
 
     const val jvmTarget = "1.8"
 
-    const val buildToolsVersion = "29.0.2"
+    const val buildToolsVersion = "29.0.3"
 
     const val ktlint = "0.36.0"
 }

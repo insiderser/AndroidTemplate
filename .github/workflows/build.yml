@@ -54,6 +54,9 @@ jobs:
           path: ~/.m2/repository/org/robolectric/android-all
           key: ${{ runner.os }}-robolectric-${{ hashFiles('.github/ci-robolectric.properties') }}
 
+      - name: Install Android SDK Build-Tools 29.0.3
+        run: sudo /usr/local/lib/android/sdk/tools/bin/sdkmanager --install 'build-tools;29.0.3'
+
       - name: Generate build number
         uses: einaregilsson/build-number@v1
         with:
