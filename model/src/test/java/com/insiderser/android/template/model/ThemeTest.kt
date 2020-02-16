@@ -28,19 +28,7 @@ import org.junit.Test
 class ThemeTest {
 
     @Test
-    fun assert_storageKey_isCorrect() {
-        checkStorageKey(Theme.FOLLOW_SYSTEM, "system")
-        checkStorageKey(Theme.AUTO_BATTERY, "battery")
-        checkStorageKey(Theme.DARK, "dark")
-        checkStorageKey(Theme.LIGHT, "light")
-    }
-
-    private fun checkStorageKey(theme: Theme, storageKey: String) {
-        assertThat(theme.storageKey).isEqualTo(storageKey)
-    }
-
-    @Test
-    fun assert_fromStorageKey_findsTheme() {
+    fun themeFromStorageKey_returnsCorrectTheme() {
         for (theme in Theme.values()) {
             assertThat(Theme.fromStorageKey(theme.storageKey)).isSameInstanceAs(theme)
         }

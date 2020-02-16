@@ -76,7 +76,7 @@ class SettingsViewModelTest {
     }
 
     @Test
-    fun assert_onThemeSettingClicked_triggersShowThemeSettingDialogEvent() {
+    fun onThemeSettingClicked_triggersShowThemeSettingDialogEvent() {
         assertThat(viewModel.showThemeSettingDialog.value).isNull()
 
         viewModel.onThemeSettingClicked()
@@ -86,7 +86,7 @@ class SettingsViewModelTest {
     }
 
     @Test
-    fun assert_availableThemes_isCorrect() {
+    fun availableThemes_isCorrect() {
         val availableThemes = viewModel.availableThemes.await()
 
         // Don't test that FOLLOW_SYSTEM vs AUTO_BATTERY logic.
@@ -99,7 +99,7 @@ class SettingsViewModelTest {
     }
 
     @Test
-    fun assert_setSelectedTheme_updatesThemeAndSavesValue() {
+    fun setSelectedTheme_updatesPreferencesStorage() {
         var postedValue: Theme? = null
         var latch = CountDownLatch(1)
 

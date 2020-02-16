@@ -21,33 +21,23 @@
  */
 package com.insiderser.android.template.prefs.data.domain.theme
 
+import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.template.model.Theme
-import com.insiderser.android.template.prefs.data.AppPreferencesStorage
-import io.mockk.MockKAnnotations
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.verify
+import com.insiderser.android.template.prefs.data.test.FakeAppPreferencesStorage
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Before
 import org.junit.Test
 
 class SetThemeUseCaseTest {
 
-    @RelaxedMockK
-    private lateinit var preferencesStorage: AppPreferencesStorage
+    private val preferencesStorage = FakeAppPreferencesStorage()
 
-    private lateinit var useCase: SetThemeUseCase
-
-    @Before
-    fun setUp() {
-        MockKAnnotations.init(this)
-        useCase = SetThemeUseCase(preferencesStorage)
-    }
+    private val useCase = SetThemeUseCase(preferencesStorage)
 
     @Test
-    fun assert_execute_setsSelectedTheme() = runBlockingTest {
+    fun givenTheme_execute_updatesPreferencesStorage() = runBlockingTest {
         Theme.values().forEach { theme ->
             useCase.execute(theme)
-            verify(exactly = 1) { preferencesStorage.selectedTheme = theme.storageKey }
+            assertThat(preferencesStorage.selectedTheme).isEqualTo(theme.storageKey)
         }
     }
 }

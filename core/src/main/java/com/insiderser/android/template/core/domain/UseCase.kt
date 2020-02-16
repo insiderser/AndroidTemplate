@@ -85,8 +85,12 @@ abstract class UseCase<in P, R>(
     /**
      * Execute this use case, suspending calling coroutine until finished.
      */
-    suspend fun executeNow(param: P): R = withContext(coroutineDispatcher) {
-        execute(param)
+    suspend fun executeNow(param: P): Result<R> = withContext(coroutineDispatcher) {
+        try {
+            Result.Success(execute(param))
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
     }
 
     /**
@@ -119,4 +123,4 @@ operator fun <R> UseCase<Unit, R>.invoke(): Flow<Result<R>> = invoke(Unit)
  * Execute this use case, suspending calling coroutine until finished.
  * @return Either [Result.Success] or [Result.Error].
  */
-suspend fun <R> UseCase<Unit, R>.executeNow(): R = executeNow(Unit)
+suspend fun <R> UseCase<Unit, R>.executeNow(): Result<R> = executeNow(Unit)

@@ -38,8 +38,7 @@ class ViewModelFactory @Inject constructor(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         Timber.v("Creating instance of ${modelClass.name}")
 
-        val found = creators.entries.find { modelClass.isAssignableFrom(it.key) }
-        val creator = found?.value
+        val creator = creators[modelClass]
             ?: throw NoVMProviderError(
                 "Cannot create an instance of ${modelClass.name} using Dagger. " +
                     "Did you forget to add it into Dagger?"

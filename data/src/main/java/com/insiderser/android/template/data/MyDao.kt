@@ -39,28 +39,17 @@ import androidx.room.Query
 interface MyDao {
 
     /**
-     * Get all [MyEntity] from the database.
-     *
+     * Get all entries from the database.
      * @return All entities, or an empty list if the table is empty
      */
-    @Query(
-        """
-        SELECT * FROM myentity
-        """
-    )
+    @Query("SELECT * FROM myentity")
     fun findAll(): LiveData<List<MyEntity>>
 
     /**
-     * Get a single [MyEntity] whose [id][MyEntity.id] matches parameter id.
-     *
+     * Get a single entry whose [id][MyEntity.id] matches parameter [id].
      * @return Found [MyEntity], or `null` if nothing found.
      */
-    @Query(
-        """
-        SELECT * FROM myentity
-        WHERE id == :id
-    """
-    )
+    @Query("SELECT * FROM myentity WHERE id == :id")
     fun findOneById(id: Int): LiveData<MyEntity>
 
     /**
@@ -73,18 +62,19 @@ interface MyDao {
      */
     @Insert(onConflict = REPLACE)
     @WorkerThread
-    fun insert(entity: MyEntity): Long
+    fun insertOne(entity: MyEntity): Long
 
     /**
-     * Delete a single [MyEntity] whose [id][MyEntity.id] matches the parameter `id`.
-     *
+     * Delete a single entry whose [id][MyEntity.id] matches the parameter [id].
+     * @return How many entries were deleted: `0` or `1`.
+     */
+    @Query("DELETE FROM myentity WHERE id == :id")
+    fun deleteOneById(id: Int): Int
+
+    /**
+     * Delete **all** entries in the table. **Be careful here!**
      * @return How many entries were deleted.
      */
-    @Query(
-        """
-        DELETE FROM myentity
-        WHERE id == :id
-    """
-    )
-    fun deleteOneById(id: Int): Int
+    @Query("DELETE FROM myentity")
+    fun deleteAll(): Int
 }

@@ -59,7 +59,7 @@ class FragmentWithViewBindingTest {
     }
 
     @Test
-    fun assert_initialBinding_isNull() {
+    fun whenViewIsNotCreated_binding_isNull() {
         assertThat(fragment.binding).isNull()
         assertThrows(IllegalStateException::class.java) {
             fragment.requireBinding()
@@ -68,7 +68,7 @@ class FragmentWithViewBindingTest {
 
     @Test
     @Suppress("UNUSED_VARIABLE")
-    fun assert_bindingIsCreated() {
+    fun whenViewIsCreated_binding_isCreated() {
         val scenario = launchFragment { fragment }
 
         assertThat(fragment.binding).isSameInstanceAs(mockBinding)
@@ -78,7 +78,7 @@ class FragmentWithViewBindingTest {
     }
 
     @Test
-    fun assert_destroyedView_bindingIsNull() {
+    fun whenViewIsDestroyed_binding_isNull() {
         val scenario = launchFragment { fragment }
 
         scenario.moveToState(DESTROYED)

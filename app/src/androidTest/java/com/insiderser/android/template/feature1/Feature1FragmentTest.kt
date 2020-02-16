@@ -66,7 +66,7 @@ class Feature1FragmentTest {
     }
 
     @Test
-    fun assert_clickingOnSettingsMenu_navigatesToSettings_then_navigateBack_returnsToFeature1() {
+    fun clickingOnSettingsMenu_navigatesToSettings_then_navigateBack_returnsToFeature1() {
         // openActionBarOverflowOrOptionsMenu(...) doesn't pass in CI
         openContextualActionModeOverflowMenu()
 

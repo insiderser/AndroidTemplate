@@ -57,7 +57,7 @@ class SettingsFragmentTest {
     }
 
     @Test
-    fun assert_clickingOnThemePreference_showsDialog() {
+    fun checkThemePreference() {
         // Check that we are in the right fragment
         onView(allOf(instanceOf(TextView::class.java), withParent(withId(R.id.toolbar))))
             .check(matches(withText(R.string.settings_title)))

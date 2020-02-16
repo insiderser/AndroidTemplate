@@ -23,59 +23,25 @@ package com.insiderser.android.template.core.dagger
 
 import androidx.lifecycle.ViewModel
 import com.google.common.truth.Truth.assertThat
-import org.junit.Assert.assertThrows
 import org.junit.Test
 import javax.inject.Provider
 
 class ViewModelFactoryTest {
 
     @Test
-    fun assert_ViewModelIsCreated_exactClass() {
-        val provider = Provider<ViewModel> { TestViewModelImpl() }
-        val victim = ViewModelFactory(mapOf(TestViewModelImpl::class.java to provider))
-
-        val created = victim.create(TestViewModelImpl::class.java)
-        assertThat(created).isInstanceOf(TestViewModelImpl::class.java)
-    }
-
-    @Test
-    fun assert_ViewModelIsCreated_fromSubclass() {
-        val provider = Provider<ViewModel> { TestViewModelImpl() }
-        val victim = ViewModelFactory(mapOf(TestViewModelImpl::class.java to provider))
+    fun givenViewModelProvider_create_returnsViewModel() {
+        val provider = Provider<ViewModel> { TestViewModel() }
+        val victim = ViewModelFactory(mapOf(TestViewModel::class.java to provider))
 
         val created = victim.create(TestViewModel::class.java)
-        assertThat(created).isInstanceOf(TestViewModelImpl::class.java)
+        assertThat(created).isInstanceOf(TestViewModel::class.java)
     }
 
     @Test(expected = NoVMProviderError::class)
-    fun assertFails_noViewModelProvider() {
+    fun givenNoViewModelProvider_create_fails() {
         val victim = ViewModelFactory(emptyMap())
         victim.create(TestViewModel::class.java)
     }
 
-    @Test(expected = NoVMProviderError::class)
-    fun assertFails_noViewModelProvider_getSubclassOfProvided() {
-        val provider = Provider<ViewModel> { TestViewModel() }
-        val victim = ViewModelFactory(mapOf(TestViewModel::class.java to provider))
-        victim.create(TestViewModelImpl::class.java)
-    }
-
-    @Test
-    fun assertFails_throwsException() {
-        val message = "Error occurred"
-        val provider = Provider<ViewModel> { throw MyException(message) }
-        val victim = ViewModelFactory(mapOf(TestViewModelImpl::class.java to provider))
-
-        val exception = assertThrows(RuntimeException::class.java) {
-            victim.create(TestViewModelImpl::class.java)
-        }
-        assertThat(exception.cause).isInstanceOf(MyException::class.java)
-        assertThat(exception.cause?.message).isEqualTo(message)
-    }
-
-    private open class TestViewModel : ViewModel()
-
-    private class TestViewModelImpl : TestViewModel()
-
-    private class MyException(message: String) : Exception(message)
+    private class TestViewModel : ViewModel()
 }

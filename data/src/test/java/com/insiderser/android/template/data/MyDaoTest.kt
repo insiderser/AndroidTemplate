@@ -37,7 +37,8 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class MyDaoTest {
 
-    @get:Rule
+    @Rule
+    @JvmField
     val executorRule = InstantTaskExecutorRule()
 
     private lateinit var db: AppDatabase
@@ -58,7 +59,7 @@ class MyDaoTest {
     }
 
     @Test
-    fun assert_emptyTable_returnsNothing() {
+    fun givenEmptyTable_find_returnsNothing() {
         val allEntities = dao.findAll().await()
         assertThat(allEntities).isEmpty()
 
@@ -67,12 +68,12 @@ class MyDaoTest {
     }
 
     @Test
-    fun insertOne_withId() {
+    fun givenEntityWithId_insertOne_insertsIntoTableWithThisId() {
         val id = 6
         val name = "Alex"
         val entity = MyEntity(id = id, name = name)
 
-        val newId = dao.insert(entity)
+        val newId = dao.insertOne(entity)
         assertThat(newId).isEqualTo(id)
 
         val insertedEntity = dao.findOneById(id).await()
@@ -85,11 +86,11 @@ class MyDaoTest {
     }
 
     @Test
-    fun insertOne_id0() {
+    fun givenEntityWithId0_insertOne_insertsIntoTableWithGeneratedId() {
         val name = "Alex"
         val entity = MyEntity(id = 0, name = name)
 
-        val id = dao.insert(entity).toInt()
+        val id = dao.insertOne(entity).toInt()
         assertThat(id).isAtLeast(1)
 
         val insertedEntity = dao.findOneById(id).await()
@@ -100,24 +101,24 @@ class MyDaoTest {
     }
 
     @Test
-    fun assert_insertWithExistingId_replacesEntry() {
+    fun whenInsertingEntityWithExistingId_insertOne_replacesEntry() {
         val id = 100
         val newName = "Sam"
 
-        dao.insert(MyEntity(id = id, name = "Alex"))
+        dao.insertOne(MyEntity(id = id, name = "Alex"))
 
         val newEntity = MyEntity(id = id, name = newName)
-        val newId = dao.insert(newEntity)
+        val newId = dao.insertOne(newEntity)
 
         assertThat(newId).isEqualTo(id)
         assertThat(dao.findOneById(id).await()).isEqualTo(newEntity)
     }
 
     @Test
-    fun assert_delete_deletesEntry() {
+    fun givenInsertedEntryId_deleteOneById_deletesEntry() {
         val id = 100
 
-        dao.insert(MyEntity(id = id, name = "Alex"))
+        dao.insertOne(MyEntity(id = id, name = "Alex"))
         val affectedEntries = dao.deleteOneById(id)
 
         assertThat(affectedEntries).isEqualTo(1)
@@ -126,9 +127,21 @@ class MyDaoTest {
     }
 
     @Test
-    fun assert_deleteNotInserted_returns0() {
-        val id = 100
-        val affectedEntries = dao.deleteOneById(id)
-        assertThat(affectedEntries).isEqualTo(0)
+    fun givenNonEmptyTable_deleteAll_deletesAllEntries() {
+        dao.insertOne(MyEntity(id = 1, name = "Alex"))
+        dao.insertOne(MyEntity(id = 2, name = "Alex"))
+        dao.insertOne(MyEntity(id = 3, name = "Alex"))
+        dao.insertOne(MyEntity(id = 4, name = "Alex"))
+
+        val affectedCount = dao.deleteAll()
+        assertThat(affectedCount).isEqualTo(4)
+        assertThat(dao.findAll().await()).isEmpty()
+        assertThat(dao.findOneById(1).await()).isNull()
+    }
+
+    @Test
+    fun givenEmptyTable_delete_doesNothing() {
+        assertThat(dao.deleteAll()).isEqualTo(0)
+        assertThat(dao.deleteOneById(1)).isEqualTo(0)
     }
 }

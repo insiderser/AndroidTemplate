@@ -29,11 +29,12 @@ import org.junit.Test
 
 class LiveDataTestUtilsTest {
 
-    @get:Rule
+    @Rule
+    @JvmField
     val executorRule = InstantTaskExecutorRule()
 
     @Test
-    fun getValue_returnsData() {
+    fun givenLiveDataWithData_await_returnsThatData() {
         val instance = SimpleTestClass()
         val liveData = MutableLiveData(instance)
 
@@ -42,7 +43,7 @@ class LiveDataTestUtilsTest {
     }
 
     @Test
-    fun getValue_returnsNullOnTimeout() {
+    fun givenLiveDataWithoutData_await_returnsNull() {
         val liveData = MutableLiveData<Any>()
 
         val actual = liveData.await()

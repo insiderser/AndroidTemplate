@@ -31,7 +31,8 @@ import org.junit.Test
 
 class EventObserverTest {
 
-    @get:Rule
+    @Rule
+    @JvmField
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Test

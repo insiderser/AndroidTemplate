@@ -25,7 +25,6 @@ import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.template.core.domain.invoke
 import com.insiderser.android.template.model.Theme
 import com.insiderser.android.template.prefs.data.test.FakeAppPreferencesStorage
-import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
@@ -36,7 +35,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import org.junit.Test
 
-@ObsoleteCoroutinesApi
 class ObservableThemeUseCaseTest {
 
     private val storage = FakeAppPreferencesStorage()
@@ -44,7 +42,7 @@ class ObservableThemeUseCaseTest {
     private val useCase = ObservableThemeUseCase(storage)
 
     @Test
-    fun assert_whenPreferenceUpdated_flowIsUpdated() = runBlocking {
+    fun whenPreferenceIsUpdated_observable_isUpdated() = runBlocking {
         val channel = ConflatedBroadcastChannel<Theme>()
         val currentThemeSubscription = channel.openSubscription()
         val collectJob = launch {

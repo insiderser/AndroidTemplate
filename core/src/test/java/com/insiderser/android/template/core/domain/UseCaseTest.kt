@@ -78,15 +78,16 @@ class UseCaseTest {
     }
 
     @Test
-    fun assert_executeNow_callsExecute() = runBlockingTest(dispatcher) {
+    fun executeNow_callsExecute() = runBlockingTest(dispatcher) {
         val result = useCaseImpl.executeNow(fakeParam)
 
-        assertThat(result).isSameInstanceAs(fakeResult)
+        check(result is Result.Success)
+        assertThat(result.data).isSameInstanceAs(fakeResult)
         coVerify(exactly = 1) { useCaseImpl.execute(fakeParam) }
     }
 
     @Test
-    fun assert_executeWasSuccessful_returnsSuccessfulResult_invoke() = runBlockingTest(dispatcher) {
+    fun whenExecuteIsSuccessful_invoke_returnsSuccess() = runBlockingTest(dispatcher) {
         useCaseImpl(fakeParam, channel)
         coVerify(exactly = 1) { useCaseImpl.execute(fakeParam) }
 
@@ -94,14 +95,14 @@ class UseCaseTest {
         assertThat(firstValue).isInstanceOf(Result.Loading::class.java)
 
         val secondValue = channel.receive()
-        assertThat(secondValue).isInstanceOf(Result.Success::class.java)
-        assertThat((secondValue as Result.Success).data).isSameInstanceAs(fakeResult)
+        check(secondValue is Result.Success)
+        assertThat(secondValue.data).isSameInstanceAs(fakeResult)
 
         channel.checkNothingToReceive()
     }
 
     @Test
-    fun assert_executeFailed_returnsErrorResult_invoke() = runBlockingTest(dispatcher) {
+    fun whenExecuteFails_invoke_returnsError() = runBlockingTest(dispatcher) {
         coEvery { useCaseImpl.execute(fakeParam) } throws exception
         useCaseImpl(fakeParam, channel)
         coVerify(exactly = 1) { useCaseImpl.execute(fakeParam) }
@@ -110,14 +111,14 @@ class UseCaseTest {
         assertThat(firstValue).isInstanceOf(Result.Loading::class.java)
 
         val secondValue = channel.receive()
-        assertThat(secondValue).isInstanceOf(Result.Error::class.java)
-        assertThat((secondValue as Result.Error).cause).isSameInstanceAs(exception)
+        check(secondValue is Result.Error)
+        assertThat(secondValue.cause).isSameInstanceAs(exception)
 
         channel.checkNothingToReceive()
     }
 
     @Test
-    fun assert_cancel_cancelsPendingJobs() = runBlockingTest(dispatcher) {
+    fun cancel_cancelsAllOngoingJobs() = runBlockingTest(dispatcher) {
         useCaseImpl(fakeParam, channel)
         useCaseImpl.cancel()
 
