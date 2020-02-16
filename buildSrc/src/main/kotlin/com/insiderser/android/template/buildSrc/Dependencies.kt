@@ -45,7 +45,7 @@ object Versions {
  */
 object Libs {
     // Don't forget to update version in buildSrc/build.gradle.kts
-    const val androidGradlePlugin = "com.android.tools.build:gradle:3.6.0-rc02"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:3.6.0-rc03"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
