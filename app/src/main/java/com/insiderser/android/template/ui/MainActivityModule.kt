@@ -22,9 +22,16 @@
 package com.insiderser.android.template.ui
 
 import androidx.lifecycle.ViewModel
+import com.insiderser.android.template.core.dagger.FeatureScope
 import com.insiderser.android.template.core.dagger.ViewModelKey
+import com.insiderser.android.template.feature1.dagger.Feature1Module
+import com.insiderser.android.template.feature1.ui.Feature1Fragment
+import com.insiderser.android.template.settings.dagger.SettingsModule
+import com.insiderser.android.template.settings.ui.SettingsFragment
+import com.insiderser.android.template.settings.ui.theme.ThemeSettingDialogFragment
 import dagger.Binds
 import dagger.Module
+import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 
 /**
@@ -41,4 +48,17 @@ internal interface MainActivityModule {
     @IntoMap
     @ViewModelKey(MainActivityViewModel::class)
     fun bindMainViewModel(mainActivityViewModel: MainActivityViewModel): ViewModel
+
+    @FeatureScope
+    @ContributesAndroidInjector(modules = [Feature1Module::class])
+    fun feature1Fragment(): Feature1Fragment
+
+    @FeatureScope
+    @ContributesAndroidInjector(modules = [SettingsModule::class])
+    fun settingsFragment(): SettingsFragment
+
+    // If needed, make this as subcomponent of settings subcomponent
+    @FeatureScope
+    @ContributesAndroidInjector(modules = [SettingsModule::class])
+    fun themeSettingDialogFragment(): ThemeSettingDialogFragment
 }

@@ -24,13 +24,12 @@ package com.insiderser.android.template.settings.ui
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.template.model.Theme
-import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponent
+import com.insiderser.android.template.prefs.data.domain.theme.ObservableThemeUseCase
+import com.insiderser.android.template.prefs.data.domain.theme.SetThemeUseCase
 import com.insiderser.android.template.prefs.data.test.FakeAppPreferencesStorage
-import com.insiderser.android.template.settings.dagger.DaggerSettingsComponent
+import com.insiderser.android.template.settings.domain.GetAvailableThemesUseCase
 import com.insiderser.android.template.test.shared.util.await
 import io.mockk.MockKAnnotations
-import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
@@ -52,9 +51,6 @@ class SettingsViewModelTest {
 
     private val storage = FakeAppPreferencesStorage()
 
-    @MockK
-    private lateinit var storageComponent: PreferencesStorageComponent
-
     private lateinit var viewModel: SettingsViewModel
 
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
@@ -64,9 +60,11 @@ class SettingsViewModelTest {
         MockKAnnotations.init(this)
         Dispatchers.setMain(mainThreadSurrogate)
 
-        every { storageComponent.appPreferencesStorage } returns storage
-        val settingsComponent = DaggerSettingsComponent.factory().create(storageComponent)
-        viewModel = settingsComponent.settingsViewModel
+        viewModel = SettingsViewModel(
+            GetAvailableThemesUseCase(),
+            ObservableThemeUseCase(storage),
+            SetThemeUseCase(storage)
+        )
     }
 
     @After

@@ -21,27 +21,11 @@
  */
 package com.insiderser.android.template.feature1.ui
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.insiderser.android.template.core.dagger.AssistedViewModelFactory
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
+import javax.inject.Inject
 
 /**
  * A [ViewModel] for [Feature1Fragment] that demonstrates how to use dagger to create
  * SavedState ViewModel.
  */
-internal class Feature1FragmentViewModel @AssistedInject constructor(
-    @Assisted private val savedStateHandle: SavedStateHandle
-) : ViewModel() {
-
-    /**
-     * Tells AssistedInject to generate a factory for [Feature1FragmentViewModel].
-     * Must be inside of the target [ViewModel] class.
-     */
-    @AssistedInject.Factory
-    interface Factory : AssistedViewModelFactory<Feature1FragmentViewModel> {
-        // TODO remove create() override after https://github.com/square/AssistedInject/pull/121 is merged
-        override fun create(savedStateHandle: SavedStateHandle): Feature1FragmentViewModel
-    }
-}
+class Feature1FragmentViewModel @Inject constructor() : ViewModel()

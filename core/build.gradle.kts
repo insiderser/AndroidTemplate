@@ -41,33 +41,24 @@ dependencies {
 
     api(Libs.AndroidX.coreKtx)
     api(Libs.AndroidX.appcompat)
+    api(Libs.AndroidX.Activity.activity)
+    api(Libs.AndroidX.Fragment.fragment)
+    api(Libs.AndroidX.material)
+
     api(Libs.AndroidX.Lifecycle.extensions)
     api(Libs.AndroidX.Lifecycle.lifecycleKtx)
     api(Libs.AndroidX.Lifecycle.liveDataKtx)
     api(Libs.AndroidX.Lifecycle.viewModelKtx)
-    api(Libs.AndroidX.Lifecycle.savedState)
 
     api(Libs.timber)
     api(Libs.Insetter.ktx)
 
     api(Libs.Dagger.dagger)
+    api(Libs.Dagger.androidSupport)
     kapt(Libs.Dagger.compiler)
-
-    implementation(Libs.AndroidX.Fragment.fragmentKtx)
-    implementation(Libs.AndroidX.material)
 
     testImplementation(project(":test-shared"))
     testImplementation(Libs.Test.mockK)
     testImplementation(Libs.Kotlin.Coroutines.test)
     testImplementation(Libs.Test.AndroidX.arch)
-
-    // FIXME: should be sharedTestImplementation: https://issuetracker.google.com/issues/127986458
-    debugImplementation(Libs.AndroidX.Fragment.testing) {
-        exclude(group = "androidx.test", module = "core")
-    }
-    testImplementation(Libs.Test.Robolectric.robolectric)
-    testImplementation(Libs.Test.AndroidX.core)
-    testImplementation(Libs.Test.AndroidX.rules)
-    testImplementation(Libs.Test.AndroidX.runner)
-    testImplementation(Libs.Test.AndroidX.ext)
 }

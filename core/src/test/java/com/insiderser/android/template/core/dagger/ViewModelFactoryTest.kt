@@ -37,7 +37,7 @@ class ViewModelFactoryTest {
         assertThat(created).isInstanceOf(TestViewModel::class.java)
     }
 
-    @Test(expected = NoVMProviderError::class)
+    @Test(expected = Error::class)
     fun givenNoViewModelProvider_create_fails() {
         val victim = ViewModelFactory(emptyMap())
         victim.create(TestViewModel::class.java)

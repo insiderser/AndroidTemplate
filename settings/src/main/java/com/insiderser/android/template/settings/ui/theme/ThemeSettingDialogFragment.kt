@@ -23,7 +23,6 @@ package com.insiderser.android.template.settings.ui.theme
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
@@ -34,11 +33,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.insiderser.android.template.model.Theme
-import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponentProvider
 import com.insiderser.android.template.settings.R
-import com.insiderser.android.template.settings.dagger.DaggerSettingsComponent
 import com.insiderser.android.template.settings.ui.SettingsViewModel
 import com.insiderser.android.template.settings.util.findTitleForTheme
+import dagger.android.support.DaggerAppCompatDialogFragment
 import javax.inject.Inject
 
 /**
@@ -47,13 +45,14 @@ import javax.inject.Inject
  */
 // Don't use viewLifecycleOwner here since DialogFragment doesn't create any layouts.
 @SuppressLint("FragmentLiveDataObserve")
-internal class ThemeSettingDialogFragment : AppCompatDialogFragment() {
+class ThemeSettingDialogFragment : DaggerAppCompatDialogFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: SettingsViewModel by viewModels { viewModelFactory }
 
+    @Suppress("RemoveExplicitTypeArguments") // Won't compile otherwise
     private val adapter: ArrayAdapter<ThemeHolder> by lazy {
         ArrayAdapter<ThemeHolder>(
             requireContext(),
@@ -93,19 +92,6 @@ internal class ThemeSettingDialogFragment : AppCompatDialogFragment() {
             adapter.getItem(index)?.theme == theme
         }
         (dialog as AlertDialog).listView.setItemChecked(selectedIndex, true)
-    }
-
-    override fun onAttach(context: Context) {
-        injectItself()
-        super.onAttach(context)
-    }
-
-    private fun injectItself() {
-        val preferencesProvider =
-            requireActivity().application as PreferencesStorageComponentProvider
-        val preferencesDataComponent = preferencesProvider.preferencesStorageComponent
-        val settingsComponent = DaggerSettingsComponent.factory().create(preferencesDataComponent)
-        settingsComponent.inject(this)
     }
 
     /**

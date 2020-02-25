@@ -38,16 +38,8 @@ dependencies {
     implementation(project(":data"))
 
     implementation(Libs.AndroidX.constraintLayout)
-    implementation(Libs.AndroidX.material)
-    implementation(Libs.AndroidX.Fragment.fragmentKtx)
 
-    implementation(Libs.AndroidX.Lifecycle.extensions)
-    implementation(Libs.AndroidX.Lifecycle.viewModelKtx)
-
-    implementation(Libs.Dagger.dagger)
     kapt(Libs.Dagger.compiler)
-    compileOnly(Libs.AssistedInject.annotations)
-    kapt(Libs.AssistedInject.processor)
 
     testImplementation(project(":test-shared"))
     debugImplementation(Libs.AndroidX.Fragment.testing) {

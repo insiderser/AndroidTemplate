@@ -38,12 +38,4 @@ interface ViewModelFactoryModule {
      */
     @Binds
     fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
-
-    /**
-     * Define connection between the framework's [ViewModelProvider.Factory]
-     * and out own implementation: [SavedStateViewModelFactory].
-     */
-    @Binds
-    @SavedStateFactory
-    fun bindSavedStateViewModelFactory(factory: SavedStateViewModelFactory): ViewModelProvider.Factory
 }

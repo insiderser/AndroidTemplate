@@ -22,10 +22,7 @@
 package com.insiderser.android.template.dagger
 
 import com.insiderser.android.template.MyApplication
-import com.insiderser.android.template.core.dagger.CoreComponent
-import com.insiderser.android.template.core.dagger.CoreModule
 import com.insiderser.android.template.core.dagger.ViewModelFactoryModule
-import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponent
 import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageModule
 import dagger.BindsInstance
 import dagger.Component
@@ -45,15 +42,13 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AndroidInjectionModule::class,
-        CoreModule::class,
         ContextModule::class,
         ViewModelFactoryModule::class,
         ActivityBindingModule::class,
         PreferencesStorageModule::class
     ]
 )
-internal interface AppComponent : AndroidInjector<MyApplication>, CoreComponent,
-    PreferencesStorageComponent {
+internal interface AppComponent : AndroidInjector<MyApplication> {
 
     /**
      * Dagger factory for building [AppComponent], binding instances into a dagger graph.

@@ -38,21 +38,10 @@ class ViewModelFactory @Inject constructor(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         Timber.v("Creating instance of ${modelClass.name}")
 
-        val creator = creators[modelClass]
-            ?: throw NoVMProviderError(
+        return creators[modelClass]?.get() as? T
+            ?: throw Error(
                 "Cannot create an instance of ${modelClass.name} using Dagger. " +
                     "Did you forget to add it into Dagger?"
             )
-        try {
-            return creator.get() as T
-        } catch (e: Exception) {
-            throw RuntimeException("Error occurred while creating ${modelClass.name}", e)
-        }
     }
 }
-
-/**
- * An [Error] that indicates that no [Provider] for the given [ViewModel]
- * had been added into a Dagger graph.
- */
-class NoVMProviderError(message: String) : Error(message)

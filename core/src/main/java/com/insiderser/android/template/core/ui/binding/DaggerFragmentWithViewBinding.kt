@@ -26,18 +26,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.MainThread
-import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import dagger.android.support.DaggerFragment
 
 /**
- * [Fragment] wrapper that uses [ViewBinding] to manage its views.
+ * [Fragment][androidx.fragment.app.Fragment] wrapper that uses [ViewBinding] to manage its views.
  *
  * Current binding can be accessed via [binding] and [requireBinding].
  *
  * @param B [ViewBinding] class that is used.
- * @see Fragment
  */
-abstract class FragmentWithViewBinding<B : ViewBinding> : Fragment() {
+abstract class DaggerFragmentWithViewBinding<B : ViewBinding> : DaggerFragment() {
 
     /**
      * A current [ViewBinding] that is being displayed to the user.

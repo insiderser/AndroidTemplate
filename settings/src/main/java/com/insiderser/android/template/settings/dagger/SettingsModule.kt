@@ -19,12 +19,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.core.dagger
+package com.insiderser.android.template.settings.dagger
 
+import androidx.lifecycle.ViewModel
+import com.insiderser.android.template.core.dagger.ViewModelKey
+import com.insiderser.android.template.settings.ui.SettingsViewModel
+import dagger.Binds
 import dagger.Module
+import dagger.multibindings.IntoMap
 
 /**
- * Dagger module used throughout the app.
+ * Dagger module for settings.
  */
 @Module
-class CoreModule
+interface SettingsModule {
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingsViewModel::class)
+    fun bindSettingsViewModel(vm: SettingsViewModel): ViewModel
+}

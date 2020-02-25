@@ -21,10 +21,9 @@
  */
 package com.insiderser.android.template.data
 
-import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.template.test.shared.util.await
@@ -46,8 +45,7 @@ class MyDaoTest {
 
     @Before
     fun setUp() {
-        val context: Context = ApplicationProvider.getApplicationContext()
-        db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
+        db = Room.inMemoryDatabaseBuilder(getApplicationContext(), AppDatabase::class.java)
             .allowMainThreadQueries()
             .build()
         dao = db.myDao
@@ -77,7 +75,6 @@ class MyDaoTest {
         assertThat(newId).isEqualTo(id)
 
         val insertedEntity = dao.findOneById(id).await()
-        assertThat(insertedEntity).isNotNull()
         assertThat(insertedEntity!!.id).isEqualTo(id)
         assertThat(insertedEntity.name).isEqualTo(name)
 

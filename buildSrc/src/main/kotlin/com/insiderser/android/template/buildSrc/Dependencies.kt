@@ -108,14 +108,12 @@ object Libs {
 
         object Activity {
             private const val version = "1.1.0"
-            const val activity = "androidx.activity:activity:$version"
-            const val activityKtx = "androidx.activity:activity-ktx:$version"
+            const val activity = "androidx.activity:activity-ktx:$version"
         }
 
         object Fragment {
             private const val version = "1.2.2"
-            const val fragment = "androidx.fragment:fragment:$version"
-            const val fragmentKtx = "androidx.fragment:fragment-ktx:$version"
+            const val fragment = "androidx.fragment:fragment-ktx:$version"
             const val testing = "androidx.fragment:fragment-testing:$version"
         }
 
@@ -139,12 +137,10 @@ object Libs {
             const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
             const val lifecycleKtx = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
             const val compiler = "androidx.lifecycle:lifecycle-compiler:$version"
-            const val savedState = "androidx.lifecycle:lifecycle-viewmodel-savedstate:$version"
         }
 
         object Room {
             private const val version = "2.2.4"
-            const val common = "androidx.room:room-common:$version"
             const val runtime = "androidx.room:room-runtime:$version"
             const val compiler = "androidx.room:room-compiler:$version"
             const val ktx = "androidx.room:room-ktx:$version"
@@ -164,12 +160,6 @@ object Libs {
         const val compiler = "com.google.dagger:dagger-compiler:$version"
         const val androidSupport = "com.google.dagger:dagger-android-support:$version"
         const val androidProcessor = "com.google.dagger:dagger-android-processor:$version"
-    }
-
-    object AssistedInject {
-        private const val version = "0.5.2"
-        const val annotations = "com.squareup.inject:assisted-inject-annotations-dagger2:$version"
-        const val processor = "com.squareup.inject:assisted-inject-processor-dagger2:$version"
     }
 
     object Retrofit {

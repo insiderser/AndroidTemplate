@@ -22,23 +22,20 @@
 package com.insiderser.android.template.feature1.dagger
 
 import androidx.lifecycle.ViewModel
-import com.insiderser.android.template.core.dagger.AssistedViewModelFactory
 import com.insiderser.android.template.core.dagger.ViewModelKey
 import com.insiderser.android.template.feature1.ui.Feature1FragmentViewModel
-import com.squareup.inject.assisted.dagger2.AssistedModule
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
 /**
- * Dagger module for feature1 module. It tells dagger how to create [Feature1FragmentViewModel].
+ * Dagger module for feature1 module.
  */
-@AssistedModule
-@Module(includes = [AssistedInject_Feature1Module::class])
-internal interface Feature1Module {
+@Module
+interface Feature1Module {
 
     @Binds
     @IntoMap
     @ViewModelKey(Feature1FragmentViewModel::class)
-    fun bindFeature1ViewModelFactory(f: Feature1FragmentViewModel.Factory): AssistedViewModelFactory<out ViewModel>
+    fun bindFeature1ViewModelFactory(vm: Feature1FragmentViewModel): ViewModel
 }

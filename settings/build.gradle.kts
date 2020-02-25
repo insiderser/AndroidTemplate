@@ -42,8 +42,6 @@ dependencies {
     implementation(project(":preferences-data"))
 
     implementation(Libs.AndroidX.constraintLayout)
-    implementation(Libs.AndroidX.material)
-    implementation(Libs.AndroidX.Fragment.fragmentKtx)
 
     kapt(Libs.Dagger.compiler)
 

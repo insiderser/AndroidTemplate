@@ -49,7 +49,6 @@ android {
 dependencies {
     implementation(project(":core"))
 
-    implementation(Libs.AndroidX.Room.common)
     implementation(Libs.AndroidX.Room.runtime)
     implementation(Libs.AndroidX.Room.ktx)
     kapt(Libs.AndroidX.Room.compiler)

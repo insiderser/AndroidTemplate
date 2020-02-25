@@ -38,7 +38,7 @@ import javax.inject.Inject
 /**
  * [ViewModel] for [SettingsFragment] that manages preferences.
  */
-internal class SettingsViewModel @Inject constructor(
+class SettingsViewModel @Inject constructor(
     getAvailableThemesUseCase: GetAvailableThemesUseCase,
     observableThemeUseCase: ObservableThemeUseCase,
     private val setThemeUseCase: SetThemeUseCase

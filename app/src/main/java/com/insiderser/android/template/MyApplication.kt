@@ -23,15 +23,11 @@ package com.insiderser.android.template
 
 import android.os.StrictMode
 import androidx.appcompat.app.AppCompatDelegate
-import com.insiderser.android.template.core.dagger.CoreComponent
-import com.insiderser.android.template.core.dagger.CoreComponentProvider
 import com.insiderser.android.template.core.domain.invoke
 import com.insiderser.android.template.core.util.toAppCompatNightMode
 import com.insiderser.android.template.dagger.AppComponent
 import com.insiderser.android.template.dagger.DaggerAppComponent
 import com.insiderser.android.template.model.Theme
-import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponent
-import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageComponentProvider
 import com.insiderser.android.template.prefs.data.domain.theme.ObservableThemeUseCase
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
@@ -48,8 +44,7 @@ import javax.inject.Inject
  * This class executes basic app configuration, such as building a
  * Dagger graph, initializing libraries that need to be initialized on startup, etc.
  */
-class MyApplication : DaggerApplication(), CoreComponentProvider,
-    PreferencesStorageComponentProvider {
+class MyApplication : DaggerApplication() {
 
     private val appScope = CoroutineScope(Dispatchers.Main)
 
@@ -107,7 +102,4 @@ class MyApplication : DaggerApplication(), CoreComponentProvider,
      * throughout the app.
      */
     override fun applicationInjector(): AndroidInjector<MyApplication> = appComponent
-
-    override val coreComponent: CoreComponent get() = appComponent
-    override val preferencesStorageComponent: PreferencesStorageComponent get() = appComponent
 }

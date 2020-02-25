@@ -71,11 +71,6 @@ dependencies {
     implementation(project(":feature1"))
     implementation(project(":settings"))
 
-    implementation(Libs.AndroidX.material)
-    implementation(Libs.AndroidX.Activity.activityKtx)
-    implementation(Libs.AndroidX.Fragment.fragmentKtx)
-
-    implementation(Libs.Dagger.androidSupport)
     kapt(Libs.Dagger.compiler)
     kapt(Libs.Dagger.androidProcessor)
 
