@@ -104,17 +104,6 @@ jobs:
           name: junit-results
           path: junit
 
-      - name: Copy schemas
-        run: |
-          mkdir -p schemas
-          find . -type d -regex ".*/schemas/com\.insiderser.*" -exec cp -r {} schemas/ \;
-
-      - name: Upload Room schemas
-        uses: actions/upload-artifact@v1
-        with:
-          name: db-schemas
-          path: schemas
-
   ui-test:
     name: UI tests
     runs-on: macos-latest
