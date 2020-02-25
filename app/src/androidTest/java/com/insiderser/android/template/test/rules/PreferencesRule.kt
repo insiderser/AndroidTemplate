@@ -21,7 +21,7 @@
  */
 package com.insiderser.android.template.test.rules
 
-import androidx.test.core.app.ApplicationProvider
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.insiderser.android.template.prefs.data.AppPreferencesStorage
 import com.insiderser.android.template.prefs.data.AppPreferencesStorageImpl
 import org.junit.rules.TestWatcher
@@ -36,9 +36,13 @@ class TestPreferencesRule(
     private val configurator: (AppPreferencesStorage.() -> Unit)? = null
 ) : TestWatcher() {
 
+    val storage: AppPreferencesStorage by lazy {
+        AppPreferencesStorageImpl(getApplicationContext())
+    }
+
     override fun starting(description: Description?) {
         super.starting(description)
-        AppPreferencesStorageImpl(ApplicationProvider.getApplicationContext()).run {
+        with(storage) {
             selectedTheme = null
 
             configurator?.invoke(this)

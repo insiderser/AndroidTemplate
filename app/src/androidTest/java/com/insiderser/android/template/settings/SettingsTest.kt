@@ -32,6 +32,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
+import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.template.R
 import com.insiderser.android.template.model.Theme
 import com.insiderser.android.template.test.rules.MainActivityRule
@@ -44,7 +45,7 @@ import org.junit.runner.RunWith
 
 @MediumTest
 @RunWith(AndroidJUnit4::class)
-class SettingsFragmentTest {
+class SettingsTest {
 
     @Rule
     @JvmField
@@ -76,5 +77,7 @@ class SettingsFragmentTest {
 
         onView(allOf(withId(R.id.summary), withParent(withId(R.id.choose_theme_preference))))
             .check(matches(withText(R.string.settings_theme_dark)))
+
+        assertThat(preferencesRule.storage.selectedTheme).isEqualTo(Theme.DARK.storageKey)
     }
 }

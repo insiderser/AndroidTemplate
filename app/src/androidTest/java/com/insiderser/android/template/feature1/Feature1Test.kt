@@ -19,40 +19,69 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.launcher
+package com.insiderser.android.template.feature1
 
 import android.widget.TextView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.openContextualActionModeOverflowMenu
+import androidx.test.espresso.Espresso.pressBack
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.RootMatchers.isPlatformPopup
+import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.SmallTest
-import androidx.test.rule.ActivityTestRule
+import androidx.test.filters.MediumTest
 import com.insiderser.android.template.R
+import com.insiderser.android.template.test.rules.MainActivityRule
 import com.insiderser.android.template.test.rules.TestPreferencesRule
-import com.insiderser.android.template.ui.launcher.LauncherActivity
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.instanceOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@SmallTest
+@MediumTest
 @RunWith(AndroidJUnit4::class)
-class LauncherFragmentTest {
+class Feature1Test {
+
+    @Rule
+    @JvmField
+    val activityRule = MainActivityRule(R.id.feature1)
 
     @Rule
     @JvmField
     val preferencesRule = TestPreferencesRule()
 
-    @Rule
-    @JvmField
-    val activityRule = ActivityTestRule(LauncherActivity::class.java)
+    @Test
+    fun assert_IAmAFragment_isDisplayed() {
+        onView(allOf(instanceOf(TextView::class.java), withParent(withId(R.id.toolbar))))
+            .check(matches(withText(R.string.feature1_title)))
+
+        onView(withId(R.id.i_am_a_fragment_text_view))
+            .check(matches(isCompletelyDisplayed()))
+            .check(matches(withText("I am a Fragment")))
+    }
 
     @Test
-    fun whenLaunched_alwaysNavigatesToMainActivity() {
+    fun clickingOnSettingsMenu_navigatesToSettings_then_navigateBack_returnsToFeature1() {
+        // openActionBarOverflowOrOptionsMenu(...) doesn't pass in CI
+        openContextualActionModeOverflowMenu()
+
+        onView(withText(R.string.settings))
+            .inRoot(isPlatformPopup())
+            .check(matches(isCompletelyDisplayed()))
+            .perform(click())
+
+        // Check we are in Settings
+        onView(allOf(instanceOf(TextView::class.java), withParent(withId(R.id.toolbar))))
+            .check(matches(withText(R.string.settings_title)))
+
+        pressBack()
+
+        // Check we are back in Feature1
         onView(allOf(instanceOf(TextView::class.java), withParent(withId(R.id.toolbar))))
             .check(matches(withText(R.string.feature1_title)))
     }
