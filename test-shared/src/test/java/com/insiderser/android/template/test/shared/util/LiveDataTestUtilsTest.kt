@@ -35,7 +35,7 @@ class LiveDataTestUtilsTest {
 
     @Test
     fun givenLiveDataWithData_await_returnsThatData() {
-        val instance = SimpleTestClass()
+        val instance = Any()
         val liveData = MutableLiveData(instance)
 
         val actual = liveData.await()

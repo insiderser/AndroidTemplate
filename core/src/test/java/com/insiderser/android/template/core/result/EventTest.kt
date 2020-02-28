@@ -22,23 +22,22 @@
 package com.insiderser.android.template.core.result
 
 import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.template.test.shared.util.SimpleTestClass
 import org.junit.Test
 
 class EventTest {
 
     @Test
     fun testEvent() {
-        val someClass = SimpleTestClass()
-        val victim = Event(someClass)
+        val instance = Any()
+        val victim = Event(instance)
 
         assertThat(victim.hasBeenHandled).isFalse()
-        assertThat(victim.getContentIfNotHandled()).isSameInstanceAs(someClass)
+        assertThat(victim.getContentIfNotHandled()).isSameInstanceAs(instance)
 
         assertThat(victim.hasBeenHandled).isTrue()
         assertThat(victim.getContentIfNotHandled()).isNull()
         assertThat(victim.hasBeenHandled).isTrue()
 
-        assertThat(victim.peekContent()).isSameInstanceAs(someClass)
+        assertThat(victim.peekContent()).isSameInstanceAs(instance)
     }
 }

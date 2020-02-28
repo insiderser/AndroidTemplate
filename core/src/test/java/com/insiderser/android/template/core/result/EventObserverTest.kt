@@ -24,7 +24,6 @@ package com.insiderser.android.template.core.result
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.template.test.shared.util.SimpleTestClass
 import org.junit.Assert.fail
 import org.junit.Rule
 import org.junit.Test
@@ -37,20 +36,20 @@ class EventObserverTest {
 
     @Test
     fun testEventObserverWithLiveData() {
-        val someTestClass = SimpleTestClass()
-        val someEvent = Event(someTestClass)
-        val liveData = MutableLiveData(someEvent)
+        val instance = Any()
+        val event = Event(instance)
+        val liveData = MutableLiveData(event)
 
         var called = false
-        val victim = EventObserver<SimpleTestClass> {
+        val victim = EventObserver<Any> {
             assertThat(called).isFalse() // Check not called multiple times
-            assertThat(it).isSameInstanceAs(someTestClass)
+            assertThat(it).isSameInstanceAs(instance)
             called = true
         }
 
         liveData.observeForever(victim)
         assertThat(called).isTrue()
-        assertThat(someEvent.hasBeenHandled).isTrue()
+        assertThat(event.hasBeenHandled).isTrue()
         liveData.removeObserver(victim)
 
         // Check event is dispatched only once
@@ -61,7 +60,7 @@ class EventObserverTest {
 
     @Test
     fun testEventObserverWithLiveData_nullValue() {
-        val liveData = MutableLiveData<Event<SimpleTestClass>>(null)
+        val liveData = MutableLiveData<Event<Any>>(null)
         liveData.observeForever(EventObserver {
             fail("Should never be called on null values")
         })

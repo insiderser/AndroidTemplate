@@ -22,7 +22,6 @@
 package com.insiderser.android.template.core.result
 
 import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.template.test.shared.util.SimpleTestClass
 import org.junit.Test
 
 class ResultTest {
@@ -33,7 +32,7 @@ class ResultTest {
 
         assertThat(result.succeeded).isFalse()
 
-        val fallback = SimpleTestClass()
+        val fallback = Any()
         assertThat(result.successOr(fallback)).isSameInstanceAs(fallback)
     }
 
@@ -45,30 +44,30 @@ class ResultTest {
         assertThat(result.cause).isSameInstanceAs(cause)
         assertThat(result.succeeded).isFalse()
 
-        val fallback = SimpleTestClass()
+        val fallback = Any()
         assertThat(result.successOr(fallback)).isSameInstanceAs(fallback)
     }
 
     @Test
     fun testSuccessResult() {
-        val data = SimpleTestClass()
+        val data = Any()
         val result = Result.Success(data)
 
         assertThat(result.data).isSameInstanceAs(data)
         assertThat(result.succeeded).isTrue()
 
-        val fallback = SimpleTestClass()
+        val fallback = Any()
         assertThat(result.successOr(fallback)).isSameInstanceAs(data)
     }
 
     @Test
     fun testSuccessResult_nullData() {
-        val result = Result.Success<SimpleTestClass?>(null)
+        val result = Result.Success<Any?>(null)
 
         assertThat(result.data).isNull()
         assertThat(result.succeeded).isFalse()
 
-        val fallback = SimpleTestClass()
+        val fallback = Any()
         assertThat(result.successOr(fallback)).isSameInstanceAs(fallback)
     }
 }
