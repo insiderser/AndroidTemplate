@@ -92,24 +92,14 @@ class SettingsViewModelTest {
 
     @Test
     fun setSelectedTheme_updatesPreferencesStorage() {
-        var postedValue: Theme? = null
-        var latch = CountDownLatch(1)
-
-        viewModel.selectedTheme.observeForever { postedTheme ->
-            postedValue = postedTheme
-            latch.countDown()
-        }
-
-        // Check default value
-        latch.await(1, TimeUnit.SECONDS)
-        assertThat(postedValue).isAnyOf(Theme.AUTO_BATTERY, Theme.FOLLOW_SYSTEM)
+        val observer = viewModel.selectedTheme.test()
+            // Check default value
+            .awaitValue(1, TimeUnit.SECONDS)
+            .assertValue(DEFAULT_THEME)
 
         Theme.values().forEach { theme ->
-            latch = CountDownLatch(1)
             viewModel.setSelectedTheme(theme)
-
-            latch.await(1, TimeUnit.SECONDS)
-            assertThat(postedValue).isEqualTo(theme)
+            observer.awaitNextValue(1, TimeUnit.SECONDS).assertValue(theme)
             assertThat(storage.selectedTheme).isEqualTo(theme.storageKey)
         }
     }

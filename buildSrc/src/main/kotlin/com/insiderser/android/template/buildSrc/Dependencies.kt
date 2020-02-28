@@ -52,6 +52,7 @@ object Libs {
     object Test {
         const val junit4 = "junit:junit:4.13"
         const val truth = "com.google.truth:truth:1.0.1"
+        const val liveDataTesting = "com.jraska.livedata:testing-ktx:1.1.1"
         const val mockK = "io.mockk:mockk:1.9.3"
 
         object Robolectric {

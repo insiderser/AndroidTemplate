@@ -38,6 +38,7 @@ dependencies {
 
     api(Libs.Test.junit4)
     api(Libs.Test.truth)
+    api(Libs.Test.liveDataTesting)
 
     testImplementation(Libs.Test.junit4)
     testImplementation(Libs.Test.AndroidX.arch)
