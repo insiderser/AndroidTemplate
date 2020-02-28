@@ -36,11 +36,6 @@ configureAndroidModule()
 android {
     defaultConfig {
         applicationId = "com.insiderser.android.template"
-
-        testInstrumentationRunnerArgument(
-            "listener",
-            "com.insiderser.android.template.test.listeners.CrashingRunListener"
-        )
     }
 
     signingConfigs {
