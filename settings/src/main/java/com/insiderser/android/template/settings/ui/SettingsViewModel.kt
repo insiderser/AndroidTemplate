@@ -29,9 +29,9 @@ import androidx.lifecycle.viewModelScope
 import com.insiderser.android.template.core.domain.invoke
 import com.insiderser.android.template.core.result.Event
 import com.insiderser.android.template.model.Theme
-import com.insiderser.android.template.prefs.data.domain.theme.ObservableThemeUseCase
-import com.insiderser.android.template.prefs.data.domain.theme.SetThemeUseCase
-import com.insiderser.android.template.settings.domain.GetAvailableThemesUseCase
+import com.insiderser.android.template.prefs.domain.theme.GetAvailableThemesUseCase
+import com.insiderser.android.template.prefs.domain.theme.ObservableThemeUseCase
+import com.insiderser.android.template.prefs.domain.theme.SetThemeUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

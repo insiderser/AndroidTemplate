@@ -19,7 +19,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.prefs.domain.theme
 
-rootProject.name = "Template"
-include ':app', ':core', ':test-shared', ':data', ':feature1', ':model', ':preferences',
-        ':settings', ':navigation'
+import com.insiderser.android.template.core.domain.UseCase
+import com.insiderser.android.template.model.Theme
+import com.insiderser.android.template.prefs.AppPreferencesStorage
+import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
+
+/**
+ * Use case for setting user-selected theme settings to app preferences.
+ */
+class SetThemeUseCase @Inject constructor(
+    private val prefs: AppPreferencesStorage
+) : UseCase<Theme, Unit>(Dispatchers.IO) {
+
+    override suspend fun execute(param: Theme) {
+        prefs.selectedTheme = param.storageKey
+    }
+}

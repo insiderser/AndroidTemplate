@@ -19,7 +19,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.prefs.domain.theme
 
-rootProject.name = "Template"
-include ':app', ':core', ':test-shared', ':data', ':feature1', ':model', ':preferences',
-        ':settings', ':navigation'
+import com.insiderser.android.template.core.domain.ObservableUseCase
+import com.insiderser.android.template.model.Theme
+import com.insiderser.android.template.prefs.AppPreferencesStorage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
+
+/**
+ * Use case for getting observable [Flow] of user-selected theme settings from app preferences.
+ * @see observe
+ * @see invoke
+ */
+class ObservableThemeUseCase @Inject constructor(
+    private val preferencesStorage: AppPreferencesStorage
+) : ObservableUseCase<Unit, Theme>() {
+
+    override suspend fun createObservable(params: Unit): Flow<Theme> = withContext(Dispatchers.IO) {
+        preferencesStorage.selectedThemeObservable.map { storageKey: String? ->
+            storageKey?.let { Theme.fromStorageKey(storageKey) }
+                ?: DEFAULT_THEME
+        }
+    }
+}

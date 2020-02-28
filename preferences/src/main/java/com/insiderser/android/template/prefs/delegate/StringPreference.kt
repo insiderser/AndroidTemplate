@@ -19,33 +19,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.test.rules
+package com.insiderser.android.template.prefs.delegate
 
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import com.insiderser.android.template.prefs.AppPreferencesStorage
-import com.insiderser.android.template.prefs.AppPreferencesStorageImpl
-import org.junit.rules.TestWatcher
-import org.junit.runner.Description
+import android.content.SharedPreferences
+import androidx.annotation.WorkerThread
+import androidx.core.content.edit
+import timber.log.Timber
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
 /**
- * A simple test rule that resets app preferences to default or testable.
- * For example, we don't want to show boarding screen every time we launch a test.
- * You can set custom preferences by passing configuration function to a constructor.
+ * Property delegate that manages a single entry in [SharedPreferences].
+ *
+ * **Note**: all get operations are done synchronously on the calling thread.
+ * Make sure to call it on a worker thread.
  */
-class TestPreferencesRule(
-    private val configurator: (AppPreferencesStorage.() -> Unit)? = null
-) : TestWatcher() {
+internal class StringPreference(
+    private val sharedPreferences: Lazy<SharedPreferences>,
+    private val preferenceKey: String,
+    private val defaultValue: String? = null
+) : ReadWriteProperty<Any, String?> {
 
-    val storage: AppPreferencesStorage by lazy {
-        AppPreferencesStorageImpl(getApplicationContext())
-    }
+    @WorkerThread
+    override fun getValue(thisRef: Any, property: KProperty<*>): String? =
+        sharedPreferences.value.getString(preferenceKey, defaultValue)
 
-    override fun starting(description: Description?) {
-        super.starting(description)
-        with(storage) {
-            selectedTheme = null
-
-            configurator?.invoke(this)
+    @WorkerThread
+    override fun setValue(thisRef: Any, property: KProperty<*>, value: String?) {
+        Timber.v("Changing value of property with key $preferenceKey to $value")
+        sharedPreferences.value.edit(commit = true) {
+            putString(preferenceKey, value)
         }
     }
 }

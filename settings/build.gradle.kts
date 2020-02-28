@@ -32,16 +32,10 @@ plugins {
 
 configureAndroidModule()
 
-kapt {
-    correctErrorTypes = true
-}
-
 dependencies {
     implementation(project(":core"))
     implementation(project(":navigation"))
-    implementation(project(":preferences-data"))
-
-    implementation(Libs.AndroidX.constraintLayout)
+    implementation(project(":preferences"))
 
     kapt(Libs.Dagger.compiler)
 

@@ -24,11 +24,13 @@ package com.insiderser.android.template.settings.ui
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.template.model.Theme
-import com.insiderser.android.template.prefs.data.domain.theme.ObservableThemeUseCase
-import com.insiderser.android.template.prefs.data.domain.theme.SetThemeUseCase
-import com.insiderser.android.template.prefs.data.test.FakeAppPreferencesStorage
-import com.insiderser.android.template.settings.domain.GetAvailableThemesUseCase
+import com.insiderser.android.template.prefs.domain.theme.DEFAULT_THEME
+import com.insiderser.android.template.prefs.domain.theme.GetAvailableThemesUseCase
+import com.insiderser.android.template.prefs.domain.theme.ObservableThemeUseCase
+import com.insiderser.android.template.prefs.domain.theme.SetThemeUseCase
+import com.insiderser.android.template.prefs.test.FakeAppPreferencesStorage
 import com.insiderser.android.template.test.shared.util.await
+import com.jraska.livedata.test
 import io.mockk.MockKAnnotations
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ObsoleteCoroutinesApi
@@ -39,7 +41,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
 @UseExperimental(ObsoleteCoroutinesApi::class)
@@ -86,14 +87,7 @@ class SettingsViewModelTest {
     @Test
     fun availableThemes_isCorrect() {
         val availableThemes = viewModel.availableThemes.await()
-
-        // Don't test that FOLLOW_SYSTEM vs AUTO_BATTERY logic.
-        // Just verify that SettingsViewModel correctly takes those values from the use case.
-        assertThat(availableThemes).run {
-            hasSize(3)
-            containsAtLeast(Theme.DARK, Theme.LIGHT)
-            containsAnyOf(Theme.AUTO_BATTERY, Theme.FOLLOW_SYSTEM)
-        }
+        assertThat(availableThemes).containsExactly(Theme.DARK, Theme.LIGHT, DEFAULT_THEME)
     }
 
     @Test

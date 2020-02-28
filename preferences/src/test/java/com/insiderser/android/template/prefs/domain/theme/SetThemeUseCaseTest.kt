@@ -19,7 +19,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.prefs.domain.theme
 
-rootProject.name = "Template"
-include ':app', ':core', ':test-shared', ':data', ':feature1', ':model', ':preferences',
-        ':settings', ':navigation'
+import com.google.common.truth.Truth.assertThat
+import com.insiderser.android.template.model.Theme
+import com.insiderser.android.template.prefs.test.FakeAppPreferencesStorage
+import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Test
+
+class SetThemeUseCaseTest {
+
+    private val preferencesStorage = FakeAppPreferencesStorage()
+
+    private val useCase = SetThemeUseCase(preferencesStorage)
+
+    @Test
+    fun givenTheme_execute_updatesPreferencesStorage() = runBlockingTest {
+        Theme.values().forEach { theme ->
+            useCase.execute(theme)
+            assertThat(preferencesStorage.selectedTheme).isEqualTo(theme.storageKey)
+        }
+    }
+}

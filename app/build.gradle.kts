@@ -61,7 +61,7 @@ android {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":preferences-data"))
+    implementation(project(":preferences"))
     implementation(project(":navigation"))
     implementation(project(":feature1"))
     implementation(project(":settings"))

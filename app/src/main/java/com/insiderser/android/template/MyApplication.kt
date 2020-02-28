@@ -28,7 +28,7 @@ import com.insiderser.android.template.core.util.toAppCompatNightMode
 import com.insiderser.android.template.dagger.AppComponent
 import com.insiderser.android.template.dagger.DaggerAppComponent
 import com.insiderser.android.template.model.Theme
-import com.insiderser.android.template.prefs.data.domain.theme.ObservableThemeUseCase
+import com.insiderser.android.template.prefs.domain.theme.ObservableThemeUseCase
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import kotlinx.coroutines.CoroutineScope

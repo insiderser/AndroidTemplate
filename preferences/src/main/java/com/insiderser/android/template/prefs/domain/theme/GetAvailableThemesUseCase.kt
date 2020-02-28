@@ -19,7 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.prefs.domain.theme
 
-rootProject.name = "Template"
-include ':app', ':core', ':test-shared', ':data', ':feature1', ':model', ':preferences',
-        ':settings', ':navigation'
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.Q
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.insiderser.android.template.model.Theme
+import javax.inject.Inject
+
+/**
+ * Use case for getting all available themes for the device that
+ * we are running on.
+ */
+class GetAvailableThemesUseCase @Inject constructor() {
+
+    /**
+     * Get all available themes for this device.
+     */
+    operator fun invoke(): LiveData<List<Theme>> = MutableLiveData(
+        listOf(
+            Theme.LIGHT, Theme.DARK,
+            if (SDK_INT >= Q) Theme.FOLLOW_SYSTEM else Theme.AUTO_BATTERY
+        )
+    )
+}

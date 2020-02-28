@@ -23,7 +23,7 @@ package com.insiderser.android.template.dagger
 
 import com.insiderser.android.template.MyApplication
 import com.insiderser.android.template.core.dagger.ViewModelFactoryModule
-import com.insiderser.android.template.prefs.data.dagger.PreferencesStorageModule
+import com.insiderser.android.template.prefs.dagger.PreferencesStorageModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
