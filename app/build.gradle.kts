@@ -55,13 +55,8 @@ android {
     buildTypes {
         named("debug") {
             signingConfig = signingConfigs.getByName("debug")
-            applicationIdSuffix = ".debug"
         }
     }
-}
-
-kapt {
-    correctErrorTypes = true
 }
 
 dependencies {

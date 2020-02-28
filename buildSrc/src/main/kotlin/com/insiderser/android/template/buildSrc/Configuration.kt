@@ -35,20 +35,11 @@ fun DependencyHandler.sharedTestImplementation(dependencyNotation: Any) {
     add("androidTestImplementation", dependencyNotation)
 }
 
-/**
- * Convenience method that loads [android extension][BaseExtension].
- */
 private fun Project.android(action: BaseExtension.() -> Unit) {
     val androidExtension = extensions.findByType(BaseExtension::class)
-        ?: throw AndroidExtensionNotFoundError("Should be called after applying android plugin")
+        ?: throw Error("Should be called after applying android plugin")
     androidExtension.apply(action)
 }
-
-/**
- * Denotes that Android extension was not found. This means that `Android Gradle plugin`
- * hadn't been applied to this [project][Project].
- */
-class AndroidExtensionNotFoundError(message: String) : Error(message)
 
 /**
  * Apply default Android configuration to this module.
@@ -56,9 +47,6 @@ class AndroidExtensionNotFoundError(message: String) : Error(message)
  * **Note**: an Android plugin must be applied before calling this method.
  */
 fun Project.configureAndroidModule() {
-    val ciVersionName = findProperty("app.versionName") as String?
-    val ciVersionCode = findProperty("app.versionCode") as String?
-
     android {
         compileSdkVersion(Versions.Sdk.compile)
         buildToolsVersion(Versions.buildToolsVersion)
@@ -67,8 +55,8 @@ fun Project.configureAndroidModule() {
             targetSdkVersion(Versions.Sdk.target)
             minSdkVersion(Versions.Sdk.min)
 
-            versionName = ciVersionName?.takeIf { it.isNotBlank() } ?: Versions.versionName
-            versionCode = ciVersionCode?.takeIf { it.isNotBlank() }?.toInt() ?: 1
+            versionName = Versions.versionName
+            versionCode = Versions.versionCode
 
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
@@ -82,10 +70,13 @@ fun Project.configureAndroidModule() {
             sourceCompatibility = JavaVersion.VERSION_1_8
         }
 
-        buildTypes {
-            named("debug") {
-                versionNameSuffix = "-debug"
-            }
+        lintOptions {
+            isWarningsAsErrors = true
+            isAbortOnError = true
+            isCheckTestSources = false
+            isCheckGeneratedSources = false
+            isCheckDependencies = true
+            lintConfig = rootProject.file("lint.xml")
         }
 
         sourceSets {
@@ -95,15 +86,6 @@ fun Project.configureAndroidModule() {
             named("androidTest") {
                 java.srcDir("src/sharedTest/java")
             }
-        }
-
-        lintOptions {
-            isWarningsAsErrors = true
-            isAbortOnError = true
-            isCheckTestSources = false
-            isCheckGeneratedSources = false
-            isCheckDependencies = true
-            lintConfig = rootProject.file("lint.xml")
         }
 
         testOptions {

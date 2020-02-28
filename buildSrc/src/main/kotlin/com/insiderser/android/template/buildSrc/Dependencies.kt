@@ -31,7 +31,8 @@ object Versions {
         const val min = 23
     }
 
-    const val versionName = "1.0.0" // X.Y.Z; X = Major, Y = minor, Z = Patch level
+    const val versionName = "0.1.0" // X.Y.Z; X = Major, Y = minor, Z = Patch level
+    const val versionCode = 1
 
     const val jvmTarget = "1.8"
 
@@ -44,9 +45,6 @@ object Versions {
  * A wrapper for all dependencies' notations used in the project together with their versions.
  */
 object Libs {
-    // Don't forget to update version in buildSrc/build.gradle.kts
-    const val androidGradlePlugin = "com.android.tools.build:gradle:3.6.0"
-
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.2"
