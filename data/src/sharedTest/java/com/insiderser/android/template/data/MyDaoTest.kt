@@ -25,6 +25,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.template.test.shared.util.await
 import org.junit.After
@@ -33,6 +34,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@SmallTest
 @RunWith(AndroidJUnit4::class)
 class MyDaoTest {
 
@@ -90,25 +92,23 @@ class MyDaoTest {
         val id = dao.insertOne(entity).toInt()
         assertThat(id).isAtLeast(1)
 
-        val insertedEntity = dao.findOneById(id).await()
-        assertThat(insertedEntity).isEqualTo(MyEntity(id, name))
-
-        val allEntities = dao.findAll().await()
-        assertThat(allEntities).containsExactly(insertedEntity)
+        val expected = MyEntity(id, name)
+        assertThat(dao.findOneById(id).await()).isEqualTo(expected)
+        assertThat(dao.findAll().await()).containsExactly(expected)
     }
 
     @Test
     fun whenInsertingEntityWithExistingId_insertOne_replacesEntry() {
         val id = 100
-        val newName = "Sam"
 
         dao.insertOne(MyEntity(id = id, name = "Alex"))
 
-        val newEntity = MyEntity(id = id, name = newName)
+        val newEntity = MyEntity(id = id, name = "Sam")
         val newId = dao.insertOne(newEntity)
 
         assertThat(newId).isEqualTo(id)
         assertThat(dao.findOneById(id).await()).isEqualTo(newEntity)
+        assertThat(dao.findAll().await()).containsExactly(newEntity)
     }
 
     @Test
