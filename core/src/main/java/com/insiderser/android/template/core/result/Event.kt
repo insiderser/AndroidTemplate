@@ -55,6 +55,9 @@ class Event<out T : Any>(private val content: T) {
     fun peekContent() = content
 }
 
+@Suppress("FunctionName")
+fun Event() = Event(Unit)
+
 /**
  * An [Observer] for [Event]s, simplifying the pattern of checking if the [Event]'s
  * content has been already handled.

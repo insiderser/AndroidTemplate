@@ -37,5 +37,5 @@ internal class LauncherActivityViewModel @Inject constructor() : ViewModel() {
      * has to navigate to [com.insiderser.android.template.ui.MainActivity].
      */
     // For now, just always navigate to MainActivity
-    val navigateToMainActivity: LiveData<Event<Unit>> = MutableLiveData(Event(Unit))
+    val navigateToMainActivity: LiveData<Event<Unit>> = MutableLiveData(Event())
 }

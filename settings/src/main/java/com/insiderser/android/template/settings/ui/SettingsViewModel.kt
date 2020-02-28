@@ -69,7 +69,7 @@ class SettingsViewModel @Inject constructor(
      * Called when user clicks on "Choose theme" setting.
      */
     fun onThemeSettingClicked() {
-        _openThemeSettingDialog.value = Event(Unit)
+        _openThemeSettingDialog.value = Event()
     }
 
     init {
