@@ -22,7 +22,6 @@
 package com.insiderser.android.template.prefs.domain.theme
 
 import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.template.model.Theme
 import com.insiderser.android.template.prefs.test.FakeAppPreferencesStorage
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test

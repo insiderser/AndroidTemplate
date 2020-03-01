@@ -21,8 +21,20 @@
  */
 package com.insiderser.android.template.prefs.domain.theme
 
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.Q
-import com.insiderser.android.template.model.Theme
+import com.google.common.truth.Truth.assertThat
+import org.junit.Assert.assertThrows
+import org.junit.Test
 
-val DEFAULT_THEME = if (SDK_INT >= Q) Theme.FOLLOW_SYSTEM else Theme.AUTO_BATTERY
+class ThemeTest {
+
+    @Test
+    fun themeFromStorageKey_returnsCorrectTheme() {
+        for (theme in Theme.values()) {
+            assertThat(Theme.fromStorageKey(theme.storageKey)).isSameInstanceAs(theme)
+        }
+
+        assertThrows(NoSuchElementException::class.java) {
+            Theme.fromStorageKey("")
+        }
+    }
+}

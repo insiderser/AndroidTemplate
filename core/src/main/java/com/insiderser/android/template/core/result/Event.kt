@@ -22,6 +22,8 @@
 package com.insiderser.android.template.core.result
 
 import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 
 /**
@@ -41,12 +43,10 @@ class Event<out T : Any>(private val content: T) {
      *
      * If the content has been handled, this returns `null`.
      */
-    fun getContentIfNotHandled(): T? {
-        return if (!hasBeenHandled) {
-            hasBeenHandled = true
-            content
-        } else null
-    }
+    fun getContentIfNotHandled(): T? = if (!hasBeenHandled) {
+        hasBeenHandled = true
+        content
+    } else null
 
     /**
      * Return the content, even if it's already been handled.
@@ -75,4 +75,36 @@ class EventObserver<T : Any>(
             onEventUnhandledCallback(content)
         }
     }
+}
+
+/**
+ * Adds the given [onChanged] lambda as an observer for [Event] within
+ * the lifespan of the given [owner].
+ * The events are dispatched on the main thread. If [LiveData] already has unconsumed events
+ * set, it will be delivered to the [onChanged].
+ *
+ * The observer will only receive events if the owner is in
+ * [started][androidx.lifecycle.Lifecycle.State.STARTED] or
+ * [resumed][androidx.lifecycle.Lifecycle.State.RESUMED] state (active).
+ *
+ * If the owner moves to the [destroyed][androidx.lifecycle.Lifecycle.State.DESTROYED] state,
+ * the observer will automatically be removed.
+ *
+ * When data changes while the [owner] is not active, it will not receive any updates.
+ * If it becomes active again, it will receive the last available data automatically.
+ *
+ * LiveData keeps a strong reference to the observer and the owner as long as the
+ * given [LifecycleOwner] is not destroyed. When it is destroyed, LiveData removes references to
+ * the observer and the owner.
+ *
+ * If the given owner is already in [destroyed][androidx.lifecycle.Lifecycle.State.DESTROYED] state,
+ * LiveData ignores the call.
+ */
+inline fun <T : Any> LiveData<Event<T>>.observeEvent(
+    owner: LifecycleOwner,
+    crossinline onChanged: (T) -> Unit
+) {
+    observe(owner, EventObserver { t ->
+        onChanged(t)
+    })
 }

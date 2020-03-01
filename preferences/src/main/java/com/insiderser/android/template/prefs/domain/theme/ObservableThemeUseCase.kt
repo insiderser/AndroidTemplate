@@ -22,7 +22,6 @@
 package com.insiderser.android.template.prefs.domain.theme
 
 import com.insiderser.android.template.core.domain.ObservableUseCase
-import com.insiderser.android.template.model.Theme
 import com.insiderser.android.template.prefs.AppPreferencesStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

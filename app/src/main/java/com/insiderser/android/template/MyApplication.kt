@@ -24,11 +24,11 @@ package com.insiderser.android.template
 import android.os.StrictMode
 import androidx.appcompat.app.AppCompatDelegate
 import com.insiderser.android.template.core.domain.invoke
-import com.insiderser.android.template.core.util.toAppCompatNightMode
 import com.insiderser.android.template.dagger.AppComponent
 import com.insiderser.android.template.dagger.DaggerAppComponent
-import com.insiderser.android.template.model.Theme
 import com.insiderser.android.template.prefs.domain.theme.ObservableThemeUseCase
+import com.insiderser.android.template.prefs.domain.theme.Theme
+import com.insiderser.android.template.prefs.domain.theme.toAppCompatNightMode
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import kotlinx.coroutines.CoroutineScope

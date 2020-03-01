@@ -19,10 +19,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.core.util
+package com.insiderser.android.template.prefs.domain.theme
 
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.Q
 import androidx.appcompat.app.AppCompatDelegate
-import com.insiderser.android.template.model.Theme
+
+/**
+ * Enum that represents the theme of our app.
+ *
+ * @param storageKey Key used to serialize & deserialize the given [Theme].
+ */
+enum class Theme(val storageKey: String) {
+    /** Always use the day (light) theme. */
+    LIGHT(KEY_LIGHT),
+    /** Always use the night (dark) theme. */
+    DARK(KEY_DARK),
+    /**
+     * (default) This setting follows the system’s setting,
+     * which on Android Q and above is a system setting.
+     */
+    FOLLOW_SYSTEM(KEY_SYSTEM),
+    /** Changes to dark when the device has its ‘Battery Saver’ feature enabled, light otherwise. */
+    AUTO_BATTERY(KEY_BATTERY);
+
+    companion object {
+
+        /**
+         * Find [Theme] for the given [Theme.storageKey].
+         * @throws NoSuchElementException if not found.
+         */
+        @JvmStatic
+        fun fromStorageKey(storageKey: String): Theme? =
+            values().first { it.storageKey == storageKey }
+    }
+}
+
+private const val KEY_LIGHT = "light"
+private const val KEY_DARK = "dark"
+private const val KEY_SYSTEM = "system"
+private const val KEY_BATTERY = "battery"
+
+val DEFAULT_THEME = if (SDK_INT >= Q) Theme.FOLLOW_SYSTEM else Theme.AUTO_BATTERY
 
 /**
  * Get [AppCompatDelegate] night mode for the given [Theme].

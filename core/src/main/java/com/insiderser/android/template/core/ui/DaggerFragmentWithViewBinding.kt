@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.core.ui.binding
+package com.insiderser.android.template.core.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -22,7 +22,6 @@
 package com.insiderser.android.template.prefs.domain.theme
 
 import com.insiderser.android.template.core.domain.UseCase
-import com.insiderser.android.template.model.Theme
 import com.insiderser.android.template.prefs.AppPreferencesStorage
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject

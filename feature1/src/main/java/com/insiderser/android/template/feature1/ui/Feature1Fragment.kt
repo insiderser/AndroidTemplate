@@ -28,7 +28,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import com.insiderser.android.template.core.ui.binding.DaggerFragmentWithViewBinding
+import com.insiderser.android.template.core.ui.DaggerFragmentWithViewBinding
 import com.insiderser.android.template.feature1.databinding.Feature1FragmentBinding
 import com.insiderser.android.template.navigation.NavigationHost
 import dev.chrisbanes.insetter.doOnApplyWindowInsets

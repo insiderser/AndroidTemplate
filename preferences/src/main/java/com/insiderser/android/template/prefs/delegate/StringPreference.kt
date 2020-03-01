@@ -46,7 +46,7 @@ internal class StringPreference(
 
     @WorkerThread
     override fun setValue(thisRef: Any, property: KProperty<*>, value: String?) {
-        Timber.v("Changing value of property with key $preferenceKey to $value")
+        Timber.v("Changing value of property $preferenceKey to $value")
         sharedPreferences.value.edit(commit = true) {
             putString(preferenceKey, value)
         }

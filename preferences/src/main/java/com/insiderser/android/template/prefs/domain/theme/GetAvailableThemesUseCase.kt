@@ -25,7 +25,6 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.Q
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.insiderser.android.template.model.Theme
 import javax.inject.Inject
 
 /**

@@ -33,8 +33,6 @@ plugins {
 configureAndroidModule()
 
 dependencies {
-    api(project(":model"))
-
     api(Libs.Kotlin.stdlib)
     api(Libs.Kotlin.Coroutines.core)
     api(Libs.Kotlin.Coroutines.android)

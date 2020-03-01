@@ -22,7 +22,7 @@
 package com.insiderser.android.template.settings.util
 
 import androidx.fragment.app.Fragment
-import com.insiderser.android.template.model.Theme
+import com.insiderser.android.template.prefs.domain.theme.Theme
 import com.insiderser.android.template.settings.R
 
 /**

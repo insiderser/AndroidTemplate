@@ -45,13 +45,13 @@ interface AppPreferencesStorage {
 
     /**
      * Theme storage key that is currently selected, or `null` if nothing selected.
-     * @see com.insiderser.android.template.model.Theme
+     * @see com.insiderser.android.template.prefs.domain.theme.Theme
      */
     var selectedTheme: String?
 
     /**
      * A [Flow] with up-to-date theme storage key that is currently selected.
-     * @see com.insiderser.android.template.model.Theme
+     * @see com.insiderser.android.template.prefs.domain.theme.Theme
      */
     val selectedThemeObservable: Flow<String?>
 }
@@ -62,7 +62,7 @@ interface AppPreferencesStorage {
 @Singleton
 class AppPreferencesStorageImpl @Inject constructor(context: Context) : AppPreferencesStorage {
 
-    private val storageIOScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val storageScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     // Lazy to prevent IO on the main thread
     private val sharedPreferences: Lazy<SharedPreferences> = lazy {
@@ -77,8 +77,7 @@ class AppPreferencesStorageImpl @Inject constructor(context: Context) : AppPrefe
         }
     }
 
-    override var selectedTheme: String?
-        by StringPreference(sharedPreferences, KEY_THEME)
+    override var selectedTheme: String? by StringPreference(sharedPreferences, KEY_THEME)
 
     private val selectedThemeChannel = ConflatedBroadcastChannel<String?>()
     override val selectedThemeObservable: Flow<String?>
@@ -89,7 +88,7 @@ class AppPreferencesStorageImpl @Inject constructor(context: Context) : AppPrefe
     }
 
     private fun updateTheme() {
-        storageIOScope.launch {
+        storageScope.launch {
             selectedThemeChannel.offer(selectedTheme)
         }
     }

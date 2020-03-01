@@ -32,7 +32,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.insiderser.android.template.model.Theme
+import com.insiderser.android.template.prefs.domain.theme.Theme
 import com.insiderser.android.template.settings.R
 import com.insiderser.android.template.settings.ui.SettingsViewModel
 import com.insiderser.android.template.settings.util.findTitleForTheme

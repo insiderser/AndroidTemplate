@@ -23,11 +23,11 @@ package com.insiderser.android.template.settings.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.template.model.Theme
 import com.insiderser.android.template.prefs.domain.theme.DEFAULT_THEME
 import com.insiderser.android.template.prefs.domain.theme.GetAvailableThemesUseCase
 import com.insiderser.android.template.prefs.domain.theme.ObservableThemeUseCase
 import com.insiderser.android.template.prefs.domain.theme.SetThemeUseCase
+import com.insiderser.android.template.prefs.domain.theme.Theme
 import com.insiderser.android.template.prefs.test.FakeAppPreferencesStorage
 import com.insiderser.android.template.test.shared.util.await
 import com.jraska.livedata.test
