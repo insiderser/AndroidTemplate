@@ -80,7 +80,7 @@ subprojects {
 
             val compilerArgs = mutableListOf(
                 "-Xjsr305=strict",
-                "-Xuse-experimental=kotlin.Experimental"
+                "-Xopt-in=kotlin.RequiresOptIn"
             )
 
             // We don't use coroutines or flow in those projects. Because of this,
