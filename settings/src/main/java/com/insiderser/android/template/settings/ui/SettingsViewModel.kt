@@ -45,6 +45,7 @@ class SettingsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _openThemeSettingDialog = MutableLiveData<Event<Unit>>()
+
     /**
      * Tells the fragment when to show
      * [ThemeSettingDialogFragment][com.insiderser.android.template.settings.ui.theme.ThemeSettingDialogFragment].

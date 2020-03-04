@@ -33,13 +33,16 @@ import androidx.appcompat.app.AppCompatDelegate
 enum class Theme(val storageKey: String) {
     /** Always use the day (light) theme. */
     LIGHT(KEY_LIGHT),
+
     /** Always use the night (dark) theme. */
     DARK(KEY_DARK),
+
     /**
      * (default) This setting follows the system’s setting,
      * which on Android Q and above is a system setting.
      */
     FOLLOW_SYSTEM(KEY_SYSTEM),
+
     /** Changes to dark when the device has its ‘Battery Saver’ feature enabled, light otherwise. */
     AUTO_BATTERY(KEY_BATTERY);
 
