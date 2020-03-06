@@ -32,6 +32,7 @@ buildscript {
         google()
         jcenter()
         maven("https://jitpack.io")
+        mavenCentral()
     }
     dependencies {
         classpath(com.insiderser.android.template.buildSrc.Libs.Kotlin.gradlePlugin)
@@ -49,6 +50,7 @@ allprojects {
         google()
         jcenter()
         maven("https://jitpack.io")
+        mavenCentral()
     }
 }
 
