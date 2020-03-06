@@ -22,7 +22,6 @@
 
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import com.insiderser.android.template.buildSrc.Versions
-import com.insiderser.android.template.buildSrc.loadProperties
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 // FIXME: cannot use imports in buildscript: https://github.com/gradle/gradle/issues/9270
@@ -54,8 +53,6 @@ allprojects {
         mavenCentral()
     }
 }
-
-loadProperties(file("local.properties"))
 
 subprojects {
     apply(plugin = "com.diffplug.gradle.spotless")
