@@ -35,8 +35,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.insiderser.android.template.R
-import com.insiderser.android.template.test.rules.MainActivityRule
-import com.insiderser.android.template.test.rules.TestPreferencesRule
+import com.insiderser.android.template.test.MainActivityRule
+import com.insiderser.android.template.test.TestPreferencesRule
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.instanceOf
 import org.junit.Rule
