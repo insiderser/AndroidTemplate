@@ -45,6 +45,9 @@ object Versions {
  * A wrapper for all dependencies' notations used in the project together with their versions.
  */
 object Libs {
+    // Also used in buildSrc/build.gradle.kts
+    const val androidGradlePlugin = "com.android.tools.build:gradle:3.6.1"
+
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.2"

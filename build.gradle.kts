@@ -35,6 +35,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
+        classpath(com.insiderser.android.template.buildSrc.Libs.androidGradlePlugin)
         classpath(com.insiderser.android.template.buildSrc.Libs.Kotlin.gradlePlugin)
         classpath(com.insiderser.android.template.buildSrc.Libs.AndroidX.Navigation.safeArgs)
     }
@@ -68,7 +69,6 @@ subprojects {
                     "disabled_rules" to "import-ordering"
                 )
             )
-            @Suppress("INACCESSIBLE_TYPE")
             licenseHeaderFile(rootProject.file("spotless/copyright.kt"))
         }
     }
