@@ -39,7 +39,7 @@ dependencies {
 
     api(Libs.AndroidX.coreKtx)
     api(Libs.AndroidX.appcompat)
-    api(Libs.AndroidX.Activity.activity)
+    api(Libs.AndroidX.activity)
     api(Libs.AndroidX.Fragment.fragment)
     api(Libs.AndroidX.material)
 

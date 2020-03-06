@@ -84,7 +84,7 @@ object Libs {
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
         object Coroutines {
-            private const val version = "1.3.3"
+            private const val version = "1.3.4"
             const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
             const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
             const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
@@ -94,20 +94,17 @@ object Libs {
     object AndroidX {
         const val coreKtx = "androidx.core:core-ktx:1.2.0"
         const val appcompat = "androidx.appcompat:appcompat:1.1.0"
+        const val activity = "androidx.activity:activity-ktx:1.1.0"
         const val material = "com.google.android.material:material:1.1.0"
         const val browser = "androidx.browser:browser:1.2.0"
         const val collection = "androidx.collection:collection-ktx:1.1.0"
+
         const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
         const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.0-beta4"
         const val drawerLayout = "androidx.drawerlayout:drawerlayout:1.0.0"
-        const val preference = "androidx.preference:preference:1.1.0"
-        const val security = "androidx.security:security-crypto:1.0.0-alpha02"
 
-        object Activity {
-            private const val version = "1.1.0"
-            const val activity = "androidx.activity:activity-ktx:$version"
-        }
+        const val security = "androidx.security:security-crypto:1.0.0-alpha02"
 
         object Fragment {
             private const val version = "1.2.2"
