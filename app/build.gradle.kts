@@ -57,6 +57,7 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(project(":preferences"))
+    implementation(project(":data"))
     implementation(project(":navigation"))
     implementation(project(":feature1"))
     implementation(project(":settings"))
@@ -76,5 +77,4 @@ dependencies {
     sharedTestImplementation(Libs.Test.AndroidX.arch)
 
     androidTestImplementation(Libs.Test.AndroidX.Espresso.core)
-    androidTestImplementation(Libs.Test.AndroidX.Espresso.intents)
 }

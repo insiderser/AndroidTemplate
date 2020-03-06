@@ -24,9 +24,9 @@ package com.insiderser.android.template.ui
 import androidx.lifecycle.ViewModel
 import com.insiderser.android.template.core.dagger.FeatureScope
 import com.insiderser.android.template.core.dagger.ViewModelKey
-import com.insiderser.android.template.feature1.dagger.Feature1Module
+import com.insiderser.android.template.dagger.Feature1Module
+import com.insiderser.android.template.dagger.SettingsModule
 import com.insiderser.android.template.feature1.ui.Feature1Fragment
-import com.insiderser.android.template.settings.dagger.SettingsModule
 import com.insiderser.android.template.settings.ui.SettingsFragment
 import com.insiderser.android.template.settings.ui.theme.ThemeSettingDialogFragment
 import dagger.Binds

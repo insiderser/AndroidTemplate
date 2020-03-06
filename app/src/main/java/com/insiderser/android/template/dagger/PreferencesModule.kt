@@ -19,23 +19,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.feature1.dagger
+package com.insiderser.android.template.dagger
 
-import androidx.lifecycle.ViewModel
-import com.insiderser.android.template.core.dagger.ViewModelKey
-import com.insiderser.android.template.feature1.ui.Feature1FragmentViewModel
+import com.insiderser.android.template.prefs.AppPreferencesStorage
+import com.insiderser.android.template.prefs.AppPreferencesStorageImpl
 import dagger.Binds
 import dagger.Module
-import dagger.multibindings.IntoMap
+import javax.inject.Singleton
 
 /**
- * Dagger module for feature1 module.
+ * Dagger module that binds [AppPreferencesStorage] into a dagger graph.
  */
 @Module
-interface Feature1Module {
+interface PreferencesModule {
 
     @Binds
-    @IntoMap
-    @ViewModelKey(Feature1FragmentViewModel::class)
-    fun bindFeature1ViewModelFactory(vm: Feature1FragmentViewModel): ViewModel
+    @Singleton
+    fun bindAppSharedPreferences(impl: AppPreferencesStorageImpl): AppPreferencesStorage
 }

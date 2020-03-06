@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.data.dagger
+package com.insiderser.android.template.dagger
 
 import android.content.Context
 import com.insiderser.android.template.data.AppDatabase

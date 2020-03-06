@@ -19,21 +19,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.prefs.dagger
+package com.insiderser.android.template.dagger
 
-import com.insiderser.android.template.prefs.AppPreferencesStorage
-import com.insiderser.android.template.prefs.AppPreferencesStorageImpl
+import androidx.lifecycle.ViewModelProvider
+import com.insiderser.android.template.core.dagger.ViewModelFactory
 import dagger.Binds
 import dagger.Module
-import javax.inject.Singleton
 
 /**
- * Dagger module that binds [AppPreferencesStorage] into a dagger graph.
+ * Module used to define connection between the framework's [ViewModelProvider.Factory]
+ * and out own implementation: [ViewModelFactory].
  */
 @Module
-interface PreferencesStorageModule {
+interface CoreModule {
 
+    /**
+     * Define connection between the framework's [ViewModelProvider.Factory]
+     * and out own implementation: [ViewModelFactory].
+     */
     @Binds
-    @Singleton
-    fun bindAppSharedPreferences(impl: AppPreferencesStorageImpl): AppPreferencesStorage
+    fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }

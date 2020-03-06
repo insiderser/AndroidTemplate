@@ -50,11 +50,9 @@ android {
 dependencies {
     implementation(project(":core"))
 
-    implementation(Libs.AndroidX.Room.runtime)
-    implementation(Libs.AndroidX.Room.ktx)
+    api(Libs.AndroidX.Room.runtime)
+    api(Libs.AndroidX.Room.ktx)
     kapt(Libs.AndroidX.Room.compiler)
-
-    kapt(Libs.Dagger.compiler)
 
     sharedTestImplementation(project(":test-shared"))
     testImplementation(Libs.Test.Robolectric.robolectric)

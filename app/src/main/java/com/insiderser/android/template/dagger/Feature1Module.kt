@@ -19,23 +19,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.settings.dagger
+package com.insiderser.android.template.dagger
 
 import androidx.lifecycle.ViewModel
 import com.insiderser.android.template.core.dagger.ViewModelKey
-import com.insiderser.android.template.settings.ui.SettingsViewModel
+import com.insiderser.android.template.feature1.ui.Feature1FragmentViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
 /**
- * Dagger module for settings.
+ * Dagger module for feature1 module.
  */
 @Module
-interface SettingsModule {
+interface Feature1Module {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SettingsViewModel::class)
-    fun bindSettingsViewModel(vm: SettingsViewModel): ViewModel
+    @ViewModelKey(Feature1FragmentViewModel::class)
+    fun bindFeature1ViewModelFactory(vm: Feature1FragmentViewModel): ViewModel
 }

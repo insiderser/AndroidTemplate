@@ -27,7 +27,6 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
-    kotlin("kapt")
 }
 
 configureAndroidModule()
@@ -53,7 +52,6 @@ dependencies {
 
     api(Libs.Dagger.dagger)
     api(Libs.Dagger.androidSupport)
-    kapt(Libs.Dagger.compiler)
 
     testImplementation(project(":test-shared"))
     testImplementation(Libs.Test.mockK)

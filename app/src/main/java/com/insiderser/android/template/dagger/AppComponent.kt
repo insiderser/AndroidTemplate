@@ -22,8 +22,6 @@
 package com.insiderser.android.template.dagger
 
 import com.insiderser.android.template.MyApplication
-import com.insiderser.android.template.core.dagger.ViewModelFactoryModule
-import com.insiderser.android.template.prefs.dagger.PreferencesStorageModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -43,9 +41,10 @@ import javax.inject.Singleton
     modules = [
         AndroidInjectionModule::class,
         ContextModule::class,
-        ViewModelFactoryModule::class,
+        CoreModule::class,
         ActivityBindingModule::class,
-        PreferencesStorageModule::class
+        PreferencesModule::class,
+        DataModule::class
     ]
 )
 internal interface AppComponent : AndroidInjector<MyApplication> {
