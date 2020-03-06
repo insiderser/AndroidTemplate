@@ -27,7 +27,7 @@ import java.io.File
 import java.util.Properties
 
 /**
- * Load all properties from `local.properties` into [project][Project]'s [extra].
+ * Load all properties from [file] into [project][Project]'s [extra].
  *
  * Loaded properties can be retrieved from [extra] or using [Project.findProperty].
  */

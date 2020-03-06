@@ -33,17 +33,6 @@ import kotlinx.coroutines.asExecutor
  *
  * You don't need to use this class directly. Instead, get one of DAOs using Dagger.
  *
- * In big projects, it's preferable to create separate database classes for each
- * feature/module. That's because if you have one DB for the whole app,
- * it won't scale very well and has no isolation. On the other hand,
- * with feature-based DBs you create separate DBs for each feature,
- * which scales very well and has perfect isolation, but it costs more because
- * maintaining DB connections is expensive, and your DBs can't share data between
- * each other. You can go hybrid, merging dependent databases together and
- * keeping separate DBs in isolation. Also, Google says that they are working
- * on making Room merge dependent DBs at runtime, but it's not available yet.
- *
- * @see com.insiderser.android.template.data.dagger.DataModule
  * @see AppDatabase.create
  */
 @Database(
@@ -65,10 +54,7 @@ abstract class AppDatabase : RoomDatabase() {
          * Create an [AppDatabase] instance that is connected to the persistent SQLite
          * database. If the database doesn't exist, it will be created.
          *
-         * **Note**: you don't need to use this method directly — use dagger for that.
-         *
          * @param context an application context
-         * @see com.insiderser.android.template.data.dagger.DataModule
          */
         @JvmStatic
         fun create(context: Context): AppDatabase =
