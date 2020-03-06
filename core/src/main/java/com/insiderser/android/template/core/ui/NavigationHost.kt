@@ -19,20 +19,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.insiderser.android.template.core.ui
 
-import com.insiderser.android.template.buildSrc.Libs
-import com.insiderser.android.template.buildSrc.configureAndroidModule
+import androidx.appcompat.widget.Toolbar
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("android.extensions")
-    id("androidx.navigation.safeargs.kotlin")
-}
+/**
+ * Should be implemented by [activities][android.app.Activity] that
+ * have child [fragments][androidx.fragment.app.Fragment] that create their own [Toolbar].
+ */
+interface NavigationHost {
 
-configureAndroidModule()
-
-dependencies {
-    api(Libs.AndroidX.Navigation.fragment)
-    api(Libs.AndroidX.Navigation.ui)
+    /**
+     * Child [Fragment][androidx.fragment.app.Fragment] has the given [toolbar]. Please,
+     * initialize all the navigation boilerplate, such as up or hamburger buttons,
+     * menus, etc.
+     */
+    fun registerToolbarWithNavigation(toolbar: Toolbar)
 }

@@ -32,5 +32,4 @@ configureAndroidModule()
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":navigation"))
 }

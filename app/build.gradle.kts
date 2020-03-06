@@ -58,7 +58,6 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":preferences"))
     implementation(project(":data"))
-    implementation(project(":navigation"))
     implementation(project(":feature1"))
     implementation(project(":settings"))
 

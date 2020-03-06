@@ -27,6 +27,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 configureAndroidModule()
@@ -41,6 +42,9 @@ dependencies {
     api(Libs.AndroidX.activity)
     api(Libs.AndroidX.Fragment.fragment)
     api(Libs.AndroidX.material)
+
+    api(Libs.AndroidX.Navigation.fragment)
+    api(Libs.AndroidX.Navigation.ui)
 
     api(Libs.AndroidX.Lifecycle.extensions)
     api(Libs.AndroidX.Lifecycle.lifecycleKtx)

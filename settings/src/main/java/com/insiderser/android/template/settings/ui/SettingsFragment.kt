@@ -30,7 +30,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.insiderser.android.template.core.result.observeEvent
 import com.insiderser.android.template.core.ui.DaggerFragmentWithViewBinding
-import com.insiderser.android.template.navigation.NavigationHost
+import com.insiderser.android.template.core.ui.NavigationHost
 import com.insiderser.android.template.settings.BuildConfig
 import com.insiderser.android.template.settings.databinding.SettingsFragmentBinding
 import com.insiderser.android.template.settings.ui.theme.ThemeSettingDialogFragment

@@ -34,8 +34,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.insiderser.android.template.R
+import com.insiderser.android.template.core.ui.NavigationHost
 import com.insiderser.android.template.databinding.MainActivityBinding
-import com.insiderser.android.template.navigation.NavigationHost
 import dagger.android.support.DaggerAppCompatActivity
 import dev.chrisbanes.insetter.doOnApplyWindowInsets
 import javax.inject.Inject

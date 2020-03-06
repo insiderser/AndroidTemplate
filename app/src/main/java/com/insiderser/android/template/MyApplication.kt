@@ -80,8 +80,6 @@ class MyApplication : DaggerApplication() {
     private fun initLogging() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
-        } else {
-            // TODO: plant Crashlytics tree
         }
     }
 
