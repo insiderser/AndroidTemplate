@@ -33,9 +33,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.insiderser.android.template.prefs.domain.theme.Theme
+import com.insiderser.android.template.prefs.domain.theme.findTitleResForTheme
 import com.insiderser.android.template.settings.R
 import com.insiderser.android.template.settings.ui.SettingsViewModel
-import com.insiderser.android.template.settings.util.findTitleForTheme
 import dagger.android.support.DaggerAppCompatDialogFragment
 import javax.inject.Inject
 
@@ -82,7 +82,7 @@ class ThemeSettingDialogFragment : DaggerAppCompatDialogFragment() {
     private fun setAvailableThemes(themes: List<Theme>) {
         adapter.clear()
         adapter.addAll(
-            themes.map { ThemeHolder(it, findTitleForTheme(it)) }
+            themes.map { ThemeHolder(it, getString(findTitleResForTheme(it))) }
         )
         setSelectedTheme(viewModel.selectedTheme.value)
     }

@@ -183,5 +183,6 @@ object Libs {
     object Insetter {
         private const val version = "0.2.1"
         const val ktx = "dev.chrisbanes:insetter-ktx:$version"
+        const val dataBinding = "dev.chrisbanes:insetter-dbx:$version"
     }
 }

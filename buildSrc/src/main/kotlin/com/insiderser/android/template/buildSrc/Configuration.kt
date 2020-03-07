@@ -38,7 +38,7 @@ fun DependencyHandler.sharedTestImplementation(dependencyNotation: Any) {
 private fun Project.android(action: BaseExtension.() -> Unit) {
     val androidExtension = extensions.findByType(BaseExtension::class)
         ?: throw Error("Should be called after applying android plugin")
-    androidExtension.apply(action)
+    action(androidExtension)
 }
 
 /**
@@ -62,6 +62,10 @@ fun Project.configureAndroidModule() {
         }
 
         viewBinding {
+            isEnabled = true
+        }
+
+        dataBinding {
             isEnabled = true
         }
 
