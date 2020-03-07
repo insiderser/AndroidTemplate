@@ -23,9 +23,7 @@ package com.insiderser.android.template.prefs.domain.theme
 
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.Q
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatDelegate
-import com.insiderser.android.template.prefs.R
 
 /**
  * Enum that represents the theme of our app.
@@ -75,15 +73,4 @@ fun Theme.toAppCompatNightMode(): Int = when (this) {
     Theme.DARK -> AppCompatDelegate.MODE_NIGHT_YES
     Theme.FOLLOW_SYSTEM -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
     Theme.AUTO_BATTERY -> AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
-}
-
-/**
- * Get short description of the given [Theme].
- */
-@StringRes
-fun findTitleResForTheme(theme: Theme): Int = when (theme) {
-    Theme.LIGHT -> R.string.theme_light
-    Theme.DARK -> R.string.theme_dark
-    Theme.FOLLOW_SYSTEM -> R.string.theme_follow_system
-    Theme.AUTO_BATTERY -> R.string.theme_auto_battery
 }

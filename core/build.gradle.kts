@@ -53,7 +53,6 @@ dependencies {
 
     api(Libs.timber)
     api(Libs.Insetter.ktx)
-    api(Libs.Insetter.dataBinding)
 
     api(Libs.Dagger.dagger)
     api(Libs.Dagger.androidSupport)

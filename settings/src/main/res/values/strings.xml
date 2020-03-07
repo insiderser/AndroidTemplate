@@ -27,6 +27,11 @@
     <string name="settings_choose_theme">Choose theme</string>
     <string name="settings_theme_dialog_title">Select app theme</string>
 
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_follow_system">System default</string>
+    <string name="settings_theme_auto_battery">Set by Battery Saver</string>
+
     <string name="settings_about_group_label">About</string>
     <string name="settings_about_version">Version</string>
 </resources>

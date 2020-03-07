@@ -36,7 +36,7 @@ import dagger.android.support.DaggerFragment
  *
  * @param B [ViewBinding] class that is used.
  */
-abstract class DaggerFragmentWithBinding<B : ViewBinding> : DaggerFragment() {
+abstract class DaggerFragmentWithViewBinding<B : ViewBinding> : DaggerFragment() {
 
     /**
      * A current [ViewBinding] that is being displayed to the user.

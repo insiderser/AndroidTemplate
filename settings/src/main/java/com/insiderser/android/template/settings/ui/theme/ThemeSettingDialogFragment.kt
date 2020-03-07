@@ -27,13 +27,13 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.insiderser.android.template.prefs.domain.theme.Theme
-import com.insiderser.android.template.prefs.domain.theme.findTitleResForTheme
 import com.insiderser.android.template.settings.R
 import com.insiderser.android.template.settings.ui.SettingsViewModel
 import dagger.android.support.DaggerAppCompatDialogFragment
@@ -52,7 +52,6 @@ class ThemeSettingDialogFragment : DaggerAppCompatDialogFragment() {
 
     private val viewModel: SettingsViewModel by viewModels { viewModelFactory }
 
-    @Suppress("RemoveExplicitTypeArguments") // Won't compile otherwise
     private val adapter: ArrayAdapter<ThemeHolder> by lazy {
         ArrayAdapter<ThemeHolder>(
             requireContext(),
@@ -80,10 +79,12 @@ class ThemeSettingDialogFragment : DaggerAppCompatDialogFragment() {
     }
 
     private fun setAvailableThemes(themes: List<Theme>) {
+        val themeHolders = themes.map { theme ->
+            ThemeHolder(theme, getTitleForTheme(theme))
+        }
+
         adapter.clear()
-        adapter.addAll(
-            themes.map { ThemeHolder(it, getString(findTitleResForTheme(it))) }
-        )
+        adapter.addAll(themeHolders)
         setSelectedTheme(viewModel.selectedTheme.value)
     }
 
@@ -112,3 +113,15 @@ class ThemeSettingDialogFragment : DaggerAppCompatDialogFragment() {
         override fun toString(): String = title
     }
 }
+
+/**
+ * Get short description of the given [Theme].
+ */
+internal fun Fragment.getTitleForTheme(theme: Theme): String = getString(
+    when (theme) {
+        Theme.LIGHT -> R.string.settings_theme_light
+        Theme.DARK -> R.string.settings_theme_dark
+        Theme.FOLLOW_SYSTEM -> R.string.settings_theme_follow_system
+        Theme.AUTO_BATTERY -> R.string.settings_theme_auto_battery
+    }
+)

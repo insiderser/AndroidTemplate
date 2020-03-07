@@ -19,91 +19,71 @@
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
   -->
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:theme="@style/AppTheme.Settings">
 
-<layout>
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        style="@style/Widget.Template.AppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <data>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/settings_title" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <variable
-            name="viewModel"
-            type="com.insiderser.android.template.settings.ui.SettingsViewModel" />
-
-        <import type="com.insiderser.android.template.settings.BuildConfig" />
-
-        <import type="com.insiderser.android.template.prefs.domain.theme.ThemeKt" />
-    </data>
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:theme="@style/AppTheme.Settings">
+        android:clipToPadding="false"
+        android:scrollbars="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar"
-            style="@style/Widget.Template.AppBar"
+        <LinearLayout
+            android:id="@+id/scrolling_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:paddingTopSystemWindowInsets="@{true}">
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:title="@string/settings_title" />
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scroll_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:scrollbars="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:paddingBottomSystemWindowInsets="@{true}">
-
-            <LinearLayout
-                android:id="@+id/scrolling_content"
+            <TextView
+                android:id="@+id/theme_group_label"
+                style="@style/Widget.Template.Settings.PreferenceGroupTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:text="@string/settings_theme_group_label" />
 
-                <TextView
-                    android:id="@+id/theme_group_label"
-                    style="@style/Widget.Template.Settings.PreferenceGroupTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_theme_group_label" />
+            <com.insiderser.android.template.settings.widget.PreferenceView
+                android:id="@+id/choose_theme_preference"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/settings_choose_theme"
+                tools:summary="@string/settings_theme_follow_system" />
 
-                <com.insiderser.android.template.settings.widget.PreferenceView
-                    android:id="@+id/choose_theme_preference"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{_ -> viewModel.onThemeSettingClicked()}"
-                    app:summary="@{viewModel.selectedTheme != null ? ThemeKt.findTitleResForTheme(viewModel.selectedTheme) : 0}"
-                    app:title="@string/settings_choose_theme"
-                    tools:summary="@string/theme_follow_system" />
+            <View style="@style/Widget.Template.Settings.Divider" />
 
-                <View style="@style/Widget.Template.Settings.Divider" />
+            <TextView
+                android:id="@+id/about_group_label"
+                style="@style/Widget.Template.Settings.PreferenceGroupTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_about_group_label" />
 
-                <TextView
-                    android:id="@+id/about_group_label"
-                    style="@style/Widget.Template.Settings.PreferenceGroupTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_about_group_label" />
+            <com.insiderser.android.template.settings.widget.PreferenceView
+                android:id="@+id/version_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/settings_about_version"
+                tools:summary="v1.0.0-dev01" />
 
-                <com.insiderser.android.template.settings.widget.PreferenceView
-                    android:id="@+id/version_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:summary="@{BuildConfig.VERSION_NAME}"
-                    app:title="@string/settings_about_version"
-                    tools:summary="v1.0.0-dev01" />
-
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</layout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

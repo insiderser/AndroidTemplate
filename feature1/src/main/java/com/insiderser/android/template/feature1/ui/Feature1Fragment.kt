@@ -28,7 +28,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import com.insiderser.android.template.core.ui.DaggerFragmentWithBinding
+import com.insiderser.android.template.core.ui.DaggerFragmentWithViewBinding
 import com.insiderser.android.template.core.ui.NavigationHost
 import com.insiderser.android.template.feature1.databinding.Feature1FragmentBinding
 import dev.chrisbanes.insetter.doOnApplyWindowInsets
@@ -37,7 +37,7 @@ import javax.inject.Inject
 /**
  * Sample [Fragment] that does nothing, except injecting into itself.
  */
-class Feature1Fragment : DaggerFragmentWithBinding<Feature1FragmentBinding>() {
+class Feature1Fragment : DaggerFragmentWithViewBinding<Feature1FragmentBinding>() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory

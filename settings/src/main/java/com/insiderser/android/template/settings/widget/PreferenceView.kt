@@ -25,7 +25,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.annotation.AttrRes
-import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.withStyledAttributes
@@ -73,10 +72,6 @@ internal class PreferenceView @JvmOverloads constructor(
             title = getText(R.styleable.PreferenceView_title)
             summary = getText(R.styleable.PreferenceView_summary)
         }
-    }
-
-    fun setSummary(@StringRes res: Int) {
-        summary = if (res != 0) context.getText(res) else null
     }
 
     override fun setOrientation(orientation: Int) {

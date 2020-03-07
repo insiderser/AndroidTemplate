@@ -24,20 +24,25 @@ package com.insiderser.android.template.settings.ui
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.insiderser.android.template.core.result.observeEvent
-import com.insiderser.android.template.core.ui.DaggerFragmentWithBinding
+import com.insiderser.android.template.core.ui.DaggerFragmentWithViewBinding
 import com.insiderser.android.template.core.ui.NavigationHost
+import com.insiderser.android.template.settings.BuildConfig
 import com.insiderser.android.template.settings.databinding.SettingsFragmentBinding
 import com.insiderser.android.template.settings.ui.theme.ThemeSettingDialogFragment
+import com.insiderser.android.template.settings.ui.theme.getTitleForTheme
+import dev.chrisbanes.insetter.doOnApplyWindowInsets
 import javax.inject.Inject
 
 /**
  * A root [fragment][androidx.fragment.app.Fragment] that displays a list of preferences.
  * All preferences are stored in preferences storage.
  */
-class SettingsFragment : DaggerFragmentWithBinding<SettingsFragmentBinding>() {
+class SettingsFragment : DaggerFragmentWithViewBinding<SettingsFragmentBinding>() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -52,12 +57,27 @@ class SettingsFragment : DaggerFragmentWithBinding<SettingsFragmentBinding>() {
     override fun onBindingCreated(binding: SettingsFragmentBinding, savedInstanceState: Bundle?) {
         (activity as? NavigationHost)?.registerToolbarWithNavigation(binding.toolbar)
 
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
+        binding.appBar.doOnApplyWindowInsets { view, insets, initial ->
+            view.updatePadding(top = initial.paddings.top + insets.systemWindowInsetTop)
+        }
+
+        binding.scrollView.doOnApplyWindowInsets { view, insets, initial ->
+            view.updatePadding(bottom = initial.paddings.bottom + insets.systemWindowInsetBottom)
+        }
+
+        binding.chooseThemePreference.setOnClickListener {
+            viewModel.onThemeSettingClicked()
+        }
+
+        binding.versionName.summary = BuildConfig.VERSION_NAME
 
         viewModel.showThemeSettingDialog.observeEvent(viewLifecycleOwner) {
             val dialogFragment = ThemeSettingDialogFragment()
             dialogFragment.show(childFragmentManager)
+        }
+
+        viewModel.selectedTheme.observe(viewLifecycleOwner) { selectedTheme ->
+            binding.chooseThemePreference.summary = getTitleForTheme(selectedTheme)
         }
     }
 }
