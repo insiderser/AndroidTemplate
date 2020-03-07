@@ -35,7 +35,6 @@ internal class ContextModule {
 
     @Singleton
     @Provides
-    fun provideApplicationContext(myApplication: MyApplication): Context {
-        return myApplication.applicationContext
-    }
+    fun provideApplicationContext(myApplication: MyApplication): Context =
+        myApplication.applicationContext
 }
