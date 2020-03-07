@@ -20,13 +20,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      # Robolectric needs Java 9+ to run tests with Android 10. On Java 12+, it fails.
-      # DataBinding can't run on Java 11+.
-      - name: Set up Java
-        uses: actions/setup-java@v1
-        with:
-          java-version: 10
-
       - name: Generate cache key
         run: ./checksum.sh checksum.txt
 
@@ -112,11 +105,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-
-      - name: Set up Java
-        uses: actions/setup-java@v1
-        with:
-          java-version: 10
 
       - name: Copy CI properties
         run: |
