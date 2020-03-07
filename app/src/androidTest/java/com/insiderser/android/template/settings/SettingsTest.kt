@@ -64,19 +64,19 @@ class SettingsTest {
             .check(matches(withText(R.string.settings_title)))
 
         onView(allOf(withId(R.id.summary), withParent(withId(R.id.choose_theme_preference))))
-            .check(matches(withText(R.string.settings_theme_light)))
+            .check(matches(withText(R.string.theme_light)))
 
         onView(withText(R.string.settings_choose_theme))
             .check(matches(isDisplayed()))
             .perform(click())
 
-        onView(withText(R.string.settings_theme_dark))
+        onView(withText(R.string.theme_dark))
             .inRoot(isDialog())
             .check(matches(isDisplayed()))
             .perform(click())
 
         onView(allOf(withId(R.id.summary), withParent(withId(R.id.choose_theme_preference))))
-            .check(matches(withText(R.string.settings_theme_dark)))
+            .check(matches(withText(R.string.theme_dark)))
 
         assertThat(preferencesRule.storage.selectedTheme).isEqualTo(Theme.DARK.storageKey)
     }
