@@ -33,7 +33,6 @@ import androidx.room.Query
  * in the [database][AppDatabase].
  *
  * @see AppDatabase.myDao
- * @see com.insiderser.android.template.data.dagger.DataModule
  */
 @Dao
 interface MyDao {
