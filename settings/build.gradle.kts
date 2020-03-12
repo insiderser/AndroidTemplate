@@ -31,6 +31,13 @@ plugins {
 
 configureAndroidModule()
 
+android {
+    @Suppress("UnstableApiUsage")
+    buildFeatures {
+        buildConfig = true
+    }
+}
+
 dependencies {
     implementation(project(":core"))
     implementation(project(":preferences"))

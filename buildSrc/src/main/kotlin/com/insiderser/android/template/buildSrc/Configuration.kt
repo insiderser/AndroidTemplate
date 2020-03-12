@@ -61,20 +61,9 @@ fun Project.configureAndroidModule() {
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
 
-        viewBinding {
-            isEnabled = true
-        }
-
         compileOptions {
             targetCompatibility = JavaVersion.VERSION_1_8
             sourceCompatibility = JavaVersion.VERSION_1_8
-        }
-
-        lintOptions {
-            isWarningsAsErrors = true
-            isAbortOnError = true
-            isCheckDependencies = true
-            lintConfig = rootProject.file("lint.xml")
         }
 
         sourceSets {

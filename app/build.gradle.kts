@@ -38,6 +38,11 @@ android {
         applicationId = "com.insiderser.android.template"
     }
 
+    @Suppress("UnstableApiUsage")
+    buildFeatures {
+        buildConfig = true
+    }
+
     signingConfigs {
         named("debug") {
             storeFile = rootProject.file("debug.jks")
@@ -51,6 +56,13 @@ android {
         named("debug") {
             signingConfig = signingConfigs.getByName("debug")
         }
+    }
+
+    lintOptions {
+        isWarningsAsErrors = true
+        isAbortOnError = true
+        isCheckDependencies = true
+        lintConfig = rootProject.file("lint.xml")
     }
 }
 

@@ -46,7 +46,7 @@ object Versions {
  */
 object Libs {
     // Also used in buildSrc/build.gradle.kts
-    const val androidGradlePlugin = "com.android.tools.build:gradle:3.6.1"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:4.0.0-beta02"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
