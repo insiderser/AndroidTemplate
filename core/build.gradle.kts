@@ -61,4 +61,10 @@ dependencies {
     testImplementation(Libs.Test.mockK)
     testImplementation(Libs.Kotlin.Coroutines.test)
     testImplementation(Libs.Test.AndroidX.arch)
+    testImplementation(Libs.Test.AndroidX.ext)
+    testImplementation(Libs.Test.AndroidX.core)
+    testImplementation(Libs.Test.AndroidX.rules)
+    testImplementation(Libs.Test.AndroidX.runner)
+    testImplementation(Libs.Test.Robolectric.robolectric)
+    debugImplementation(Libs.AndroidX.Fragment.testing)
 }

@@ -23,18 +23,20 @@ package com.insiderser.android.template.settings.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.insiderser.android.template.core.result.observeEvent
-import com.insiderser.android.template.core.ui.DaggerFragmentWithViewBinding
 import com.insiderser.android.template.core.ui.NavigationHost
+import com.insiderser.android.template.core.ui.viewLifecycleScoped
 import com.insiderser.android.template.settings.BuildConfig
 import com.insiderser.android.template.settings.databinding.SettingsFragmentBinding
 import com.insiderser.android.template.settings.ui.theme.ThemeSettingDialogFragment
 import com.insiderser.android.template.settings.ui.theme.getTitleForTheme
+import dagger.android.support.DaggerFragment
 import dev.chrisbanes.insetter.doOnApplyWindowInsets
 import javax.inject.Inject
 
@@ -42,27 +44,33 @@ import javax.inject.Inject
  * A root [fragment][androidx.fragment.app.Fragment] that displays a list of preferences.
  * All preferences are stored in preferences storage.
  */
-class SettingsFragment : DaggerFragmentWithViewBinding<SettingsFragmentBinding>() {
+class SettingsFragment : DaggerFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: SettingsViewModel by viewModels { viewModelFactory }
 
-    override fun onCreateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): SettingsFragmentBinding = SettingsFragmentBinding.inflate(inflater, container, false)
+    private var binding: SettingsFragmentBinding by viewLifecycleScoped()
 
-    override fun onBindingCreated(binding: SettingsFragmentBinding, savedInstanceState: Bundle?) {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View =
+        SettingsFragmentBinding.inflate(inflater, container, false).also {
+            binding = it
+        }.root
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (activity as? NavigationHost)?.registerToolbarWithNavigation(binding.toolbar)
 
-        binding.appBar.doOnApplyWindowInsets { view, insets, initial ->
-            view.updatePadding(top = initial.paddings.top + insets.systemWindowInsetTop)
+        binding.appBar.doOnApplyWindowInsets { appBar, insets, initial ->
+            appBar.updatePadding(top = initial.paddings.top + insets.systemWindowInsetTop)
         }
 
-        binding.scrollView.doOnApplyWindowInsets { view, insets, initial ->
-            view.updatePadding(bottom = initial.paddings.bottom + insets.systemWindowInsetBottom)
+        binding.scrollView.doOnApplyWindowInsets { scrollView, insets, initial ->
+            scrollView.updatePadding(bottom = initial.paddings.bottom + insets.systemWindowInsetBottom)
         }
 
         binding.chooseThemePreference.setOnClickListener {

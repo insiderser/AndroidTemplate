@@ -23,37 +23,45 @@ package com.insiderser.android.template.feature1.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import com.insiderser.android.template.core.ui.DaggerFragmentWithViewBinding
 import com.insiderser.android.template.core.ui.NavigationHost
+import com.insiderser.android.template.core.ui.viewLifecycleScoped
 import com.insiderser.android.template.feature1.databinding.Feature1FragmentBinding
+import dagger.android.support.DaggerFragment
 import dev.chrisbanes.insetter.doOnApplyWindowInsets
 import javax.inject.Inject
 
 /**
  * Sample [Fragment] that does nothing, except injecting into itself.
  */
-class Feature1Fragment : DaggerFragmentWithViewBinding<Feature1FragmentBinding>() {
+class Feature1Fragment : DaggerFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: Feature1FragmentViewModel by viewModels { viewModelFactory }
 
-    override fun onCreateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): Feature1FragmentBinding = Feature1FragmentBinding.inflate(inflater, container, false)
+    private var binding: Feature1FragmentBinding by viewLifecycleScoped()
 
-    override fun onBindingCreated(binding: Feature1FragmentBinding, savedInstanceState: Bundle?) {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View =
+        Feature1FragmentBinding.inflate(inflater, container, false).also {
+            binding = it
+        }.root
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (activity as? NavigationHost)?.registerToolbarWithNavigation(binding.toolbar)
 
-        binding.statusBar.doOnApplyWindowInsets { view, insets, _ ->
-            view.updateLayoutParams<ViewGroup.LayoutParams> {
+        binding.statusBar.doOnApplyWindowInsets { statusBar, insets, _ ->
+            statusBar.updateLayoutParams<ViewGroup.LayoutParams> {
                 height = insets.systemWindowInsetTop
             }
         }
