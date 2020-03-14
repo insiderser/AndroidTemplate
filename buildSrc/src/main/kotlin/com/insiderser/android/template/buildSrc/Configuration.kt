@@ -77,9 +77,7 @@ fun Project.configureAndroidModule() {
 
         testOptions {
             animationsDisabled = true
-            unitTests.apply {
-                isIncludeAndroidResources = true
-            }
+            unitTests.isIncludeAndroidResources = true
         }
     }
 }

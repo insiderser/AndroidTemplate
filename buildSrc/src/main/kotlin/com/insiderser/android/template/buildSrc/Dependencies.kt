@@ -153,7 +153,7 @@ object Libs {
     }
 
     object Dagger {
-        private const val version = "2.26"
+        private const val version = "2.27"
         const val dagger = "com.google.dagger:dagger:$version"
         const val compiler = "com.google.dagger:dagger-compiler:$version"
         const val androidSupport = "com.google.dagger:dagger-android-support:$version"
