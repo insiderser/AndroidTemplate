@@ -97,7 +97,7 @@ class SettingsViewModelTest {
     @Test
     fun availableThemes_isCorrect() {
         val availableThemes = viewModel.availableThemes.await()
-        assertThat(availableThemes).containsExactly(fakeAvailableThemes)
+        assertThat(availableThemes).containsExactlyElementsIn(fakeAvailableThemes)
     }
 
     @Test
