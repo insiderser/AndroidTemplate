@@ -22,12 +22,9 @@
 package com.insiderser.android.template.ui
 
 import android.os.Bundle
-import android.view.View
-import androidx.activity.viewModels
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.updatePadding
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -37,18 +34,13 @@ import com.insiderser.android.template.R
 import com.insiderser.android.template.core.ui.NavigationHost
 import com.insiderser.android.template.databinding.MainActivityBinding
 import dagger.android.support.DaggerAppCompatActivity
+import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.doOnApplyWindowInsets
-import javax.inject.Inject
 
 /**
  * The main activity and navigation point.
  */
 class MainActivity : DaggerAppCompatActivity(), NavigationHost {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel: MainActivityViewModel by viewModels { viewModelFactory }
 
     private lateinit var binding: MainActivityBinding
 
@@ -68,9 +60,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationHost {
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.navigationView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        Insetter.setEdgeToEdgeSystemUiFlags(binding.navigationView, true)
 
         binding.root.doOnApplyWindowInsets { view, insets, initial ->
             // Avoid drawing behind navigation bar in landscape with button mode

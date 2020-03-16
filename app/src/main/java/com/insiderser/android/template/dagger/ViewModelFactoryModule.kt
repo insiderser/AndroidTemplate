@@ -21,42 +21,22 @@
  */
 package com.insiderser.android.template.dagger
 
-import com.insiderser.android.template.MyApplication
-import dagger.BindsInstance
-import dagger.Component
-import dagger.android.AndroidInjectionModule
-import dagger.android.AndroidInjector
-import javax.inject.Singleton
+import androidx.lifecycle.ViewModelProvider
+import com.insiderser.android.template.core.dagger.ViewModelFactory
+import dagger.Binds
+import dagger.Module
 
 /**
- * Main application-level dagger component that holds everything together.
- *
- * Use [DaggerAppComponent.factory] to create [AppComponent].
- *
- * Feature modules may create separate module components
- * that depend on one of [AppComponent]'s parent components.
+ * Module used to define connection between the framework's [ViewModelProvider.Factory]
+ * and out own implementation: [ViewModelFactory].
  */
-@Singleton
-@Component(
-    modules = [
-        AndroidInjectionModule::class,
-        ContextModule::class,
-        ViewModelFactoryModule::class,
-        ActivityBindingModule::class,
-        DataModule::class
-    ]
-)
-internal interface AppComponent : AndroidInjector<MyApplication> {
+@Module
+interface ViewModelFactoryModule {
 
     /**
-     * Dagger factory for building [AppComponent], binding instances into a dagger graph.
+     * Define connection between the framework's [ViewModelProvider.Factory]
+     * and out own implementation: [ViewModelFactory].
      */
-    @Component.Factory
-    interface Factory {
-
-        /**
-         * Create [AppComponent] & bind [MyApplication] into a dagger graph.
-         */
-        fun create(@BindsInstance application: MyApplication): AppComponent
-    }
+    @Binds
+    fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }

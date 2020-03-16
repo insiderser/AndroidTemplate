@@ -19,13 +19,22 @@
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
   -->
-<resources>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:orientation="vertical"
+    tools:parentTag="com.insiderser.android.template.widget.PreferenceView">
 
-    <style name="AppTheme.Launcher">
-        <item name="android:windowBackground">@drawable/launch_screen</item>
-    </style>
+    <TextView
+        android:id="@+id/title"
+        style="@style/Widget.Template.Settings.PreferenceTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-    <style name="AppTheme.Settings">
-        <item name="preferenceStyle">@style/Widget.Template.Settings.PreferenceView</item>
-    </style>
-</resources>
+    <TextView
+        android:id="@+id/summary"
+        style="@style/Widget.Template.Settings.PreferenceSummary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+</merge>

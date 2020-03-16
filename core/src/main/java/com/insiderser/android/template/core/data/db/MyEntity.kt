@@ -19,33 +19,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.test
+package com.insiderser.android.template.core.data.db
 
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import com.insiderser.android.template.core.data.prefs.AppPreferencesStorage
-import com.insiderser.android.template.core.data.prefs.AppPreferencesStorageImpl
-import org.junit.rules.TestWatcher
-import org.junit.runner.Description
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 /**
- * A simple test rule that resets app preferences to default or testable.
- * For example, we don't want to show boarding screen every time we launch a test.
- * You can set custom preferences by passing configuration function to a constructor.
+ * A sample entity with [id] and [name] as its columns.
+ *
+ * @see MyDao
  */
-class TestPreferencesRule(
-    private val configurator: (AppPreferencesStorage.() -> Unit)? = null
-) : TestWatcher() {
-
-    val storage: AppPreferencesStorage by lazy {
-        AppPreferencesStorageImpl(getApplicationContext())
-    }
-
-    override fun starting(description: Description?) {
-        super.starting(description)
-        with(storage) {
-            selectedTheme = null
-
-            configurator?.invoke(this)
-        }
-    }
-}
+@Entity
+data class MyEntity(
+    @PrimaryKey(autoGenerate = true) val id: Int,
+    val name: String
+)

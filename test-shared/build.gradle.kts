@@ -26,7 +26,6 @@ import com.insiderser.android.template.buildSrc.configureAndroidModule
 plugins {
     id("com.android.library")
     kotlin("android")
-    kotlin("android.extensions")
 }
 
 configureAndroidModule()

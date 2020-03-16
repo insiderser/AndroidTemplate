@@ -19,33 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.test
+package com.insiderser.android.template.core.domain.prefs.theme
 
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.insiderser.android.template.core.data.prefs.AppPreferencesStorage
-import com.insiderser.android.template.core.data.prefs.AppPreferencesStorageImpl
-import org.junit.rules.TestWatcher
-import org.junit.runner.Description
+import com.insiderser.android.template.core.domain.ObservableUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 /**
- * A simple test rule that resets app preferences to default or testable.
- * For example, we don't want to show boarding screen every time we launch a test.
- * You can set custom preferences by passing configuration function to a constructor.
+ * Use case for getting observable [Flow] of user-selected theme setting from app preferences.
+ * @see observe
+ * @see invoke
  */
-class TestPreferencesRule(
-    private val configurator: (AppPreferencesStorage.() -> Unit)? = null
-) : TestWatcher() {
+class ObservableThemeUseCase @Inject constructor(
+    private val preferencesStorage: AppPreferencesStorage
+) : ObservableUseCase<Unit, Theme>() {
 
-    val storage: AppPreferencesStorage by lazy {
-        AppPreferencesStorageImpl(getApplicationContext())
-    }
-
-    override fun starting(description: Description?) {
-        super.starting(description)
-        with(storage) {
-            selectedTheme = null
-
-            configurator?.invoke(this)
+    override suspend fun createObservable(params: Unit): Flow<Theme> = withContext(Dispatchers.IO) {
+        preferencesStorage.selectedThemeObservable.map { storageKey: String? ->
+            if (storageKey != null) Theme.fromStorageKey(storageKey) else DEFAULT_THEME
         }
     }
 }

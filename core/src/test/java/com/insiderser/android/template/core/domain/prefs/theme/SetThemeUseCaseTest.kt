@@ -19,33 +19,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.test
+package com.insiderser.android.template.core.domain.prefs.theme
 
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import com.insiderser.android.template.core.data.prefs.AppPreferencesStorage
-import com.insiderser.android.template.core.data.prefs.AppPreferencesStorageImpl
-import org.junit.rules.TestWatcher
-import org.junit.runner.Description
+import com.google.common.truth.Truth.assertThat
+import com.insiderser.android.template.core.data.prefs.test.FakeAppPreferencesStorage
+import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Test
 
-/**
- * A simple test rule that resets app preferences to default or testable.
- * For example, we don't want to show boarding screen every time we launch a test.
- * You can set custom preferences by passing configuration function to a constructor.
- */
-class TestPreferencesRule(
-    private val configurator: (AppPreferencesStorage.() -> Unit)? = null
-) : TestWatcher() {
+class SetThemeUseCaseTest {
 
-    val storage: AppPreferencesStorage by lazy {
-        AppPreferencesStorageImpl(getApplicationContext())
-    }
+    private val preferencesStorage = FakeAppPreferencesStorage()
 
-    override fun starting(description: Description?) {
-        super.starting(description)
-        with(storage) {
-            selectedTheme = null
+    private val useCase = SetThemeUseCase(preferencesStorage)
 
-            configurator?.invoke(this)
+    @Test
+    fun givenTheme_execute_updatesPreferencesStorage() = runBlockingTest {
+        Theme.values().forEach { theme ->
+            useCase.execute(theme)
+            assertThat(preferencesStorage.selectedTheme).isEqualTo(theme.storageKey)
         }
     }
 }

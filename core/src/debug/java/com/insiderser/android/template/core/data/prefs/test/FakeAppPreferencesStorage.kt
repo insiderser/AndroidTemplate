@@ -19,33 +19,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.test
+package com.insiderser.android.template.core.data.prefs.test
 
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope.TESTS
 import com.insiderser.android.template.core.data.prefs.AppPreferencesStorage
-import com.insiderser.android.template.core.data.prefs.AppPreferencesStorageImpl
-import org.junit.rules.TestWatcher
-import org.junit.runner.Description
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 
 /**
- * A simple test rule that resets app preferences to default or testable.
- * For example, we don't want to show boarding screen every time we launch a test.
- * You can set custom preferences by passing configuration function to a constructor.
+ * Fake [AppPreferencesStorage] implementation that doesn't use [android.content.SharedPreferences].
+ *
+ * **For testing purposes only!**
  */
-class TestPreferencesRule(
-    private val configurator: (AppPreferencesStorage.() -> Unit)? = null
-) : TestWatcher() {
+@RestrictTo(TESTS)
+class FakeAppPreferencesStorage : AppPreferencesStorage {
 
-    val storage: AppPreferencesStorage by lazy {
-        AppPreferencesStorageImpl(getApplicationContext())
-    }
-
-    override fun starting(description: Description?) {
-        super.starting(description)
-        with(storage) {
-            selectedTheme = null
-
-            configurator?.invoke(this)
+    override var selectedTheme: String? = null
+        set(value) {
+            field = value
+            selectedThemeChannel.offer(value)
         }
-    }
+
+    private val selectedThemeChannel = ConflatedBroadcastChannel(selectedTheme)
+    override val selectedThemeObservable: Flow<String?>
+        get() = selectedThemeChannel.asFlow()
 }

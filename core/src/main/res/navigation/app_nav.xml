@@ -28,8 +28,8 @@
 
     <fragment
         android:id="@+id/feature1"
-        android:name="com.insiderser.android.template.feature1.ui.Feature1Fragment" />
+        android:name="com.insiderser.android.template.ui.feature1.Feature1Fragment" />
     <fragment
         android:id="@+id/settings"
-        android:name="com.insiderser.android.template.settings.ui.SettingsFragment" />
+        android:name="com.insiderser.android.template.ui.settings.SettingsFragment" />
 </navigation>

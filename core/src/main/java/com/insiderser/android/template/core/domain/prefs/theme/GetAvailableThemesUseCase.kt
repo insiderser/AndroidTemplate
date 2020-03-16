@@ -19,44 +19,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.dagger
+package com.insiderser.android.template.core.domain.prefs.theme
 
-import com.insiderser.android.template.MyApplication
-import dagger.BindsInstance
-import dagger.Component
-import dagger.android.AndroidInjectionModule
-import dagger.android.AndroidInjector
-import javax.inject.Singleton
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.Q
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import javax.inject.Inject
 
 /**
- * Main application-level dagger component that holds everything together.
- *
- * Use [DaggerAppComponent.factory] to create [AppComponent].
- *
- * Feature modules may create separate module components
- * that depend on one of [AppComponent]'s parent components.
+ * Use case for getting all available themes for the device that
+ * we are running on.
  */
-@Singleton
-@Component(
-    modules = [
-        AndroidInjectionModule::class,
-        ContextModule::class,
-        ViewModelFactoryModule::class,
-        ActivityBindingModule::class,
-        DataModule::class
-    ]
-)
-internal interface AppComponent : AndroidInjector<MyApplication> {
+class GetAvailableThemesUseCase @Inject constructor() {
 
     /**
-     * Dagger factory for building [AppComponent], binding instances into a dagger graph.
+     * Get all available themes for this device.
      */
-    @Component.Factory
-    interface Factory {
-
-        /**
-         * Create [AppComponent] & bind [MyApplication] into a dagger graph.
-         */
-        fun create(@BindsInstance application: MyApplication): AppComponent
-    }
+    operator fun invoke(): LiveData<List<Theme>> = MutableLiveData(
+        listOf(
+            Theme.LIGHT, Theme.DARK,
+            if (SDK_INT >= Q) Theme.FOLLOW_SYSTEM else Theme.AUTO_BATTERY
+        )
+    )
 }

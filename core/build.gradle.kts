@@ -22,15 +22,31 @@
 
 import com.insiderser.android.template.buildSrc.Libs
 import com.insiderser.android.template.buildSrc.configureAndroidModule
+import com.insiderser.android.template.buildSrc.sharedTestImplementation
 
 plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
+    kotlin("kapt")
     id("androidx.navigation.safeargs.kotlin")
 }
 
 configureAndroidModule()
+
+android {
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true",
+                    "room.expandProjection" to "true"
+                )
+            }
+        }
+    }
+}
 
 dependencies {
     api(Libs.Kotlin.stdlib)
@@ -42,6 +58,7 @@ dependencies {
     api(Libs.AndroidX.activity)
     api(Libs.AndroidX.Fragment.fragment)
     api(Libs.AndroidX.material)
+    api(Libs.AndroidX.recyclerView)
 
     api(Libs.AndroidX.Navigation.fragment)
     api(Libs.AndroidX.Navigation.ui)
@@ -57,14 +74,20 @@ dependencies {
     api(Libs.Dagger.dagger)
     api(Libs.Dagger.androidSupport)
 
-    testImplementation(project(":test-shared"))
+    api(Libs.AndroidX.Room.runtime)
+    api(Libs.AndroidX.Room.ktx)
+    kapt(Libs.AndroidX.Room.compiler)
+
+    sharedTestImplementation(project(":test-shared"))
     testImplementation(Libs.Test.mockK)
     testImplementation(Libs.Kotlin.Coroutines.test)
-    testImplementation(Libs.Test.AndroidX.arch)
-    testImplementation(Libs.Test.AndroidX.ext)
-    testImplementation(Libs.Test.AndroidX.core)
-    testImplementation(Libs.Test.AndroidX.rules)
-    testImplementation(Libs.Test.AndroidX.runner)
+
+    sharedTestImplementation(Libs.Test.AndroidX.arch)
+    sharedTestImplementation(Libs.Test.AndroidX.ext)
+    sharedTestImplementation(Libs.Test.AndroidX.core)
+    sharedTestImplementation(Libs.Test.AndroidX.rules)
+    sharedTestImplementation(Libs.Test.AndroidX.runner)
+
     testImplementation(Libs.Test.Robolectric.robolectric)
     debugImplementation(Libs.AndroidX.Fragment.testing)
 }

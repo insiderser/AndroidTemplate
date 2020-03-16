@@ -22,8 +22,11 @@
 package com.insiderser.android.template.dagger
 
 import android.content.Context
-import com.insiderser.android.template.data.AppDatabase
-import com.insiderser.android.template.data.MyDao
+import com.insiderser.android.template.core.data.db.AppDatabase
+import com.insiderser.android.template.core.data.db.MyDao
+import com.insiderser.android.template.core.data.prefs.AppPreferencesStorage
+import com.insiderser.android.template.core.data.prefs.AppPreferencesStorageImpl
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -32,13 +35,22 @@ import javax.inject.Singleton
  * A module that tells dagger how to create anything in this data module.
  */
 @Module
-class DataModule {
+interface DataModule {
 
+    @Binds
     @Singleton
-    @Provides
-    fun provideAppDatabase(context: Context): AppDatabase = AppDatabase.create(context)
+    fun bindAppSharedPreferences(impl: AppPreferencesStorageImpl): AppPreferencesStorage
 
-    @Singleton
-    @Provides
-    fun provideMyDao(db: AppDatabase): MyDao = db.myDao
+    companion object {
+
+        @JvmStatic
+        @Singleton
+        @Provides
+        fun provideAppDatabase(context: Context): AppDatabase = AppDatabase.create(context)
+
+        @JvmStatic
+        @Singleton
+        @Provides
+        fun provideMyDao(db: AppDatabase): MyDao = db.myDao
+    }
 }

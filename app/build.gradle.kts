@@ -68,10 +68,6 @@ android {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":preferences"))
-    implementation(project(":data"))
-    implementation(project(":feature1"))
-    implementation(project(":settings"))
 
     kapt(Libs.Dagger.compiler)
     kapt(Libs.Dagger.androidProcessor)
@@ -79,6 +75,8 @@ dependencies {
     debugImplementation(Libs.leakCanary)
 
     sharedTestImplementation(project(":test-shared"))
+    testImplementation(Libs.Kotlin.Coroutines.test)
+    testImplementation(Libs.Test.mockK)
 
     sharedTestImplementation(Libs.Test.AndroidX.core)
     sharedTestImplementation(Libs.Test.AndroidX.runner)

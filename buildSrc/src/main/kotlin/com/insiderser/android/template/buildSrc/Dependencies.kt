@@ -99,8 +99,6 @@ object Libs {
         const val appcompat = "androidx.appcompat:appcompat:1.1.0"
         const val activity = "androidx.activity:activity-ktx:1.1.0"
         const val material = "com.google.android.material:material:1.1.0"
-        const val browser = "androidx.browser:browser:1.2.0"
-        const val collection = "androidx.collection:collection-ktx:1.1.0"
 
         const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
         const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
@@ -122,19 +120,12 @@ object Libs {
             const val safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:$version"
         }
 
-        object Paging {
-            private const val version = "2.1.1"
-            const val common = "androidx.paging:paging-common-ktx:$version"
-            const val runtime = "androidx.paging:paging-runtime-ktx:$version"
-        }
-
         object Lifecycle {
             private const val version = "2.2.0"
             const val extensions = "androidx.lifecycle:lifecycle-extensions:$version"
             const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
             const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
             const val lifecycleKtx = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
-            const val compiler = "androidx.lifecycle:lifecycle-compiler:$version"
         }
 
         object Room {
@@ -143,12 +134,6 @@ object Libs {
             const val compiler = "androidx.room:room-compiler:$version"
             const val ktx = "androidx.room:room-ktx:$version"
             const val testing = "androidx.room:room-testing:$version"
-        }
-
-        object Work {
-            private const val version = "2.3.0"
-            const val runtimeKtx = "androidx.work:work-runtime-ktx:$version"
-            const val testing = "androidx.work:work-testing:$version"
         }
     }
 

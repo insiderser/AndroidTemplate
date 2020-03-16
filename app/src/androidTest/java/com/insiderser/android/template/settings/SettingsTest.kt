@@ -34,7 +34,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.template.R
-import com.insiderser.android.template.prefs.domain.theme.Theme
+import com.insiderser.android.template.core.domain.prefs.theme.Theme
 import com.insiderser.android.template.test.MainActivityRule
 import com.insiderser.android.template.test.TestPreferencesRule
 import org.hamcrest.CoreMatchers.allOf

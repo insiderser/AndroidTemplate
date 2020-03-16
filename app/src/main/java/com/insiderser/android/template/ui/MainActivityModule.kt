@@ -21,18 +21,12 @@
  */
 package com.insiderser.android.template.ui
 
-import androidx.lifecycle.ViewModel
-import com.insiderser.android.template.core.dagger.FeatureScope
-import com.insiderser.android.template.core.dagger.ViewModelKey
-import com.insiderser.android.template.dagger.Feature1Module
-import com.insiderser.android.template.dagger.SettingsModule
-import com.insiderser.android.template.feature1.ui.Feature1Fragment
-import com.insiderser.android.template.settings.ui.SettingsFragment
-import com.insiderser.android.template.settings.ui.theme.ThemeSettingDialogFragment
-import dagger.Binds
+import com.insiderser.android.template.core.dagger.FragmentScope
+import com.insiderser.android.template.ui.settings.SettingsFragment
+import com.insiderser.android.template.ui.settings.SettingsModule
+import com.insiderser.android.template.ui.settings.ThemeSettingDialogFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import dagger.multibindings.IntoMap
 
 /**
  * A Dagger module for [MainActivity].
@@ -40,25 +34,12 @@ import dagger.multibindings.IntoMap
 @Module
 internal interface MainActivityModule {
 
-    /**
-     * Tell Dagger that we want [MainActivityViewModel] to be bound into [MainActivity]
-     * using [ViewModelFactory][com.insiderser.android.template.core.dagger.ViewModelFactory].
-     */
-    @Binds
-    @IntoMap
-    @ViewModelKey(MainActivityViewModel::class)
-    fun bindMainViewModel(mainActivityViewModel: MainActivityViewModel): ViewModel
-
-    @FeatureScope
-    @ContributesAndroidInjector(modules = [Feature1Module::class])
-    fun feature1Fragment(): Feature1Fragment
-
-    @FeatureScope
+    @FragmentScope
     @ContributesAndroidInjector(modules = [SettingsModule::class])
     fun settingsFragment(): SettingsFragment
 
     // If needed, make this as subcomponent of settings subcomponent
-    @FeatureScope
+    @FragmentScope
     @ContributesAndroidInjector(modules = [SettingsModule::class])
     fun themeSettingDialogFragment(): ThemeSettingDialogFragment
 }

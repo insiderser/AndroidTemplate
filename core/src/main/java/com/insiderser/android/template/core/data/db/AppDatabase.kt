@@ -19,44 +19,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.dagger
+package com.insiderser.android.template.core.data.db
 
-import com.insiderser.android.template.MyApplication
-import dagger.BindsInstance
-import dagger.Component
-import dagger.android.AndroidInjectionModule
-import dagger.android.AndroidInjector
-import javax.inject.Singleton
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asExecutor
 
 /**
- * Main application-level dagger component that holds everything together.
+ * A main Room database. Here you can retrieve all app DAOs.
  *
- * Use [DaggerAppComponent.factory] to create [AppComponent].
+ * You don't need to use this class directly. Instead, get one of DAOs using Dagger.
  *
- * Feature modules may create separate module components
- * that depend on one of [AppComponent]'s parent components.
+ * @see AppDatabase.create
  */
-@Singleton
-@Component(
-    modules = [
-        AndroidInjectionModule::class,
-        ContextModule::class,
-        ViewModelFactoryModule::class,
-        ActivityBindingModule::class,
-        DataModule::class
-    ]
+@Database(
+    entities = [
+        MyEntity::class
+    ],
+    version = AppDatabase.DB_VERSION
 )
-internal interface AppComponent : AndroidInjector<MyApplication> {
+abstract class AppDatabase : RoomDatabase() {
 
-    /**
-     * Dagger factory for building [AppComponent], binding instances into a dagger graph.
-     */
-    @Component.Factory
-    interface Factory {
+    abstract val myDao: MyDao
+
+    companion object {
+
+        internal const val DB_VERSION = 1
+        private const val DB_NAME = "app.db"
 
         /**
-         * Create [AppComponent] & bind [MyApplication] into a dagger graph.
+         * Create an [AppDatabase] instance that is connected to the persistent SQLite
+         * database. If the database doesn't exist, it will be created.
+         *
+         * @param context an application context
          */
-        fun create(@BindsInstance application: MyApplication): AppComponent
+        @JvmStatic
+        fun create(context: Context): AppDatabase =
+            Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME)
+                .setTransactionExecutor(Dispatchers.IO.asExecutor())
+                .build()
     }
 }
