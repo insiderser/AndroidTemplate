@@ -56,13 +56,6 @@ jobs:
           path: ~/.m2/repository/org/robolectric/android-all
           key: ${{ runner.os }}-robolectric-${{ hashFiles('.github/ci-robolectric.properties') }}
 
-      - name: Install Android SDK components
-        env:
-          ANDROID_SDK_TOOLS: /usr/local/lib/android/tools/bin
-        run: |
-          echo y | sudo "$ANDROID_SDK_TOOLS/sdkmanager" --sdk_root="$ANDROID_SDK_ROOT" \
-              --install 'build-tools;29.0.3'
-
       - name: Build
         run: ./gradlew spotlessCheck app:lintDebug testDebugUnitTest app:assembleDebug
 

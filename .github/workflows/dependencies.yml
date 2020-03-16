@@ -19,7 +19,6 @@ jobs:
         run: |
           mkdir -p ~/.gradle
           cp .github/ci-gradle.properties ~/.gradle/gradle.properties
-          cp -f .github/ci-robolectric.properties test-shared/src/main/resources/robolectric.properties
 
       - name: Restore Gradle cache
         uses: actions/cache@v1
@@ -34,13 +33,6 @@ jobs:
         with:
           path: ~/.gradle/wrapper/dists
           key: ${{ runner.os }}-gradledist-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-
-      - name: Install Android SDK components
-        env:
-          ANDROID_SDK_TOOLS: /usr/local/lib/android/tools/bin
-        run: |
-          echo y | sudo "$ANDROID_SDK_TOOLS/sdkmanager" --sdk_root="$ANDROID_SDK_ROOT" \
-              --install 'build-tools;29.0.3'
 
       - name: Check for dependency updates
         run: ./gradlew dependencyUpdates
