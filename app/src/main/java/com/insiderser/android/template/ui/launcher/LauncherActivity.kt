@@ -25,7 +25,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
-import com.insiderser.android.template.core.result.observeEvent
+import com.insiderser.android.template.core.util.observeEvent
 import com.insiderser.android.template.ui.MainActivity
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject

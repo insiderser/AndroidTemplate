@@ -23,104 +23,33 @@ package com.insiderser.android.template.core.domain
 
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PROTECTED
-import com.insiderser.android.template.core.result.Result
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.channels.SendChannel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 /**
- * Executes business logic asynchronously.
+ * Executes a single unit of business logic.
  *
- * @param coroutineDispatcher Dispatcher that [execute] will be called on.
  * @param P Type of parameter that will be passed to [execute] function.
  * @param R Type that will be returned, wrapped in `Flow<Result<R>>`.
- * @see kotlinx.coroutines.Dispatchers
  */
-abstract class UseCase<in P, R>(
-    private val coroutineDispatcher: CoroutineDispatcher
-) {
-
-    private val job = SupervisorJob()
-    private val coroutineScope = CoroutineScope(coroutineDispatcher + job)
-
-    /**
-     * Execute this use case with the given params. Can be called on any thread.
-     * @return [Flow] where the result will be posted.
-     */
-    operator fun invoke(param: P): Flow<Result<R>> {
-        val channel = ConflatedBroadcastChannel<Result<R>>()
-        this(param, channel)
-        return channel.asFlow()
-    }
-
-    /**
-     * Execute this use case with the given params. Can be called on any thread.
-     * @param channel Where the result should be posted?
-     */
-    @VisibleForTesting
-    operator fun invoke(param: P, channel: SendChannel<Result<R>>) {
-        coroutineScope.launch {
-            channel.offer(Result.Loading)
-            try {
-                val result = execute(param)
-                channel.offer(Result.Success(result))
-            } catch (e: CancellationException) {
-                Timber.d("Job was cancelled")
-                throw e
-            } catch (e: Exception) {
-                Timber.i(e, "Use case execution failed")
-                channel.offer(Result.Error(e))
-            }
-        }
-    }
+abstract class UseCase<in P, R> {
 
     /**
      * Execute this use case, suspending calling coroutine until finished.
      */
-    suspend fun executeNow(param: P): Result<R> = withContext(coroutineDispatcher) {
-        try {
-            Result.Success(execute(param))
-        } catch (e: Exception) {
-            Result.Error(e)
-        }
-    }
+    suspend operator fun invoke(param: P): Result<R> = runCatching { execute(param) }
 
     /**
      * Executes core logic.
      *
-     * Will be called on a [coroutineDispatcher] passed as a parameter
-     * to [UseCase] constructor. Can be canceled at any moment.
+     * **Note**: this method can be called on any thread. You must take care that no
+     * heavy logic are run on the main thread.
      *
-     * Execution is considered successful if it returns without any [Exception].
+     * Execution is considered successful only if it returns without any [Exception]s thrown.
      */
-    @Throws(Exception::class)
     @VisibleForTesting(otherwise = PROTECTED)
     abstract suspend fun execute(param: P): R
-
-    /**
-     * Cancel all ongoing jobs of this use case. This use case can't be used anymore.
-     */
-    fun cancel() {
-        job.cancel()
-    }
 }
 
 /**
- * Execute this use case. Can be called on any thread.
- * @return A [Flow] where the result will be posted.
- */
-operator fun <R> UseCase<Unit, R>.invoke(): Flow<Result<R>> = invoke(Unit)
-
-/**
  * Execute this use case, suspending calling coroutine until finished.
- * @return Either [Result.Success] or [Result.Error].
  */
-suspend fun <R> UseCase<Unit, R>.executeNow(): Result<R> = executeNow(Unit)
+suspend operator fun <R> UseCase<Unit, R>.invoke(): Result<R> = invoke(Unit)

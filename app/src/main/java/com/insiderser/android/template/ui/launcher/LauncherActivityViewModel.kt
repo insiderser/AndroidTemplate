@@ -24,7 +24,7 @@ package com.insiderser.android.template.ui.launcher
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.insiderser.android.template.core.result.Event
+import com.insiderser.android.template.core.util.Event
 import javax.inject.Inject
 
 /**

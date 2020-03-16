@@ -19,50 +19,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.core.result
+package com.insiderser.android.template.core.util
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
 import com.google.common.truth.Truth.assertThat
-import org.junit.Assert.fail
-import org.junit.Rule
 import org.junit.Test
 
-class EventObserverTest {
-
-    @Rule
-    @JvmField
-    val instantTaskExecutorRule = InstantTaskExecutorRule()
+class EventTest {
 
     @Test
-    fun testEventObserverWithLiveData() {
+    fun testEvent() {
         val instance = Any()
-        val event = Event(instance)
-        val liveData = MutableLiveData(event)
+        val victim = Event(instance)
 
-        var called = false
-        val victim = EventObserver<Any> {
-            assertThat(called).isFalse() // Check not called multiple times
-            assertThat(it).isSameInstanceAs(instance)
-            called = true
-        }
+        assertThat(victim.hasBeenHandled).isFalse()
+        assertThat(victim.getContentIfNotHandled()).isSameInstanceAs(instance)
 
-        liveData.observeForever(victim)
-        assertThat(called).isTrue()
-        assertThat(event.hasBeenHandled).isTrue()
-        liveData.removeObserver(victim)
+        assertThat(victim.hasBeenHandled).isTrue()
+        assertThat(victim.getContentIfNotHandled()).isNull()
+        assertThat(victim.hasBeenHandled).isTrue()
 
-        // Check event is dispatched only once
-        called = false
-        liveData.observeForever(victim)
-        assertThat(called).isFalse()
-    }
-
-    @Test
-    fun testEventObserverWithLiveData_nullValue() {
-        val liveData = MutableLiveData<Event<Any>>(null)
-        liveData.observeForever(EventObserver {
-            fail("Should never be called on null values")
-        })
+        assertThat(victim.peekContent()).isSameInstanceAs(instance)
     }
 }

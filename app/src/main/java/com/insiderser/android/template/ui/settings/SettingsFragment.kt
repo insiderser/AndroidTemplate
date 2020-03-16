@@ -33,9 +33,9 @@ import androidx.lifecycle.observe
 import com.insiderser.android.template.BuildConfig
 import com.insiderser.android.template.R
 import com.insiderser.android.template.core.domain.prefs.theme.Theme
-import com.insiderser.android.template.core.result.observeEvent
 import com.insiderser.android.template.core.ui.NavigationHost
 import com.insiderser.android.template.core.ui.viewLifecycleScoped
+import com.insiderser.android.template.core.util.observeEvent
 import com.insiderser.android.template.databinding.SettingsFragmentBinding
 import dagger.android.support.DaggerFragment
 import dev.chrisbanes.insetter.doOnApplyWindowInsets

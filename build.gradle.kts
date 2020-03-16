@@ -77,13 +77,14 @@ subprojects {
 
             val compilerArgs = mutableListOf(
                 "-Xjsr305=strict",
+                "-Xallow-result-return-type",
                 "-Xopt-in=kotlin.RequiresOptIn"
             )
 
             // We don't use coroutines or flow in those projects. Because of this,
             // Kotlin compiler will generate a warning that will fail our build
             // because we have `allWarningsAsErrors = true`
-            val projectNamesWithoutCoroutinesFlow = arrayOf("model", "test-shared")
+            val projectNamesWithoutCoroutinesFlow = arrayOf("test-shared")
             if (this@subprojects.name !in projectNamesWithoutCoroutinesFlow) {
                 compilerArgs += listOf(
                     "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
@@ -99,7 +100,7 @@ tasks.withType<DependencyUpdatesTask> {
     checkForGradleUpdate = false
     rejectVersionIf {
         candidate.version.contains("alpha") ||
-            // Reject Kotlin early access preview (EAP) releases
+            // Kotlin early access preview (EAP).
             candidate.version.contains("eap")
     }
 }

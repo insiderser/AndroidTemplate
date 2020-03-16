@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.insiderser.android.template.core.result
+package com.insiderser.android.template.core.util
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LifecycleOwner

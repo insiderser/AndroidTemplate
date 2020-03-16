@@ -31,7 +31,7 @@ import com.insiderser.android.template.core.domain.prefs.theme.GetAvailableTheme
 import com.insiderser.android.template.core.domain.prefs.theme.ObservableThemeUseCase
 import com.insiderser.android.template.core.domain.prefs.theme.SetThemeUseCase
 import com.insiderser.android.template.core.domain.prefs.theme.Theme
-import com.insiderser.android.template.core.result.Event
+import com.insiderser.android.template.core.util.Event
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -62,7 +62,9 @@ class SettingsViewModel @Inject constructor(
      * Set given [theme][Theme] as app's theme.
      */
     fun setSelectedTheme(theme: Theme) {
-        setThemeUseCase(theme)
+        viewModelScope.launch {
+            setThemeUseCase(theme)
+        }
     }
 
     /**

@@ -24,6 +24,7 @@ package com.insiderser.android.template.core.domain.prefs.theme
 import com.insiderser.android.template.core.data.prefs.AppPreferencesStorage
 import com.insiderser.android.template.core.domain.UseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
@@ -31,9 +32,9 @@ import javax.inject.Inject
  */
 class SetThemeUseCase @Inject constructor(
     private val prefs: AppPreferencesStorage
-) : UseCase<Theme, Unit>(Dispatchers.IO) {
+) : UseCase<Theme, Unit>() {
 
-    override suspend fun execute(param: Theme) {
+    override suspend fun execute(param: Theme) = withContext(Dispatchers.IO) {
         prefs.selectedTheme = param.storageKey
     }
 }
