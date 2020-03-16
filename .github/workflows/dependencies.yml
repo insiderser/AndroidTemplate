@@ -1,0 +1,53 @@
+name: Dependencies
+
+on:
+  schedule:
+    - cron: '0 0 * * 1,3,5'
+
+jobs:
+  updates:
+    name: Updates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Generate cache key
+        run: ./checksum.sh checksum.txt
+
+      - name: Copy CI properties
+        run: |
+          mkdir -p ~/.gradle
+          cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+          cp -f .github/ci-robolectric.properties test-shared/src/main/resources/robolectric.properties
+
+      - name: Restore Gradle cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradlecache-${{ hashFiles('checksum.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-gradlecache-
+
+      - name: Restore Gradle dist cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/wrapper/dists
+          key: ${{ runner.os }}-gradledist-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+
+      - name: Install Android SDK components
+        env:
+          ANDROID_SDK_TOOLS: /usr/local/lib/android/tools/bin
+        run: |
+          echo y | sudo "$ANDROID_SDK_TOOLS/sdkmanager" --sdk_root="$ANDROID_SDK_ROOT" \
+              --install 'build-tools;29.0.3'
+
+      - name: Check for dependency updates
+        run: ./gradlew dependencyUpdates
+
+      - name: Upload dependency updates report
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+          name: dependency-updates
+          path: build/dependencyUpdates

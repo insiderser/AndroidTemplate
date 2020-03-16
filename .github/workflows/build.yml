@@ -64,7 +64,7 @@ jobs:
               --install 'build-tools;29.0.3'
 
       - name: Build
-        run: ./gradlew dependencyUpdates spotlessCheck app:lintDebug testDebugUnitTest app:assembleDebug
+        run: ./gradlew spotlessCheck app:lintDebug testDebugUnitTest app:assembleDebug
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v1
@@ -84,13 +84,6 @@ jobs:
         with:
           name: lint
           path: lint
-
-      - name: Upload dependency updates report
-        if: always()
-        uses: actions/upload-artifact@v1
-        with:
-          name: dependency-updates
-          path: build/dependencyUpdates
 
       - name: Copy test results
         if: always()
