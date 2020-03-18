@@ -12,27 +12,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Generate cache key
-        run: ./checksum.sh checksum.txt
-
       - name: Copy CI properties
         run: |
           mkdir -p ~/.gradle
           cp .github/ci-gradle.properties ~/.gradle/gradle.properties
-
-      - name: Restore Gradle cache
-        uses: actions/cache@v1
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradlecache-${{ hashFiles('checksum.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-gradlecache-
-
-      - name: Restore Gradle dist cache
-        uses: actions/cache@v1
-        with:
-          path: ~/.gradle/wrapper/dists
-          key: ${{ runner.os }}-gradledist-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
 
       - name: Check for dependency updates
         run: ./gradlew dependencyUpdates
