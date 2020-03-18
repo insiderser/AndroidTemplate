@@ -27,7 +27,7 @@ import androidx.test.rule.ActivityTestRule
 import com.insiderser.android.template.ui.MainActivity
 
 /**
- * Test rule for [MainActivity]. Allows to launch specific destination in the activity.
+ * Test rule for [MainActivity]. Allows launching a specific destination in the [MainActivity].
  * @see ActivityTestRule
  */
 class MainActivityRule(
