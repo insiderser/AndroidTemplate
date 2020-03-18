@@ -47,7 +47,6 @@ import kotlin.annotation.AnnotationRetention.RUNTIME
  * of a dependency be the same as that of the [android.app.Application].
  *
  * @see FragmentScope
- * @see FeatureScope
  */
 @MustBeDocumented
 @Retention(RUNTIME)
@@ -59,24 +58,8 @@ annotation class ActivityScope
  * a dependency should be the same as that of a [android.app.Fragment].
  *
  * @see ActivityScope
- * @see FeatureScope
  */
 @MustBeDocumented
 @Retention(RUNTIME)
 @Scope
 annotation class FragmentScope
-
-/**
- * Tells Dagger that the lifespan of a dependency
- * should be the same as that of a feature components.
- *
- * Use this only when the dependency is bound to that feature and
- * you have a *multi-module project*, where your feature has its own module.
- *
- * @see ActivityScope
- * @see FragmentScope
- */
-@MustBeDocumented
-@Retention(RUNTIME)
-@Scope
-annotation class FeatureScope
