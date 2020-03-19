@@ -27,7 +27,6 @@ import com.insiderser.android.template.core.domain.invoke
 import com.insiderser.android.template.core.domain.prefs.theme.ObservableThemeUseCase
 import com.insiderser.android.template.core.domain.prefs.theme.Theme
 import com.insiderser.android.template.core.domain.prefs.theme.toAppCompatNightMode
-import com.insiderser.android.template.dagger.AppComponent
 import com.insiderser.android.template.dagger.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
@@ -47,10 +46,6 @@ import javax.inject.Inject
 class MyApplication : DaggerApplication() {
 
     private val appScope = CoroutineScope(Dispatchers.Main)
-
-    private val appComponent: AppComponent by lazy {
-        DaggerAppComponent.factory().create(this)
-    }
 
     @Inject
     internal lateinit var observableThemeUseCase: ObservableThemeUseCase
@@ -99,5 +94,6 @@ class MyApplication : DaggerApplication() {
      * Returns app-level [Dagger component][dagger.Component], that is used
      * throughout the app.
      */
-    override fun applicationInjector(): AndroidInjector<MyApplication> = appComponent
+    override fun applicationInjector(): AndroidInjector<MyApplication> =
+        DaggerAppComponent.factory().create(this)
 }
