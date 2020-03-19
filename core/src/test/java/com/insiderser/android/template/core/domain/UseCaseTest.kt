@@ -30,8 +30,7 @@ import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -51,8 +50,6 @@ class UseCaseTest {
     @MockK
     private lateinit var exception: Exception
 
-    private val dispatcher = TestCoroutineDispatcher()
-
     @SpyK
     private var useCaseImpl = FakeUseCaseImpl()
 
@@ -62,7 +59,7 @@ class UseCaseTest {
     }
 
     @Test
-    fun whenExecuteIsSuccessful_invoke_returnsSuccess() = runBlockingTest(dispatcher) {
+    fun whenExecuteIsSuccessful_invoke_returnsSuccess() = runBlocking {
         val result = useCaseImpl(fakeParam)
         coVerify(exactly = 1) { useCaseImpl.execute(fakeParam) }
         assertThat(result.isSuccess).isTrue()
@@ -70,7 +67,7 @@ class UseCaseTest {
     }
 
     @Test
-    fun whenExecuteFails_invoke_returnsError() = runBlockingTest(dispatcher) {
+    fun whenExecuteFails_invoke_returnsError() = runBlocking {
         coEvery { useCaseImpl.execute(fakeParam) } throws exception
         val result = useCaseImpl(fakeParam)
         coVerify(exactly = 1) { useCaseImpl.execute(fakeParam) }
