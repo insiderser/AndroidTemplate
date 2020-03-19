@@ -66,7 +66,7 @@ subprojects {
                     "disabled_rules" to "import-ordering"
                 )
             )
-            licenseHeaderFile(rootProject.file("spotless/copyright.kt"))
+            licenseHeaderFile(rootProject.file("copyright.kt"))
         }
     }
 

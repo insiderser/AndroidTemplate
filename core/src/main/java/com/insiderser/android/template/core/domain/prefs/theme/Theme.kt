@@ -19,6 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package com.insiderser.android.template.core.domain.prefs.theme
 
 import android.os.Build.VERSION.SDK_INT
