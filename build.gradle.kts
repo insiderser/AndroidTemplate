@@ -73,7 +73,7 @@ subprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             allWarningsAsErrors = true
-            jvmTarget = Versions.jvmTarget
+            jvmTarget = Versions.jvmTarget.toString()
 
             val compilerArgs = mutableListOf(
                 "-Xjsr305=strict",

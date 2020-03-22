@@ -22,6 +22,8 @@
 
 package com.insiderser.android.template.buildSrc
 
+import org.gradle.api.JavaVersion
+
 /**
  * A wrapper for high-level version config used in build scripts.
  */
@@ -35,7 +37,8 @@ object Versions {
     const val versionName = "0.1.0" // X.Y.Z; X = Major, Y = minor, Z = Patch level
     const val versionCode = 1
 
-    const val jvmTarget = "1.8"
+    @JvmField
+    val jvmTarget = JavaVersion.VERSION_1_8
 
     const val buildToolsVersion = "29.0.3"
 
@@ -62,22 +65,18 @@ object Libs {
         object Robolectric {
             private const val version = "4.3.1"
             const val robolectric = "org.robolectric:robolectric:$version"
-            const val annotations = "org.robolectric:annotations:$version"
         }
 
         object AndroidX {
             private const val version = "1.2.0"
             const val core = "androidx.test:core:$version"
-            const val runner = "androidx.test:runner:$version"
             const val rules = "androidx.test:rules:$version"
             const val ext = "androidx.test.ext:junit:1.1.1"
-            const val extTruth = "androidx.test.ext:truth:1.2.0"
             const val arch = "androidx.arch.core:core-testing:2.1.0"
 
             object Espresso {
                 private const val version = "3.2.0"
                 const val core = "androidx.test.espresso:espresso-core:$version"
-                const val intents = "androidx.test.espresso:espresso-intents:$version"
             }
         }
     }
@@ -100,13 +99,7 @@ object Libs {
         const val appcompat = "androidx.appcompat:appcompat:1.1.0"
         const val activity = "androidx.activity:activity-ktx:1.1.0"
         const val material = "com.google.android.material:material:1.1.0"
-
         const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
-        const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-        const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.0-beta4"
-        const val drawerLayout = "androidx.drawerlayout:drawerlayout:1.0.0"
-
-        const val security = "androidx.security:security-crypto:1.0.0-alpha02"
 
         object Fragment {
             private const val version = "1.2.3"
@@ -134,7 +127,6 @@ object Libs {
             const val runtime = "androidx.room:room-runtime:$version"
             const val compiler = "androidx.room:room-compiler:$version"
             const val ktx = "androidx.room:room-ktx:$version"
-            const val testing = "androidx.room:room-testing:$version"
         }
     }
 

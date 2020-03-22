@@ -23,7 +23,6 @@
 package com.insiderser.android.template.buildSrc
 
 import com.android.build.gradle.BaseExtension
-import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.kotlin.dsl.findByType
@@ -63,8 +62,8 @@ fun Project.configureAndroidModule() {
         }
 
         compileOptions {
-            targetCompatibility = JavaVersion.VERSION_1_8
-            sourceCompatibility = JavaVersion.VERSION_1_8
+            targetCompatibility = Versions.jvmTarget
+            sourceCompatibility = Versions.jvmTarget
         }
 
         sourceSets {

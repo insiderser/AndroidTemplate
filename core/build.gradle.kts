@@ -86,7 +86,6 @@ dependencies {
     sharedTestImplementation(Libs.Test.AndroidX.ext)
     sharedTestImplementation(Libs.Test.AndroidX.core)
     sharedTestImplementation(Libs.Test.AndroidX.rules)
-    sharedTestImplementation(Libs.Test.AndroidX.runner)
 
     testImplementation(Libs.Test.Robolectric.robolectric)
     debugImplementation(Libs.AndroidX.Fragment.testing)

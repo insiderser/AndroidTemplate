@@ -79,10 +79,8 @@ dependencies {
     testImplementation(Libs.Test.mockK)
 
     sharedTestImplementation(Libs.Test.AndroidX.core)
-    sharedTestImplementation(Libs.Test.AndroidX.runner)
     sharedTestImplementation(Libs.Test.AndroidX.rules)
     sharedTestImplementation(Libs.Test.AndroidX.ext)
-    sharedTestImplementation(Libs.Test.AndroidX.extTruth)
     sharedTestImplementation(Libs.Test.AndroidX.arch)
 
     androidTestImplementation(Libs.Test.AndroidX.Espresso.core)
