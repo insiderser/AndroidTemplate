@@ -54,8 +54,6 @@ object Libs {
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
-    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.2"
-
     object Test {
         const val junit4 = "junit:junit:4.13"
         const val truth = "com.google.truth:truth:1.0.1"
@@ -156,6 +154,13 @@ object Libs {
         private const val version = "1.9.2"
         const val moshi = "com.squareup.moshi:moshi:$version"
         const val codeGenerator = "com.squareup.moshi:moshi-kotlin-codegen:$version"
+    }
+
+    object LeakCanary {
+        private const val version = "2.2"
+        const val leakCanary = "com.squareup.leakcanary:leakcanary-android:$version"
+        const val instrumentation =
+            "com.squareup.leakcanary:leakcanary-android-instrumentation:$version"
     }
 
     object Insetter {

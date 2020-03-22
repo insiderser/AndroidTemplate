@@ -36,6 +36,7 @@ configureAndroidModule()
 android {
     defaultConfig {
         applicationId = "com.insiderser.android.template"
+        testInstrumentationRunnerArgument("listener", "leakcanary.FailTestOnLeakRunListener")
     }
 
     @Suppress("UnstableApiUsage")
@@ -72,7 +73,8 @@ dependencies {
     kapt(Libs.Dagger.compiler)
     kapt(Libs.Dagger.androidProcessor)
 
-    debugImplementation(Libs.leakCanary)
+    debugImplementation(Libs.LeakCanary.leakCanary)
+    androidTestImplementation(Libs.LeakCanary.instrumentation)
 
     sharedTestImplementation(project(":test-shared"))
     testImplementation(Libs.Kotlin.Coroutines.test)
