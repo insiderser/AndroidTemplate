@@ -47,7 +47,7 @@ object Versions {
  */
 object Libs {
     // Also used in buildSrc/build.gradle.kts
-    const val androidGradlePlugin = "com.android.tools.build:gradle:4.0.0-beta02"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:4.0.0-beta03"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
@@ -56,7 +56,7 @@ object Libs {
     object Test {
         const val junit4 = "junit:junit:4.13"
         const val truth = "com.google.truth:truth:1.0.1"
-        const val liveDataTesting = "com.jraska.livedata:testing-ktx:1.1.1"
+        const val liveDataTesting = "com.jraska.livedata:testing-ktx:1.1.2"
         const val mockK = "io.mockk:mockk:1.9.3"
 
         object Robolectric {
@@ -109,7 +109,7 @@ object Libs {
         const val security = "androidx.security:security-crypto:1.0.0-alpha02"
 
         object Fragment {
-            private const val version = "1.2.2"
+            private const val version = "1.2.3"
             const val fragment = "androidx.fragment:fragment-ktx:$version"
             const val testing = "androidx.fragment:fragment-testing:$version"
         }
