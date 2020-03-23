@@ -91,6 +91,7 @@ tasks.withType<DependencyUpdatesTask> {
     rejectVersionIf {
         candidate.version.contains("alpha") ||
             // Kotlin early access preview (EAP).
-            candidate.version.contains("eap")
+            candidate.version.contains("eap") ||
+            candidate.version.contains(Regex("""-M\d"""))
     }
 }
