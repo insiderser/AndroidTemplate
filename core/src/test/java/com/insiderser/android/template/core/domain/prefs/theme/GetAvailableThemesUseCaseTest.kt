@@ -22,21 +22,23 @@
 
 package com.insiderser.android.template.core.domain.prefs.theme
 
-import com.insiderser.android.template.core.data.prefs.AppPreferencesStorage
-import com.insiderser.android.template.core.domain.UseCase
-import com.insiderser.android.template.core.util.AppDispatchers
-import kotlinx.coroutines.withContext
-import javax.inject.Inject
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.google.common.truth.Truth.assertThat
+import com.insiderser.android.template.test.shared.util.await
+import org.junit.Rule
+import org.junit.Test
 
-/**
- * Use case for setting user-selected theme settings to app preferences.
- */
-class SetThemeUseCase @Inject constructor(
-    private val prefs: AppPreferencesStorage,
-    private val dispatchers: AppDispatchers
-) : UseCase<Theme, Unit>() {
+class GetAvailableThemesUseCaseTest {
 
-    override suspend fun execute(param: Theme) = withContext(dispatchers.io) {
-        prefs.selectedTheme = param.storageKey
+    @Rule
+    @JvmField
+    val executorRule = InstantTaskExecutorRule()
+
+    @Test
+    // TODO: test on different SDK levels
+    fun invoke_returnsListThatContainsDefaultTheme() {
+        val useCase = GetAvailableThemesUseCase()
+        val themes = useCase.invoke().await()
+        assertThat(themes).contains(DEFAULT_THEME)
     }
 }

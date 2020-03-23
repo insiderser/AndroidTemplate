@@ -47,7 +47,7 @@ class LiveDataTestUtilsTest {
     fun givenLiveDataWithoutData_await_returnsNull() {
         val liveData = MutableLiveData<Any>()
 
-        val actual = liveData.await()
+        val actual = liveData.await(0)
         assertThat(actual).isNull()
     }
 }

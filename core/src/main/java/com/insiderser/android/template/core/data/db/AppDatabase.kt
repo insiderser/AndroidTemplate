@@ -26,8 +26,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.asExecutor
 
 /**
  * A main Room database. Here you can retrieve all app DAOs.
@@ -59,8 +57,6 @@ abstract class AppDatabase : RoomDatabase() {
          */
         @JvmStatic
         fun create(context: Context): AppDatabase =
-            Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME)
-                .setTransactionExecutor(Dispatchers.IO.asExecutor())
-                .build()
+            Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME).build()
     }
 }

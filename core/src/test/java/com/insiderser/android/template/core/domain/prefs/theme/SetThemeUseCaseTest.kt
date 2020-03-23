@@ -24,17 +24,22 @@ package com.insiderser.android.template.core.domain.prefs.theme
 
 import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.template.core.data.prefs.test.FakeAppPreferencesStorage
-import kotlinx.coroutines.runBlocking
+import com.insiderser.android.template.core.util.test.TestAppDispatchers
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 
 class SetThemeUseCaseTest {
 
+    private val testDispatcher = TestCoroutineDispatcher()
+    private val dispatchers = TestAppDispatchers(testDispatcher)
+
     private val preferencesStorage = FakeAppPreferencesStorage()
 
-    private val useCase = SetThemeUseCase(preferencesStorage)
+    private val useCase = SetThemeUseCase(preferencesStorage, dispatchers)
 
     @Test
-    fun givenTheme_execute_updatesPreferencesStorage() = runBlocking {
+    fun givenTheme_execute_updatesPreferencesStorage() = testDispatcher.runBlockingTest {
         Theme.values().forEach { theme ->
             useCase.execute(theme)
             assertThat(preferencesStorage.selectedTheme).isEqualTo(theme.storageKey)

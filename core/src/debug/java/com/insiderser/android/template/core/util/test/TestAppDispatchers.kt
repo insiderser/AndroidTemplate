@@ -20,23 +20,21 @@
  * SOFTWARE.
  */
 
-package com.insiderser.android.template.core.domain.prefs.theme
+package com.insiderser.android.template.core.util.test
 
-import com.insiderser.android.template.core.data.prefs.AppPreferencesStorage
-import com.insiderser.android.template.core.domain.UseCase
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope.TESTS
 import com.insiderser.android.template.core.util.AppDispatchers
-import kotlinx.coroutines.withContext
-import javax.inject.Inject
+import kotlinx.coroutines.CoroutineDispatcher
 
 /**
- * Use case for setting user-selected theme settings to app preferences.
+ * Fake [AppDispatchers] implementation for tests that replaces all dispatchers with
+ * a [CoroutineDispatcher] passed as a parameter.
  */
-class SetThemeUseCase @Inject constructor(
-    private val prefs: AppPreferencesStorage,
-    private val dispatchers: AppDispatchers
-) : UseCase<Theme, Unit>() {
+@RestrictTo(TESTS)
+class TestAppDispatchers(dispatcher: CoroutineDispatcher) : AppDispatchers {
 
-    override suspend fun execute(param: Theme) = withContext(dispatchers.io) {
-        prefs.selectedTheme = param.storageKey
-    }
+    override val main: CoroutineDispatcher = dispatcher
+    override val default: CoroutineDispatcher = dispatcher
+    override val io: CoroutineDispatcher = dispatcher
 }

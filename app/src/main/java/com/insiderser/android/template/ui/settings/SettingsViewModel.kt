@@ -56,8 +56,7 @@ class SettingsViewModel @Inject constructor(
     val availableThemes: LiveData<List<Theme>> = getAvailableThemesUseCase()
 
     /** Currently selected theme by the user, or (if nothing selected) a default value. */
-    val selectedTheme: LiveData<Theme> = observableThemeUseCase.observe()
-        .asLiveData(viewModelScope.coroutineContext)
+    val selectedTheme: LiveData<Theme> = observableThemeUseCase.observe().asLiveData()
 
     /**
      * Set given [theme][Theme] as app's theme.

@@ -20,24 +20,31 @@
  * SOFTWARE.
  */
 
-package com.insiderser.android.template.dagger
+package com.insiderser.android.template.core.util
 
-import androidx.lifecycle.ViewModelProvider
-import com.insiderser.android.template.core.dagger.ViewModelFactory
-import dagger.Binds
-import dagger.Module
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
 /**
- * Module used to define connection between the framework's [ViewModelProvider.Factory]
- * and out own implementation: [ViewModelFactory].
+ * Wrapper for all [CoroutineDispatcher]s used in the app.
+ *
+ * Please, use [AppDispatchers] instead of hardcoding dispatchers.
+ * This allows passing fake dispatchers as a parameter to your class, simplifying testing.
+ *
+ * @see DefaultAppDispatchers
+ * @see com.insiderser.android.template.core.util.test.TestAppDispatchers
  */
-@Module
-interface ViewModelFactoryModule {
+interface AppDispatchers {
 
-    /**
-     * Define connection between the framework's [ViewModelProvider.Factory]
-     * and out own implementation: [ViewModelFactory].
-     */
-    @Binds
-    fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+    val main: CoroutineDispatcher
+    val default: CoroutineDispatcher
+    val io: CoroutineDispatcher
+}
+
+class DefaultAppDispatchers @Inject constructor() : AppDispatchers {
+
+    override val main: CoroutineDispatcher = Dispatchers.Main
+    override val default: CoroutineDispatcher = Dispatchers.Default
+    override val io: CoroutineDispatcher = Dispatchers.IO
 }

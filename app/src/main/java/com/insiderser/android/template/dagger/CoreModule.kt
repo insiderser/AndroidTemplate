@@ -20,23 +20,31 @@
  * SOFTWARE.
  */
 
-package com.insiderser.android.template.core.domain.prefs.theme
+package com.insiderser.android.template.dagger
 
-import com.insiderser.android.template.core.data.prefs.AppPreferencesStorage
-import com.insiderser.android.template.core.domain.UseCase
+import androidx.lifecycle.ViewModelProvider
+import com.insiderser.android.template.core.dagger.ViewModelFactory
 import com.insiderser.android.template.core.util.AppDispatchers
-import kotlinx.coroutines.withContext
-import javax.inject.Inject
+import com.insiderser.android.template.core.util.DefaultAppDispatchers
+import dagger.Binds
+import dagger.Module
+import javax.inject.Singleton
 
 /**
- * Use case for setting user-selected theme settings to app preferences.
+ * Module used to define connection between the framework's [ViewModelProvider.Factory]
+ * and out own implementation: [ViewModelFactory].
  */
-class SetThemeUseCase @Inject constructor(
-    private val prefs: AppPreferencesStorage,
-    private val dispatchers: AppDispatchers
-) : UseCase<Theme, Unit>() {
+@Module
+interface CoreModule {
 
-    override suspend fun execute(param: Theme) = withContext(dispatchers.io) {
-        prefs.selectedTheme = param.storageKey
-    }
+    /**
+     * Define connection between the framework's [ViewModelProvider.Factory]
+     * and out own implementation: [ViewModelFactory].
+     */
+    @Binds
+    fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+
+    @Binds
+    @Singleton
+    fun bindAppDispatchers(dispatchers: DefaultAppDispatchers): AppDispatchers
 }

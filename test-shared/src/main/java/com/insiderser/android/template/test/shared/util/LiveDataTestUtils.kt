@@ -31,7 +31,10 @@ import java.util.concurrent.TimeUnit
  * Get the value of a [LiveData] safely.
  */
 @Throws(InterruptedException::class)
-fun <T> LiveData<T>.await(): T? {
+fun <T> LiveData<T>.await(
+    timeout: Long = 2,
+    timeoutUnit: TimeUnit = TimeUnit.SECONDS
+): T? {
     var data: T? = null
     val latch = CountDownLatch(1)
     val observer = object : Observer<T> {
@@ -42,7 +45,7 @@ fun <T> LiveData<T>.await(): T? {
         }
     }
     observeForever(observer)
-    latch.await(2, TimeUnit.SECONDS)
+    latch.await(timeout, timeoutUnit)
 
     return data
 }

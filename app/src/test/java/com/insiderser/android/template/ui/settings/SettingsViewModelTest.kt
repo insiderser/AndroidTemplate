@@ -25,27 +25,29 @@ package com.insiderser.android.template.ui.settings
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.template.core.data.prefs.test.FakeAppPreferencesStorage
-import com.insiderser.android.template.core.domain.prefs.theme.DEFAULT_THEME
 import com.insiderser.android.template.core.domain.prefs.theme.GetAvailableThemesUseCase
 import com.insiderser.android.template.core.domain.prefs.theme.ObservableThemeUseCase
 import com.insiderser.android.template.core.domain.prefs.theme.SetThemeUseCase
 import com.insiderser.android.template.core.domain.prefs.theme.Theme
 import com.insiderser.android.template.test.shared.util.await
-import com.jraska.livedata.test
 import io.mockk.MockKAnnotations
+import io.mockk.coVerify
+import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.util.concurrent.TimeUnit
 
 @OptIn(ObsoleteCoroutinesApi::class)
 class SettingsViewModelTest {
@@ -54,35 +56,44 @@ class SettingsViewModelTest {
     @JvmField
     val executorRule = InstantTaskExecutorRule()
 
+    private val testDispatcher = TestCoroutineDispatcher()
+
     private val fakeAvailableThemes = listOf(Theme.DARK, Theme.LIGHT, Theme.FOLLOW_SYSTEM)
+    private val fakeSelectedThemeChannel = ConflatedBroadcastChannel<Theme>()
 
     @MockK
     private lateinit var getAvailableThemesUseCase: GetAvailableThemesUseCase
 
-    private val storage = FakeAppPreferencesStorage()
+    @MockK(relaxUnitFun = true)
+    private lateinit var observableThemeUseCase: ObservableThemeUseCase
+
+    @RelaxedMockK
+    private lateinit var setThemeUseCase: SetThemeUseCase
 
     private lateinit var viewModel: SettingsViewModel
-
-    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        Dispatchers.setMain(mainThreadSurrogate)
+        Dispatchers.setMain(testDispatcher)
 
         every { getAvailableThemesUseCase() } returns MutableLiveData(fakeAvailableThemes)
 
+        every { observableThemeUseCase.observe() } returns fakeSelectedThemeChannel.asFlow()
+
         viewModel = SettingsViewModel(
             getAvailableThemesUseCase,
-            ObservableThemeUseCase(storage),
-            SetThemeUseCase(storage)
+            observableThemeUseCase,
+            setThemeUseCase
         )
+
+        testDispatcher.advanceUntilIdle()
     }
 
     @After
     fun tearDown() {
         Dispatchers.resetMain()
-        mainThreadSurrogate.close()
+        testDispatcher.cleanupTestCoroutines()
     }
 
     @Test
@@ -96,22 +107,32 @@ class SettingsViewModelTest {
     }
 
     @Test
-    fun availableThemes_isCorrect() {
+    fun availableThemes_returnsThemesFromGetAvailableThemesUseCase() {
         val availableThemes = viewModel.availableThemes.await()
         assertThat(availableThemes).containsExactlyElementsIn(fakeAvailableThemes)
     }
 
     @Test
-    fun setSelectedTheme_updatesPreferencesStorage() {
-        val observer = viewModel.selectedTheme.test()
-            // Check default value
-            .awaitValue(1, TimeUnit.SECONDS)
-            .assertValue(DEFAULT_THEME)
+    fun selectedTheme_returnsThemeFromObservableThemeUseCase() {
+        verify { observableThemeUseCase.invoke(Unit) }
+
+        viewModel.selectedTheme.observeForever { }
+        assertThat(viewModel.selectedTheme.value).isNull()
 
         Theme.values().forEach { theme ->
-            viewModel.setSelectedTheme(theme)
-            observer.awaitNextValue(1, TimeUnit.SECONDS).assertValue(theme)
-            assertThat(storage.selectedTheme).isEqualTo(theme.storageKey)
+            fakeSelectedThemeChannel.offer(theme)
+            testDispatcher.advanceUntilIdle()
+            assertThat(viewModel.selectedTheme.value).isEqualTo(theme)
         }
+    }
+
+    @Test
+    fun setSelectedTheme_callsSetThemeUseCase() {
+        Theme.values().forEach { theme ->
+            viewModel.setSelectedTheme(theme)
+            testDispatcher.advanceUntilIdle()
+            coVerify(exactly = 1) { setThemeUseCase(theme) }
+        }
+        confirmVerified(setThemeUseCase)
     }
 }
