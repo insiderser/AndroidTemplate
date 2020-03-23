@@ -30,13 +30,10 @@ import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
 /**
- * A simple test rule that resets app preferences to default or testable.
- * For example, we don't want to show boarding screen every time we launch a test.
- * You can set custom preferences by passing configuration function to a constructor.
+ * A simple test rule that resets app preferences to default.
+ * For example, we might want not to show boarding screen.
  */
-class TestPreferencesRule(
-    private val configurator: (AppPreferencesStorage.() -> Unit)? = null
-) : TestWatcher() {
+class TestPreferencesRule() : TestWatcher() {
 
     val storage: AppPreferencesStorage by lazy {
         AppPreferencesStorageImpl(getApplicationContext(), DefaultAppDispatchers())
@@ -46,8 +43,6 @@ class TestPreferencesRule(
         super.starting(description)
         with(storage) {
             selectedTheme = null
-
-            configurator?.invoke(this)
         }
     }
 }

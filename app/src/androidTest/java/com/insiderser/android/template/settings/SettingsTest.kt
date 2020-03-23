@@ -23,6 +23,7 @@
 package com.insiderser.android.template.settings
 
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -54,18 +55,23 @@ class SettingsTest {
 
     @Rule
     @JvmField
-    val preferencesRule = TestPreferencesRule {
-        selectedTheme = Theme.LIGHT.storageKey
-    }
+    val preferencesRule = TestPreferencesRule()
+
+    private val isDarkTheme: Boolean
+        get() = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
 
     @Test
     fun checkThemePreference() {
+        preferencesRule.storage.selectedTheme = Theme.LIGHT.storageKey
+
         // Check that we are in the right fragment
         onView(allOf(instanceOf(TextView::class.java), withParent(withId(R.id.toolbar))))
             .check(matches(withText(R.string.settings_title)))
 
         onView(allOf(withId(R.id.summary), withParent(withId(R.id.choose_theme_preference))))
             .check(matches(withText(R.string.settings_theme_light)))
+
+        assertThat(isDarkTheme).isFalse()
 
         onView(withText(R.string.settings_choose_theme))
             .check(matches(isDisplayed()))
@@ -79,6 +85,11 @@ class SettingsTest {
         onView(allOf(withId(R.id.summary), withParent(withId(R.id.choose_theme_preference))))
             .check(matches(withText(R.string.settings_theme_dark)))
 
-        assertThat(preferencesRule.storage.selectedTheme).isEqualTo(Theme.DARK.storageKey)
+        assertThat(isDarkTheme).isTrue()
+
+        activityRule.restartActivity()
+
+        onView(allOf(withId(R.id.summary), withParent(withId(R.id.choose_theme_preference))))
+            .check(matches(withText(R.string.settings_theme_dark)))
     }
 }
