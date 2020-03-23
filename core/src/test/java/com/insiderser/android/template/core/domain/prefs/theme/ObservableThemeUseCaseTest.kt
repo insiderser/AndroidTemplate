@@ -23,9 +23,9 @@
 package com.insiderser.android.template.core.domain.prefs.theme
 
 import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.template.core.data.prefs.test.FakeAppPreferencesStorage
 import com.insiderser.android.template.core.domain.invoke
-import com.insiderser.android.template.core.util.test.TestAppDispatchers
+import com.insiderser.android.template.fake.FakeAppDispatchers
+import com.insiderser.android.template.fake.FakeAppPreferencesStorage
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
@@ -40,7 +40,7 @@ import org.junit.Test
 class ObservableThemeUseCaseTest {
 
     private val testDispatcher = TestCoroutineDispatcher()
-    private val dispatchers = TestAppDispatchers(testDispatcher)
+    private val dispatchers = FakeAppDispatchers(testDispatcher)
 
     private val storage = FakeAppPreferencesStorage()
 

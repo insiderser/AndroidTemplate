@@ -20,32 +20,34 @@
  * SOFTWARE.
  */
 
-package com.insiderser.android.template.test.shared.util
+package com.insiderser.android.template.test
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
+import com.google.common.truth.Truth.assertThat
+import org.junit.Rule
+import org.junit.Test
 
-/**
- * Get the value of a [LiveData] safely.
- */
-@Throws(InterruptedException::class)
-fun <T> LiveData<T>.await(
-    timeout: Long = 2,
-    timeoutUnit: TimeUnit = TimeUnit.SECONDS
-): T? {
-    var data: T? = null
-    val latch = CountDownLatch(1)
-    val observer = object : Observer<T> {
-        override fun onChanged(o: T?) {
-            data = o
-            latch.countDown()
-            removeObserver(this)
-        }
+class LiveDataTestUtilsTest {
+
+    @Rule
+    @JvmField
+    val executorRule = InstantTaskExecutorRule()
+
+    @Test
+    fun givenLiveDataWithData_await_returnsThatData() {
+        val instance = Any()
+        val liveData = MutableLiveData(instance)
+
+        val actual = liveData.await()
+        assertThat(actual).isSameInstanceAs(instance)
     }
-    observeForever(observer)
-    latch.await(timeout, timeoutUnit)
 
-    return data
+    @Test
+    fun givenLiveDataWithoutData_await_returnsNull() {
+        val liveData = MutableLiveData<Any>()
+
+        val actual = liveData.await(0)
+        assertThat(actual).isNull()
+    }
 }

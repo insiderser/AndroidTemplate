@@ -24,7 +24,7 @@ package com.insiderser.android.template.core.domain.prefs.theme
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.template.test.shared.util.await
+import com.insiderser.android.template.test.await
 import org.junit.Rule
 import org.junit.Test
 

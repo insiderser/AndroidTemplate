@@ -31,9 +31,7 @@ plugins {
 configureAndroidModule()
 
 dependencies {
-    implementation(Libs.Kotlin.stdlib)
-
-    implementation(Libs.AndroidX.Lifecycle.extensions)
+    implementation(project(":core"))
 
     api(Libs.Test.junit4)
     api(Libs.Test.truth)

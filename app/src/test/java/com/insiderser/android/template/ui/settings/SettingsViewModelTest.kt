@@ -29,7 +29,7 @@ import com.insiderser.android.template.core.domain.prefs.theme.GetAvailableTheme
 import com.insiderser.android.template.core.domain.prefs.theme.ObservableThemeUseCase
 import com.insiderser.android.template.core.domain.prefs.theme.SetThemeUseCase
 import com.insiderser.android.template.core.domain.prefs.theme.Theme
-import com.insiderser.android.template.test.shared.util.await
+import com.insiderser.android.template.test.await
 import io.mockk.MockKAnnotations
 import io.mockk.coVerify
 import io.mockk.confirmVerified

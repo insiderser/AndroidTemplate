@@ -23,8 +23,8 @@
 package com.insiderser.android.template.core.domain.prefs.theme
 
 import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.template.core.data.prefs.test.FakeAppPreferencesStorage
-import com.insiderser.android.template.core.util.test.TestAppDispatchers
+import com.insiderser.android.template.fake.FakeAppDispatchers
+import com.insiderser.android.template.fake.FakeAppPreferencesStorage
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
@@ -32,7 +32,7 @@ import org.junit.Test
 class SetThemeUseCaseTest {
 
     private val testDispatcher = TestCoroutineDispatcher()
-    private val dispatchers = TestAppDispatchers(testDispatcher)
+    private val dispatchers = FakeAppDispatchers(testDispatcher)
 
     private val preferencesStorage = FakeAppPreferencesStorage()
 

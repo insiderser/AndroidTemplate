@@ -28,7 +28,7 @@ import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.template.test.shared.util.await
+import com.insiderser.android.template.test.await
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
