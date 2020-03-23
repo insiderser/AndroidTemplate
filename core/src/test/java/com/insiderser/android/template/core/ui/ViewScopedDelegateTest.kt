@@ -30,10 +30,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.testing.launchFragment
 import androidx.lifecycle.Lifecycle.State.DESTROYED
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.viewbinding.ViewBinding
 import com.google.common.truth.Truth.assertThat
-import io.mockk.MockKAnnotations
-import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.mockk
 import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
@@ -41,29 +39,24 @@ import org.junit.runner.RunWith
 import java.lang.ref.WeakReference
 
 @RunWith(AndroidJUnit4::class)
-class ViewBindingDelegateTest {
+class ViewScopedDelegateTest {
 
-    @RelaxedMockK
-    private lateinit var mockView: View
-
-    private lateinit var bindingRef: WeakReference<ViewBinding>
+    private lateinit var ref: WeakReference<Any>
 
     private lateinit var fragment: FakeFragmentWithViewBinding
 
     @Before
     fun setUp() {
-        MockKAnnotations.init(this)
+        val view = View(mockk(relaxed = true))
 
-        val binding = ViewBinding { mockView }
-        bindingRef = WeakReference(binding)
-
-        fragment = FakeFragmentWithViewBinding(binding)
+        ref = WeakReference(view)
+        fragment = FakeFragmentWithViewBinding(view)
     }
 
     @Test
     fun whenViewIsNotCreated_getValue_throwsIllegalStateException() {
         assertThrows(IllegalStateException::class.java) {
-            fragment.binding
+            fragment.targetProperty
         }
     }
 
@@ -72,8 +65,8 @@ class ViewBindingDelegateTest {
     fun whenViewIsCreated_getValue_returnsValue() {
         val scenario = launchFragment { fragment }
 
-        assertThat(fragment.binding).isSameInstanceAs(bindingRef.get())
-        assertThat(bindingRef.get()).isNotNull()
+        assertThat(fragment.targetProperty).isSameInstanceAs(ref.get())
+        assertThat(ref.get()).isNotNull()
     }
 
     @Test
@@ -82,27 +75,28 @@ class ViewBindingDelegateTest {
 
         scenario.moveToState(DESTROYED)
         assertThrows(IllegalStateException::class.java) {
-            fragment.binding
+            fragment.targetProperty
         }
 
         System.gc()
-        // Check view binding is garbage collected
-        assertThat(bindingRef.get()).isNull()
+        // Check view is garbage collected
+        assertThat(ref.get()).isNull()
     }
 
-    class FakeFragmentWithViewBinding(testBinding: ViewBinding) : Fragment() {
+    class FakeFragmentWithViewBinding(mockView: View) : Fragment() {
 
-        private var testBinding: ViewBinding? = testBinding
-        var binding: ViewBinding by viewLifecycleScoped()
+        private var mockView: View? = mockView
+
+        var targetProperty: View by viewLifecycleScoped()
 
         override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View? {
-            binding = testBinding!!
-            testBinding = null
-            return binding.root
+            targetProperty = mockView!!
+            mockView = null
+            return targetProperty
         }
     }
 }
