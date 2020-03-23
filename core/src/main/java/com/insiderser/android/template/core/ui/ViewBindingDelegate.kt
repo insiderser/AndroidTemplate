@@ -26,7 +26,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle.Event.ON_DESTROY
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import androidx.viewbinding.ViewBinding
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -34,7 +33,7 @@ import kotlin.reflect.KProperty
  * Returns a property delegate that automatically sets backing property to `null`
  * after this [Fragment]'s view gets destroyed.
  */
-fun <T : ViewBinding> Fragment.viewLifecycleScoped(): ReadWriteProperty<Any, T> =
+fun <T : Any> Fragment.viewLifecycleScoped(): ReadWriteProperty<Any, T> =
     ViewLifecycleScopedProperty(this)
 
 private class ViewLifecycleScopedProperty<T : Any>(owner: Fragment) :
@@ -49,6 +48,7 @@ private class ViewLifecycleScopedProperty<T : Any>(owner: Fragment) :
             }
     }
 
+    @Suppress("unused")
     @OnLifecycleEvent(ON_DESTROY)
     fun onDestroyView() {
         value = null
