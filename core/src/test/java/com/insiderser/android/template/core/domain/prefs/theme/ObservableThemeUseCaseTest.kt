@@ -24,8 +24,8 @@ package com.insiderser.android.template.core.domain.prefs.theme
 
 import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.template.core.domain.invoke
-import com.insiderser.android.template.fake.FakeAppDispatchers
-import com.insiderser.android.template.fake.FakeAppPreferencesStorage
+import com.insiderser.android.template.test.fake.FakeAppDispatchers
+import com.insiderser.android.template.test.fake.FakeAppPreferencesStorage
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel

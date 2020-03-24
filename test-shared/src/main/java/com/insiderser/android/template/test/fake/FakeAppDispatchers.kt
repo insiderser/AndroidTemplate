@@ -20,27 +20,18 @@
  * SOFTWARE.
  */
 
-package com.insiderser.android.template.fake
+package com.insiderser.android.template.test.fake
 
-import com.insiderser.android.template.core.data.prefs.AppPreferencesStorage
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
+import com.insiderser.android.template.core.util.AppDispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 
 /**
- * Fake [AppPreferencesStorage] implementation that doesn't use [android.content.SharedPreferences].
- *
- * **For testing purposes only!**
+ * Fake [AppDispatchers] implementation for tests that replaces all dispatchers with
+ * a [CoroutineDispatcher] passed as a parameter.
  */
-class FakeAppPreferencesStorage : AppPreferencesStorage {
+class FakeAppDispatchers(dispatcher: CoroutineDispatcher) : AppDispatchers {
 
-    override var selectedTheme: String? = null
-        set(value) {
-            field = value
-            selectedThemeChannel.offer(value)
-        }
-
-    private val selectedThemeChannel = ConflatedBroadcastChannel(selectedTheme)
-    override val selectedThemeObservable: Flow<String?>
-        get() = selectedThemeChannel.asFlow()
+    override val main: CoroutineDispatcher = dispatcher
+    override val default: CoroutineDispatcher = dispatcher
+    override val io: CoroutineDispatcher = dispatcher
 }
