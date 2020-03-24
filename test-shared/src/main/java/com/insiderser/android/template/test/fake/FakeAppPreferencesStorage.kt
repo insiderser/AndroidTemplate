@@ -29,8 +29,6 @@ import kotlinx.coroutines.flow.asFlow
 
 /**
  * Fake [AppPreferencesStorage] implementation that doesn't use [android.content.SharedPreferences].
- *
- * **For testing purposes only!**
  */
 class FakeAppPreferencesStorage : AppPreferencesStorage {
 
