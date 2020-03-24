@@ -29,9 +29,11 @@ import kotlinx.coroutines.CoroutineDispatcher
  * Fake [AppDispatchers] implementation for tests that replaces all dispatchers with
  * a [CoroutineDispatcher] passed as a parameter.
  */
-class FakeAppDispatchers(dispatcher: CoroutineDispatcher) : AppDispatchers {
+class FakeAppDispatchers(
+    private val dispatcher: CoroutineDispatcher
+) : AppDispatchers {
 
-    override val main: CoroutineDispatcher = dispatcher
-    override val default: CoroutineDispatcher = dispatcher
-    override val io: CoroutineDispatcher = dispatcher
+    override val main: CoroutineDispatcher get() = dispatcher
+    override val default: CoroutineDispatcher get() = dispatcher
+    override val io: CoroutineDispatcher get() = dispatcher
 }
