@@ -25,12 +25,11 @@ package com.insiderser.android.template.core.domain
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import io.mockk.MockKAnnotations
-import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -59,7 +58,9 @@ class UseCaseTest {
     }
 
     @Test
-    fun whenExecuteIsSuccessful_invoke_returnsSuccess() = runBlocking {
+    fun whenExecuteIsSuccessful_invoke_returnsSuccess() = runBlockingTest {
+        useCaseImpl.shouldReturnError = false
+
         val result = useCaseImpl(fakeParam)
         coVerify(exactly = 1) { useCaseImpl.execute(fakeParam) }
         assertThat(result.isSuccess).isTrue()
@@ -67,8 +68,9 @@ class UseCaseTest {
     }
 
     @Test
-    fun whenExecuteFails_invoke_returnsError() = runBlocking {
-        coEvery { useCaseImpl.execute(fakeParam) } throws exception
+    fun whenExecuteFails_invoke_returnsError() = runBlockingTest {
+        useCaseImpl.shouldReturnError = true
+
         val result = useCaseImpl(fakeParam)
         coVerify(exactly = 1) { useCaseImpl.execute(fakeParam) }
 
@@ -77,10 +79,17 @@ class UseCaseTest {
     }
 
     private inner class FakeUseCaseImpl : UseCase<FakeParameter, FakeResult>() {
+
+        var shouldReturnError: Boolean = false
+
         override suspend fun execute(param: FakeParameter): FakeResult {
-            // Simulate that we do something expensive here...
-            delay(DELAY)
-            return fakeResult
+            if (shouldReturnError) {
+                throw exception
+            } else {
+                // Simulate that we do something expensive here...
+                delay(DELAY)
+                return fakeResult
+            }
         }
     }
 
