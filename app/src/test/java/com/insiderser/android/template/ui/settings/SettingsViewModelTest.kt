@@ -30,6 +30,7 @@ import com.insiderser.android.template.core.domain.prefs.theme.ObservableThemeUs
 import com.insiderser.android.template.core.domain.prefs.theme.SetThemeUseCase
 import com.insiderser.android.template.core.domain.prefs.theme.Theme
 import com.insiderser.android.template.test.await
+import com.insiderser.android.template.test.rules.MainDispatcherRule
 import io.mockk.MockKAnnotations
 import io.mockk.coVerify
 import io.mockk.confirmVerified
@@ -37,14 +38,10 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.verify
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
-import org.junit.After
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -56,7 +53,9 @@ class SettingsViewModelTest {
     @JvmField
     val executorRule = InstantTaskExecutorRule()
 
-    private val testDispatcher = TestCoroutineDispatcher()
+    @Rule
+    @JvmField
+    val dispatcherRule = MainDispatcherRule()
 
     private val fakeAvailableThemes = listOf(Theme.DARK, Theme.LIGHT, Theme.FOLLOW_SYSTEM)
     private val fakeSelectedThemeChannel = ConflatedBroadcastChannel<Theme>()
@@ -75,7 +74,6 @@ class SettingsViewModelTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        Dispatchers.setMain(testDispatcher)
 
         every { getAvailableThemesUseCase() } returns MutableLiveData(fakeAvailableThemes)
 
@@ -86,14 +84,6 @@ class SettingsViewModelTest {
             observableThemeUseCase,
             setThemeUseCase
         )
-
-        testDispatcher.advanceUntilIdle()
-    }
-
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
-        testDispatcher.cleanupTestCoroutines()
     }
 
     @Test
@@ -113,24 +103,23 @@ class SettingsViewModelTest {
     }
 
     @Test
-    fun selectedTheme_returnsThemeFromObservableThemeUseCase() {
-        verify { observableThemeUseCase.invoke(Unit) }
+    fun selectedTheme_returnsThemeFromObservableThemeUseCase() =
+        dispatcherRule.runBlockingTest {
+            verify { observableThemeUseCase.invoke(Unit) }
 
-        viewModel.selectedTheme.observeForever { }
-        assertThat(viewModel.selectedTheme.value).isNull()
+            viewModel.selectedTheme.observeForever { }
+            assertThat(viewModel.selectedTheme.value).isNull()
 
-        Theme.values().forEach { theme ->
-            fakeSelectedThemeChannel.offer(theme)
-            testDispatcher.advanceUntilIdle()
-            assertThat(viewModel.selectedTheme.value).isEqualTo(theme)
+            Theme.values().forEach { theme ->
+                fakeSelectedThemeChannel.offer(theme)
+                assertThat(viewModel.selectedTheme.value).isEqualTo(theme)
+            }
         }
-    }
 
     @Test
-    fun setSelectedTheme_callsSetThemeUseCase() {
+    fun setSelectedTheme_callsSetThemeUseCase() = dispatcherRule.runBlockingTest {
         Theme.values().forEach { theme ->
             viewModel.setSelectedTheme(theme)
-            testDispatcher.advanceUntilIdle()
             coVerify(exactly = 1) { setThemeUseCase(theme) }
         }
         confirmVerified(setThemeUseCase)

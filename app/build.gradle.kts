@@ -78,7 +78,6 @@ dependencies {
     androidTestImplementation(Libs.LeakCanary.instrumentation)
 
     sharedTestImplementation(project(":test-shared"))
-    testImplementation(Libs.Kotlin.Coroutines.test)
     testImplementation(Libs.Test.mockK)
 
     sharedTestImplementation(Libs.Test.AndroidX.core)

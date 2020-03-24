@@ -80,7 +80,6 @@ dependencies {
 
     sharedTestImplementation(project(":test-shared"))
     testImplementation(Libs.Test.mockK)
-    testImplementation(Libs.Kotlin.Coroutines.test)
 
     sharedTestImplementation(Libs.Test.AndroidX.arch)
     sharedTestImplementation(Libs.Test.AndroidX.ext)
