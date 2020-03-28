@@ -38,7 +38,7 @@ import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.template.R
 import com.insiderser.android.template.core.domain.prefs.theme.Theme
 import com.insiderser.android.template.test.MainActivityRule
-import com.insiderser.android.template.test.TestPreferencesRule
+import com.insiderser.android.template.test.PreferencesRule
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.instanceOf
 import org.junit.Rule
@@ -55,7 +55,7 @@ class SettingsTest {
 
     @Rule
     @JvmField
-    val preferencesRule = TestPreferencesRule()
+    val preferencesRule = PreferencesRule()
 
     private val isDarkTheme: Boolean
         get() = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES

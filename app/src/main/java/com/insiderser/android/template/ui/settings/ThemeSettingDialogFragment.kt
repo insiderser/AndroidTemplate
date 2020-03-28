@@ -73,7 +73,7 @@ class ThemeSettingDialogFragment : DaggerAppCompatDialogFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.availableThemes.observe(this, ::setAvailableThemes)
+        setAvailableThemes(viewModel.availableThemes)
         viewModel.selectedTheme.observe(this, ::setSelectedTheme)
     }
 

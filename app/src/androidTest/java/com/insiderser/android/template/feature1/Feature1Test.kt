@@ -37,7 +37,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.insiderser.android.template.R
 import com.insiderser.android.template.test.MainActivityRule
-import com.insiderser.android.template.test.TestPreferencesRule
+import com.insiderser.android.template.test.PreferencesRule
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.instanceOf
 import org.junit.Rule
@@ -54,7 +54,7 @@ class Feature1Test {
 
     @Rule
     @JvmField
-    val preferencesRule = TestPreferencesRule()
+    val preferencesRule = PreferencesRule()
 
     @Test
     fun assert_IAmAFragment_isDisplayed() {

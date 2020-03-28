@@ -33,16 +33,21 @@ import org.junit.runner.Description
  * A simple test rule that resets app preferences to default.
  * For example, we might want not to show boarding screen.
  */
-class TestPreferencesRule : TestWatcher() {
+class PreferencesRule : TestWatcher() {
 
     val storage: AppPreferencesStorage by lazy {
         AppPreferencesStorageImpl(getApplicationContext(), DefaultAppDispatchers())
     }
 
     override fun starting(description: Description?) {
-        super.starting(description)
-        with(storage) {
-            selectedTheme = null
-        }
+        resetPreferences()
+    }
+
+    override fun finished(description: Description?) {
+        resetPreferences()
+    }
+
+    fun resetPreferences() = with(storage) {
+        selectedTheme = null
     }
 }

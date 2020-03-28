@@ -24,7 +24,6 @@ package com.insiderser.android.template
 
 import android.os.StrictMode
 import androidx.appcompat.app.AppCompatDelegate
-import com.insiderser.android.template.core.domain.invoke
 import com.insiderser.android.template.core.domain.prefs.theme.ObservableThemeUseCase
 import com.insiderser.android.template.core.domain.prefs.theme.Theme
 import com.insiderser.android.template.core.domain.prefs.theme.toAppCompatNightMode
@@ -81,8 +80,7 @@ class MyApplication : DaggerApplication() {
 
     private fun initTheme() {
         appScope.launch {
-            observableThemeUseCase()
-            observableThemeUseCase.observe().collect { updateAppTheme(it) }
+            observableThemeUseCase().collect { updateAppTheme(it) }
         }
     }
 

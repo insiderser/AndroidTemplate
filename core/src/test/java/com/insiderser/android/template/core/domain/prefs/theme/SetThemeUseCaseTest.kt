@@ -23,8 +23,8 @@
 package com.insiderser.android.template.core.domain.prefs.theme
 
 import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.template.test.fake.FakeAppDispatchers
-import com.insiderser.android.template.test.fake.FakeAppPreferencesStorage
+import com.insiderser.android.template.test.fakes.FakeAppDispatchers
+import com.insiderser.android.template.test.fakes.FakeAppPreferencesStorage
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test

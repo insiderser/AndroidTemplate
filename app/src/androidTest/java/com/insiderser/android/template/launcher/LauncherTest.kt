@@ -32,7 +32,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import androidx.test.rule.ActivityTestRule
 import com.insiderser.android.template.R
-import com.insiderser.android.template.test.TestPreferencesRule
+import com.insiderser.android.template.test.PreferencesRule
 import com.insiderser.android.template.ui.launcher.LauncherActivity
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.instanceOf
@@ -46,7 +46,7 @@ class LauncherTest {
 
     @Rule
     @JvmField
-    val preferencesRule = TestPreferencesRule()
+    val preferencesRule = PreferencesRule()
 
     @Rule
     @JvmField

@@ -27,7 +27,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.insiderser.android.template.core.domain.invoke
 import com.insiderser.android.template.core.domain.prefs.theme.GetAvailableThemesUseCase
 import com.insiderser.android.template.core.domain.prefs.theme.ObservableThemeUseCase
 import com.insiderser.android.template.core.domain.prefs.theme.SetThemeUseCase
@@ -53,10 +52,10 @@ class SettingsViewModel @Inject constructor(
     val showThemeSettingDialog: LiveData<Event<Unit>> get() = _openThemeSettingDialog
 
     /** All themes that user can choose from. */
-    val availableThemes: LiveData<List<Theme>> = getAvailableThemesUseCase()
+    val availableThemes: List<Theme> = getAvailableThemesUseCase()
 
     /** Currently selected theme by the user, or (if nothing selected) a default value. */
-    val selectedTheme: LiveData<Theme> = observableThemeUseCase.observe().asLiveData()
+    val selectedTheme: LiveData<Theme> = observableThemeUseCase().asLiveData()
 
     /**
      * Set given [theme][Theme] as app's theme.
@@ -72,11 +71,5 @@ class SettingsViewModel @Inject constructor(
      */
     fun onThemeSettingClicked() {
         _openThemeSettingDialog.value = Event()
-    }
-
-    init {
-        viewModelScope.launch {
-            observableThemeUseCase()
-        }
     }
 }

@@ -24,8 +24,6 @@ package com.insiderser.android.template.core.domain.prefs.theme
 
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.Q
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import javax.inject.Inject
 
 /**
@@ -37,10 +35,8 @@ class GetAvailableThemesUseCase @Inject constructor() {
     /**
      * Get all available themes for this device.
      */
-    operator fun invoke(): LiveData<List<Theme>> = MutableLiveData(
-        listOf(
-            Theme.LIGHT, Theme.DARK,
-            if (SDK_INT >= Q) Theme.FOLLOW_SYSTEM else Theme.AUTO_BATTERY
-        )
+    operator fun invoke(): List<Theme> = listOf(
+        Theme.LIGHT, Theme.DARK,
+        if (SDK_INT >= Q) Theme.FOLLOW_SYSTEM else Theme.AUTO_BATTERY
     )
 }

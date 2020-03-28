@@ -33,7 +33,7 @@ import javax.inject.Inject
  * This allows passing fake dispatchers as a parameter to your class, simplifying testing.
  *
  * @see DefaultAppDispatchers
- * @see com.insiderser.android.template.test.fake.FakeAppDispatchers
+ * @see com.insiderser.android.template.test.fakes.FakeAppDispatchers
  */
 interface AppDispatchers {
 

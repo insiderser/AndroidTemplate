@@ -23,26 +23,19 @@
 package com.insiderser.android.template.core.domain.prefs.theme
 
 import com.insiderser.android.template.core.data.prefs.AppPreferencesStorage
-import com.insiderser.android.template.core.domain.ObservableUseCase
-import com.insiderser.android.template.core.util.AppDispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
  * Use case for getting observable [Flow] of user-selected theme setting from app preferences.
- * @see observe
- * @see invoke
  */
 class ObservableThemeUseCase @Inject constructor(
-    private val preferencesStorage: AppPreferencesStorage,
-    private val dispatchers: AppDispatchers
-) : ObservableUseCase<Unit, Theme>() {
+    private val preferencesStorage: AppPreferencesStorage
+) {
 
-    override suspend fun createObservable(params: Unit): Flow<Theme> = withContext(dispatchers.io) {
+    operator fun invoke(): Flow<Theme> =
         preferencesStorage.selectedThemeObservable.map { storageKey: String? ->
             if (storageKey != null) Theme.fromStorageKey(storageKey) else DEFAULT_THEME
         }
-    }
 }

@@ -22,23 +22,15 @@
 
 package com.insiderser.android.template.core.domain.prefs.theme
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.template.test.await
-import org.junit.Rule
 import org.junit.Test
 
 class GetAvailableThemesUseCaseTest {
-
-    @Rule
-    @JvmField
-    val executorRule = InstantTaskExecutorRule()
 
     @Test
     // TODO: test on different SDK levels
     fun invoke_returnsListThatContainsDefaultTheme() {
         val useCase = GetAvailableThemesUseCase()
-        val themes = useCase.invoke().await()
-        assertThat(themes).contains(DEFAULT_THEME)
+        assertThat(useCase()).contains(DEFAULT_THEME)
     }
 }

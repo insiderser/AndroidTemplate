@@ -23,7 +23,6 @@
 package com.insiderser.android.template.ui.settings
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
 import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.template.core.domain.prefs.theme.GetAvailableThemesUseCase
 import com.insiderser.android.template.core.domain.prefs.theme.ObservableThemeUseCase
@@ -35,9 +34,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.coVerify
 import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.verify
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
@@ -57,33 +54,26 @@ class SettingsViewModelTest {
     @JvmField
     val dispatcherRule = MainDispatcherRule()
 
-    private val fakeAvailableThemes = listOf(Theme.DARK, Theme.LIGHT, Theme.FOLLOW_SYSTEM)
-    private val fakeSelectedThemeChannel = ConflatedBroadcastChannel<Theme>()
-
-    @MockK
+    @RelaxedMockK
     private lateinit var getAvailableThemesUseCase: GetAvailableThemesUseCase
 
-    @MockK(relaxUnitFun = true)
+    @RelaxedMockK
     private lateinit var observableThemeUseCase: ObservableThemeUseCase
 
     @RelaxedMockK
     private lateinit var setThemeUseCase: SetThemeUseCase
 
-    private lateinit var viewModel: SettingsViewModel
-
-    @Before
-    fun setUp() {
-        MockKAnnotations.init(this)
-
-        every { getAvailableThemesUseCase() } returns MutableLiveData(fakeAvailableThemes)
-
-        every { observableThemeUseCase.observe() } returns fakeSelectedThemeChannel.asFlow()
-
-        viewModel = SettingsViewModel(
+    private val viewModel: SettingsViewModel by lazy {
+        SettingsViewModel(
             getAvailableThemesUseCase,
             observableThemeUseCase,
             setThemeUseCase
         )
+    }
+
+    @Before
+    fun setUp() {
+        MockKAnnotations.init(this)
     }
 
     @Test
@@ -98,23 +88,23 @@ class SettingsViewModelTest {
 
     @Test
     fun availableThemes_returnsThemesFromGetAvailableThemesUseCase() {
-        val availableThemes = viewModel.availableThemes.await()
-        assertThat(availableThemes).containsExactlyElementsIn(fakeAvailableThemes)
+        val availableThemes = listOf(Theme.DARK, Theme.LIGHT)
+        every { getAvailableThemesUseCase() } returns availableThemes
+        assertThat(viewModel.availableThemes).containsExactlyElementsIn(availableThemes)
     }
 
     @Test
-    fun selectedTheme_returnsThemeFromObservableThemeUseCase() =
-        dispatcherRule.runBlockingTest {
-            verify { observableThemeUseCase.invoke(Unit) }
+    fun selectedTheme_returnsThemeFromObservableThemeUseCase() = dispatcherRule.runBlockingTest {
+        val channel = ConflatedBroadcastChannel<Theme>()
+        every { observableThemeUseCase() } returns channel.asFlow()
 
-            viewModel.selectedTheme.observeForever { }
-            assertThat(viewModel.selectedTheme.value).isNull()
+        viewModel.selectedTheme.observeForever { }
 
-            Theme.values().forEach { theme ->
-                fakeSelectedThemeChannel.offer(theme)
-                assertThat(viewModel.selectedTheme.value).isEqualTo(theme)
-            }
+        Theme.values().forEach { theme ->
+            channel.offer(theme)
+            assertThat(viewModel.selectedTheme.value).isEqualTo(theme)
         }
+    }
 
     @Test
     fun setSelectedTheme_callsSetThemeUseCase() = dispatcherRule.runBlockingTest {

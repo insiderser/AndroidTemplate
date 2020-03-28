@@ -36,6 +36,4 @@ dependencies {
     api(Libs.Test.junit4)
     api(Libs.Test.truth)
     api(Libs.Kotlin.Coroutines.test)
-
-    testImplementation(Libs.Test.AndroidX.arch)
 }

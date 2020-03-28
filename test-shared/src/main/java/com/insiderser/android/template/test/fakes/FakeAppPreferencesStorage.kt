@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package com.insiderser.android.template.test.fake
+package com.insiderser.android.template.test.fakes
 
 import com.insiderser.android.template.core.data.prefs.AppPreferencesStorage
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
