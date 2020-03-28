@@ -53,11 +53,11 @@ class Event<out T : Any>(private val content: T) {
      * Return the content, even if it's already been handled.
      */
     @VisibleForTesting
-    fun peekContent() = content
+    fun peekContent(): T = content
 }
 
 @Suppress("FunctionName")
-fun Event() = Event(Unit)
+fun Event(): Event<Unit> = Event(Unit)
 
 /**
  * An [Observer] for [Event]s, simplifying the pattern of checking if the [Event]'s
