@@ -26,30 +26,38 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.testing.launchFragment
 import androidx.lifecycle.Lifecycle.State.DESTROYED
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
-import io.mockk.mockk
 import org.junit.Assert.assertThrows
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.lang.ref.WeakReference
 
+@SmallTest
 @RunWith(AndroidJUnit4::class)
 class ViewScopedDelegateTest {
 
-    private lateinit var ref: WeakReference<Any>
+    @Rule
+    @JvmField
+    val executorRule = InstantTaskExecutorRule()
+
+    private lateinit var viewRef: WeakReference<View>
 
     private lateinit var fragment: FakeFragmentWithViewBinding
 
     @Before
     fun setUp() {
-        val view = View(mockk(relaxed = true))
+        val view = View(getApplicationContext())
 
-        ref = WeakReference(view)
+        viewRef = WeakReference(view)
         fragment = FakeFragmentWithViewBinding(view)
     }
 
@@ -65,8 +73,8 @@ class ViewScopedDelegateTest {
     fun whenViewIsCreated_getValue_returnsValue() {
         val scenario = launchFragment { fragment }
 
-        assertThat(fragment.targetProperty).isSameInstanceAs(ref.get())
-        assertThat(ref.get()).isNotNull()
+        assertThat(fragment.targetProperty).isSameInstanceAs(viewRef.get())
+        assertThat(viewRef.get()).isNotNull()
     }
 
     @Test
@@ -78,9 +86,9 @@ class ViewScopedDelegateTest {
             fragment.targetProperty
         }
 
-        System.gc()
+        Runtime.getRuntime().gc()
         // Check view is garbage collected
-        assertThat(ref.get()).isNull()
+        assertThat(viewRef.get()).isNull()
     }
 
     class FakeFragmentWithViewBinding(mockView: View) : Fragment() {
@@ -89,6 +97,7 @@ class ViewScopedDelegateTest {
 
         var targetProperty: View by viewLifecycleScoped()
 
+        @Suppress("ReplaceNotNullAssertionWithElvisReturn")
         override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
