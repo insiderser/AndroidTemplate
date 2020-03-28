@@ -50,6 +50,7 @@ class MyDaoTest {
     @Before
     fun setUp() {
         db = Room.inMemoryDatabaseBuilder(getApplicationContext(), AppDatabase::class.java)
+            .allowMainThreadQueries()
             .build()
         dao = db.myDao
     }
