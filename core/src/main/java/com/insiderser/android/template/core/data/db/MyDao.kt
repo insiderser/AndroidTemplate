@@ -23,11 +23,11 @@
 package com.insiderser.android.template.core.data.db
 
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 /**
  * A sample DAO (data access object) for managing instances of [MyEntity]
@@ -43,14 +43,14 @@ interface MyDao {
      * @return All entities, or an empty list if the table is empty
      */
     @Query("SELECT * FROM myentity")
-    fun findAll(): LiveData<List<MyEntity>>
+    fun findAll(): Flow<List<MyEntity>>
 
     /**
      * Get a single entry whose [id][MyEntity.id] matches parameter [id].
      * @return Found [MyEntity], or `null` if nothing found.
      */
     @Query("SELECT * FROM myentity WHERE id == :id")
-    fun findOneById(id: Int): LiveData<MyEntity>
+    fun findOneById(id: Int): Flow<MyEntity>
 
     /**
      * Insert a single [MyEntity] into the database.
@@ -62,19 +62,19 @@ interface MyDao {
      */
     @Insert(onConflict = REPLACE)
     @WorkerThread
-    fun insertOne(entity: MyEntity): Long
+    suspend fun insertOne(entity: MyEntity): Long
 
     /**
      * Delete a single entry whose [id][MyEntity.id] matches the parameter [id].
      * @return How many entries were deleted: `0` or `1`.
      */
     @Query("DELETE FROM myentity WHERE id == :id")
-    fun deleteOneById(id: Int): Int
+    suspend fun deleteOneById(id: Int): Int
 
     /**
      * Delete **all** entries in the table. **Be careful here!**
      * @return How many entries were deleted.
      */
     @Query("DELETE FROM myentity")
-    fun deleteAll(): Int
+    suspend fun deleteAll(): Int
 }

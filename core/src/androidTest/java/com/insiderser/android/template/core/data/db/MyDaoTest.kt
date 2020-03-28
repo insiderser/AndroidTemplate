@@ -28,7 +28,8 @@ import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.template.test.await
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -49,7 +50,6 @@ class MyDaoTest {
     @Before
     fun setUp() {
         db = Room.inMemoryDatabaseBuilder(getApplicationContext(), AppDatabase::class.java)
-            .allowMainThreadQueries()
             .build()
         dao = db.myDao
     }
@@ -60,46 +60,43 @@ class MyDaoTest {
     }
 
     @Test
-    fun givenEmptyTable_find_returnsNothing() {
-        val allEntities = dao.findAll().await()
+    fun givenEmptyTable_find_returnsNothing() = runBlockingTest {
+        val allEntities = dao.findAll().first()
         assertThat(allEntities).isEmpty()
 
-        val singleEntity = dao.findOneById(1).await()
+        val singleEntity = dao.findOneById(1).first()
         assertThat(singleEntity).isNull()
     }
 
     @Test
-    fun givenEntityWithId_insertOne_insertsIntoTableWithThisId() {
-        val id = 6
-        val name = "Alex"
-        val entity = MyEntity(id = id, name = name)
+    fun givenEntityWithId_insertOne_insertsIntoTableWithThisId() = runBlockingTest {
+        val entity = MyEntity(id = 6, name = "Alex")
 
         val newId = dao.insertOne(entity)
-        assertThat(newId).isEqualTo(id)
+        assertThat(newId).isEqualTo(entity.id)
 
-        val insertedEntity = dao.findOneById(id).await()
-        assertThat(insertedEntity!!.id).isEqualTo(id)
-        assertThat(insertedEntity.name).isEqualTo(name)
+        val loaded = dao.findOneById(entity.id).first()
+        assertThat(loaded.id).isEqualTo(entity.id)
+        assertThat(loaded.name).isEqualTo(entity.name)
 
-        val allEntities = dao.findAll().await()
-        assertThat(allEntities).containsExactly(insertedEntity)
+        val allEntities = dao.findAll().first()
+        assertThat(allEntities).containsExactly(loaded)
     }
 
     @Test
-    fun givenEntityWithId0_insertOne_insertsIntoTableWithGeneratedId() {
-        val name = "Alex"
-        val entity = MyEntity(id = 0, name = name)
+    fun givenEntityWithId0_insertOne_insertsIntoTableWithGeneratedId() = runBlockingTest {
+        val entity = MyEntity(id = 0, name = "Alex")
 
         val id = dao.insertOne(entity).toInt()
         assertThat(id).isAtLeast(1)
 
-        val expected = MyEntity(id, name)
-        assertThat(dao.findOneById(id).await()).isEqualTo(expected)
-        assertThat(dao.findAll().await()).containsExactly(expected)
+        val expected = MyEntity(id, entity.name)
+        assertThat(dao.findOneById(id).first()).isEqualTo(expected)
+        assertThat(dao.findAll().first()).containsExactly(expected)
     }
 
     @Test
-    fun whenInsertingEntityWithExistingId_insertOne_replacesEntry() {
+    fun whenInsertingEntityWithExistingId_insertOne_replacesEntry() = runBlockingTest {
         val id = 100
 
         dao.insertOne(MyEntity(id = id, name = "Alex"))
@@ -108,37 +105,37 @@ class MyDaoTest {
         val newId = dao.insertOne(newEntity)
 
         assertThat(newId).isEqualTo(id)
-        assertThat(dao.findOneById(id).await()).isEqualTo(newEntity)
-        assertThat(dao.findAll().await()).containsExactly(newEntity)
+        assertThat(dao.findOneById(id).first()).isEqualTo(newEntity)
+        assertThat(dao.findAll().first()).containsExactly(newEntity)
     }
 
     @Test
-    fun givenInsertedEntryId_deleteOneById_deletesEntry() {
+    fun givenInsertedEntryId_deleteOneById_deletesEntry() = runBlockingTest {
         val id = 100
 
         dao.insertOne(MyEntity(id = id, name = "Alex"))
-        val affectedEntries = dao.deleteOneById(id)
+        val deleted = dao.deleteOneById(id)
 
-        assertThat(affectedEntries).isEqualTo(1)
-        assertThat(dao.findAll().await()).isEmpty()
-        assertThat(dao.findOneById(id).await()).isNull()
+        assertThat(deleted).isEqualTo(1)
+        assertThat(dao.findAll().first()).isEmpty()
+        assertThat(dao.findOneById(id).first()).isNull()
     }
 
     @Test
-    fun givenNonEmptyTable_deleteAll_deletesAllEntries() {
-        dao.insertOne(MyEntity(id = 1, name = "Alex"))
-        dao.insertOne(MyEntity(id = 2, name = "Alex"))
-        dao.insertOne(MyEntity(id = 3, name = "Alex"))
-        dao.insertOne(MyEntity(id = 4, name = "Alex"))
+    fun givenNonEmptyTable_deleteAll_deletesAllEntries() = runBlockingTest {
+        val n = 5
+        for (id in 1..n) {
+            dao.insertOne(MyEntity(id = id, name = "Alex"))
+        }
 
-        val affectedCount = dao.deleteAll()
-        assertThat(affectedCount).isEqualTo(4)
-        assertThat(dao.findAll().await()).isEmpty()
-        assertThat(dao.findOneById(1).await()).isNull()
+        val deleted = dao.deleteAll()
+        assertThat(deleted).isEqualTo(n)
+        assertThat(dao.findAll().first()).isEmpty()
+        assertThat(dao.findOneById(1).first()).isNull()
     }
 
     @Test
-    fun givenEmptyTable_delete_doesNothing() {
+    fun givenEmptyTable_delete_doesNothing() = runBlockingTest {
         assertThat(dao.deleteAll()).isEqualTo(0)
         assertThat(dao.deleteOneById(1)).isEqualTo(0)
     }
