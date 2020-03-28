@@ -43,10 +43,6 @@ class PreferencesRule : TestWatcher() {
         resetPreferences()
     }
 
-    override fun finished(description: Description?) {
-        resetPreferences()
-    }
-
     fun resetPreferences() = with(storage) {
         selectedTheme = null
     }
