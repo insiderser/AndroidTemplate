@@ -25,7 +25,7 @@
 
     <string name="feature1_title">Feature1</string>
 
-    <string name="settings_title">Settings</string>
+    <string name="settings">Settings</string>
 
     <string name="settings_theme_group_label">Theme</string>
     <string name="settings_choose_theme">Choose theme</string>

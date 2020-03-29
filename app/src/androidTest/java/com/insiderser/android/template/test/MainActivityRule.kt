@@ -24,6 +24,7 @@ package com.insiderser.android.template.test
 
 import android.content.Intent
 import androidx.annotation.IdRes
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.rule.ActivityTestRule
 import com.insiderser.android.template.ui.MainActivity
 
@@ -35,22 +36,17 @@ class MainActivityRule(
     @IdRes private val destination: Int
 ) : ActivityTestRule<MainActivity>(MainActivity::class.java) {
 
-    override fun getActivityIntent(): Intent = Intent()
-        .putExtra(MainActivity.EXTRA_DESTINATION, destination)
+    override fun getActivityIntent(): Intent = getIntentForDestination(destination)
 
-    /**
-     * Restart [MainActivity] (finish and relaunch).
-     */
     fun restartActivity() {
         finishActivity()
-        launchActivity()
+        launchActivity(activityIntent)
     }
 
-    /**
-     * Launch [MainActivity] with default intent.
-     * @see restartActivity
-     */
-    fun launchActivity() {
-        launchActivity(activityIntent)
+    companion object {
+        @JvmStatic
+        fun getIntentForDestination(@IdRes destination: Int): Intent = Intent()
+            .setClass(getApplicationContext(), MainActivity::class.java)
+            .putExtra(MainActivity.EXTRA_DESTINATION, destination)
     }
 }

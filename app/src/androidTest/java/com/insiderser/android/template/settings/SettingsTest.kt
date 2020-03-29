@@ -24,6 +24,7 @@ package com.insiderser.android.template.settings
 
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -39,6 +40,7 @@ import com.insiderser.android.template.R
 import com.insiderser.android.template.core.domain.prefs.theme.Theme
 import com.insiderser.android.template.test.MainActivityRule
 import com.insiderser.android.template.test.PreferencesRule
+import com.insiderser.android.template.ui.MainActivity
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.instanceOf
 import org.junit.Rule
@@ -51,10 +53,6 @@ class SettingsTest {
 
     @Rule
     @JvmField
-    val activityRule = MainActivityRule(R.id.settings)
-
-    @Rule
-    @JvmField
     val preferencesRule = PreferencesRule()
 
     private val isDarkTheme: Boolean
@@ -64,32 +62,36 @@ class SettingsTest {
     fun checkThemePreference() {
         preferencesRule.storage.selectedTheme = Theme.LIGHT.storageKey
 
-        // Check that we are in the right fragment
-        onView(allOf(instanceOf(TextView::class.java), withParent(withId(R.id.toolbar))))
-            .check(matches(withText(R.string.settings_title)))
+        ActivityScenario.launch<MainActivity>(
+            MainActivityRule.getIntentForDestination(R.id.settings_dest)
+        ).use { scenario ->
+            // Check that we are in the right fragment
+            onView(allOf(withParent(withId(R.id.toolbar)), instanceOf(TextView::class.java)))
+                .check(matches(withText(R.string.settings)))
 
-        onView(allOf(withId(R.id.summary), withParent(withId(R.id.choose_theme_preference))))
-            .check(matches(withText(R.string.settings_theme_light)))
+            onView(allOf(withParent(withId(R.id.choose_theme_preference)), withId(R.id.summary)))
+                .check(matches(withText(R.string.settings_theme_light)))
 
-        assertThat(isDarkTheme).isFalse()
+            assertThat(isDarkTheme).isFalse()
 
-        onView(withText(R.string.settings_choose_theme))
-            .check(matches(isDisplayed()))
-            .perform(click())
+            onView(withText(R.string.settings_choose_theme))
+                .check(matches(isDisplayed()))
+                .perform(click())
 
-        onView(withText(R.string.settings_theme_dark))
-            .inRoot(isDialog())
-            .check(matches(isDisplayed()))
-            .perform(click())
+            onView(withText(R.string.settings_theme_dark))
+                .inRoot(isDialog())
+                .check(matches(isDisplayed()))
+                .perform(click())
 
-        onView(allOf(withId(R.id.summary), withParent(withId(R.id.choose_theme_preference))))
-            .check(matches(withText(R.string.settings_theme_dark)))
+            onView(allOf(withParent(withId(R.id.choose_theme_preference)), withId(R.id.summary)))
+                .check(matches(withText(R.string.settings_theme_dark)))
 
-        assertThat(isDarkTheme).isTrue()
+            assertThat(isDarkTheme).isTrue()
 
-        activityRule.restartActivity()
+            scenario.recreate()
 
-        onView(allOf(withId(R.id.summary), withParent(withId(R.id.choose_theme_preference))))
-            .check(matches(withText(R.string.settings_theme_dark)))
+            onView(allOf(withParent(withId(R.id.choose_theme_preference)), withId(R.id.summary)))
+                .check(matches(withText(R.string.settings_theme_dark)))
+        }
     }
 }

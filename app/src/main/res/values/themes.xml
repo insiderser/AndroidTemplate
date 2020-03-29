@@ -19,7 +19,24 @@
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
   -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Base.AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">?attr/isLightTheme
+        </item>
+    </style>
+
+    <style name="Base.AppTheme.DayNightColors">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/blueDark</item>
+        <item name="colorSecondary">@color/blue</item>
+    </style>
+
+    <style name="Base.AppTheme.DayNightColors.EdgeToEdge" />
+
+    <style name="AppTheme" parent="Base.AppTheme.DayNightColors.EdgeToEdge" />
 
     <style name="AppTheme.Launcher">
         <item name="android:windowBackground">@drawable/launch_screen</item>

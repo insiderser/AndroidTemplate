@@ -27,8 +27,6 @@ import android.app.Dialog
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -92,20 +90,6 @@ class ThemeSettingDialogFragment : DaggerAppCompatDialogFragment() {
             adapter.getItem(index)?.theme == theme
         }
         (dialog as AlertDialog).listView.setItemChecked(selectedIndex, true)
-    }
-
-    /**
-     * Show this dialog with [ThemeSettingDialogFragment]'s [TAG].
-     * @see AppCompatDialogFragment.show
-     */
-    fun show(fragmentManager: FragmentManager) {
-        show(fragmentManager, TAG)
-    }
-
-    companion object {
-
-        @JvmField
-        val TAG = ThemeSettingDialogFragment::class.java.name
     }
 
     private data class ThemeHolder(val theme: Theme, val title: String) {

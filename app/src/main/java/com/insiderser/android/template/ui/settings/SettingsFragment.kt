@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import com.insiderser.android.template.BuildConfig
 import com.insiderser.android.template.R
 import com.insiderser.android.template.core.domain.prefs.theme.Theme
@@ -38,6 +39,7 @@ import com.insiderser.android.template.core.ui.NavigationHost
 import com.insiderser.android.template.core.ui.viewLifecycleScoped
 import com.insiderser.android.template.core.util.observeEvent
 import com.insiderser.android.template.databinding.SettingsFragmentBinding
+import com.insiderser.android.template.ui.settings.SettingsFragmentDirections.Companion.actionSettingsHomeToThemeSettingDialogDest
 import dagger.android.support.DaggerFragment
 import dev.chrisbanes.insetter.doOnApplyWindowInsets
 import javax.inject.Inject
@@ -82,8 +84,7 @@ class SettingsFragment : DaggerFragment() {
         binding.versionName.summary = BuildConfig.VERSION_NAME
 
         viewModel.showThemeSettingDialog.observeEvent(viewLifecycleOwner) {
-            val dialogFragment = ThemeSettingDialogFragment()
-            dialogFragment.show(childFragmentManager)
+            findNavController().navigate(actionSettingsHomeToThemeSettingDialogDest())
         }
 
         viewModel.selectedTheme.observe(viewLifecycleOwner) { selectedTheme ->

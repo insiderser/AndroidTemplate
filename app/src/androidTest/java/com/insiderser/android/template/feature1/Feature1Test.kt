@@ -50,7 +50,7 @@ class Feature1Test {
 
     @Rule
     @JvmField
-    val activityRule = MainActivityRule(R.id.feature1)
+    val activityRule = MainActivityRule(R.id.feature1_dest)
 
     @Rule
     @JvmField
@@ -68,7 +68,6 @@ class Feature1Test {
 
     @Test
     fun clickingOnSettingsMenu_navigatesToSettings_then_navigateBack_returnsToFeature1() {
-        // openActionBarOverflowOrOptionsMenu(...) doesn't pass in CI
         openContextualActionModeOverflowMenu()
 
         onView(withText(R.string.settings))
@@ -78,7 +77,7 @@ class Feature1Test {
 
         // Check we are in Settings
         onView(allOf(instanceOf(TextView::class.java), withParent(withId(R.id.toolbar))))
-            .check(matches(withText(R.string.settings_title)))
+            .check(matches(withText(R.string.settings)))
 
         pressBack()
 

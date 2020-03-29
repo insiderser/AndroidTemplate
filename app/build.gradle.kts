@@ -29,6 +29,7 @@ plugins {
     kotlin("android")
     kotlin("android.extensions")
     kotlin("kapt")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 configureAndroidModule()
@@ -70,6 +71,9 @@ android {
 
 dependencies {
     implementation(project(":core"))
+
+    implementation(Libs.AndroidX.Navigation.fragment)
+    implementation(Libs.AndroidX.Navigation.ui)
 
     kapt(Libs.Dagger.compiler)
     kapt(Libs.Dagger.androidProcessor)

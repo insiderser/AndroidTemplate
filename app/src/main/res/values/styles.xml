@@ -21,6 +21,10 @@
   -->
 <resources>
 
+    <style name="Widget.Template.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface" />
+
+    <style name="Widget.Template.AppBar" parent="Widget.MaterialComponents.AppBarLayout.Surface" />
+
     <style name="Widget.Template.Settings.PreferenceView" parent="">
         <item name="android:paddingTop">@dimen/settings_preference_padding_vertical</item>
         <item name="android:paddingBottom">@dimen/settings_preference_padding_vertical</item>
