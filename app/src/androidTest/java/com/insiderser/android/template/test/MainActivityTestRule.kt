@@ -32,7 +32,7 @@ import com.insiderser.android.template.ui.MainActivity
  * Test rule for [MainActivity]. Allows launching a specific destination in the [MainActivity].
  * @see ActivityTestRule
  */
-class MainActivityRule(
+class MainActivityTestRule(
     @IdRes private val destination: Int
 ) : ActivityTestRule<MainActivity>(MainActivity::class.java) {
 
@@ -45,8 +45,8 @@ class MainActivityRule(
 
     companion object {
         @JvmStatic
-        fun getIntentForDestination(@IdRes destination: Int): Intent = Intent()
-            .setClass(getApplicationContext(), MainActivity::class.java)
-            .putExtra(MainActivity.EXTRA_DESTINATION, destination)
+        fun getIntentForDestination(@IdRes destination: Int): Intent =
+            Intent(getApplicationContext(), MainActivity::class.java)
+                .putExtra(MainActivity.EXTRA_DESTINATION, destination)
     }
 }

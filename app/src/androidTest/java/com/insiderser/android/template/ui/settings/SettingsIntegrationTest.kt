@@ -20,10 +20,11 @@
  * SOFTWARE.
  */
 
-package com.insiderser.android.template.settings
+package com.insiderser.android.template.ui.settings
 
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import androidx.appcompat.app.AppCompatDelegate.getDefaultNightMode
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -38,41 +39,38 @@ import androidx.test.filters.MediumTest
 import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.template.R
 import com.insiderser.android.template.core.domain.prefs.theme.Theme
-import com.insiderser.android.template.test.MainActivityRule
+import com.insiderser.android.template.test.MainActivityTestRule
 import com.insiderser.android.template.test.PreferencesRule
+import com.insiderser.android.template.test.toolbarTitle
 import com.insiderser.android.template.ui.MainActivity
 import org.hamcrest.CoreMatchers.allOf
-import org.hamcrest.CoreMatchers.instanceOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @MediumTest
 @RunWith(AndroidJUnit4::class)
-class SettingsTest {
+class SettingsIntegrationTest {
 
     @Rule
     @JvmField
     val preferencesRule = PreferencesRule()
-
-    private val isDarkTheme: Boolean
-        get() = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
 
     @Test
     fun checkThemePreference() {
         preferencesRule.storage.selectedTheme = Theme.LIGHT.storageKey
 
         ActivityScenario.launch<MainActivity>(
-            MainActivityRule.getIntentForDestination(R.id.settings_dest)
+            MainActivityTestRule.getIntentForDestination(R.id.settings)
         ).use { scenario ->
             // Check that we are in the right fragment
-            onView(allOf(withParent(withId(R.id.toolbar)), instanceOf(TextView::class.java)))
+            onView(toolbarTitle())
                 .check(matches(withText(R.string.settings)))
 
             onView(allOf(withParent(withId(R.id.choose_theme_preference)), withId(R.id.summary)))
                 .check(matches(withText(R.string.settings_theme_light)))
 
-            assertThat(isDarkTheme).isFalse()
+            assertThat(getDefaultNightMode()).isEqualTo(MODE_NIGHT_NO)
 
             onView(withText(R.string.settings_choose_theme))
                 .check(matches(isDisplayed()))
@@ -85,11 +83,9 @@ class SettingsTest {
 
             onView(allOf(withParent(withId(R.id.choose_theme_preference)), withId(R.id.summary)))
                 .check(matches(withText(R.string.settings_theme_dark)))
-
-            assertThat(isDarkTheme).isTrue()
+            assertThat(getDefaultNightMode()).isEqualTo(MODE_NIGHT_YES)
 
             scenario.recreate()
-
             onView(allOf(withParent(withId(R.id.choose_theme_preference)), withId(R.id.summary)))
                 .check(matches(withText(R.string.settings_theme_dark)))
         }
