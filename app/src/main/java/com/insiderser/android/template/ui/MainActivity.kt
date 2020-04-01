@@ -56,6 +56,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationHost {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
         binding = MainActivityBinding.inflate(layoutInflater)

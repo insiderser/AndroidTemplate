@@ -25,8 +25,6 @@ package com.insiderser.android.template.dagger
 import com.insiderser.android.template.core.dagger.ActivityScope
 import com.insiderser.android.template.ui.MainActivity
 import com.insiderser.android.template.ui.MainActivityModule
-import com.insiderser.android.template.ui.launcher.LauncherActivity
-import com.insiderser.android.template.ui.launcher.LauncherActivityModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -47,8 +45,4 @@ internal abstract class ActivityBindingModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [MainActivityModule::class])
     abstract fun mainActivity(): MainActivity
-
-    @ActivityScope
-    @ContributesAndroidInjector(modules = [LauncherActivityModule::class])
-    abstract fun launcherActivity(): LauncherActivity
 }

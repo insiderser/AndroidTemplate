@@ -32,15 +32,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.MainActivity" />
-
         <activity
-            android:name=".ui.launcher.LauncherActivity"
+            android:name=".ui.MainActivity"
             android:theme="@style/AppTheme.Launcher" />
 
         <activity-alias
             android:name=".Launcher"
-            android:targetActivity=".ui.launcher.LauncherActivity">
+            android:targetActivity=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
