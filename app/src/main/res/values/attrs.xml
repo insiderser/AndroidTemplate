@@ -21,7 +21,6 @@
   -->
 <resources>
 
-    <attr name="preferenceStyle" format="reference" />
     <declare-styleable name="PreferenceView">
         <!-- How the preference should be titled? -->
         <attr name="title" format="string" />

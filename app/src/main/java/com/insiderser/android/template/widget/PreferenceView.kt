@@ -25,8 +25,6 @@ package com.insiderser.android.template.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import androidx.annotation.AttrRes
-import androidx.annotation.StyleRes
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.withStyledAttributes
 import androidx.core.view.isVisible
@@ -38,16 +36,10 @@ import com.insiderser.android.template.databinding.PreferenceViewBinding
  * Similar to Preference from Android's preferences library.
  */
 @Suppress("MemberVisibilityCanBePrivate")
-internal class PreferenceView @JvmOverloads constructor(
+class PreferenceView @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet? = null,
-    @AttrRes defStyleAttr: Int = R.attr.preferenceStyle,
-    @StyleRes defStyleRes: Int = R.style.Widget_Template_Settings_PreferenceView
-) : LinearLayoutCompat(context, attrs, defStyleAttr) {
-
-    init {
-        orientation = VERTICAL
-    }
+    attrs: AttributeSet? = null
+) : LinearLayoutCompat(context, attrs) {
 
     private val binding = PreferenceViewBinding.inflate(LayoutInflater.from(context), this)
 
@@ -67,7 +59,9 @@ internal class PreferenceView @JvmOverloads constructor(
         }
 
     init {
-        context.withStyledAttributes(attrs, R.styleable.PreferenceView, defStyleAttr, defStyleRes) {
+        orientation = VERTICAL
+
+        context.withStyledAttributes(attrs, R.styleable.PreferenceView) {
             title = getText(R.styleable.PreferenceView_title)
             summary = getText(R.styleable.PreferenceView_summary)
         }

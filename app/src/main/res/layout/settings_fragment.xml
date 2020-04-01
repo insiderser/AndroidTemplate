@@ -24,8 +24,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:theme="@style/AppTheme.Settings">
+    android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -63,6 +62,7 @@
 
             <com.insiderser.android.template.widget.PreferenceView
                 android:id="@+id/choose_theme_preference"
+                style="@style/Widget.Template.Settings.PreferenceView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="@string/settings_choose_theme"
@@ -79,6 +79,7 @@
 
             <com.insiderser.android.template.widget.PreferenceView
                 android:id="@+id/version_name"
+                style="@style/Widget.Template.Settings.PreferenceView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="@string/settings_about_version"

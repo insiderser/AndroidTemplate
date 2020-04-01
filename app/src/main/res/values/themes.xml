@@ -41,8 +41,4 @@
     <style name="AppTheme.Launcher">
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
-
-    <style name="AppTheme.Settings">
-        <item name="preferenceStyle">@style/Widget.Template.Settings.PreferenceView</item>
-    </style>
 </resources>
