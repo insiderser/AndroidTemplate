@@ -39,7 +39,7 @@ import com.insiderser.android.template.core.ui.NavigationHost
 import com.insiderser.android.template.core.ui.viewLifecycleScoped
 import com.insiderser.android.template.core.util.observeEvent
 import com.insiderser.android.template.databinding.SettingsFragmentBinding
-import com.insiderser.android.template.ui.settings.SettingsFragmentDirections.Companion.actionSettingsHomeToThemeSettingDialogDest
+import com.insiderser.android.template.ui.settings.SettingsFragmentDirections.Companion.actionSettingsHomeToThemeSettingDialog
 import dagger.android.support.DaggerFragment
 import dev.chrisbanes.insetter.doOnApplyWindowInsets
 import javax.inject.Inject
@@ -84,7 +84,7 @@ class SettingsFragment : DaggerFragment() {
         binding.versionName.summary = BuildConfig.VERSION_NAME
 
         viewModel.showThemeSettingDialog.observeEvent(viewLifecycleOwner) {
-            findNavController().navigate(actionSettingsHomeToThemeSettingDialogDest())
+            findNavController().navigate(actionSettingsHomeToThemeSettingDialog())
         }
 
         viewModel.selectedTheme.observe(viewLifecycleOwner) { selectedTheme ->

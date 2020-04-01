@@ -23,19 +23,19 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/settings_dest"
-    app:startDestination="@id/settings_home_dest">
+    android:id="@+id/settings"
+    app:startDestination="@id/settings_home">
 
     <fragment
-        android:id="@+id/settings_home_dest"
+        android:id="@+id/settings_home"
         android:name="com.insiderser.android.template.ui.settings.SettingsFragment"
         tools:layout="@layout/settings_fragment">
         <action
-            android:id="@+id/action_settings_home_to_theme_setting_dialog_dest"
-            app:destination="@id/theme_setting_dialog_dest" />
+            android:id="@+id/action_settings_home_to_theme_setting_dialog"
+            app:destination="@id/theme_setting_dialog" />
     </fragment>
     <dialog
-        android:id="@+id/theme_setting_dialog_dest"
+        android:id="@+id/theme_setting_dialog"
         android:name="com.insiderser.android.template.ui.settings.ThemeSettingDialogFragment" />
 
 </navigation>
