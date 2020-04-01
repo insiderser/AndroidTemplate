@@ -63,7 +63,7 @@ internal class PreferenceView @JvmOverloads constructor(
         get() = binding.summary.text
         set(value) {
             binding.summary.text = value
-            binding.summary.isVisible = value?.isNotEmpty() == true
+            binding.summary.isVisible = !value.isNullOrEmpty()
         }
 
     init {

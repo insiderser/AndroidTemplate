@@ -28,13 +28,16 @@
         android:id="@+id/title"
         style="@style/Widget.Template.Settings.PreferenceTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:text="Title" />
 
     <TextView
         android:id="@+id/summary"
         style="@style/Widget.Template.Settings.PreferenceSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:text="Summary"
+        tools:visibility="visible" />
 
 </merge>
