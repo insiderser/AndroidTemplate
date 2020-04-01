@@ -20,19 +20,15 @@
   ~ SOFTWARE.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    android:id="@+id/app_nav"
+    app:startDestination="@id/feature1_dest">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/navigation_view"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/app" />
-
-</FrameLayout>
+    <fragment
+        android:id="@+id/feature1_dest"
+        android:name="com.insiderser.android.template.ui.feature1.Feature1Fragment"
+        tools:layout="@layout/feature1_fragment" />
+    <include app:graph="@navigation/settings" />
+</navigation>

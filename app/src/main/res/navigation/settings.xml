@@ -23,26 +23,19 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/app_nav"
-    app:startDestination="@id/feature1_dest">
+    android:id="@+id/settings_dest"
+    app:startDestination="@id/settings_home_dest">
 
     <fragment
-        android:id="@+id/feature1_dest"
-        android:name="com.insiderser.android.template.ui.feature1.Feature1Fragment"
-        tools:layout="@layout/feature1_fragment" />
-    <navigation
-        android:id="@+id/settings_dest"
-        app:startDestination="@id/settings_home_dest">
-        <fragment
-            android:id="@+id/settings_home_dest"
-            android:name="com.insiderser.android.template.ui.settings.SettingsFragment"
-            tools:layout="@layout/settings_fragment">
-            <action
-                android:id="@+id/action_settings_home_to_theme_setting_dialog_dest"
-                app:destination="@id/theme_setting_dialog_dest" />
-        </fragment>
-        <dialog
-            android:id="@+id/theme_setting_dialog_dest"
-            android:name="com.insiderser.android.template.ui.settings.ThemeSettingDialogFragment" />
-    </navigation>
+        android:id="@+id/settings_home_dest"
+        android:name="com.insiderser.android.template.ui.settings.SettingsFragment"
+        tools:layout="@layout/settings_fragment">
+        <action
+            android:id="@+id/action_settings_home_to_theme_setting_dialog_dest"
+            app:destination="@id/theme_setting_dialog_dest" />
+    </fragment>
+    <dialog
+        android:id="@+id/theme_setting_dialog_dest"
+        android:name="com.insiderser.android.template.ui.settings.ThemeSettingDialogFragment" />
+
 </navigation>
