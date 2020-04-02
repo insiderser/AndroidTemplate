@@ -22,7 +22,7 @@
 
 package com.insiderser.android.template.ui
 
-import androidx.test.core.app.ActivityScenario
+import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.openContextualActionModeOverflowMenu
 import androidx.test.espresso.Espresso.pressBack
@@ -34,7 +34,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.insiderser.android.template.R
-import com.insiderser.android.template.test.MainActivityTestRule
+import com.insiderser.android.template.test.MainActivityTestRule.Companion.getIntentForDestination
 import com.insiderser.android.template.test.toolbarTitle
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -45,23 +45,23 @@ class NavigationTest {
 
     @Test
     fun inFeature1_clickOnSettingsContextItem_navigatesToSettings_then_navigateBack_returnsToFeature1() {
-        ActivityScenario.launch<MainActivity>(
-            MainActivityTestRule.getIntentForDestination(R.id.feature1)
-        ).use {
-            openContextualActionModeOverflowMenu()
+        val scenario = launchActivity<MainActivity>(getIntentForDestination(R.id.feature1))
 
-            onView(withText(R.string.settings))
-                .inRoot(isPlatformPopup())
-                .check(matches(isCompletelyDisplayed()))
-                .perform(click())
+        openContextualActionModeOverflowMenu()
 
-            onView(toolbarTitle())
-                .check(matches(withText(R.string.settings)))
+        onView(withText(R.string.settings))
+            .inRoot(isPlatformPopup())
+            .check(matches(isCompletelyDisplayed()))
+            .perform(click())
 
-            pressBack()
+        onView(toolbarTitle())
+            .check(matches(withText(R.string.settings)))
 
-            onView(toolbarTitle())
-                .check(matches(withText(R.string.feature1_title)))
-        }
+        pressBack()
+
+        onView(toolbarTitle())
+            .check(matches(withText(R.string.feature1_title)))
+
+        scenario.close()
     }
 }

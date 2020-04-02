@@ -25,7 +25,7 @@ package com.insiderser.android.template.ui.settings
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.app.AppCompatDelegate.getDefaultNightMode
-import androidx.test.core.app.ActivityScenario
+import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -39,8 +39,8 @@ import androidx.test.filters.MediumTest
 import com.google.common.truth.Truth.assertThat
 import com.insiderser.android.template.R
 import com.insiderser.android.template.core.domain.prefs.theme.Theme
-import com.insiderser.android.template.test.MainActivityTestRule
-import com.insiderser.android.template.test.PreferencesRule
+import com.insiderser.android.template.test.MainActivityTestRule.Companion.getIntentForDestination
+import com.insiderser.android.template.test.ResetPreferencesRule
 import com.insiderser.android.template.test.toolbarTitle
 import com.insiderser.android.template.ui.MainActivity
 import org.hamcrest.CoreMatchers.allOf
@@ -54,40 +54,39 @@ class SettingsIntegrationTest {
 
     @Rule
     @JvmField
-    val preferencesRule = PreferencesRule()
+    val preferencesRule = ResetPreferencesRule()
 
     @Test
     fun checkThemePreference() {
         preferencesRule.storage.selectedTheme = Theme.LIGHT.storageKey
+        val scenario = launchActivity<MainActivity>(getIntentForDestination(R.id.settings))
 
-        ActivityScenario.launch<MainActivity>(
-            MainActivityTestRule.getIntentForDestination(R.id.settings)
-        ).use { scenario ->
-            // Check that we are in the right fragment
-            onView(toolbarTitle())
-                .check(matches(withText(R.string.settings)))
+        // Check that we are in the right fragment
+        onView(toolbarTitle())
+            .check(matches(withText(R.string.settings)))
 
-            onView(allOf(withParent(withId(R.id.choose_theme_preference)), withId(R.id.summary)))
-                .check(matches(withText(R.string.settings_theme_light)))
+        onView(allOf(withParent(withId(R.id.choose_theme_preference)), withId(R.id.summary)))
+            .check(matches(withText(R.string.settings_theme_light)))
 
-            assertThat(getDefaultNightMode()).isEqualTo(MODE_NIGHT_NO)
+        assertThat(getDefaultNightMode()).isEqualTo(MODE_NIGHT_NO)
 
-            onView(withText(R.string.settings_choose_theme))
-                .check(matches(isDisplayed()))
-                .perform(click())
+        onView(withText(R.string.settings_choose_theme))
+            .check(matches(isDisplayed()))
+            .perform(click())
 
-            onView(withText(R.string.settings_theme_dark))
-                .inRoot(isDialog())
-                .check(matches(isDisplayed()))
-                .perform(click())
+        onView(withText(R.string.settings_theme_dark))
+            .inRoot(isDialog())
+            .check(matches(isDisplayed()))
+            .perform(click())
 
-            onView(allOf(withParent(withId(R.id.choose_theme_preference)), withId(R.id.summary)))
-                .check(matches(withText(R.string.settings_theme_dark)))
-            assertThat(getDefaultNightMode()).isEqualTo(MODE_NIGHT_YES)
+        onView(allOf(withParent(withId(R.id.choose_theme_preference)), withId(R.id.summary)))
+            .check(matches(withText(R.string.settings_theme_dark)))
+        assertThat(getDefaultNightMode()).isEqualTo(MODE_NIGHT_YES)
 
-            scenario.recreate()
-            onView(allOf(withParent(withId(R.id.choose_theme_preference)), withId(R.id.summary)))
-                .check(matches(withText(R.string.settings_theme_dark)))
-        }
+        scenario.recreate()
+        onView(allOf(withParent(withId(R.id.choose_theme_preference)), withId(R.id.summary)))
+            .check(matches(withText(R.string.settings_theme_dark)))
+
+        scenario.close()
     }
 }

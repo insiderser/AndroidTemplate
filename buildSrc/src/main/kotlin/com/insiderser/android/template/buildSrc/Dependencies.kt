@@ -20,13 +20,12 @@
  * SOFTWARE.
  */
 
+@file:Suppress("PublicApiImplicitType")
+
 package com.insiderser.android.template.buildSrc
 
 import org.gradle.api.JavaVersion
 
-/**
- * A wrapper for high-level version config used in build scripts.
- */
 object Versions {
     object Sdk {
         const val compile = 29
@@ -45,9 +44,6 @@ object Versions {
     const val ktlint = "0.36.0"
 }
 
-/**
- * A wrapper for all dependencies' notations used in the project together with their versions.
- */
 object Libs {
     // Also used in buildSrc/build.gradle.kts
     const val androidGradlePlugin = "com.android.tools.build:gradle:4.0.0-beta03"
@@ -65,10 +61,9 @@ object Libs {
         }
 
         object AndroidX {
-            private const val version = "1.2.0"
-            const val core = "androidx.test:core:$version"
-            const val rules = "androidx.test:rules:$version"
-            const val ext = "androidx.test.ext:junit:1.1.1"
+            const val core = "androidx.test:core-ktx:1.2.0"
+            const val rules = "androidx.test:rules:1.2.0"
+            const val ext = "androidx.test.ext:junit-ktx:1.1.1"
             const val arch = "androidx.arch.core:core-testing:2.1.0"
 
             object Espresso {
