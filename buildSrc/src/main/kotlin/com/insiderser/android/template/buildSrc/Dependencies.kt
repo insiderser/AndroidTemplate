@@ -87,14 +87,14 @@ object Libs {
     }
 
     object AndroidX {
-        const val coreKtx = "androidx.core:core-ktx:1.2.0"
-        const val appcompat = "androidx.appcompat:appcompat:1.1.0"
+        const val coreKtx = "androidx.core:core-ktx:1.3.0-beta01"
+        const val appcompat = "androidx.appcompat:appcompat:1.2.0-beta01"
         const val activity = "androidx.activity:activity-ktx:1.1.0"
         const val material = "com.google.android.material:material:1.1.0"
         const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
 
         object Fragment {
-            private const val version = "1.2.3"
+            private const val version = "1.2.4"
             const val fragment = "androidx.fragment:fragment-ktx:$version"
             const val testing = "androidx.fragment:fragment-testing:$version"
         }

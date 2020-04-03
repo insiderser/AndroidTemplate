@@ -22,7 +22,6 @@
 
 package com.insiderser.android.template.ui.settings
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -40,8 +39,6 @@ import javax.inject.Inject
  * Dialog fragment for selecting app theme preference.
  * Should only be used from [SettingsFragment].
  */
-// Don't use viewLifecycleOwner here since DialogFragment doesn't create any layouts.
-@SuppressLint("FragmentLiveDataObserve")
 class ThemeSettingDialogFragment : DaggerAppCompatDialogFragment() {
 
     @Inject
