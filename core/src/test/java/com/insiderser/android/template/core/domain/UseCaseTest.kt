@@ -61,7 +61,7 @@ class UseCaseTest {
         useCaseImpl.shouldReturnError = false
 
         val result = useCaseImpl(fakeParam)
-        coVerify(exactly = 1) { useCaseImpl.execute(fakeParam) }
+        coVerify(exactly = 1) { useCaseImpl["execute"](fakeParam) }
         assertThat(result.isSuccess).isTrue()
         assertThat(result.getOrNull()).isSameInstanceAs(fakeResult)
     }
@@ -71,7 +71,7 @@ class UseCaseTest {
         useCaseImpl.shouldReturnError = true
 
         val result = useCaseImpl(fakeParam)
-        coVerify(exactly = 1) { useCaseImpl.execute(fakeParam) }
+        coVerify(exactly = 1) { useCaseImpl["execute"](fakeParam) }
 
         assertThat(result.isFailure).isTrue()
         assertThat(result.exceptionOrNull()).isSameInstanceAs(exception)

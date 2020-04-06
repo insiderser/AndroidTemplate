@@ -22,9 +22,6 @@
 
 package com.insiderser.android.template.core.domain
 
-import androidx.annotation.VisibleForTesting
-import androidx.annotation.VisibleForTesting.PROTECTED
-
 /**
  * Executes a single unit of business logic.
  *
@@ -46,8 +43,7 @@ abstract class UseCase<in P, R> {
      *
      * Execution is considered successful only if it returns without any [Exception]s thrown.
      */
-    @VisibleForTesting(otherwise = PROTECTED)
-    abstract suspend fun execute(param: P): R
+    protected abstract suspend fun execute(param: P): R
 }
 
 /**
