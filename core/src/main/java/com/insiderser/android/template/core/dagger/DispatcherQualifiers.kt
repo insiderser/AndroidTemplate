@@ -20,20 +20,23 @@
  * SOFTWARE.
  */
 
-package com.insiderser.android.template.test.fakes
+package com.insiderser.android.template.core.dagger
 
-import com.insiderser.android.template.core.util.AppDispatchers
-import kotlinx.coroutines.CoroutineDispatcher
+import javax.inject.Qualifier
+import kotlin.annotation.AnnotationRetention.RUNTIME
 
 /**
- * Fake [AppDispatchers] implementation for tests that replaces all dispatchers with
- * a [CoroutineDispatcher] passed as a parameter.
+ * @see kotlinx.coroutines.Dispatchers.Default
  */
-class FakeAppDispatchers(
-    private val dispatcher: CoroutineDispatcher
-) : AppDispatchers {
+@Qualifier
+@MustBeDocumented
+@Retention(RUNTIME)
+annotation class DefaultDispatcher
 
-    override val main: CoroutineDispatcher get() = dispatcher
-    override val default: CoroutineDispatcher get() = dispatcher
-    override val io: CoroutineDispatcher get() = dispatcher
-}
+/**
+ * @see kotlinx.coroutines.Dispatchers.IO
+ */
+@Qualifier
+@MustBeDocumented
+@Retention(RUNTIME)
+annotation class IODispatcher

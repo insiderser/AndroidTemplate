@@ -23,7 +23,7 @@
 package com.insiderser.android.template.core.domain.prefs.theme
 
 import com.google.common.truth.Truth.assertThat
-import com.insiderser.android.template.test.fakes.FakeAppPreferencesStorage
+import com.insiderser.android.template.core.fakes.FakeAppPreferencesStorage
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

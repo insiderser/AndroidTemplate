@@ -28,7 +28,8 @@ import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import androidx.annotation.WorkerThread
 import androidx.core.content.edit
-import com.insiderser.android.template.core.util.AppDispatchers
+import com.insiderser.android.template.core.dagger.IODispatcher
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
@@ -48,13 +49,11 @@ interface AppPreferencesStorage {
 
     /**
      * Theme storage key that is currently selected, or `null` if nothing selected.
-     * @see com.insiderser.android.template.core.domain.prefs.theme.Theme
      */
     var selectedTheme: String?
 
     /**
      * A [Flow] with up-to-date theme storage key that is currently selected.
-     * @see com.insiderser.android.template.core.domain.prefs.theme.Theme
      */
     val selectedThemeObservable: Flow<String?>
 }
@@ -65,10 +64,10 @@ interface AppPreferencesStorage {
 @Singleton
 class AppPreferencesStorageImpl @Inject constructor(
     context: Context,
-    dispatchers: AppDispatchers
+    @IODispatcher ioDispatcher: CoroutineDispatcher
 ) : AppPreferencesStorage {
 
-    private val storageScope = CoroutineScope(dispatchers.io)
+    private val storageScope = CoroutineScope(ioDispatcher)
 
     // Lazy to prevent IO on the main thread
     private val sharedPreferences: Lazy<SharedPreferences> = lazy {

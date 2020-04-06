@@ -23,12 +23,14 @@
 package com.insiderser.android.template.dagger
 
 import androidx.lifecycle.ViewModelProvider
+import com.insiderser.android.template.core.dagger.DefaultDispatcher
+import com.insiderser.android.template.core.dagger.IODispatcher
 import com.insiderser.android.template.core.dagger.ViewModelFactory
-import com.insiderser.android.template.core.util.AppDispatchers
-import com.insiderser.android.template.core.util.DefaultAppDispatchers
 import dagger.Binds
 import dagger.Module
-import javax.inject.Singleton
+import dagger.Provides
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 /**
  * Module used to define connection between the framework's [ViewModelProvider.Factory]
@@ -44,7 +46,16 @@ interface CoreModule {
     @Binds
     fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
-    @Binds
-    @Singleton
-    fun bindAppDispatchers(dispatchers: DefaultAppDispatchers): AppDispatchers
+    companion object {
+
+        @JvmStatic
+        @Provides
+        @DefaultDispatcher
+        fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
+
+        @JvmStatic
+        @Provides
+        @IODispatcher
+        fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+    }
 }

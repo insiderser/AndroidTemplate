@@ -25,7 +25,7 @@ package com.insiderser.android.template.test
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.insiderser.android.template.core.data.prefs.AppPreferencesStorage
 import com.insiderser.android.template.core.data.prefs.AppPreferencesStorageImpl
-import com.insiderser.android.template.core.util.DefaultAppDispatchers
+import kotlinx.coroutines.Dispatchers
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
@@ -36,7 +36,7 @@ import org.junit.runner.Description
 class ResetPreferencesRule : TestWatcher() {
 
     val storage: AppPreferencesStorage by lazy {
-        AppPreferencesStorageImpl(getApplicationContext(), DefaultAppDispatchers())
+        AppPreferencesStorageImpl(getApplicationContext(), Dispatchers.IO)
     }
 
     override fun starting(description: Description?) {

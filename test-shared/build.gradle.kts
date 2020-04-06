@@ -31,9 +31,9 @@ plugins {
 configureAndroidModule()
 
 dependencies {
-    implementation(project(":core"))
-
     api(Libs.Test.junit4)
     api(Libs.Test.truth)
     api(Libs.Kotlin.Coroutines.test)
+
+    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
 }
