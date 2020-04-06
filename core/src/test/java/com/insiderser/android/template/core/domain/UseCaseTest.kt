@@ -28,7 +28,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
@@ -86,8 +85,6 @@ class UseCaseTest {
             if (shouldReturnError) {
                 throw exception
             } else {
-                // Simulate that we do something expensive here...
-                delay(DELAY)
                 return fakeResult
             }
         }
@@ -96,5 +93,3 @@ class UseCaseTest {
     private class FakeParameter
     private class FakeResult
 }
-
-private const val DELAY = 1000L
