@@ -78,7 +78,7 @@ class AppPreferencesStorageImpl @Inject constructor(
 
     private val onChangedListener = OnSharedPreferenceChangeListener { _, key ->
         when (key) {
-            KEY_THEME -> updateTheme()
+            KEY_THEME -> selectedThemeChannel.offer(selectedTheme)
         }
     }
 
@@ -89,10 +89,6 @@ class AppPreferencesStorageImpl @Inject constructor(
         get() = selectedThemeChannel.asFlow()
 
     init {
-        updateTheme()
-    }
-
-    private fun updateTheme() {
         storageScope.launch {
             selectedThemeChannel.offer(selectedTheme)
         }
@@ -112,13 +108,13 @@ class AppPreferencesStorageImpl @Inject constructor(
  * **Note**: all get operations are done synchronously on the calling thread.
  * Make sure to call it on a worker thread.
  */
+@WorkerThread
 private class StringPreference(
     private val sharedPreferences: Lazy<SharedPreferences>,
     private val preferenceKey: String,
     private val defaultValue: String? = null
 ) : ReadWriteProperty<Any, String?> {
 
-    @WorkerThread
     override fun getValue(thisRef: Any, property: KProperty<*>): String? =
         sharedPreferences.value.getString(preferenceKey, defaultValue)
 
