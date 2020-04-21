@@ -46,14 +46,14 @@ object Versions {
 
 object Libs {
     // Also used in buildSrc/build.gradle.kts
-    const val androidGradlePlugin = "com.android.tools.build:gradle:4.0.0-beta03"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:4.0.0-beta04"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
     object Test {
         const val junit4 = "junit:junit:4.13"
         const val truth = "com.google.truth:truth:1.0.1"
-        const val mockK = "io.mockk:mockk:1.9.3"
+        const val mockK = "io.mockk:mockk:1.10.0"
 
         object Robolectric {
             private const val version = "4.3.1"
@@ -74,7 +74,7 @@ object Libs {
     }
 
     object Kotlin {
-        private const val kotlinVersion = "1.3.71"
+        private const val kotlinVersion = "1.3.72"
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
@@ -87,7 +87,7 @@ object Libs {
     }
 
     object AndroidX {
-        const val coreKtx = "androidx.core:core-ktx:1.3.0-beta01"
+        const val coreKtx = "androidx.core:core-ktx:1.3.0-rc01"
         const val appcompat = "androidx.appcompat:appcompat:1.2.0-beta01"
         const val activity = "androidx.activity:activity-ktx:1.1.0"
         const val material = "com.google.android.material:material:1.1.0"
@@ -100,7 +100,7 @@ object Libs {
         }
 
         object Navigation {
-            private const val version = "2.2.1"
+            private const val version = "2.2.2"
             const val ui = "androidx.navigation:navigation-ui-ktx:$version"
             const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
             const val safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:$version"
