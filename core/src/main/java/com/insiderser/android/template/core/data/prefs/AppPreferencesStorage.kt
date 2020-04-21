@@ -70,7 +70,7 @@ class AppPreferencesStorageImpl @Inject constructor(
     private val storageScope = CoroutineScope(ioDispatcher)
 
     // Lazy to prevent IO on the main thread
-    private val sharedPreferences: Lazy<SharedPreferences> = lazy {
+    internal val sharedPreferences: SharedPreferences by lazy {
         context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE).apply {
             registerOnSharedPreferenceChangeListener(onChangedListener)
         }
@@ -82,7 +82,7 @@ class AppPreferencesStorageImpl @Inject constructor(
         }
     }
 
-    override var selectedTheme: String? by StringPreference(sharedPreferences, KEY_THEME)
+    override var selectedTheme: String? by StringPreference(KEY_THEME)
 
     private val selectedThemeChannel = ConflatedBroadcastChannel<String?>()
     override val selectedThemeObservable: Flow<String?>
@@ -104,23 +104,18 @@ class AppPreferencesStorageImpl @Inject constructor(
 
 /**
  * Property delegate that manages a single entry in [SharedPreferences].
- *
- * **Note**: all get operations are done synchronously on the calling thread.
- * Make sure to call it on a worker thread.
  */
-@WorkerThread
 private class StringPreference(
-    private val sharedPreferences: Lazy<SharedPreferences>,
     private val preferenceKey: String,
     private val defaultValue: String? = null
-) : ReadWriteProperty<Any, String?> {
+) : ReadWriteProperty<AppPreferencesStorageImpl, String?> {
 
-    override fun getValue(thisRef: Any, property: KProperty<*>): String? =
-        sharedPreferences.value.getString(preferenceKey, defaultValue)
+    override fun getValue(thisRef: AppPreferencesStorageImpl, property: KProperty<*>): String? =
+        thisRef.sharedPreferences.getString(preferenceKey, defaultValue)
 
-    override fun setValue(thisRef: Any, property: KProperty<*>, value: String?) {
+    override fun setValue(thisRef: AppPreferencesStorageImpl, property: KProperty<*>, value: String?) {
         Timber.v("Changing value of property $preferenceKey to $value")
-        sharedPreferences.value.edit {
+        thisRef.sharedPreferences.edit {
             putString(preferenceKey, value)
         }
     }
