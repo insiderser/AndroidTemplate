@@ -23,9 +23,8 @@
 package com.insiderser.android.template.core.fakes
 
 import com.insiderser.android.template.core.data.prefs.AppPreferencesStorage
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * Fake [AppPreferencesStorage] implementation that doesn't use [android.content.SharedPreferences].
@@ -35,10 +34,10 @@ class FakeAppPreferencesStorage : AppPreferencesStorage {
     override var selectedTheme: String? = null
         set(value) {
             field = value
-            selectedThemeChannel.offer(value)
+            selectedThemeStateFlow.value = value
         }
 
-    private val selectedThemeChannel = ConflatedBroadcastChannel(selectedTheme)
+    private val selectedThemeStateFlow = MutableStateFlow(selectedTheme)
     override val selectedThemeObservable: Flow<String?>
-        get() = selectedThemeChannel.asFlow()
+        get() = selectedThemeStateFlow
 }
