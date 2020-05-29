@@ -56,30 +56,7 @@ obj/
 /out/
 
 # User-specific configurations
-.idea/caches/
-.idea/libraries/
-.idea/shelf/
-.idea/codeStyles/
-.idea/inspectionProfiles/
-.idea/codeStyleSettings.xml
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/.name
-.idea/gradle.xml
-.idea/compiler.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/scopes/scope_settings.xml
-.idea/dictionaries
-.idea/jsLibraryMappings.xml
-.idea/datasources.xml
-.idea/dataSources.ids
-.idea/sqlDataSources.xml
-.idea/dynamic.xml
-.idea/uiDesigner.xml
-.idea/assetWizardSettings.xml
-.idea/mongoSettings.xml
-.idea/navEditor.xml
+.idea/
 
 # OS-specific files
 .DS_Store
