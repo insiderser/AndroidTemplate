@@ -20,6 +20,8 @@
  * SOFTWARE.
  */
 
+@file:Suppress("DEPRECATION")
+
 package com.insiderser.android.template.test
 
 import android.content.Intent
