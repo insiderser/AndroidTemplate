@@ -44,12 +44,10 @@ interface DataModule {
 
     companion object {
 
-        @JvmStatic
         @Singleton
         @Provides
         fun provideAppDatabase(context: Context): AppDatabase = AppDatabase.create(context)
 
-        @JvmStatic
         @Singleton
         @Provides
         fun provideMyDao(db: AppDatabase): MyDao = db.myDao

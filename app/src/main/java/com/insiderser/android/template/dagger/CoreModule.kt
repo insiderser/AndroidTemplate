@@ -48,12 +48,10 @@ interface CoreModule {
 
     companion object {
 
-        @JvmStatic
         @Provides
         @DefaultDispatcher
         fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
 
-        @JvmStatic
         @Provides
         @IODispatcher
         fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
