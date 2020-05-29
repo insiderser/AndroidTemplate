@@ -41,7 +41,7 @@ buildscript {
 }
 
 plugins {
-    id("com.diffplug.gradle.spotless") version "3.28.1"
+    id("com.diffplug.gradle.spotless") version "4.0.1"
     id("com.github.ben-manes.versions") version "0.28.0"
 }
 
@@ -90,6 +90,7 @@ tasks.withType<DependencyUpdatesTask> {
     checkForGradleUpdate = false
     rejectVersionIf {
         candidate.version.contains("alpha") ||
+            candidate.version.contains("beta") ||
             // Kotlin early access preview (EAP).
             candidate.version.contains("eap") ||
             candidate.version.contains(Regex("""-M\d"""))

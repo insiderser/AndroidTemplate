@@ -46,7 +46,7 @@ object Versions {
 
 object Libs {
     // Also used in buildSrc/build.gradle.kts
-    const val androidGradlePlugin = "com.android.tools.build:gradle:4.0.0-beta05"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:4.0.0"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
@@ -61,13 +61,13 @@ object Libs {
         }
 
         object AndroidX {
-            const val core = "androidx.test:core-ktx:1.3.0-beta01"
-            const val rules = "androidx.test:rules:1.3.0-beta01"
-            const val ext = "androidx.test.ext:junit-ktx:1.1.2-beta01"
+            const val core = "androidx.test:core-ktx:1.3.0-rc01"
+            const val rules = "androidx.test:rules:1.3.0-rc01"
+            const val ext = "androidx.test.ext:junit-ktx:1.1.2-rc01"
             const val arch = "androidx.arch.core:core-testing:2.1.0"
 
             object Espresso {
-                private const val version = "3.3.0-beta01"
+                private const val version = "3.3.0-rc01"
                 const val core = "androidx.test.espresso:espresso-core:$version"
             }
         }
@@ -79,7 +79,7 @@ object Libs {
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
         object Coroutines {
-            private const val version = "1.3.5"
+            private const val version = "1.3.7"
             const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
             const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
             const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
@@ -87,8 +87,8 @@ object Libs {
     }
 
     object AndroidX {
-        const val coreKtx = "androidx.core:core-ktx:1.3.0-rc01"
-        const val appcompat = "androidx.appcompat:appcompat:1.2.0-beta01"
+        const val coreKtx = "androidx.core:core-ktx:1.3.0"
+        const val appcompat = "androidx.appcompat:appcompat:1.2.0-rc01"
         const val activity = "androidx.activity:activity-ktx:1.1.0"
         const val material = "com.google.android.material:material:1.1.0"
         const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
@@ -123,7 +123,7 @@ object Libs {
     }
 
     object Dagger {
-        private const val version = "2.27"
+        private const val version = "2.28"
         const val dagger = "com.google.dagger:dagger:$version"
         const val compiler = "com.google.dagger:dagger-compiler:$version"
         const val androidSupport = "com.google.dagger:dagger-android-support:$version"
@@ -151,14 +151,14 @@ object Libs {
     }
 
     object LeakCanary {
-        private const val version = "2.2"
+        private const val version = "2.3"
         const val leakCanary = "com.squareup.leakcanary:leakcanary-android:$version"
         const val instrumentation =
             "com.squareup.leakcanary:leakcanary-android-instrumentation:$version"
     }
 
     object Insetter {
-        private const val version = "0.2.1"
+        private const val version = "0.2.2"
         const val ktx = "dev.chrisbanes:insetter-ktx:$version"
     }
 }
