@@ -26,7 +26,7 @@ import javax.inject.Qualifier
 import kotlin.annotation.AnnotationRetention.RUNTIME
 
 /**
- * @see kotlinx.coroutines.Dispatchers.Default
+ * Tells Dagger to inject [kotlinx.coroutines.Dispatchers.Default].
  */
 @Qualifier
 @MustBeDocumented
@@ -34,7 +34,7 @@ import kotlin.annotation.AnnotationRetention.RUNTIME
 annotation class DefaultDispatcher
 
 /**
- * @see kotlinx.coroutines.Dispatchers.IO
+ * Tells Dagger to inject [kotlinx.coroutines.Dispatchers.IO].
  */
 @Qualifier
 @MustBeDocumented

@@ -37,6 +37,7 @@ buildscript {
         classpath(com.insiderser.android.template.buildSrc.Libs.androidGradlePlugin)
         classpath(com.insiderser.android.template.buildSrc.Libs.Kotlin.gradlePlugin)
         classpath(com.insiderser.android.template.buildSrc.Libs.AndroidX.Navigation.safeArgs)
+        classpath(com.insiderser.android.template.buildSrc.Libs.Hilt.gradlePlugin)
     }
 }
 

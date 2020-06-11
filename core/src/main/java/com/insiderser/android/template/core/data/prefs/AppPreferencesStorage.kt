@@ -29,6 +29,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import androidx.annotation.WorkerThread
 import androidx.core.content.edit
 import com.insiderser.android.template.core.dagger.IODispatcher
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
@@ -63,7 +64,7 @@ interface AppPreferencesStorage {
  */
 @Singleton
 class AppPreferencesStorageImpl @Inject constructor(
-    context: Context,
+    @ApplicationContext context: Context,
     @IODispatcher ioDispatcher: CoroutineDispatcher
 ) : AppPreferencesStorage {
 

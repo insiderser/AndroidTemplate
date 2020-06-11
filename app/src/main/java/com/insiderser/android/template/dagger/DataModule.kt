@@ -30,12 +30,15 @@ import com.insiderser.android.template.core.data.prefs.AppPreferencesStorageImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Singleton
 
 /**
  * A module that tells dagger how to create anything in this data module.
  */
 @Module
+@InstallIn(ApplicationComponent::class)
 interface DataModule {
 
     @Binds

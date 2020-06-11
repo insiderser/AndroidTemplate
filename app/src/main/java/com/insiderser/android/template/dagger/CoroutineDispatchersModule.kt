@@ -20,22 +20,31 @@
  * SOFTWARE.
  */
 
-package com.insiderser.android.template.ui.settings
+package com.insiderser.android.template.dagger
 
-import androidx.lifecycle.ViewModel
-import com.insiderser.android.template.core.dagger.ViewModelKey
-import dagger.Binds
+import androidx.lifecycle.ViewModelProvider
+import com.insiderser.android.template.core.dagger.DefaultDispatcher
+import com.insiderser.android.template.core.dagger.IODispatcher
 import dagger.Module
-import dagger.multibindings.IntoMap
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 /**
- * Dagger module for settings.
+ * Module used to define connection between the framework's [ViewModelProvider.Factory]
+ * and out own implementation: [ViewModelFactory].
  */
 @Module
-interface SettingsModule {
+@InstallIn(ApplicationComponent::class)
+object CoroutineDispatchersModule {
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(SettingsViewModel::class)
-    fun bindSettingsViewModel(vm: SettingsViewModel): ViewModel
+    @Provides
+    @DefaultDispatcher
+    fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
+
+    @Provides
+    @IODispatcher
+    fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 }

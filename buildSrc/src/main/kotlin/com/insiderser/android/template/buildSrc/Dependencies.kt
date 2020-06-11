@@ -122,12 +122,17 @@ object Libs {
         }
     }
 
-    object Dagger {
-        private const val version = "2.28"
-        const val dagger = "com.google.dagger:dagger:$version"
-        const val compiler = "com.google.dagger:dagger-compiler:$version"
-        const val androidSupport = "com.google.dagger:dagger-android-support:$version"
-        const val androidProcessor = "com.google.dagger:dagger-android-processor:$version"
+    object Hilt {
+        private const val version = "2.28-alpha"
+        const val android = "com.google.dagger:hilt-android:$version"
+        const val compiler = "com.google.dagger:hilt-android-compiler:$version"
+        const val gradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
+
+        object AndroidX {
+            private const val version = "1.0.0-alpha01"
+            const val lifecycle = "androidx.hilt:hilt-lifecycle-viewmodel:$version"
+            const val compiler = "androidx.hilt:hilt-compiler:$version"
+        }
     }
 
     object Retrofit {

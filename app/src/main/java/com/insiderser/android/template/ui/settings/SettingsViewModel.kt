@@ -22,6 +22,7 @@
 
 package com.insiderser.android.template.ui.settings
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -33,12 +34,11 @@ import com.insiderser.android.template.core.domain.prefs.theme.SetThemeUseCase
 import com.insiderser.android.template.core.domain.prefs.theme.Theme
 import com.insiderser.android.template.core.util.Event
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * [ViewModel] for [SettingsFragment] that manages preferences.
  */
-class SettingsViewModel @Inject constructor(
+class SettingsViewModel @ViewModelInject constructor(
     getAvailableThemesUseCase: GetAvailableThemesUseCase,
     observableThemeUseCase: ObservableThemeUseCase,
     private val setThemeUseCase: SetThemeUseCase

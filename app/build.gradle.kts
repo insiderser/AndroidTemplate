@@ -30,6 +30,7 @@ plugins {
     kotlin("android.extensions")
     kotlin("kapt")
     id("androidx.navigation.safeargs.kotlin")
+    id("dagger.hilt.android.plugin")
 }
 
 configureAndroidModule()
@@ -75,8 +76,11 @@ dependencies {
     implementation(Libs.AndroidX.Navigation.fragment)
     implementation(Libs.AndroidX.Navigation.ui)
 
-    kapt(Libs.Dagger.compiler)
-    kapt(Libs.Dagger.androidProcessor)
+    // FIXME Why require Libs.Hilt.android if it's already defined in core module?
+    implementation(Libs.Hilt.android)
+    implementation(Libs.Hilt.AndroidX.lifecycle)
+    kapt(Libs.Hilt.compiler)
+    kapt(Libs.Hilt.AndroidX.compiler)
 
     debugImplementation(Libs.LeakCanary.leakCanary)
     androidTestImplementation(Libs.LeakCanary.instrumentation)

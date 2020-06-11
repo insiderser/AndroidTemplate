@@ -26,25 +26,22 @@ import android.app.Dialog
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.insiderser.android.template.R
 import com.insiderser.android.template.core.domain.prefs.theme.Theme
-import dagger.android.support.DaggerAppCompatDialogFragment
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Dialog fragment for selecting app theme preference.
  * Should only be used from [SettingsFragment].
  */
-class ThemeSettingDialogFragment : DaggerAppCompatDialogFragment() {
+@AndroidEntryPoint
+class ThemeSettingDialogFragment : AppCompatDialogFragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel: SettingsViewModel by viewModels { viewModelFactory }
+    private val viewModel: SettingsViewModel by viewModels()
 
     private val adapter: ArrayAdapter<ThemeHolder> by lazy {
         ArrayAdapter<ThemeHolder>(

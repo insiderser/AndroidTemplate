@@ -22,14 +22,13 @@
 
 package com.insiderser.android.template
 
+import android.app.Application
 import android.os.StrictMode
 import androidx.appcompat.app.AppCompatDelegate
 import com.insiderser.android.template.core.domain.prefs.theme.ObservableThemeUseCase
 import com.insiderser.android.template.core.domain.prefs.theme.Theme
 import com.insiderser.android.template.core.domain.prefs.theme.toAppCompatNightMode
-import com.insiderser.android.template.dagger.DaggerAppComponent
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
+import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -43,7 +42,8 @@ import javax.inject.Inject
  * This class executes basic app configuration, such as building a
  * Dagger graph, initializing libraries that need to be initialized on startup, etc.
  */
-class MyApplication : DaggerApplication() {
+@HiltAndroidApp
+class MyApplication : Application() {
 
     private val appScope = CoroutineScope(Dispatchers.Main)
 
@@ -88,11 +88,4 @@ class MyApplication : DaggerApplication() {
         Timber.d("Setting app theme to $selectedTheme")
         AppCompatDelegate.setDefaultNightMode(selectedTheme.toAppCompatNightMode())
     }
-
-    /**
-     * Returns app-level [Dagger component][dagger.Component], that is used
-     * throughout the app.
-     */
-    override fun applicationInjector(): AndroidInjector<MyApplication> =
-        DaggerAppComponent.factory().create(this)
 }

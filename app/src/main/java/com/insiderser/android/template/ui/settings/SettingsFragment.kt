@@ -28,7 +28,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.insiderser.android.template.BuildConfig
@@ -39,20 +38,17 @@ import com.insiderser.android.template.core.ui.viewLifecycleScoped
 import com.insiderser.android.template.core.util.observeEvent
 import com.insiderser.android.template.databinding.SettingsFragmentBinding
 import com.insiderser.android.template.ui.settings.SettingsFragmentDirections.Companion.actionSettingsHomeToThemeSettingDialog
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
-import javax.inject.Inject
 
 /**
  * A root [fragment][androidx.fragment.app.Fragment] that displays a list of preferences.
  * All preferences are stored in preferences storage.
  */
-class SettingsFragment : DaggerFragment() {
+@AndroidEntryPoint
+class SettingsFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel: SettingsViewModel by viewModels { viewModelFactory }
+    private val viewModel: SettingsViewModel by viewModels()
 
     private var binding: SettingsFragmentBinding by viewLifecycleScoped()
 

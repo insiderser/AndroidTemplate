@@ -67,8 +67,7 @@ dependencies {
     api(Libs.timber)
     api(Libs.Insetter.ktx)
 
-    api(Libs.Dagger.dagger)
-    api(Libs.Dagger.androidSupport)
+    api(Libs.Hilt.android)
 
     api(Libs.AndroidX.Room.runtime)
     api(Libs.AndroidX.Room.ktx)

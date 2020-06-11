@@ -24,6 +24,7 @@ package com.insiderser.android.template.ui
 
 import android.os.Bundle
 import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -33,14 +34,15 @@ import androidx.navigation.ui.setupWithNavController
 import com.insiderser.android.template.R
 import com.insiderser.android.template.core.ui.NavigationHost
 import com.insiderser.android.template.databinding.MainActivityBinding
-import dagger.android.support.DaggerAppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import dev.chrisbanes.insetter.setEdgeToEdgeSystemUiFlags
 
 /**
  * The main activity and navigation point.
  */
-class MainActivity : DaggerAppCompatActivity(), NavigationHost {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity(), NavigationHost {
 
     private lateinit var binding: MainActivityBinding
 

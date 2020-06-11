@@ -11,8 +11,9 @@ This template includes:
 - boilerplate code that we do in most Android apps nowadays
 - multi-module setup
 - CI configuration with GitHub Actions
-- Dagger setup
+- Dagger Hilt setup
 - settings
+- light & dark theme
 
 ### License
 
