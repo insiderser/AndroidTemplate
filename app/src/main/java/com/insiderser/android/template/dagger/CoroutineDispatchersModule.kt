@@ -22,7 +22,6 @@
 
 package com.insiderser.android.template.dagger
 
-import androidx.lifecycle.ViewModelProvider
 import com.insiderser.android.template.core.dagger.DefaultDispatcher
 import com.insiderser.android.template.core.dagger.IODispatcher
 import dagger.Module
@@ -33,8 +32,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
 /**
- * Module used to define connection between the framework's [ViewModelProvider.Factory]
- * and out own implementation: [ViewModelFactory].
+ * Module that defines which dispatchers should be injected.
+ *
+ * If needed, add other dispatchers here.
  */
 @Module
 @InstallIn(ApplicationComponent::class)
