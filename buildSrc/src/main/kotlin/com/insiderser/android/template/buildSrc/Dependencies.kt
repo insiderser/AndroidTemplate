@@ -61,13 +61,13 @@ object Libs {
         }
 
         object AndroidX {
-            const val core = "androidx.test:core-ktx:1.3.0-rc01"
-            const val rules = "androidx.test:rules:1.3.0-rc01"
-            const val ext = "androidx.test.ext:junit-ktx:1.1.2-rc01"
+            const val core = "androidx.test:core-ktx:1.2.0"
+            const val rules = "androidx.test:rules:1.2.0"
+            const val ext = "androidx.test.ext:junit-ktx:1.1.1"
             const val arch = "androidx.arch.core:core-testing:2.1.0"
 
             object Espresso {
-                private const val version = "3.3.0-rc01"
+                private const val version = "3.2.0"
                 const val core = "androidx.test.espresso:espresso-core:$version"
             }
         }
