@@ -31,7 +31,7 @@ import androidx.fragment.app.Fragment
 import com.insiderser.android.template.core.ui.NavigationHost
 import com.insiderser.android.template.core.ui.viewLifecycleScoped
 import com.insiderser.android.template.databinding.Feature1FragmentBinding
-import dev.chrisbanes.insetter.doOnApplyWindowInsets
+import dev.chrisbanes.insetter.Insetter
 
 /**
  * Sample [Fragment].
@@ -50,12 +50,12 @@ class Feature1Fragment : Fragment() {
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (activity as? NavigationHost)?.registerToolbarWithNavigation(binding.toolbar)
+        (activity as NavigationHost).registerToolbarWithNavigation(binding.toolbar)
 
-        binding.statusBar.doOnApplyWindowInsets { statusBar, insets, _ ->
+        Insetter.builder().setOnApplyInsetsListener { statusBar, insets, _ ->
             statusBar.updateLayoutParams<ViewGroup.LayoutParams> {
                 height = insets.systemWindowInsetTop
             }
-        }
+        }.applyToView(binding.statusBar)
     }
 }

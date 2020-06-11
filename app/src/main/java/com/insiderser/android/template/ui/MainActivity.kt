@@ -25,7 +25,6 @@ package com.insiderser.android.template.ui
 import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.updatePadding
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -35,8 +34,8 @@ import com.insiderser.android.template.R
 import com.insiderser.android.template.core.ui.NavigationHost
 import com.insiderser.android.template.databinding.MainActivityBinding
 import dagger.android.support.DaggerAppCompatActivity
-import dev.chrisbanes.insetter.Insetter
-import dev.chrisbanes.insetter.doOnApplyWindowInsets
+import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
+import dev.chrisbanes.insetter.setEdgeToEdgeSystemUiFlags
 
 /**
  * The main activity and navigation point.
@@ -62,15 +61,9 @@ class MainActivity : DaggerAppCompatActivity(), NavigationHost {
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Insetter.setEdgeToEdgeSystemUiFlags(binding.navigationView, true)
+        binding.navigationView.setEdgeToEdgeSystemUiFlags(true)
 
-        binding.root.doOnApplyWindowInsets { view, insets, initial ->
-            // Avoid drawing behind navigation bar in landscape with button mode
-            view.updatePadding(
-                left = initial.paddings.left + insets.systemWindowInsetLeft,
-                right = initial.paddings.right + insets.systemWindowInsetRight
-            )
-        }
+        binding.root.applySystemWindowInsetsToPadding(left = true, right = true)
 
         if (savedInstanceState == null && intent.hasExtra(EXTRA_DESTINATION)) {
             navigateTo(intent.getIntExtra(EXTRA_DESTINATION, 0))

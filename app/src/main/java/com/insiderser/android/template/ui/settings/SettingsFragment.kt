@@ -26,7 +26,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -41,7 +40,7 @@ import com.insiderser.android.template.core.util.observeEvent
 import com.insiderser.android.template.databinding.SettingsFragmentBinding
 import com.insiderser.android.template.ui.settings.SettingsFragmentDirections.Companion.actionSettingsHomeToThemeSettingDialog
 import dagger.android.support.DaggerFragment
-import dev.chrisbanes.insetter.doOnApplyWindowInsets
+import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import javax.inject.Inject
 
 /**
@@ -67,15 +66,10 @@ class SettingsFragment : DaggerFragment() {
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (activity as? NavigationHost)?.registerToolbarWithNavigation(binding.toolbar)
+        (activity as NavigationHost).registerToolbarWithNavigation(binding.toolbar)
 
-        binding.appBar.doOnApplyWindowInsets { appBar, insets, initial ->
-            appBar.updatePadding(top = initial.paddings.top + insets.systemWindowInsetTop)
-        }
-
-        binding.scrollView.doOnApplyWindowInsets { scrollView, insets, initial ->
-            scrollView.updatePadding(bottom = initial.paddings.bottom + insets.systemWindowInsetBottom)
-        }
+        binding.appBar.applySystemWindowInsetsToPadding(top = true)
+        binding.scrollView.applySystemWindowInsetsToPadding(bottom = true)
 
         binding.chooseThemePreference.setOnClickListener {
             viewModel.onThemeSettingClicked()

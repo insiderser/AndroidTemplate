@@ -94,7 +94,7 @@ object Libs {
         const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
 
         object Fragment {
-            private const val version = "1.2.4"
+            private const val version = "1.2.5"
             const val fragment = "androidx.fragment:fragment-ktx:$version"
             const val testing = "androidx.fragment:fragment-testing:$version"
         }
@@ -151,14 +151,14 @@ object Libs {
     }
 
     object LeakCanary {
-        private const val version = "2.3"
+        private const val version = "2.4"
         const val leakCanary = "com.squareup.leakcanary:leakcanary-android:$version"
         const val instrumentation =
             "com.squareup.leakcanary:leakcanary-android-instrumentation:$version"
     }
 
     object Insetter {
-        private const val version = "0.2.2"
+        private const val version = "0.3.0"
         const val ktx = "dev.chrisbanes:insetter-ktx:$version"
     }
 }
