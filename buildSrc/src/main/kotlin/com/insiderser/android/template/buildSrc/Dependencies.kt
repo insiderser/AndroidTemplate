@@ -39,7 +39,7 @@ object Versions {
     @JvmField
     val jvmTarget = JavaVersion.VERSION_1_8
 
-    const val buildToolsVersion = "29.0.3"
+    const val buildToolsVersion = "30.0.0"
 
     const val ktlint = "0.36.0"
 }
