@@ -105,7 +105,5 @@ inline fun <T : Any> LiveData<Event<T>>.observeEvent(
     owner: LifecycleOwner,
     crossinline onChanged: (T) -> Unit
 ) {
-    observe(owner, EventObserver { t ->
-        onChanged(t)
-    })
+    observe(owner, EventObserver { onChanged(it) })
 }

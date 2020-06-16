@@ -62,8 +62,10 @@ class EventObserverTest {
     @Test
     fun testEventObserverWithLiveData_nullValue() {
         val liveData = MutableLiveData<Event<Any>>(null)
-        liveData.observeForever(EventObserver {
-            fail("Should never be called on null values")
-        })
+        liveData.observeForever(
+            EventObserver {
+                fail("Should never be called on null values")
+            }
+        )
     }
 }
