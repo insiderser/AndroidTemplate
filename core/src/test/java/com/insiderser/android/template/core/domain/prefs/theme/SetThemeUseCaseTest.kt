@@ -39,8 +39,7 @@ class SetThemeUseCaseTest {
     @Test
     fun givenTheme_useCase_updatesPreferencesStorage() = testDispatcher.runBlockingTest {
         Theme.values().forEach { theme ->
-            val result = useCase(theme)
-            assertThat(result.isSuccess).isTrue()
+            useCase(theme)
             assertThat(preferencesStorage.selectedTheme).isEqualTo(theme.storageKey)
         }
     }

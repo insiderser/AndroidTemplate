@@ -22,31 +22,57 @@
 
 package com.insiderser.android.template.core.domain
 
-/**
- * Executes a single unit of business logic.
- *
- * @param P Type of parameter that will be passed to [execute] function.
- * @param R Type that will be returned, wrapped in `Flow<Result<R>>`.
- */
-abstract class UseCase<in P, R> {
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 
-    /**
-     * Execute this use case, suspending calling coroutine until finished.
-     */
-    suspend operator fun invoke(param: P): Result<R> = runCatching { execute(param) }
+abstract class ResultUseCase<in Params, Type> {
 
-    /**
-     * Executes core logic.
-     *
-     * **Note**: this method can be called on any thread. You must take care that no
-     * heavy logic are run on the main thread.
-     *
-     * Execution is considered successful only if it returns without any [Exception]s thrown.
-     */
-    protected abstract suspend fun execute(param: P): R
+    protected abstract val workDispatcher: CoroutineDispatcher
+
+    suspend operator fun invoke(param: Params): Result<Type> = withContext(workDispatcher) {
+        execute(param)
+    }
+
+    protected abstract suspend fun execute(param: Params): Result<Type>
 }
 
-/**
- * Execute this use case, suspending calling coroutine until finished.
- */
-suspend operator fun <R> UseCase<Unit, R>.invoke(): Result<R> = invoke(Unit)
+abstract class NoResultUseCase<in Params> {
+
+    protected abstract val workDispatcher: CoroutineDispatcher
+
+    suspend operator fun invoke(param: Params) {
+        withContext(workDispatcher) {
+            execute(param)
+        }
+    }
+
+    protected abstract suspend fun execute(param: Params)
+}
+
+abstract class ObservableUseCase<in Param, Type> {
+
+    private val eventChannel = ConflatedBroadcastChannel<Param>()
+
+    protected abstract val workDispatcher: CoroutineDispatcher
+
+    operator fun invoke(param: Param) {
+        eventChannel.offer(param)
+    }
+
+    fun observe(): Flow<Type> = eventChannel.asFlow()
+        .distinctUntilChanged()
+        .flatMapLatest { execute(it) }
+        .flowOn(workDispatcher)
+
+    protected abstract suspend fun execute(param: Param): Flow<Type>
+}
+
+suspend operator fun <Type> ResultUseCase<Unit, Type>.invoke(): Result<Type> = invoke(Unit)
+suspend operator fun NoResultUseCase<Unit>.invoke() = invoke(Unit)
+operator fun <Type> ObservableUseCase<Unit, Type>.invoke() = invoke(Unit)
