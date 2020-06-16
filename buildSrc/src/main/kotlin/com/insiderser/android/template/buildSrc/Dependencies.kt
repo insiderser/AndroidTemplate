@@ -41,7 +41,7 @@ object Versions {
 
     const val buildToolsVersion = "30.0.0"
 
-    const val ktlint = "0.36.0"
+    const val ktlint = "0.37.1"
 }
 
 object Libs {
@@ -136,7 +136,7 @@ object Libs {
     }
 
     object Retrofit {
-        private const val version = "2.7.1"
+        private const val version = "2.9.0"
         const val retrofit = "com.squareup.retrofit2:retrofit:$version"
         const val mock = "com.squareup.retrofit2:retrofit-mock:$version"
         const val moshiConverter = "com.squareup.retrofit2:converter-moshi:$version"
@@ -150,7 +150,7 @@ object Libs {
     }
 
     object Moshi {
-        private const val version = "1.9.2"
+        private const val version = "1.9.3"
         const val moshi = "com.squareup.moshi:moshi:$version"
         const val codeGenerator = "com.squareup.moshi:moshi-kotlin-codegen:$version"
     }
@@ -158,8 +158,7 @@ object Libs {
     object LeakCanary {
         private const val version = "2.4"
         const val leakCanary = "com.squareup.leakcanary:leakcanary-android:$version"
-        const val instrumentation =
-            "com.squareup.leakcanary:leakcanary-android-instrumentation:$version"
+        const val instrumentation = "com.squareup.leakcanary:leakcanary-android-instrumentation:$version"
     }
 
     object Insetter {
