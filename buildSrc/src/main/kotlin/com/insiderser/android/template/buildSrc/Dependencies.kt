@@ -27,14 +27,14 @@ package com.insiderser.android.template.buildSrc
 import org.gradle.api.JavaVersion
 
 object Versions {
+    const val versionName = "0.1.0" // X.Y.Z; X = Major, Y = minor, Z = Patch level
+    const val versionCode = 1
+
     object Sdk {
         const val target = 30
         const val compile = target
         const val min = 23
     }
-
-    const val versionName = "0.1.0" // X.Y.Z; X = Major, Y = minor, Z = Patch level
-    const val versionCode = 1
 
     @JvmField
     val jvmTarget = JavaVersion.VERSION_1_8
@@ -55,11 +55,6 @@ object Libs {
         const val truth = "com.google.truth:truth:1.0.1"
         const val mockK = "io.mockk:mockk:1.10.0"
 
-        object Robolectric {
-            private const val version = "4.3.1"
-            const val robolectric = "org.robolectric:robolectric:$version"
-        }
-
         object AndroidX {
             const val core = "androidx.test:core-ktx:1.2.0"
             const val rules = "androidx.test:rules:1.2.0"
@@ -70,6 +65,11 @@ object Libs {
                 private const val version = "3.2.0"
                 const val core = "androidx.test.espresso:espresso-core:$version"
             }
+        }
+
+        object Robolectric {
+            private const val version = "4.3.1"
+            const val robolectric = "org.robolectric:robolectric:$version"
         }
     }
 

@@ -79,7 +79,6 @@ subprojects {
                 "-Xjsr305=strict",
                 "-Xallow-result-return-type",
                 "-Xopt-in=kotlin.RequiresOptIn",
-                "-progressive",
                 "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
                 "-Xuse-experimental=kotlinx.coroutines.FlowPreview"
             )
@@ -90,10 +89,12 @@ subprojects {
 tasks.withType<DependencyUpdatesTask> {
     checkForGradleUpdate = false
     rejectVersionIf {
-        candidate.version.contains("alpha") ||
-            candidate.version.contains("beta") ||
-            // Kotlin early access preview (EAP).
-            candidate.version.contains("eap") ||
-            candidate.version.contains(Regex("""-M\d"""))
+        with(candidate.version) {
+            return@rejectVersionIf contains("alpha") ||
+                contains("beta") ||
+                // Kotlin early access preview (EAP).
+                contains("eap") ||
+                contains(Regex("""-M\d"""))
+        }
     }
 }
