@@ -24,14 +24,13 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import com.insiderser.android.template.buildSrc.Versions
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-// FIXME: cannot use imports in buildscript: https://github.com/gradle/gradle/issues/9270
-@Suppress("RemoveRedundantQualifierName")
 buildscript {
     repositories {
         google()
         jcenter()
         maven("https://jitpack.io")
         mavenCentral()
+        maven("https://dl.bintray.com/kotlin/kotlin-eap")
     }
     dependencies {
         classpath(com.insiderser.android.template.buildSrc.Libs.androidGradlePlugin)
@@ -52,6 +51,7 @@ allprojects {
         jcenter()
         maven("https://jitpack.io")
         mavenCentral()
+        maven("https://dl.bintray.com/kotlin/kotlin-eap")
     }
 }
 
@@ -84,11 +84,9 @@ tasks.withType<DependencyUpdatesTask> {
     checkForGradleUpdate = false
     rejectVersionIf {
         with(candidate.version) {
-            return@rejectVersionIf contains("alpha") ||
-                contains("beta") ||
+            return@rejectVersionIf contains("alpha")
                 // Kotlin early access preview (EAP).
-                contains("eap") ||
-                contains(Regex("""-M\d"""))
+                || contains("eap")
         }
     }
 }
