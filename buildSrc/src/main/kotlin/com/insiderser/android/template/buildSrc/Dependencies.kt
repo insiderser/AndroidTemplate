@@ -123,7 +123,7 @@ object Libs {
     }
 
     object Hilt {
-        private const val version = "2.28-alpha"
+        private const val version = "2.28.1-alpha"
         const val android = "com.google.dagger:hilt-android:$version"
         const val compiler = "com.google.dagger:hilt-android-compiler:$version"
         const val gradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
