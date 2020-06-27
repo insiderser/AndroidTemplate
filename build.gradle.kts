@@ -41,7 +41,6 @@ buildscript {
 }
 
 plugins {
-    id("com.diffplug.gradle.spotless") version "4.4.0"
     id("com.github.ben-manes.versions") version "0.28.0"
 }
 
@@ -56,15 +55,6 @@ allprojects {
 }
 
 subprojects {
-    apply(plugin = "com.diffplug.gradle.spotless")
-    spotless {
-        kotlin {
-            target("**/*.kt")
-            ktlint(Versions.ktlint)
-            licenseHeaderFile(rootProject.file("copyright.kt"))
-        }
-    }
-
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             allWarningsAsErrors = true

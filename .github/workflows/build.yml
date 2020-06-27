@@ -58,7 +58,7 @@ jobs:
           key: ${{ runner.os }}-robolectric-${{ hashFiles('test-shared/src/main/resources/robolectric.properties') }}
 
       - name: Build
-        run: ./gradlew spotlessCheck app:lintDebug testDebugUnitTest app:assembleDebug
+        run: ./gradlew app:lintDebug testDebugUnitTest app:assembleDebug
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v1
