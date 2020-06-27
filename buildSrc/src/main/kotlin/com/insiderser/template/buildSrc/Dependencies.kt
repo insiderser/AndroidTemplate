@@ -40,8 +40,6 @@ object Versions {
     val jvmTarget = JavaVersion.VERSION_1_8
 
     const val buildToolsVersion = "30.0.0"
-
-    const val ktlint = "0.37.1"
 }
 
 object Libs {
