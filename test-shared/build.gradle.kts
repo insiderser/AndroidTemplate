@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
+import com.insiderser.template.buildSrc.Dependencies
 
 plugins {
     id("com.android.library")
@@ -29,10 +29,10 @@ plugins {
 }
 
 dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
+    api(Dependencies.Test.junit4)
+    api(Dependencies.Test.truth)
+    api(Dependencies.Kotlin.stdlib)
+    api(Dependencies.Kotlin.Coroutines.test)
 
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+    implementation(Dependencies.AndroidX.Lifecycle.liveDataKtx)
 }

@@ -22,7 +22,7 @@
 
 package com.insiderser.template.buildSrc
 
-object Libs {
+object Dependencies {
     // Also used in buildSrc/build.gradle.kts
     const val androidGradlePlugin = "com.android.tools.build:gradle:4.0.0"
 

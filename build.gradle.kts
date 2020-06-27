@@ -33,10 +33,10 @@ buildscript {
         maven("https://dl.bintray.com/kotlin/kotlin-eap")
     }
     dependencies {
-        classpath(com.insiderser.template.buildSrc.Libs.androidGradlePlugin)
-        classpath(com.insiderser.template.buildSrc.Libs.Kotlin.gradlePlugin)
-        classpath(com.insiderser.template.buildSrc.Libs.AndroidX.Navigation.safeArgs)
-        classpath(com.insiderser.template.buildSrc.Libs.Hilt.gradlePlugin)
+        classpath(com.insiderser.template.buildSrc.Dependencies.androidGradlePlugin)
+        classpath(com.insiderser.template.buildSrc.Dependencies.Kotlin.gradlePlugin)
+        classpath(com.insiderser.template.buildSrc.Dependencies.AndroidX.Navigation.safeArgs)
+        classpath(com.insiderser.template.buildSrc.Dependencies.Hilt.gradlePlugin)
     }
 }
 

@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
+import com.insiderser.template.buildSrc.Dependencies
 import com.insiderser.template.buildSrc.sharedTestImplementation
 
 plugins {
@@ -45,39 +45,39 @@ android {
 }
 
 dependencies {
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.core)
-    api(Libs.Kotlin.Coroutines.android)
+    api(Dependencies.Kotlin.stdlib)
+    api(Dependencies.Kotlin.Coroutines.core)
+    api(Dependencies.Kotlin.Coroutines.android)
 
-    api(Libs.AndroidX.coreKtx)
-    api(Libs.AndroidX.appcompat)
-    api(Libs.AndroidX.activity)
-    api(Libs.AndroidX.Fragment.fragment)
-    api(Libs.AndroidX.material)
-    api(Libs.AndroidX.recyclerView)
+    api(Dependencies.AndroidX.coreKtx)
+    api(Dependencies.AndroidX.appcompat)
+    api(Dependencies.AndroidX.activity)
+    api(Dependencies.AndroidX.Fragment.fragment)
+    api(Dependencies.AndroidX.material)
+    api(Dependencies.AndroidX.recyclerView)
 
-    api(Libs.AndroidX.Lifecycle.extensions)
-    api(Libs.AndroidX.Lifecycle.lifecycleKtx)
-    api(Libs.AndroidX.Lifecycle.liveDataKtx)
-    api(Libs.AndroidX.Lifecycle.viewModelKtx)
+    api(Dependencies.AndroidX.Lifecycle.extensions)
+    api(Dependencies.AndroidX.Lifecycle.lifecycleKtx)
+    api(Dependencies.AndroidX.Lifecycle.liveDataKtx)
+    api(Dependencies.AndroidX.Lifecycle.viewModelKtx)
 
-    api(Libs.timber)
-    api(Libs.Insetter.ktx)
+    api(Dependencies.timber)
+    api(Dependencies.Insetter.ktx)
 
-    api(Libs.Hilt.android)
+    api(Dependencies.Hilt.android)
 
-    api(Libs.AndroidX.Room.runtime)
-    api(Libs.AndroidX.Room.ktx)
-    kapt(Libs.AndroidX.Room.compiler)
+    api(Dependencies.AndroidX.Room.runtime)
+    api(Dependencies.AndroidX.Room.ktx)
+    kapt(Dependencies.AndroidX.Room.compiler)
 
     sharedTestImplementation(project(":test-shared"))
-    testImplementation(Libs.Test.mockK)
+    testImplementation(Dependencies.Test.mockK)
 
-    sharedTestImplementation(Libs.Test.AndroidX.arch)
-    sharedTestImplementation(Libs.Test.AndroidX.ext)
-    sharedTestImplementation(Libs.Test.AndroidX.core)
-    sharedTestImplementation(Libs.Test.AndroidX.rules)
+    sharedTestImplementation(Dependencies.Test.AndroidX.arch)
+    sharedTestImplementation(Dependencies.Test.AndroidX.ext)
+    sharedTestImplementation(Dependencies.Test.AndroidX.core)
+    sharedTestImplementation(Dependencies.Test.AndroidX.rules)
 
-    testImplementation(Libs.Test.Robolectric.robolectric)
-    debugImplementation(Libs.AndroidX.Fragment.testing)
+    testImplementation(Dependencies.Test.Robolectric.robolectric)
+    debugImplementation(Dependencies.AndroidX.Fragment.testing)
 }

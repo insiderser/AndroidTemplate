@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
+import com.insiderser.template.buildSrc.Dependencies
 import com.insiderser.template.buildSrc.sharedTestImplementation
 
 plugins {
@@ -71,25 +71,25 @@ android {
 dependencies {
     implementation(project(":core"))
 
-    implementation(Libs.AndroidX.Navigation.fragment)
-    implementation(Libs.AndroidX.Navigation.ui)
+    implementation(Dependencies.AndroidX.Navigation.fragment)
+    implementation(Dependencies.AndroidX.Navigation.ui)
 
     // FIXME Why require Libs.Hilt.android if it's already defined in core module?
-    implementation(Libs.Hilt.android)
-    implementation(Libs.Hilt.AndroidX.lifecycle)
-    kapt(Libs.Hilt.compiler)
-    kapt(Libs.Hilt.AndroidX.compiler)
+    implementation(Dependencies.Hilt.android)
+    implementation(Dependencies.Hilt.AndroidX.lifecycle)
+    kapt(Dependencies.Hilt.compiler)
+    kapt(Dependencies.Hilt.AndroidX.compiler)
 
-    debugImplementation(Libs.LeakCanary.leakCanary)
-    androidTestImplementation(Libs.LeakCanary.instrumentation)
+    debugImplementation(Dependencies.LeakCanary.leakCanary)
+    androidTestImplementation(Dependencies.LeakCanary.instrumentation)
 
     sharedTestImplementation(project(":test-shared"))
-    testImplementation(Libs.Test.mockK)
+    testImplementation(Dependencies.Test.mockK)
 
-    sharedTestImplementation(Libs.Test.AndroidX.core)
-    sharedTestImplementation(Libs.Test.AndroidX.rules)
-    sharedTestImplementation(Libs.Test.AndroidX.ext)
-    sharedTestImplementation(Libs.Test.AndroidX.arch)
+    sharedTestImplementation(Dependencies.Test.AndroidX.core)
+    sharedTestImplementation(Dependencies.Test.AndroidX.rules)
+    sharedTestImplementation(Dependencies.Test.AndroidX.ext)
+    sharedTestImplementation(Dependencies.Test.AndroidX.arch)
 
-    androidTestImplementation(Libs.Test.AndroidX.Espresso.core)
+    androidTestImplementation(Dependencies.Test.AndroidX.Espresso.core)
 }
