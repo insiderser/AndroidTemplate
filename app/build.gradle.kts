@@ -21,7 +21,6 @@
  */
 
 import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
 import com.insiderser.template.buildSrc.sharedTestImplementation
 
 plugins {
@@ -31,9 +30,8 @@ plugins {
     kotlin("kapt")
     id("androidx.navigation.safeargs.kotlin")
     id("dagger.hilt.android.plugin")
+    `android-common`
 }
-
-configureAndroidModule()
 
 android {
     defaultConfig {

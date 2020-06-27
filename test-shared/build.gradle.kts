@@ -21,14 +21,12 @@
  */
 
 import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
 
 plugins {
     id("com.android.library")
     kotlin("android")
+    `android-common`
 }
-
-configureAndroidModule()
 
 dependencies {
     api(Libs.Test.junit4)

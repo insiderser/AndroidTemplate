@@ -21,7 +21,6 @@
  */
 
 import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
 import com.insiderser.template.buildSrc.sharedTestImplementation
 
 plugins {
@@ -29,9 +28,8 @@ plugins {
     kotlin("android")
     kotlin("android.extensions")
     kotlin("kapt")
+    `android-common`
 }
-
-configureAndroidModule()
 
 android {
     defaultConfig {
