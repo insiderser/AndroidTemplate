@@ -38,7 +38,8 @@ import androidx.room.RoomDatabase
     entities = [
         MyEntity::class
     ],
-    version = AppDatabase.DB_VERSION
+    version = AppDatabase.DB_VERSION,
+    exportSchema = false,
 )
 abstract class AppDatabase : RoomDatabase() {
 
