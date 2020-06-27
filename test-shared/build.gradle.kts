@@ -33,6 +33,7 @@ configureAndroidModule()
 dependencies {
     api(Libs.Test.junit4)
     api(Libs.Test.truth)
+    api(Libs.Kotlin.stdlib)
     api(Libs.Kotlin.Coroutines.test)
 
     implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
