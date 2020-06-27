@@ -20,9 +20,9 @@
  * SOFTWARE.
  */
 
-import com.insiderser.android.template.buildSrc.Libs
-import com.insiderser.android.template.buildSrc.configureAndroidModule
-import com.insiderser.android.template.buildSrc.sharedTestImplementation
+import com.insiderser.template.buildSrc.Libs
+import com.insiderser.template.buildSrc.configureAndroidModule
+import com.insiderser.template.buildSrc.sharedTestImplementation
 
 plugins {
     id("com.android.library")

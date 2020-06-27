@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/settings_theme_group_label" />
 
-            <com.insiderser.android.template.widget.PreferenceView
+            <com.insiderser.template.widget.PreferenceView
                 android:id="@+id/choose_theme_preference"
                 style="@style/Widget.Template.Settings.PreferenceView"
                 android:layout_width="match_parent"
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/settings_about_group_label" />
 
-            <com.insiderser.android.template.widget.PreferenceView
+            <com.insiderser.template.widget.PreferenceView
                 android:id="@+id/version_name"
                 style="@style/Widget.Template.Settings.PreferenceView"
                 android:layout_width="match_parent"

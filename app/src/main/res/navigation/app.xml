@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/feature1"
-        android:name="com.insiderser.android.template.ui.feature1.Feature1Fragment"
+        android:name="com.insiderser.template.ui.feature1.Feature1Fragment"
         tools:layout="@layout/feature1_fragment" />
     <include app:graph="@navigation/settings" />
 </navigation>

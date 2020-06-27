@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/settings_home"
-        android:name="com.insiderser.android.template.ui.settings.SettingsFragment"
+        android:name="com.insiderser.template.ui.settings.SettingsFragment"
         tools:layout="@layout/settings_fragment">
         <action
             android:id="@+id/action_settings_home_to_theme_setting_dialog"
@@ -36,6 +36,6 @@
     </fragment>
     <dialog
         android:id="@+id/theme_setting_dialog"
-        android:name="com.insiderser.android.template.ui.settings.ThemeSettingDialogFragment" />
+        android:name="com.insiderser.template.ui.settings.ThemeSettingDialogFragment" />
 
 </navigation>

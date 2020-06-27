@@ -20,21 +20,24 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.core.domain.prefs.theme
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import com.insiderser.template.core.data.prefs.AppPreferencesStorage
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-configureAndroidModule()
+/**
+ * Use case for getting observable [Flow] of user-selected theme setting from app preferences.
+ */
+class ObservableThemeUseCase @Inject constructor(
+    private val preferencesStorage: AppPreferencesStorage
+) {
 
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
-
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+    operator fun invoke(): Flow<Theme> =
+        preferencesStorage.selectedThemeObservable.map { storageKey: String? ->
+            if (storageKey != null) Theme.fromStorageKey(
+                storageKey
+            ) else DEFAULT_THEME
+        }
 }

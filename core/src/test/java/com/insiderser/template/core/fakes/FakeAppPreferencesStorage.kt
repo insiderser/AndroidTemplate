@@ -20,21 +20,24 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.core.fakes
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import com.insiderser.template.core.data.prefs.AppPreferencesStorage
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 
-configureAndroidModule()
+/**
+ * Fake [AppPreferencesStorage] implementation that doesn't use [android.content.SharedPreferences].
+ */
+class FakeAppPreferencesStorage : AppPreferencesStorage {
 
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
+    override var selectedTheme: String? = null
+        set(value) {
+            field = value
+            selectedThemeStateFlow.value = value
+        }
 
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+    private val selectedThemeStateFlow = MutableStateFlow(selectedTheme)
+    override val selectedThemeObservable: Flow<String?>
+        get() = selectedThemeStateFlow
 }

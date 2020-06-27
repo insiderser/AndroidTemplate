@@ -20,21 +20,18 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.core.data.db
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-configureAndroidModule()
-
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
-
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
-}
+/**
+ * A sample entity with [id] and [name] as its columns.
+ *
+ * @see MyDao
+ */
+@Entity
+data class MyEntity(
+    @PrimaryKey(autoGenerate = true) val id: Int,
+    val name: String
+)

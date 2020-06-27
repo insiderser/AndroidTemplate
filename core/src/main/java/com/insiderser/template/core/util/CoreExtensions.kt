@@ -20,21 +20,33 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.core.util
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
+/**
+ * Convenience method for callbacks/listeners whose return value indicates
+ * whether the event was consumed or not.
+ * @param f Function to execute (will be called only once).
+ * @return Always `true`.
+ */
+inline fun consume(f: () -> Unit): Boolean {
+    f()
+    return true
 }
 
-configureAndroidModule()
-
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
-
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
-}
+/**
+ * Force Kotlin to check that all variants in `when` statement are matched.
+ *
+ * By default, Kotlin doesn't care whether we consumed all possible variants
+ * in `when` statements as long as the statement doesn't return any value.
+ *
+ * This extension allows us to force Kotlin to check that all variants are matched.
+ *
+ * Example:
+ * ```
+ * when(sealedObject) {
+ *     is OneType -> ...
+ *     is AnotherType -> ...
+ * }.checkAllMatched()
+ * ```
+ */
+fun <T> T.checkAllMatched(): T = this

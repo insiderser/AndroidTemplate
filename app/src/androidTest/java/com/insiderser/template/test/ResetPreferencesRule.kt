@@ -20,21 +20,33 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.test
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
+import com.insiderser.template.core.data.prefs.AppPreferencesStorage
+import com.insiderser.template.core.data.prefs.AppPreferencesStorageImpl
+import kotlinx.coroutines.Dispatchers
+import org.junit.rules.TestWatcher
+import org.junit.runner.Description
 
-configureAndroidModule()
+/**
+ * A simple test rule that resets app preferences to default.
+ * For example, we might want not to show boarding screen.
+ */
+class ResetPreferencesRule : TestWatcher() {
 
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
+    val storage: AppPreferencesStorage by lazy {
+        AppPreferencesStorageImpl(
+            getApplicationContext(),
+            Dispatchers.IO
+        )
+    }
 
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+    override fun starting(description: Description?) {
+        resetPreferences()
+    }
+
+    fun resetPreferences() = with(storage) {
+        selectedTheme = null
+    }
 }

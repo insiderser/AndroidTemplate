@@ -20,21 +20,31 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.dagger
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import com.insiderser.template.core.dagger.DefaultDispatcher
+import com.insiderser.template.core.dagger.IODispatcher
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
-configureAndroidModule()
+/**
+ * Module that defines which dispatchers should be injected.
+ *
+ * If needed, add other dispatchers here.
+ */
+@Module
+@InstallIn(ApplicationComponent::class)
+object CoroutineDispatchersModule {
 
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
+    @Provides
+    @DefaultDispatcher
+    fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
 
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+    @Provides
+    @IODispatcher
+    fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 }

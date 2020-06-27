@@ -20,21 +20,23 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.core.dagger
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import javax.inject.Qualifier
+import kotlin.annotation.AnnotationRetention.RUNTIME
 
-configureAndroidModule()
+/**
+ * Tells Dagger to inject [kotlinx.coroutines.Dispatchers.Default].
+ */
+@Qualifier
+@MustBeDocumented
+@Retention(RUNTIME)
+annotation class DefaultDispatcher
 
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
-
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
-}
+/**
+ * Tells Dagger to inject [kotlinx.coroutines.Dispatchers.IO].
+ */
+@Qualifier
+@MustBeDocumented
+@Retention(RUNTIME)
+annotation class IODispatcher

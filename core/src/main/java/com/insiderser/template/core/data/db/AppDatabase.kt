@@ -20,21 +20,47 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.core.data.db
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
 
-configureAndroidModule()
+/**
+ * A main Room database. Here you can retrieve all app DAOs.
+ *
+ * You don't need to use this class directly. Instead, get one of DAOs using Dagger.
+ *
+ * @see AppDatabase.create
+ */
+@Database(
+    entities = [
+        MyEntity::class
+    ],
+    version = AppDatabase.DB_VERSION,
+    exportSchema = false,
+)
+abstract class AppDatabase : RoomDatabase() {
 
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
+    abstract val myDao: MyDao
 
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+    companion object {
+
+        internal const val DB_VERSION = 1
+        private const val DB_NAME = "app.db"
+
+        /**
+         * Create an [AppDatabase] instance that is connected to the persistent SQLite
+         * database. If the database doesn't exist, it will be created.
+         *
+         * @param context an application context
+         */
+        @JvmStatic
+        fun create(context: Context): AppDatabase =
+            Room.databaseBuilder(
+                context, AppDatabase::class.java,
+                DB_NAME
+            ).build()
+    }
 }

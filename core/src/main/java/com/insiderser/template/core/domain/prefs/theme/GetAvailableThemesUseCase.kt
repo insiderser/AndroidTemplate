@@ -20,21 +20,24 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.core.domain.prefs.theme
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.Q
+import javax.inject.Inject
 
-configureAndroidModule()
+/**
+ * Use case for getting all available themes for the device that
+ * we are running on.
+ */
+class GetAvailableThemesUseCase @Inject constructor() {
 
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
-
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+    /**
+     * Get all available themes for this device.
+     */
+    operator fun invoke(): List<Theme> = listOf(
+        Theme.LIGHT,
+        Theme.DARK,
+        if (SDK_INT >= Q) Theme.FOLLOW_SYSTEM else Theme.AUTO_BATTERY
+    )
 }

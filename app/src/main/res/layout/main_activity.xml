@@ -25,7 +25,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context="com.insiderser.template.ui.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navigation_view"

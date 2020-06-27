@@ -21,7 +21,7 @@
  */
 
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import com.insiderser.android.template.buildSrc.Versions
+import com.insiderser.template.buildSrc.Versions
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
@@ -33,10 +33,10 @@ buildscript {
         maven("https://dl.bintray.com/kotlin/kotlin-eap")
     }
     dependencies {
-        classpath(com.insiderser.android.template.buildSrc.Libs.androidGradlePlugin)
-        classpath(com.insiderser.android.template.buildSrc.Libs.Kotlin.gradlePlugin)
-        classpath(com.insiderser.android.template.buildSrc.Libs.AndroidX.Navigation.safeArgs)
-        classpath(com.insiderser.android.template.buildSrc.Libs.Hilt.gradlePlugin)
+        classpath(com.insiderser.template.buildSrc.Libs.androidGradlePlugin)
+        classpath(com.insiderser.template.buildSrc.Libs.Kotlin.gradlePlugin)
+        classpath(com.insiderser.template.buildSrc.Libs.AndroidX.Navigation.safeArgs)
+        classpath(com.insiderser.template.buildSrc.Libs.Hilt.gradlePlugin)
     }
 }
 

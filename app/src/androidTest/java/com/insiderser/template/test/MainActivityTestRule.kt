@@ -20,21 +20,38 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+@file:Suppress("DEPRECATION")
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+package com.insiderser.template.test
 
-configureAndroidModule()
+import android.content.Intent
+import androidx.annotation.IdRes
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
+import androidx.test.rule.ActivityTestRule
+import com.insiderser.template.ui.MainActivity
 
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
+/**
+ * Test rule for [MainActivity]. Allows launching a specific destination in the [MainActivity].
+ * @see ActivityTestRule
+ */
+class MainActivityTestRule(
+    @IdRes private val destination: Int
+) : ActivityTestRule<MainActivity>(MainActivity::class.java) {
 
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+    override fun getActivityIntent(): Intent =
+        getIntentForDestination(
+            destination
+        )
+
+    fun restartActivity() {
+        finishActivity()
+        launchActivity(activityIntent)
+    }
+
+    companion object {
+        @JvmStatic
+        fun getIntentForDestination(@IdRes destination: Int): Intent =
+            Intent(getApplicationContext(), MainActivity::class.java)
+                .putExtra(MainActivity.EXTRA_DESTINATION, destination)
+    }
 }

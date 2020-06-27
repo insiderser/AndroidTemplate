@@ -20,21 +20,26 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.core.util
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import com.google.common.truth.Truth.assertThat
+import com.insiderser.template.core.util.Event
+import org.junit.Test
 
-configureAndroidModule()
+class EventTest {
 
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
+    @Test
+    fun testEvent() {
+        val instance = Any()
+        val victim = Event(instance)
 
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+        assertThat(victim.hasBeenHandled).isFalse()
+        assertThat(victim.getContentIfNotHandled()).isSameInstanceAs(instance)
+
+        assertThat(victim.hasBeenHandled).isTrue()
+        assertThat(victim.getContentIfNotHandled()).isNull()
+        assertThat(victim.hasBeenHandled).isTrue()
+
+        assertThat(victim.peekContent()).isSameInstanceAs(instance)
+    }
 }

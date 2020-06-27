@@ -20,21 +20,19 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.core.domain.prefs.theme
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import com.google.common.truth.Truth.assertThat
+import com.insiderser.template.core.domain.prefs.theme.DEFAULT_THEME
+import com.insiderser.template.core.domain.prefs.theme.GetAvailableThemesUseCase
+import org.junit.Test
 
-configureAndroidModule()
+class GetAvailableThemesUseCaseTest {
 
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
-
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+    @Test
+    // TODO: test on different SDK levels
+    fun invoke_returnsListThatContainsDefaultTheme() {
+        val useCase = GetAvailableThemesUseCase()
+        assertThat(useCase()).contains(DEFAULT_THEME)
+    }
 }

@@ -20,21 +20,31 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.test
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 
-configureAndroidModule()
+/**
+ * Get the value of a [LiveData] safely.
+ */
+fun <T> LiveData<T>.await(
+    timeout: Long = 2,
+    timeoutUnit: TimeUnit = TimeUnit.SECONDS
+): T? {
+    var data: T? = null
+    val latch = CountDownLatch(1)
+    val observer = object : Observer<T> {
+        override fun onChanged(o: T?) {
+            data = o
+            latch.countDown()
+            removeObserver(this)
+        }
+    }
+    observeForever(observer)
+    latch.await(timeout, timeoutUnit)
 
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
-
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+    return data
 }

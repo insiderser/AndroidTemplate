@@ -20,21 +20,23 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.core.domain.prefs.theme
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import com.google.common.truth.Truth.assertThat
+import com.insiderser.template.core.domain.prefs.theme.Theme
+import org.junit.Assert.assertThrows
+import org.junit.Test
 
-configureAndroidModule()
+class ThemeTest {
 
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
+    @Test
+    fun themeFromStorageKey_returnsCorrectTheme() {
+        for (theme in Theme.values()) {
+            assertThat(Theme.fromStorageKey(theme.storageKey)).isSameInstanceAs(theme)
+        }
 
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+        assertThrows(NoSuchElementException::class.java) {
+            Theme.fromStorageKey("")
+        }
+    }
 }

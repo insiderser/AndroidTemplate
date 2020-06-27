@@ -20,21 +20,30 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.test
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import android.view.View
+import android.widget.TextView
+import androidx.annotation.IdRes
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withParent
+import com.insiderser.template.R
+import org.hamcrest.CoreMatchers.allOf
+import org.hamcrest.CoreMatchers.instanceOf
+import org.hamcrest.Matcher
 
-configureAndroidModule()
-
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
-
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
-}
+/**
+ * Returns Espresso [Matcher] of a title [TextView] within
+ * [Toolbar][androidx.appcompat.widget.Toolbar].
+ *
+ * Usage:
+ * ```
+ * onView(toolbarTitle()).check(...)
+ * ```
+ *
+ * @param toolbarId ID of your Toolbar. [R.id.toolbar] by default.
+ */
+fun toolbarTitle(@IdRes toolbarId: Int = R.id.toolbar): Matcher<View> = allOf(
+    instanceOf(TextView::class.java),
+    withParent(withId(toolbarId))
+)

@@ -21,7 +21,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.insiderser.android.template">
+    package="com.insiderser.template">
 
     <application
         android:name=".MyApplication"

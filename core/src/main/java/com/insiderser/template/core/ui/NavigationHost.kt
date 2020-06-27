@@ -20,21 +20,20 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.core.ui
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import androidx.appcompat.widget.Toolbar
 
-configureAndroidModule()
+/**
+ * Should be implemented by [activities][android.app.Activity] that
+ * have child [fragments][androidx.fragment.app.Fragment] that create their own [Toolbar].
+ */
+interface NavigationHost {
 
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
-
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+    /**
+     * Child [Fragment][androidx.fragment.app.Fragment] has the given [toolbar]. Please,
+     * initialize all the navigation boilerplate, such as up or hamburger buttons,
+     * menus, etc.
+     */
+    fun registerToolbarWithNavigation(toolbar: Toolbar)
 }

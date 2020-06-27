@@ -20,21 +20,25 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.core.domain.prefs.theme
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import com.insiderser.template.core.dagger.IODispatcher
+import com.insiderser.template.core.data.prefs.AppPreferencesStorage
+import com.insiderser.template.core.domain.NoResultUseCase
+import kotlinx.coroutines.CoroutineDispatcher
+import javax.inject.Inject
 
-configureAndroidModule()
+/**
+ * Use case for setting user-selected theme settings to app preferences.
+ */
+class SetThemeUseCase @Inject constructor(
+    private val prefs: AppPreferencesStorage,
+    @IODispatcher private val ioDispatcher: CoroutineDispatcher
+) : NoResultUseCase<Theme>() {
 
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
+    override val workDispatcher: CoroutineDispatcher = ioDispatcher
 
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+    override suspend fun execute(param: Theme) {
+        prefs.selectedTheme = param.storageKey
+    }
 }

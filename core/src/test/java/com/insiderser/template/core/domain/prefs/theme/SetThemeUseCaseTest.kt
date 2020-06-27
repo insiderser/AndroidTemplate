@@ -20,21 +20,32 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.core.domain.prefs.theme
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import com.google.common.truth.Truth.assertThat
+import com.insiderser.template.core.fakes.FakeAppPreferencesStorage
+import com.insiderser.template.core.domain.prefs.theme.SetThemeUseCase
+import com.insiderser.template.core.domain.prefs.theme.Theme
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Test
 
-configureAndroidModule()
+class SetThemeUseCaseTest {
 
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
+    private val testDispatcher = TestCoroutineDispatcher()
 
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+    private val preferencesStorage = FakeAppPreferencesStorage()
+
+    private val useCase = SetThemeUseCase(
+        preferencesStorage,
+        testDispatcher
+    )
+
+    @Test
+    fun givenTheme_useCase_updatesPreferencesStorage() = testDispatcher.runBlockingTest {
+        Theme.values().forEach { theme ->
+            useCase(theme)
+            assertThat(preferencesStorage.selectedTheme).isEqualTo(theme.storageKey)
+        }
+    }
 }

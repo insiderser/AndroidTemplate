@@ -20,21 +20,34 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.test.rules
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import org.junit.rules.TestWatcher
+import org.junit.runner.Description
 
-configureAndroidModule()
+/**
+ * JUnit rule that swaps default [Dispatchers.Main] with [TestCoroutineDispatcher].
+ *
+ * Singe [MainDispatcherRule] implements [TestCoroutineScope],
+ * you can use this rule to launch any coroutines in your test code.
+ */
+class MainDispatcherRule(
+    private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
+) : TestWatcher(), TestCoroutineScope by TestCoroutineScope(testDispatcher) {
 
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
+    override fun starting(description: Description?) {
+        super.starting(description)
+        Dispatchers.setMain(testDispatcher)
+    }
 
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+    override fun finished(description: Description?) {
+        super.finished(description)
+        Dispatchers.resetMain()
+        testDispatcher.cleanupTestCoroutines()
+    }
 }

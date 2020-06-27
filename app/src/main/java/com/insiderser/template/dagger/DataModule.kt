@@ -20,21 +20,39 @@
  * SOFTWARE.
  */
 
-import com.insiderser.template.buildSrc.Libs
-import com.insiderser.template.buildSrc.configureAndroidModule
+package com.insiderser.template.dagger
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import android.content.Context
+import com.insiderser.template.core.data.db.AppDatabase
+import com.insiderser.template.core.data.db.MyDao
+import com.insiderser.template.core.data.prefs.AppPreferencesStorage
+import com.insiderser.template.core.data.prefs.AppPreferencesStorageImpl
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import javax.inject.Singleton
 
-configureAndroidModule()
+/**
+ * A module that tells dagger how to create anything in this data module.
+ */
+@Module
+@InstallIn(ApplicationComponent::class)
+interface DataModule {
 
-dependencies {
-    api(Libs.Test.junit4)
-    api(Libs.Test.truth)
-    api(Libs.Kotlin.stdlib)
-    api(Libs.Kotlin.Coroutines.test)
+    @Binds
+    @Singleton
+    fun bindAppSharedPreferences(impl: AppPreferencesStorageImpl): AppPreferencesStorage
 
-    implementation(Libs.AndroidX.Lifecycle.liveDataKtx)
+    companion object {
+
+        @Singleton
+        @Provides
+        fun provideAppDatabase(context: Context): AppDatabase = AppDatabase.create(context)
+
+        @Singleton
+        @Provides
+        fun provideMyDao(db: AppDatabase): MyDao = db.myDao
+    }
 }

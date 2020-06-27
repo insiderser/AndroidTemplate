@@ -22,7 +22,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:orientation="vertical"
-    tools:parentTag="com.insiderser.android.template.widget.PreferenceView">
+    tools:parentTag="com.insiderser.template.widget.PreferenceView">
 
     <TextView
         android:id="@+id/title"
