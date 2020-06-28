@@ -57,9 +57,9 @@ dependencies {
     api(Dependencies.AndroidX.recyclerView)
 
     api(Dependencies.AndroidX.Lifecycle.extensions)
-    api(Dependencies.AndroidX.Lifecycle.lifecycleKtx)
-    api(Dependencies.AndroidX.Lifecycle.liveDataKtx)
-    api(Dependencies.AndroidX.Lifecycle.viewModelKtx)
+    api(Dependencies.AndroidX.Lifecycle.lifecycle)
+    api(Dependencies.AndroidX.Lifecycle.liveData)
+    api(Dependencies.AndroidX.Lifecycle.viewModel)
 
     api(Dependencies.timber)
     api(Dependencies.Insetter.ktx)

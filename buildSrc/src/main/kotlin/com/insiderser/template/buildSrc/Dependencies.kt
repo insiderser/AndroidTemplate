@@ -87,9 +87,9 @@ object Dependencies {
         object Lifecycle {
             private const val version = "2.2.0"
             const val extensions = "androidx.lifecycle:lifecycle-extensions:$version"
-            const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
-            const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
-            const val lifecycleKtx = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
+            const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
+            const val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
+            const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
         }
 
         object Room {

@@ -34,5 +34,5 @@ dependencies {
     api(Dependencies.Kotlin.stdlib)
     api(Dependencies.Kotlin.Coroutines.test)
 
-    implementation(Dependencies.AndroidX.Lifecycle.liveDataKtx)
+    implementation(Dependencies.AndroidX.Lifecycle.liveData)
 }
