@@ -57,7 +57,7 @@ object Dependencies {
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
         object Coroutines {
-            private const val version = "1.3.7"
+            private const val version = "1.3.7-1.4-M2"
             const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
             const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
             const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
@@ -68,7 +68,7 @@ object Dependencies {
         const val coreKtx = "androidx.core:core-ktx:1.3.0"
         const val appcompat = "androidx.appcompat:appcompat:1.2.0-rc01"
         const val activity = "androidx.activity:activity-ktx:1.1.0"
-        const val material = "com.google.android.material:material:1.1.0"
+        const val material = "com.google.android.material:material:1.2.0-beta01"
         const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
 
         object Fragment {
@@ -116,7 +116,6 @@ object Dependencies {
     object Retrofit {
         private const val version = "2.9.0"
         const val retrofit = "com.squareup.retrofit2:retrofit:$version"
-        const val mock = "com.squareup.retrofit2:retrofit-mock:$version"
         const val moshiConverter = "com.squareup.retrofit2:converter-moshi:$version"
     }
 
