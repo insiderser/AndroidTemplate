@@ -51,7 +51,7 @@ class ThemeSettingDialogFragment : AppCompatDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        MaterialAlertDialogBuilder(context)
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.settings_theme_dialog_title)
             .setSingleChoiceItems(adapter, -1) { dialog, which ->
                 adapter.getItem(which)?.theme?.let { theme ->
