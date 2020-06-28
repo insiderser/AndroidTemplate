@@ -60,7 +60,6 @@ subprojects {
             allWarningsAsErrors = true
             jvmTarget = Versions.jvmTarget.toString()
             freeCompilerArgs = mutableListOf(
-                "-Xjsr305=strict",
                 "-Xallow-result-return-type",
                 "-Xopt-in=kotlin.RequiresOptIn",
                 "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
