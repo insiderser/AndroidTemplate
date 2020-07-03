@@ -74,7 +74,7 @@ dependencies {
     implementation(Dependencies.AndroidX.Navigation.fragment)
     implementation(Dependencies.AndroidX.Navigation.ui)
 
-    // FIXME Why require Libs.Hilt.android if it's already defined in core module?
+    // FIXME Why require Dependencies.Hilt.android if it's already defined in core module?
     implementation(Dependencies.Hilt.android)
     implementation(Dependencies.Hilt.AndroidX.lifecycle)
     kapt(Dependencies.Hilt.compiler)
