@@ -70,6 +70,7 @@ object Dependencies {
         const val activity = "androidx.activity:activity-ktx:1.1.0"
         const val material = "com.google.android.material:material:1.2.0-beta01"
         const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
+        const val startup = "androidx.startup:startup-runtime:1.0.0-alpha01"
 
         object Fragment {
             private const val version = "1.2.5"

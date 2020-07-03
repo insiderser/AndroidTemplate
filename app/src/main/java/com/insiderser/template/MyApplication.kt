@@ -23,69 +23,7 @@
 package com.insiderser.template
 
 import android.app.Application
-import android.os.StrictMode
-import androidx.appcompat.app.AppCompatDelegate
-import com.insiderser.template.core.domain.prefs.theme.ObservableThemeUseCase
-import com.insiderser.template.core.domain.prefs.theme.Theme
-import com.insiderser.template.core.domain.prefs.theme.toAppCompatNightMode
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import timber.log.Timber
-import javax.inject.Inject
 
-/**
- * This is the entry point of the whole application.
- *
- * This class executes basic app configuration, such as building a
- * Dagger graph, initializing libraries that need to be initialized on startup, etc.
- */
 @HiltAndroidApp
-class MyApplication : Application() {
-
-    private val appScope = CoroutineScope(Dispatchers.Main)
-
-    @Inject
-    internal lateinit var observableThemeUseCase: ObservableThemeUseCase
-
-    override fun onCreate() {
-        // Enable strict mode before Dagger builds graph
-        if (BuildConfig.DEBUG) {
-            enableStrictMode()
-        }
-
-        super.onCreate()
-
-        initLogging()
-        initTheme()
-    }
-
-    private fun enableStrictMode() {
-        StrictMode.setThreadPolicy(
-            StrictMode.ThreadPolicy.Builder()
-                .detectAll()
-                // Doing anything expensive on the main thread is bad, so enforce that
-                .penaltyDeath()
-                .build()
-        )
-    }
-
-    private fun initLogging() {
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }
-    }
-
-    private fun initTheme() {
-        appScope.launch {
-            observableThemeUseCase().collect { updateAppTheme(it) }
-        }
-    }
-
-    private fun updateAppTheme(selectedTheme: Theme) {
-        Timber.d("Setting app theme to $selectedTheme")
-        AppCompatDelegate.setDefaultNightMode(selectedTheme.toAppCompatNightMode())
-    }
-}
+class MyApplication : Application()

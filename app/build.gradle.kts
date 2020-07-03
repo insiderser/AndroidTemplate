@@ -80,6 +80,8 @@ dependencies {
     kapt(Dependencies.Hilt.compiler)
     kapt(Dependencies.Hilt.AndroidX.compiler)
 
+    implementation(Dependencies.AndroidX.startup)
+
     debugImplementation(Dependencies.LeakCanary.leakCanary)
     androidTestImplementation(Dependencies.LeakCanary.instrumentation)
 
